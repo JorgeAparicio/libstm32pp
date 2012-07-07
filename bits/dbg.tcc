@@ -21,6 +21,6 @@
 
 #pragma once
 
-namespace dbgmcu {
-// DBGMCU function implementation
-}// namespace dbgmcu
+namespace dbg {
+// DBG function implementation
+}// namespace dbg
