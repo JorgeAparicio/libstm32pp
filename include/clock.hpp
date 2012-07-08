@@ -271,8 +271,8 @@ namespace clock {
    * Define the prescaler parameters below ************************************/
   enum {
     _HPRE = 0,
-    _PPRE1 = 2,
-    _PPRE2 = 1,
+    _PPRE1 = 0,
+    _PPRE2 = 0,
   };
   /************************************ Define the prescaler parameters above */
 
