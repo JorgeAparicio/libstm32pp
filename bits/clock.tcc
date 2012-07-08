@@ -370,9 +370,7 @@ namespace clock {
       rcc::registers::cfgr::bits::sw::states::PLL
       >();
 
-      while (!RCC::matchSystemClockSource<
-          rcc::registers::cfgr::bits::sws::states::PLL
-          >()) {}
+      while (!RCC::isSystemClockSourceStable()) {}
     }
     else
     clock::hseFailureHandler();
@@ -407,12 +405,10 @@ namespace clock {
       >();
 #endif // VALUE_LINE
       RCC::selectSystemClockSource<
-      rcc::registers::cfgr::bits::sw::HSE
+      rcc::registers::cfgr::bits::sw::states::HSE
       >();
 
-      while (!RCC::matchSystemClockSource<
-          rcc::registers::cfgr::bits::sws::HSE
-          >()) {}
+      while (!RCC::isSystemClockSourceStable()) {}
 
     }
     else
@@ -479,12 +475,10 @@ namespace clock {
     while (!RCC::isPllStable()) {}
 
     RCC::selectSystemClockSource<
-    rcc::registers::cfgr::bits::sw::PLL
+    rcc::registers::cfgr::bits::sw::states::PLL
     >();
 
-    while (!RCC::matchSystemClockSource<
-        rcc::registers::cfgr::bits::sws::PLL
-        >()) {}
+    while (!RCC::isSystemClockSourceStable()) {}
 
 #else // USING_PLL
     // Internal Clock
@@ -606,12 +600,10 @@ namespace clock {
       >();
 
       RCC::selectSystemClockSource<
-      rcc::registers::cfgr::bits::sw::HSE
+      rcc::registers::cfgr::bits::sw::states::HSE
       >();
 
-      while (!RCC::matchSystemClockSource<
-          rcc::registers::cfgr::bits::sws::HSE
-          >()) {}
+      while (!RCC::isSystemClockSourceStable()) {}
     }
     else
     clock::hseFailureHandler();
@@ -653,12 +645,10 @@ namespace clock {
     while (!RCC::isPllStable()) {}
 
     RCC::selectSystemClockSource<
-    rcc::registers::cfgr::bits::sw::PLL
+    rcc::registers::cfgr::bits::sw::states::PLL
     >();
 
-    while (!RCC::matchSystemClockSource<
-        rcc::registers::cfgr::bits::sws::PLL
-        >()) {}
+    while (!RCC::isSystemClockSourceStable()) {}
 
 #else // USING_PLL
     // Internal Clock
