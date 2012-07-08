@@ -29,7 +29,7 @@
 namespace clock {
 
   /* Are you using an external crystal, resonator, or RC oscillator? **********/
-#define USING_EXTERNAL_CRYSTAL
+//#define USING_EXTERNAL_CRYSTAL
   /***** Comment the macro above to answer no, otherwise your answer is yes ***/
 
 #ifndef USING_EXTERNAL_CRYSTAL
@@ -52,7 +52,7 @@ namespace clock {
 #endif /* USING_EXTERNAL_CRYSTAL || USING_EXTERNAL_CLOCK */
 
   /* Do you want to use the PLL? **********************************************/
-#define USING_PLL
+//#define USING_PLL
   /******* Comment the macro above to answer no, otherwise your answer is yes */
 
 #ifdef USING_PLL
@@ -295,7 +295,7 @@ namespace clock {
 
   /* Insert the flash access latency (in wait states) in the following line ***/
   enum {
-    _LATENCY = 3
+    _LATENCY = 0
   };
   /****** Insert the flash access latency (in wait states) in the previous line */
   /* IMPORTANT: USING A LOW LATENCY AT HIGH CLOCK FREQUENCIES MIGHT RESULT IN
