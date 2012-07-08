@@ -50,6 +50,8 @@ namespace tim {
 
   /**
    * @brief Sets the prescaler value of the counter.
+   * @note  A value of 0 indicates no prescaler, a value of 1 indicates
+   *        prescaling by 2, and so on.
    */
   template<address::E T>
   void Functions<T>::setPrescaler(u16 const psc)
@@ -58,7 +60,8 @@ namespace tim {
   }
 
   /**
-   * @brief Sets the autoreload value of the counter.
+   * @brief Sets the auto-reload value of the counter.
+   * @note  A value of 0 blocks the counter.
    */
   template<address::E T>
   void Functions<T>::setAutoReload(u16 const rld)
@@ -170,7 +173,7 @@ namespace tim {
   }
 
   /**
-   * @brief Configures the timer.
+   * @brief Configures the timer as a basic counter.
    */
   template<address::E T>
   template<
