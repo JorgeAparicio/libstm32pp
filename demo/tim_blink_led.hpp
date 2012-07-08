@@ -30,6 +30,8 @@
 #include "peripheral/tim.hpp"
 #include "core/nvic.hpp"
 
+// TODO Test TIM demo on STM32F1XX
+
 int main()
 {
 #ifdef STM32F1XX

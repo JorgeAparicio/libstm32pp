@@ -29,6 +29,8 @@
 #include "peripheral/rcc.hpp"
 #include "peripheral/usart.hpp"
 
+// TODO USART demo for STM32F1XX
+
 typedef PA9 U1TX;
 typedef PA10 U1RX;
 
@@ -36,10 +38,6 @@ const char msg[] = "Hello World!\n\r";
 
 int main()
 {
-#ifdef STM32F1XX
-  // TODO USART demo for F1 family.
-
-#else
   RCC::enableClocks<
       rcc::registers::ahb1enr::bits::GPIOA
   >();
@@ -63,7 +61,6 @@ int main()
   RCC::enableClocks<
       rcc::registers::apb2enr::bits::USART1
   >();
-#endif
 
   RCC::enableClocks<
       rcc::registers::apb2enr::bits::USART1
@@ -104,6 +101,6 @@ int main()
     USART1::sendData(msg[i]);
   }
 
-  while(true) {
+  while (true) {
   }
 }

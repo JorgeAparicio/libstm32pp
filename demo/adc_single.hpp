@@ -29,6 +29,8 @@
 #include "peripheral/rcc.hpp"
 #include "peripheral/adc.hpp"
 
+// TODO Test ADC demo on STM32F1XX
+
 int main()
 {
   u32 debug = 0;

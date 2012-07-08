@@ -29,13 +29,13 @@
 #include "peripheral/rcc.hpp"
 #include "peripheral/usart.hpp"
 
+// TODO DMA demo for STM32F1XX
+
 typedef PA9 U1TX;
 typedef PA10 U1RX;
 typedef DMA2_STREAM7 DMA_U1TX;
 
 char msg[] = "Hello World!\n\r";
-
-// TODO DMA demo for F1 family
 
 int main()
 {

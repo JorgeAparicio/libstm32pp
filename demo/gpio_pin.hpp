@@ -28,6 +28,8 @@
 #include "peripheral/gpio.hpp"
 #include "peripheral/rcc.hpp"
 
+// TODO Test GPIO demo on STM32F1XX
+
 int main()
 {
 #ifdef STM32F1XX
