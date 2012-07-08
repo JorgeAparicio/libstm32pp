@@ -32,6 +32,7 @@
 #include "../device_select.hpp"
 #include "../defs.hpp"
 
+#include "../clock.hpp"
 #include "../../memorymap/tim.hpp"
 
 // Low-level access to the registers
@@ -62,9 +63,15 @@
 
 // High-level functions
 namespace tim {
-  template<address::E>
+  template<address::E A>
   class Functions {
     public:
+      enum {
+        FREQUENCY = u32(A) > u32(alias::address::APB2) ?
+                                               clock::APB2_TIMERS :
+                                               clock::APB1_TIMERS
+      };
+
       static INLINE void startCounter();
       static INLINE void stopCounter();
       static INLINE void setPrescaler(u16 const);
@@ -99,7 +106,7 @@ namespace tim {
     private:
       Functions();
   };
-}// namespace tim
+}  // namespace tim
 
 // High-level access to the peripheral
 typedef tim::Functions<tim::address::TIM1> TIM1;
