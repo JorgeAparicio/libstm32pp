@@ -38,7 +38,7 @@ int main()
   >();
 
   PA0::setMode<
-      gpio::registers::cr::states::ANALOG_INPUT
+      gpio::registers::cr::states::GP_PUSH_PULL_2MHZ
   >();
 
 #else
@@ -47,11 +47,15 @@ int main()
   >();
 
   PA0::setMode<
-  gpio::registers::moder::states::ANALOG
+  gpio::registers::moder::states::OUTPUT
   >();
 #endif
 
-  TIM6::configureCounter<
+  RCC::enableClocks<
+      rcc::registers::apb1enr::bits::TIM6
+  >();
+
+  TIM6::configureBasicCounter<
       tim::registers::cr1::bits::cen::states::COUNTER_DISABLED,
       tim::registers::cr1::bits::udis::states::UPDATE_EVENT_ENABLED,
       tim::registers::cr1::bits::urs::states::UPDATE_REQUEST_SOURCE_OVERFLOW_UNDERFLOW,
@@ -59,7 +63,7 @@ int main()
       tim::registers::cr1::bits::arpe::states::AUTO_RELOAD_UNBUFFERED
   >();
 
-  TIM6::enableInterrupt();
+  TIM6::enableUpdateInterrupt();
 
   TIM6::setPrescaler(3999);
 
@@ -67,9 +71,17 @@ int main()
 
   TIM6::generateUpdate();
 
+#if defined VALUE_LINE || \
+    defined STM32F2XX || \
+    defined STM32F4XX
   NVIC::enableInterrupt<
-      nvic::irqn::TIM6_DAC
+  nvic::irqn::TIM6_DAC
   >();
+#else
+  NVIC::enableInterrupt<
+      nvic::irqn::TIM6
+  >();
+#endif
 
   TIM6::startCounter();
 
@@ -78,11 +90,17 @@ int main()
 
 }
 
+#if defined VALUE_LINE || \
+    defined STM32F2XX || \
+    defined STM32F4XX
 void interrupt::TIM6_DAC()
+#else
+void interrupt::TIM6()
+#endif
 {
   static u32 debug = 0;
 
-  TIM6::clearFlag();
+  TIM6::clearUpdateFlag();
 
   debug++;
 
