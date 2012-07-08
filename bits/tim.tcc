@@ -160,6 +160,52 @@ namespace tim {
   }
 
   /**
+   * @brief Configures the timer to generate a periodic interrupt.
+   * @note  This functions doesn't starts the counter.
+   */
+  template<address::E T>
+  template<u32 Frequency>
+  void Functions<T>::configurePeriodicInterrupt()
+  {
+    configureBasicCounter<
+        registers::cr1::bits::cen::states::COUNTER_DISABLED,
+        registers::cr1::bits::udis::states::UPDATE_EVENT_ENABLED,
+        registers::cr1::bits::urs::states::UPDATE_REQUEST_SOURCE_OVERFLOW_UNDERFLOW,
+        registers::cr1::bits::opm::states::DONT_STOP_COUNTER_AT_NEXT_UPDATE_EVENT,
+        registers::cr1::bits::arpe::states::AUTO_RELOAD_UNBUFFERED
+    >();
+
+    setAutoReload(
+        (FREQUENCY / Frequency < 65536 ?
+            FREQUENCY / Frequency :
+            (FREQUENCY / (10 * Frequency) < 65536 ?
+                FREQUENCY / (10 * Frequency) :
+                (FREQUENCY / (100 * Frequency) < 65536 ?
+                    FREQUENCY / (100 * Frequency) :
+                    (FREQUENCY / (1000 * Frequency) < 65536 ?
+                        FREQUENCY / (1000 * Frequency) :
+                        (FREQUENCY / (10000 * Frequency) < 65536 ?
+                            FREQUENCY / (10000 * Frequency) :
+                            0))))));
+
+    setPrescaler(
+        (FREQUENCY / Frequency < 65536 ?
+            1 - 1 :
+            (FREQUENCY / (10 * Frequency) < 65536 ?
+                10 - 1 :
+                (FREQUENCY / (100 * Frequency) < 65536 ?
+                    100 - 1 :
+                    (FREQUENCY / (1000 * Frequency) < 65536 ?
+                        1000 - 1 :
+                        (FREQUENCY / (10000 * Frequency) < 65536 ?
+                                                                   10000 - 1 :
+                                                                   0))))));
+
+    enableUpdateInterrupt();
+    generateUpdate();
+  }
+
+  /**
    * @brief Configures the master mode.
    */
   template<address::E T>

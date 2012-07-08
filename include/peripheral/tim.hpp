@@ -68,8 +68,8 @@ namespace tim {
     public:
       enum {
         FREQUENCY = u32(A) > u32(alias::address::APB2) ?
-                                               clock::APB2_TIMERS :
-                                               clock::APB1_TIMERS
+                                                         clock::APB2_TIMERS :
+                                                         clock::APB1_TIMERS
       };
 
       static INLINE void startCounter();
@@ -84,6 +84,11 @@ namespace tim {
       static INLINE void clearUpdateFlag();
       static INLINE void enableUpdateDma();
       static INLINE void disableUpdateDma();
+
+      template<
+          u32
+      >
+      static INLINE void configurePeriodicInterrupt();
 
       template<
           tim::registers::cr2::bits::mms::states::E
