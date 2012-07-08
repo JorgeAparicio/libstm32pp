@@ -24,218 +24,98 @@
 #include "common.hpp"
 
 namespace tim {
-  namespace basic {
-    struct Registers {
-        __RW
-        u32 CR1;  // 0x00: Control 1
-        __RW
-        u32 CR2;  // 0x04: Control 2
-        u32 _RESERVED0;
-        __RW
-        u32 DIER;  // 0x0C: DMA/Interrupt enable
-        __RW
-        u32 SR;  // 0x10: Status
-        __RW
-        u32 EGR;  // 0x14: Event generation
-        u32 _RESERVED1[3];
-        __RW
-        u32 CNT;  // 0x24: Counter
-        __RW
-        u32 PSC;  // 0x28: Prescaler
-        __RW
-        u32 ARR;  // 0x2C: Auto-reload
-    };
-
-    namespace address {
-      enum E {
-        TIM6 = alias::address::APB1 + 0x1000,
-        TIM7 = alias::address::APB1 + 0x1400,
+  struct Registers {
+      __RW
+      u32 CR1;  // 0x00: Control 1
+      __RW
+      u32 CR2;  // 0x04: Control 2
+      __RW
+      u32 SMCR;  // 0x08: Slave mode control
+      __RW
+      u32 DIER;  // 0x0C: DMA/Interrupt enable
+      __RW
+      u32 SR;  // 0x10: Status
+      __RW
+      u32 EGR;  // 0x14: Event generation
+      __RW
+      u32 CCMR1;  // 0x18: Capture/Compare mode 1
+      __RW
+      u32 CCMR2;  // 0x1C: Capture/Compare mode 2
+      __RW
+      u32 CCER;  // 0x20: Capture/Compare enable
+      __RW
+      u32 CNT;  // 0x24: Counter
+      __RW
+      u32 PSC;  // 0x28: Prescaler
+      __RW
+      u32 ARR;  // 0x2C: Auto-reload
+      __RW
+      u32 RCR;  // 0x30: Repetition counter
+      __RW
+      u32 CCR1;  // 0x34: Capture/Compare 1
+      __RW
+      u32 CCR2;  // 0x38: Capture/Compare 2
+      __RW
+      u32 CCR3;  // 0x3C: Capture/Compare 3
+      __RW
+      u32 CCR4;  // 0x40: Capture/Compare 4
+      __RW
+      u32 BDTR;  // 0x44: Break and dead-time
+      __RW
+      u32 DCR;  // 0x48: DMA control
+      __RW
+      u32 DMAR;  // 0x4C: DMA address for full transfer
+      union {
+          __RW
+          u32 TIM2_OR;  // 0x50: Timer 2 option
+          __RW
+          u32 TIM5_OR;  // 0x50: Timer 5 option
+          __RW
+          u32 TIM11_OR;  // 0x50: Timer 11 option
       };
-    }  // namespace address
-  }  // namespace basic
+  };
 
-  namespace generalPurpose1 {
-    struct Registers {
-        __RW
-        u32 CR1;    // 0x00: Control 1
-        __RW
-        u32 CR2;    // 0x04: Control 2
-        __RW
-        u32 SMCR;   // 0x08: Slave mode control
-        __RW
-        u32 DIER;   // 0x0C: DMA/Interrupt enable
-        __RW
-        u32 SR;     // 0x10: Status
-        __RW
-        u32 EGR;    // 0x14: Event generation
-        __RW
-        u32 CCMR[2];  // 0x18, 0x1C: Capture/Compare mode
-        __RW
-        u32 CCER;   // 0x20: Capture/Compare enable
-        __RW
-        u32 CNT;    // 0x24: Counter
-        __RW
-        u32 PSC;    // 0x28: Prescaler
-        __RW
-        u32 ARR;    // 0x2C: Auto-reload
-        u32 _RESERVED0;
-        __RW
-        u32 CCR[4];   // 0x34-0x40: Capture/Compare
-        u32 _RESERVED1;
-        __RW
-        u32 DCR;    // 0x48: DMA control
-        __RW
-        u32 DMAR;   // 0x4C: DMA address for full transfer
-        __RW
-        u32 OR;     // 0x50: Option
-    };
-
-    namespace address {
-      enum E {
-        TIM2 = alias::address::APB1 + 0x0000,
-        TIM3 = alias::address::APB1 + 0x0400,
-        TIM4 = alias::address::APB1 + 0x0800,
-        TIM5 = alias::address::APB1 + 0x0C00,
-      };
-    }  // namespace address
-  }  // namespace generalPurpose1
-
-  namespace generalPurpose2 {
-    struct Registers {
-        __RW
-        u32 CR1;  // 0x00: Control 1
-        __RW
-        u32 CR2;  // 0x04: Control 2
-        __RW
-        u32 SMCR;  // 0x08: Slave mode control
-        __RW
-        u32 DIER;  // 0x0C: DMA/Interrupt enable
-        __RW
-        u32 SR;  // 0x10: Status
-        __RW
-        u32 EGR;  // 0x14: Event generation
-        __RW
-        u32 CCMR1;  // 0x18: Capture/Compare mode 1
-        u32 _RESERVED0;
-        __RW
-        u32 CCER;  // 0x20: Capture/Compare enable
-        __RW
-        u32 CNT;  // 0x24: Counter
-        __RW
-        u32 PSC;  // 0x28: Prescaler
-        __RW
-        u32 ARR;  // 0x2C: Auto-reload
-        u32 _RESERVED1;
-        __RW
-        u32 CCR1;  // 0x34: Capture/Compare 1
-        __RW
-        u32 CCR2;  // 0x38: Capture/Compare 2
-    };
-
-    namespace address {
-      enum E {
-        TIM9 = alias::address::APB2 + 0x4000,
-        TIM12 = alias::address::APB1 + 0x1800,
-      };
-    }  // namespace address
-  }  // namespace generalPurpose2
-
-  namespace generalPurpose3 {
-    struct Registers {
-        __RW
-        u32 CR1;  // 0x00: Control 1
-        u32 _RESERVED0[2];
-        __RW
-        u32 DIER;  // 0x0C: DMA/Interrupt enable
-        __RW
-        u32 SR;  // 0x10: Status
-        __RW
-        u32 EGR;  // 0x14: Event generation
-        __RW
-        u32 CCMR1;  // 0x18: Capture/Compare mode 1
-        u32 _RESERVED1;
-        __RW
-        u32 CCER;  // 0x20: Capture/Compare enable
-        __RW
-        u32 CNT;  // 0x24: Counter
-        __RW
-        u32 PSC;  // 0x28: Prescaler
-        __RW
-        u32 ARR;  // 0x2C: Auto-reload
-        u32 _RESERVED2;
-        __RW
-        u32 CCR1;  // 0x34: Capture/Compare 1
-        u32 _RESERVED3[6];
-        __RW
-        u32 OR;  // 0x50: Option
-    };
-
-    namespace address {
-      enum E {
+  namespace address {
+    enum E {
 #ifdef STM32F1XX
-        TIM10 = alias::address::APB2 + 0x5000,
-        TIM11 = alias::address::APB2 + 0x5400,
-        #else
-        TIM10 = alias::address::APB2 + 0x4400,
-        TIM11 = alias::address::APB2 + 0x4800,
+      TIM1 = alias::address::APB2 + 0x2C00,
+      TIM8 = alias::address::APB2 + 0x3400,
+#else
+      TIM1 = alias::address::APB2 + 0x0000,
+      TIM8 = alias::address::APB2 + 0x0400,
+      #endif
+      TIM2 = alias::address::APB1 + 0x0000,
+      TIM3 = alias::address::APB1 + 0x0400,
+      TIM4 = alias::address::APB1 + 0x0800,
+      TIM5 = alias::address::APB1 + 0x0C00,
+
+      TIM9 = alias::address::APB2 + 0x4000,
+      TIM12 = alias::address::APB1 + 0x1800,
+
+#ifdef STM32F1XX
+      TIM10 = alias::address::APB2 + 0x5000,
+      TIM11 = alias::address::APB2 + 0x5400,
+#else
+      TIM10 = alias::address::APB2 + 0x4400,
+      TIM11 = alias::address::APB2 + 0x4800,
 
 #endif
-        TIM13 = alias::address::APB1 + 0x1C00,
-        TIM14 = alias::address::APB1 + 0x2000,
-      };
-    }  // namespace address
-  }  // namespace generalPurpose3
+      TIM13 = alias::address::APB1 + 0x1C00,
+      TIM14 = alias::address::APB1 + 0x2000,
 
 #ifdef VALUE_LINE
-  namespace generalPurpose4 {
-    struct Registers {
-        __RW
-        u32 CR1;  // 0x00: Control 1
-        __RW
-        u32 CR2;  // 0x04: Control 2
-        u32 _RESERVED0;
-        __RW
-        u32 DIER;  // 0x0C: DMA/Interrupt enable
-        __RW
-        u32 SR;  // 0x10: Status
-        __RW
-        u32 EGR;  // 0x14: Event generation
-        __RW
-        u32 CCMR1;  // 0x18: Capture/Compare mode 1
-        u32 _RESERVED1;
-        __RW
-        u32 CCER;  // 0x20: Capture/Compare enable
-        __RW
-        u32 CNT;  // 0x24: Counter
-        __RW
-        u32 PSC;  // 0x28: Prescaler
-        __RW
-        u32 ARR;  // 0x2C: Auto-reload
-        __RW
-        u32 RCR;  // 0x30: Repetition counter
-        __RW
-        u32 CCR1;  // 0x34: Capture/Compare 1
-        u32 _RESERVED2[3];
-        __RW
-        u32 BDTR;  // 0x44: Break and dead-time
-        __RW
-        u32 DCR;  // 0x48: DMA control
-        __RW
-        u32 DMAR;  // 0x4C: DMA address for full transfer
-    };
-
-    namespace address {
-      enum E {
-        TIM15 = alias::address::APB2 + 0x4000,
-        TIM16 = alias::address::APB2 + 0x4400,
-        TIM17 = alias::address::APB2 + 0x4800,
-      };
-    }  // namespace address
-  }  // namespace generalPurpose4
+      TIM15 = alias::address::APB2 + 0x4000,
+      TIM16 = alias::address::APB2 + 0x4400,
+      TIM17 = alias::address::APB2 + 0x4800,
 #endif
 
-  namespace advancedControl {
-    struct Registers {
+      TIM6 = alias::address::APB1 + 0x1000,
+      TIM7 = alias::address::APB1 + 0x1400,
+    };
+  }  // namespace address
+
+  namespace _reserved {
+    struct RegistersAC {
         __RW
         u32 CR1;  // 0x00: Control 1
         __RW
@@ -277,20 +157,322 @@ namespace tim {
         __RW
         u32 DMAR;  // 0x4C: DMA address for full transfer
     };
-    namespace address {
-      enum E {
-#ifdef STM32F1XX
-        TIM1 = alias::address::APB2 + 0x2C00,
-        TIM8 = alias::address::APB2 + 0x3400,
-#else
-      TIM1 = alias::address::APB2 + 0x0000,
-      TIM8 = alias::address::APB2 + 0x0400,
-#endif
-      };
-    }  // namespace address
-  }  // namespace advancedControl
 
-  // TODO General-Purpose and Advanced-Control-Timers register bits
+    struct RegistersB {
+        __RW
+        u32 CR1;  // 0x00: Control 1
+        __RW
+        u32 CR2;  // 0x04: Control 2
+        u32 _RESERVED0;
+        __RW
+        u32 DIER;  // 0x0C: DMA/Interrupt enable
+        __RW
+        u32 SR;  // 0x10: Status
+        __RW
+        u32 EGR;  // 0x14: Event generation
+        u32 _RESERVED1[3];
+        __RW
+        u32 CNT;  // 0x24: Counter
+        __RW
+        u32 PSC;  // 0x28: Prescaler
+        __RW
+        u32 ARR;  // 0x2C: Auto-reload
+    };
+
+    struct RegistersGP0 {
+        __RW
+        u32 CR1;  // 0x00: Control 1
+        __RW
+        u32 CR2;  // 0x04: Control 2
+        __RW
+        u32 SMCR;  // 0x08: Slave mode control
+        __RW
+        u32 DIER;  // 0x0C: DMA/Interrupt enable
+        __RW
+        u32 SR;  // 0x10: Status
+        __RW
+        u32 EGR;  // 0x14: Event generation
+        __RW
+        u32 CCMR1;  // 0x18: Capture/Compare mode 1
+        __RW
+        u32 CCMR2;  // 0x1C: Capture/Compare mode 2
+        __RW
+        u32 CCER;  // 0x20: Capture/Compare enable
+        __RW
+        u32 CNT;  // 0x24: Counter
+        __RW
+        u32 PSC;  // 0x28: Prescaler
+        __RW
+        u32 ARR;  // 0x2C: Auto-reload
+        u32 _RESERVED0;
+        __RW
+        u32 CCR1;  // 0x34: Capture/Compare 1
+        __RW
+        u32 CCR2;  // 0x38: Capture/Compare 2
+        __RW
+        u32 CCR3;  // 0x3C: Capture/Compare 3
+        __RW
+        u32 CCR4;  // 0x40: Capture/Compare 4
+        u32 _RESERVED1;
+        __RW
+        u32 DCR;  // 0x48: DMA control
+        __RW
+        u32 DMAR;  // 0x4C: DMA address for full transfer
+        __RW
+        u32 TIM2_OR;  // 0x50: Timer 2 option
+    };
+
+    struct RegistersGP1 {
+        __RW
+        u32 CR1;  // 0x00: Control 1
+        __RW
+        u32 CR2;  // 0x04: Control 2
+        __RW
+        u32 SMCR;  // 0x08: Slave mode control
+        __RW
+        u32 DIER;  // 0x0C: DMA/Interrupt enable
+        __RW
+        u32 SR;  // 0x10: Status
+        __RW
+        u32 EGR;  // 0x14: Event generation
+        __RW
+        u32 CCMR1;  // 0x18: Capture/Compare mode 1
+        __RW
+        u32 CCMR2;  // 0x1C: Capture/Compare mode 2
+        __RW
+        u32 CCER;  // 0x20: Capture/Compare enable
+        __RW
+        u32 CNT;  // 0x24: Counter
+        __RW
+        u32 PSC;  // 0x28: Prescaler
+        __RW
+        u32 ARR;  // 0x2C: Auto-reload
+        u32 _RESERVED0;
+        __RW
+        u32 CCR1;  // 0x34: Capture/Compare 1
+        __RW
+        u32 CCR2;  // 0x38: Capture/Compare 2
+        __RW
+        u32 CCR3;  // 0x3C: Capture/Compare 3
+        __RW
+        u32 CCR4;  // 0x40: Capture/Compare 4
+        u32 _RESERVED1;
+        __RW
+        u32 DCR;  // 0x48: DMA control
+        __RW
+        u32 DMAR;  // 0x4C: DMA address for full transfer
+    };
+
+    struct RegistersGP2 {
+        __RW
+        u32 CR1;  // 0x00: Control 1
+        __RW
+        u32 CR2;  // 0x04: Control 2
+        __RW
+        u32 SMCR;  // 0x08: Slave mode control
+        __RW
+        u32 DIER;  // 0x0C: DMA/Interrupt enable
+        __RW
+        u32 SR;  // 0x10: Status
+        __RW
+        u32 EGR;  // 0x14: Event generation
+        __RW
+        u32 CCMR1;  // 0x18: Capture/Compare mode 1
+        __RW
+        u32 CCMR2;  // 0x1C: Capture/Compare mode 2
+        __RW
+        u32 CCER;  // 0x20: Capture/Compare enable
+        __RW
+        u32 CNT;  // 0x24: Counter
+        __RW
+        u32 PSC;  // 0x28: Prescaler
+        __RW
+        u32 ARR;  // 0x2C: Auto-reload
+        u32 _RESERVED0;
+        __RW
+        u32 CCR1;  // 0x34: Capture/Compare 1
+        __RW
+        u32 CCR2;  // 0x38: Capture/Compare 2
+        __RW
+        u32 CCR3;  // 0x3C: Capture/Compare 3
+        __RW
+        u32 CCR4;  // 0x40: Capture/Compare 4
+        u32 _RESERVED1;
+        __RW
+        u32 DCR;  // 0x48: DMA control
+        __RW
+        u32 DMAR;  // 0x4C: DMA address for full transfer
+        __RW
+        u32 TIM5_OR;  // 0x50: Timer 5 option
+    };
+
+    struct RegistersGP3 {
+        __RW
+        u32 CR1;  // 0x00: Control 1
+        __RW
+        u32 CR2;  // 0x04: Control 2
+        __RW
+        u32 SMCR;  // 0x08: Slave mode control
+        __RW
+        u32 DIER;  // 0x0C: DMA/Interrupt enable
+        __RW
+        u32 SR;  // 0x10: Status
+        __RW
+        u32 EGR;  // 0x14: Event generation
+        __RW
+        u32 CCMR1;  // 0x18: Capture/Compare mode 1
+        u32 _RESERVED0;
+        __RW
+        u32 CCER;  // 0x20: Capture/Compare enable
+        __RW
+        u32 CNT;  // 0x24: Counter
+        __RW
+        u32 PSC;  // 0x28: Prescaler
+        __RW
+        u32 ARR;  // 0x2C: Auto-reload
+        u32 _RESERVED1;
+        __RW
+        u32 CCR1;  // 0x34: Capture/Compare 1
+        __RW
+        u32 CCR2;  // 0x38: Capture/Compare 2
+    };
+
+    struct RegistersGP4 {
+        __RW
+        u32 CR1;  // 0x00: Control 1
+        u32 _RESERVED0;
+        __RW
+        u32 SMCR;  // 0x08: Slave mode control
+        __RW
+        u32 DIER;  // 0x0C: DMA/Interrupt enable
+        __RW
+        u32 SR;  // 0x10: Status
+        __RW
+        u32 EGR;  // 0x14: Event generation
+        __RW
+        u32 CCMR1;  // 0x18: Capture/Compare mode 1
+        u32 _RESERVED1;
+        __RW
+        u32 CCER;  // 0x20: Capture/Compare enable
+        __RW
+        u32 CNT;  // 0x24: Counter
+        __RW
+        u32 PSC;  // 0x28: Prescaler
+        __RW
+        u32 ARR;  // 0x2C: Auto-reload
+        u32 _RESERVED2;
+        __RW
+        u32 CCR1;  // 0x34: Capture/Compare 1
+    };
+
+    struct RegistersGP5 {
+        __RW
+        u32 CR1;  // 0x00: Control 1
+        u32 _RESERVED0;
+        __RW
+        u32 SMCR;  // 0x08: Slave mode control
+        __RW
+        u32 DIER;  // 0x0C: DMA/Interrupt enable
+        __RW
+        u32 SR;  // 0x10: Status
+        __RW
+        u32 EGR;  // 0x14: Event generation
+        __RW
+        u32 CCMR1;  // 0x18: Capture/Compare mode 1
+        u32 _RESERVED1;
+        __RW
+        u32 CCER;  // 0x20: Capture/Compare enable
+        __RW
+        u32 CNT;  // 0x24: Counter
+        __RW
+        u32 PSC;  // 0x28: Prescaler
+        __RW
+        u32 ARR;  // 0x2C: Auto-reload
+        u32 _RESERVED2;
+        __RW
+        u32 CCR1;  // 0x34: Capture/Compare 1
+        u32 _RESERVED3[6];
+        __RW
+        u32 TIM11_OR;  // 0x50: Timer 11 option
+    };
+
+    struct RegistersGP6 {
+        __RW
+        u32 CR1;  // 0x00: Control 1
+        __RW
+        u32 CR2;  // 0x04: Control 2
+        __RW
+        u32 SMCR;  // 0x08: Slave mode control
+        __RW
+        u32 DIER;  // 0x0C: DMA/Interrupt enable
+        __RW
+        u32 SR;  // 0x10: Status
+        __RW
+        u32 EGR;  // 0x14: Event generation
+        __RW
+        u32 CCMR1;  // 0x18: Capture/Compare mode 1
+        u32 _RESERVED0;
+        __RW
+        u32 CCER;  // 0x20: Capture/Compare enable
+        __RW
+        u32 CNT;  // 0x24: Counter
+        __RW
+        u32 PSC;  // 0x28: Prescaler
+        __RW
+        u32 ARR;  // 0x2C: Auto-reload
+        __RW
+        u32 RCR;  // 0x30: Repetition counter
+        __RW
+        u32 CCR1;  // 0x34: Capture/Compare 1
+        __RW
+        u32 CCR2;  // 0x38: Capture/Compare 2
+        u32 _RESERVED[2];
+        __RW
+        u32 BDTR;  // 0x44: Break and dead-time
+        __RW
+        u32 DCR;  // 0x48: DMA control
+        __RW
+        u32 DMAR;  // 0x4C: DMA address for full transfer
+    };
+
+    struct RegistersGP7 {
+        __RW
+        u32 CR1;  // 0x00: Control 1
+        __RW
+        u32 CR2;  // 0x04: Control 2
+        __RW
+        u32 SMCR;  // 0x08: Slave mode control
+        __RW
+        u32 DIER;  // 0x0C: DMA/Interrupt enable
+        __RW
+        u32 SR;  // 0x10: Status
+        __RW
+        u32 EGR;  // 0x14: Event generation
+        __RW
+        u32 CCMR1;  // 0x18: Capture/Compare mode 1
+        u32 _RESERVED0;
+        __RW
+        u32 CCER;  // 0x20: Capture/Compare enable
+        __RW
+        u32 CNT;  // 0x24: Counter
+        __RW
+        u32 PSC;  // 0x28: Prescaler
+        __RW
+        u32 ARR;  // 0x2C: Auto-reload
+        __RW
+        u32 RCR;  // 0x30: Repetition counter
+        __RW
+        u32 CCR1;  // 0x34: Capture/Compare 1
+        u32 _RESERVED1[3];
+        __RW
+        u32 BDTR;  // 0x44: Break and dead-time
+        __RW
+        u32 DCR;  // 0x48: DMA control
+        __RW
+        u32 DMAR;  // 0x4C: DMA address for full transfer
+    };
+  }  // namespace _reserved
+
   namespace registers {
     namespace cr1 {
       enum {
@@ -399,6 +581,15 @@ namespace tim {
       }  // namespace bits
     }  // namespace cr2
 
+    namespace smcr {
+      enum {
+        OFFSET = 0x08
+      };
+      namespace bits {
+      // TODO TIM SMCR bits
+      }
+    }
+
     namespace dier {
       enum {
         OFFSET = 0x0C
@@ -482,5 +673,149 @@ namespace tim {
         }  // namespace ug
       }  // namespace bits
     }  // namespace egr
+
+    namespace iccmr1 {
+      enum {
+        OFFSET = 0x18
+      };
+    }  // namespace iccmr1
+
+    namespace occmr1 {
+      enum {
+        OFFSET = 0x18
+      };
+    }  // namespace occmr1
+
+    namespace iccmr2 {
+      enum {
+        OFFSET = 0x1C
+      };
+    }  // namespace iccmr2
+
+    namespace occmr2 {
+      enum {
+        OFFSET = 0x1C
+      };
+    }  // namespace occmr2
+
+    namespace iccmr {
+      namespace bits {
+      // TODO TIM ICCMR bits
+      }
+    }  // namespace iccmr
+
+    namespace occmr {
+      namespace bits {
+      // TODO TIM OCCMR bits
+      }
+    }  // namespace occmr
+
+    namespace ccer {
+      enum {
+        OFFSET = 0x20
+      };
+      namespace bits {
+      // TODO TIM CCER bits
+      }// namespace bits
+    }  // namespace ccer
+
+    namespace cnt {
+      enum {
+        OFFSET = 0x24
+      };
+    }  // namespace cnt
+
+    namespace psc {
+      enum {
+        OFFSET = 0x28
+      };
+    }  // namespace psc
+
+    namespace arr {
+      enum {
+        OFFSET = 0x2C
+      };
+    }  // namespace arr
+
+    namespace rcr {
+      enum {
+        OFFSET = 0x30
+      };
+    }  // namespace rcr
+
+    namespace ccr1 {
+      enum {
+        OFFSET = 0x34
+      };
+    }  // namespace ccr1
+
+    namespace ccr2 {
+      enum {
+        OFFSET = 0x38
+      };
+    }  // namespace ccr2
+
+    namespace ccr3 {
+      enum {
+        OFFSET = 0x3C
+      };
+    }  // namespace ccr3
+
+    namespace ccr4 {
+      enum {
+        OFFSET = 0x40
+      };
+    }  // namespace ccr4
+
+    namespace bdtr {
+      enum {
+        OFFSET = 0x44
+      };
+      namespace bits {
+      // TODO TIM BDTR bits
+      }// namespace bits
+    }  // namespace bdtr
+
+    namespace dcr {
+      enum {
+        OFFSET = 0x48
+      };
+      namespace bits {
+      // TODO TIM DCR bits
+      }// namespace bits
+    }  // namespace dcr
+
+    namespace dmar {
+      enum {
+        OFFSET = 0x4C
+      };
+    }  // namespace dmar
+
+    namespace tim2_or {
+      enum {
+        OFFSET = 0x50
+      };
+      namespace bits {
+      // TODO TIM TIM2_OR bits
+      }// namespace bits
+    }  // namespace tim2_or
+
+    namespace tim5_or {
+      enum {
+        OFFSET = 0x50
+      };
+      namespace bits {
+      // TODO TIM TIM5_OR bits
+      }// namespace bits
+    }  // namespace tim5_or
+
+    namespace tim11_or {
+      enum {
+        OFFSET = 0x50
+      };
+      namespace bits {
+      // TODO TIM TIM11_OR bits
+      }// namespace bits
+    }  // namespace tim11_or
   }  // namespace registers
 }  // namespace tim
