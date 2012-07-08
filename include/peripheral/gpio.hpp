@@ -63,11 +63,6 @@ namespace gpio {
       >::address,
     };
 
-    template<
-    gpio::registers::cr::states::E CR
-    >
-    static INLINE void setMode();
-
     static INLINE void setHigh();
     static INLINE void setLow();
     static INLINE void output(u32 const value);
@@ -75,6 +70,11 @@ namespace gpio {
     static INLINE void pullUp();
     static INLINE void pullDown();
     static INLINE bool isHigh();
+
+    template<
+    gpio::registers::cr::states::E CR
+    >
+    static INLINE void setMode();
 
     private:
     Pin();
@@ -84,28 +84,28 @@ namespace gpio {
   class Port {
     public:
     template<
-    registers::cr::states::E,
-    registers::cr::states::E,
-    registers::cr::states::E,
-    registers::cr::states::E,
-    registers::cr::states::E,
-    registers::cr::states::E,
-    registers::cr::states::E,
-    registers::cr::states::E
+    gpio::registers::cr::states::E, /* 0 */
+    gpio::registers::cr::states::E, /* 1 */
+    gpio::registers::cr::states::E, /* 2 */
+    gpio::registers::cr::states::E, /* 3 */
+    gpio::registers::cr::states::E, /* 4 */
+    gpio::registers::cr::states::E, /* 5 */
+    gpio::registers::cr::states::E, /* 6 */
+    gpio::registers::cr::states::E /* 7 */
     >
-    static INLINE void setupLow();
+    static INLINE void configureLowerPins();
 
     template<
-    registers::cr::states::E,
-    registers::cr::states::E,
-    registers::cr::states::E,
-    registers::cr::states::E,
-    registers::cr::states::E,
-    registers::cr::states::E,
-    registers::cr::states::E,
-    registers::cr::states::E
+    gpio::registers::cr::states::E, /* 8 */
+    gpio::registers::cr::states::E, /* 9 */
+    gpio::registers::cr::states::E, /* 10 */
+    gpio::registers::cr::states::E, /* 11 */
+    gpio::registers::cr::states::E, /* 12 */
+    gpio::registers::cr::states::E, /* 13 */
+    gpio::registers::cr::states::E, /* 14 */
+    gpio::registers::cr::states::E /* 15 */
     >
-    static INLINE void setupHigh();
+    static INLINE void configureHigherPins();
 
     static INLINE void setValue(u32 const value);
     static INLINE u32 getValue();
@@ -130,6 +130,12 @@ namespace gpio {
             N
         >::address,
       };
+
+      static INLINE void setHigh();
+      static INLINE void setLow();
+      static INLINE void output(u32 const value);
+      static INLINE u32 input();
+      static INLINE bool isHigh();
 
       template<
           gpio::registers::moder::states::E
@@ -156,12 +162,6 @@ namespace gpio {
       >
       static INLINE void setAlternateFunction();
 
-      static INLINE void setHigh();
-      static INLINE void setLow();
-      static INLINE void output(u32 const value);
-      static INLINE u32 input();
-      static INLINE bool isHigh();
-
     private:
       Pin();
   };
@@ -174,84 +174,84 @@ namespace gpio {
       static INLINE u16 input();
 
       template<
-          registers::moder::states::E,
-          registers::moder::states::E,
-          registers::moder::states::E,
-          registers::moder::states::E,
-          registers::moder::states::E,
-          registers::moder::states::E,
-          registers::moder::states::E,
-          registers::moder::states::E,
-          registers::moder::states::E,
-          registers::moder::states::E,
-          registers::moder::states::E,
-          registers::moder::states::E,
-          registers::moder::states::E,
-          registers::moder::states::E,
-          registers::moder::states::E,
-          registers::moder::states::E
+          gpio::registers::moder::states::E, /* 0 */
+          gpio::registers::moder::states::E, /* 1 */
+          gpio::registers::moder::states::E, /* 2 */
+          gpio::registers::moder::states::E, /* 3 */
+          gpio::registers::moder::states::E, /* 4 */
+          gpio::registers::moder::states::E, /* 5 */
+          gpio::registers::moder::states::E, /* 6 */
+          gpio::registers::moder::states::E, /* 7 */
+          gpio::registers::moder::states::E, /* 8 */
+          gpio::registers::moder::states::E, /* 9 */
+          gpio::registers::moder::states::E, /* 10 */
+          gpio::registers::moder::states::E, /* 11 */
+          gpio::registers::moder::states::E, /* 12 */
+          gpio::registers::moder::states::E, /* 13 */
+          gpio::registers::moder::states::E, /* 14 */
+          gpio::registers::moder::states::E /* 15 */
       >
-      static INLINE void setMode();
+      static INLINE void setModes();
 
       template<
-          registers::otyper::states::E,
-          registers::otyper::states::E,
-          registers::otyper::states::E,
-          registers::otyper::states::E,
-          registers::otyper::states::E,
-          registers::otyper::states::E,
-          registers::otyper::states::E,
-          registers::otyper::states::E,
-          registers::otyper::states::E,
-          registers::otyper::states::E,
-          registers::otyper::states::E,
-          registers::otyper::states::E,
-          registers::otyper::states::E,
-          registers::otyper::states::E,
-          registers::otyper::states::E,
-          registers::otyper::states::E
+          gpio::registers::otyper::states::E, /* 0 */
+          gpio::registers::otyper::states::E, /* 1 */
+          gpio::registers::otyper::states::E, /* 2 */
+          gpio::registers::otyper::states::E, /* 3 */
+          gpio::registers::otyper::states::E, /* 4 */
+          gpio::registers::otyper::states::E, /* 5 */
+          gpio::registers::otyper::states::E, /* 6 */
+          gpio::registers::otyper::states::E, /* 7 */
+          gpio::registers::otyper::states::E, /* 8 */
+          gpio::registers::otyper::states::E, /* 9 */
+          gpio::registers::otyper::states::E, /* 10 */
+          gpio::registers::otyper::states::E, /* 11 */
+          gpio::registers::otyper::states::E, /* 12 */
+          gpio::registers::otyper::states::E, /* 13 */
+          gpio::registers::otyper::states::E, /* 14 */
+          gpio::registers::otyper::states::E /* 15 */
       >
-      static INLINE void setOutputType();
+      static INLINE void setOutputTypes();
 
       template<
-          registers::ospeedr::states::E,
-          registers::ospeedr::states::E,
-          registers::ospeedr::states::E,
-          registers::ospeedr::states::E,
-          registers::ospeedr::states::E,
-          registers::ospeedr::states::E,
-          registers::ospeedr::states::E,
-          registers::ospeedr::states::E,
-          registers::ospeedr::states::E,
-          registers::ospeedr::states::E,
-          registers::ospeedr::states::E,
-          registers::ospeedr::states::E,
-          registers::ospeedr::states::E,
-          registers::ospeedr::states::E,
-          registers::ospeedr::states::E,
-          registers::ospeedr::states::E
+          gpio::registers::ospeedr::states::E, /* 0 */
+          gpio::registers::ospeedr::states::E, /* 1 */
+          gpio::registers::ospeedr::states::E, /* 2 */
+          gpio::registers::ospeedr::states::E, /* 3 */
+          gpio::registers::ospeedr::states::E, /* 4 */
+          gpio::registers::ospeedr::states::E, /* 5 */
+          gpio::registers::ospeedr::states::E, /* 6 */
+          gpio::registers::ospeedr::states::E, /* 7 */
+          gpio::registers::ospeedr::states::E, /* 8 */
+          gpio::registers::ospeedr::states::E, /* 9 */
+          gpio::registers::ospeedr::states::E, /* 10 */
+          gpio::registers::ospeedr::states::E, /* 11 */
+          gpio::registers::ospeedr::states::E, /* 12 */
+          gpio::registers::ospeedr::states::E, /* 13 */
+          gpio::registers::ospeedr::states::E, /* 14 */
+          gpio::registers::ospeedr::states::E /* 15 */
       >
-      static INLINE void setOutputSpeed();
+      static INLINE void setOutputSpeeds();
 
       template<
-          registers::pupdr::states::E,
-          registers::pupdr::states::E,
-          registers::pupdr::states::E,
-          registers::pupdr::states::E,
-          registers::pupdr::states::E,
-          registers::pupdr::states::E,
-          registers::pupdr::states::E,
-          registers::pupdr::states::E,
-          registers::pupdr::states::E,
-          registers::pupdr::states::E,
-          registers::pupdr::states::E,
-          registers::pupdr::states::E,
-          registers::pupdr::states::E,
-          registers::pupdr::states::E,
-          registers::pupdr::states::E,
-          registers::pupdr::states::E
+          gpio::registers::pupdr::states::E, /* 0 */
+          gpio::registers::pupdr::states::E, /* 1 */
+          gpio::registers::pupdr::states::E, /* 2 */
+          gpio::registers::pupdr::states::E, /* 3 */
+          gpio::registers::pupdr::states::E, /* 4 */
+          gpio::registers::pupdr::states::E, /* 5 */
+          gpio::registers::pupdr::states::E, /* 6 */
+          gpio::registers::pupdr::states::E, /* 7 */
+          gpio::registers::pupdr::states::E, /* 8 */
+          gpio::registers::pupdr::states::E, /* 9 */
+          gpio::registers::pupdr::states::E, /* 10 */
+          gpio::registers::pupdr::states::E, /* 11 */
+          gpio::registers::pupdr::states::E, /* 12 */
+          gpio::registers::pupdr::states::E, /* 13 */
+          gpio::registers::pupdr::states::E, /* 14 */
+          gpio::registers::pupdr::states::E /* 15 */
       >
-      static INLINE void setPullMode();
+      static INLINE void setPullModes();
 
     private:
       Port();
