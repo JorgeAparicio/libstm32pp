@@ -68,18 +68,5 @@
 /********* Comment the macro above to answer no, otherwise your answer is yes */
 
 #endif // !STM32F1XX && !STM32F2XX
-/*******************************************************************************
- *
- *               DON'T MODIFY ANYTHING BELOW THIS COMMENT BLOCK
- *
- ******************************************************************************/
 
-// No more than one device family allowed
-#if (defined STM32F1XX && defined STM32F2XX) || \
-    (defined STM32F1XX && defined STM32F4XX) || \
-    (defined STM32F2XX && defined STM32F4XX) || \
-    (defined VALUE_LINE && defined CONNECTIVITY_LINE) || \
-    (defined VALUE_LINE && defined XL_DENSITY) || \
-    (defined CONNECTIVITY_LINE && defined XL_DENSITY)
-#error "More than one device family selected."
-#endif
+#include "../bits/device_select.tcc"
