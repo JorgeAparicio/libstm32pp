@@ -108,6 +108,8 @@ namespace gpio {
 
   /**
    * @brief Configures the pins 0-7 of the port.
+   * @note  PB3 and PB4 are JTAG pins, they should be configured as ALTERNATE
+   *        if using the JTAG.
    */
   template<address::E P>
   template<
@@ -129,6 +131,8 @@ namespace gpio {
 
   /**
    * @brief Configures the pins 8-15 of the port.
+   * @note  PA13, PA14 and PA15 are JTAG pins, they should be configured as
+   *        ALTERNATE if using the JTAG.
    */
   template<address::E P>
   template<
@@ -303,6 +307,8 @@ namespace gpio {
 
   /**
    * @brief Configures the mode of the port.
+   * @note  PB3, PB4, PA13, PA14 and PA15 are JTAG pins, they should be
+   *        configured as ALTERNATE if using the JTAG.
    */
   template<address::E P>
   template<
