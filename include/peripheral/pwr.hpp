@@ -39,13 +39,14 @@
 namespace pwr {
   class Functions {
     public:
-      // TODO PWR functions declaration
+      static INLINE void enableBackupDomainWriteProtection();
+      static INLINE void disableBackupDomainWriteProtection();
     private:
       Functions();
   };
 }  // namespace pwr
 
 // High-level access to the peripheral
-// TODO PWR high-level access
+typedef pwr::Functions PWR;
 
 #include "../../bits/pwr.tcc"

@@ -20,7 +20,22 @@
  ******************************************************************************/
 
 #pragma once
+#include "../include/bitband.hpp"
 
 namespace pwr {
-  // TODO PWR functions implementation
+  void Functions::enableBackupDomainWriteProtection()
+  {
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::cr::OFFSET,
+        registers::cr::bits::dbp::POSITION
+    >::address) = 1;
+  }
+
+  void Functions::disableBackupDomainWriteProtection()
+  {
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::cr::OFFSET,
+        registers::cr::bits::dbp::POSITION
+    >::address) = 0;
+  }
 }  // namespace pwr
