@@ -102,9 +102,9 @@ void mcuSetup()
       gpio::registers::moder::states::INPUT, /* 10 */
       gpio::registers::moder::states::INPUT, /* 11 */
       gpio::registers::moder::states::INPUT, /* 12 */
-      gpio::registers::moder::states::INPUT, /* 13 */
-      gpio::registers::moder::states::INPUT, /* 14 */
-      gpio::registers::moder::states::INPUT /* 15 */
+      gpio::registers::moder::states::ALTERNATE, /* 13: JTAG PIN! */
+      gpio::registers::moder::states::ALTERNATE, /* 14: JTAG PIN! */
+      gpio::registers::moder::states::ALTERNATE /* 15: JTAG PIN! */
   >();
 #endif
 
