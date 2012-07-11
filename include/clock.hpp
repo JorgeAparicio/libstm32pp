@@ -20,7 +20,8 @@
  ******************************************************************************/
 
 #include "device_select.hpp"
-#include "cfunctions.hpp"
+#include "peripheral/rcc.hpp"
+#include "peripheral/flash.hpp"
 
 #pragma once
 
@@ -28,246 +29,429 @@
 
 namespace clock {
 
-  /* Are you using an external crystal, resonator, or RC oscillator? **********/
-//#define USING_EXTERNAL_CRYSTAL
-  /***** Comment the macro above to answer no, otherwise your answer is yes ***/
+  /****************************************************************************
+   *                                                                          *
+   *                               CLOCK SOURCES                              *
+   *                                                                          *
+   ****************************************************************************/
 
-#ifndef USING_EXTERNAL_CRYSTAL
-
-  /* Are you using an external clock? *****************************************/
-//#define USING_EXTERNAL_CLOCK
+  /* Are you using an external high speed crystal, resonator or oscillator? ***/
+//#define USING_HSE_CRYSTAL
   /******* Comment the macro above to answer no, otherwise your answer is yes */
 
-#endif /* USING_EXTERNAL_CRYSTAL */
+#ifndef USING_HSE_CRYSTAL
 
-#if defined USING_EXTERNAL_CRYSTAL  || \
-    defined USING_EXTERNAL_CLOCK
+  /* Are you using a high speed external clock? *******************************/
+//#define USING_HSE_CLOCK
+  /******* Comment the macro above to answer no, otherwise your answer is yes */
 
-  /* Insert the external clock frequency (in Hz), in the following line *******/
+#endif // USING_HSE_CRYSTAL
+#if defined USING_HSE_CRYSTAL  || \
+    defined USING_HSE_CLOCK
+
+  /* Insert the HSE clock frequency (in Hz) ***********************************/
   enum {
-    _SOURCE = 8000000
+    HSE = 8000000
   };
-  /******** Insert the external clock frequency (in Hz), in the previous line */
+  /*********************************** Insert the HSE clock frequency (in Hz) */
 
-#endif /* USING_EXTERNAL_CRYSTAL || USING_EXTERNAL_CLOCK */
+  /* Insert the allowed HSE clock stabilization's time (in cycles) ************/
+  enum {
+    _HSE_TIMEOUT = 0x100
+  };
+  /************ Insert the allowed HSE clock stabilization's time (in cycles) */
+
+  /**
+   * @brief This function is called when the external clock fails.
+   * @note  The user must define this function.
+   */
+  static INLINE void hseFailureHandler(void);
+
+#endif // USING_HSE_CRYSTAL || USING_HSE_CLOCK
+  /* Are you using an external low speed crystal, resonator or oscillator? ****/
+//#define USING_LSE_CRYSTAL
+  /******* Comment the macro above to answer no, otherwise your answer is yes */
+
+#ifndef USING_LSE_CRYSTAL
+
+  /* Are you using a low speed external clock? *******************************/
+//#define USING_LSE_CLOCK
+  /******* Comment the macro above to answer no, otherwise your answer is yes */
+
+#endif // USING_LSE_CRYSTAL
+#if defined USING_LSE_CRYSTAL  || \
+  defined USING_LSE_CLOCK
+
+  /* Insert the LSE clock frequency (in Hz) ***********************************/
+  enum {
+    LSE = 32768
+  };
+  /*********************************** Insert the LSE clock frequency (in Hz) */
+
+  /* Insert the allowed LSE clock stabilization's time (in cycles) ************/
+  enum {
+    _LSE_TIMEOUT = 0x400
+  };
+  /************ Insert the allowed LSE clock stabilization's time (in cycles) */
+
+  /**
+   * @brief This function is called when the external clock fails.
+   * @note  The user must define this function.
+   */
+  static INLINE void lseFailureHandler(void);
+
+#endif // USING_LSE_CRYSTAL || USING_LSE_CLOCK
+  /* Do you want to use the LSI? **********************************************/
+//#define USING_LSI
+  /******* Comment the macro above to answer no, otherwise your answer is yes */
+
+  /****************************************************************************
+   *                                                                          *
+   *                       REAL TIME CLOCK CONFIGURATION                      *
+   *                                                                          *
+   ****************************************************************************/
+
+  /* Are you going to use the Real time clock module? *************************/
+//#define USING_RTC
+  /******* Comment the macro above to answer no, otherwise your answer is yes */
+
+#ifdef USING_RTC
+#ifdef STM32F1XX
+  /*****************************************************************************
+   * The RTC bus clocking scheme is shown below:
+   *
+   *     1 / 128
+   * HSE---------+
+   *             |
+   * LSE---------+----> RTC
+   *             |
+   * LSI---------+
+   *
+   * Define the prescaler parameters ******************************************/
+  enum {
+    _RTCSEL = rcc::registers::bdcr::bits::rtcsel::states::
+    LSE_CLOCK_AS_RTC_SOURCE
+  };
+  /****************************************** Define the prescaler parameters */
+#else // STM32F1XX
+  /*****************************************************************************
+   * The RTC bus clocking scheme is shown below:
+   *
+   *     1 / RTCPRE
+   * HSE------------+
+   *                |
+   * LSE------------+----> RTC
+   *                |
+   * LSI------------+
+   *
+   * Define the prescaler parameters ******************************************/
+  enum {
+    _RTCPRE = 8,
+    _RTCSEL = rcc::registers::bdcr::bits::rtcsel::states::
+    LSE_CLOCK_AS_RTC_SOURCE
+  };
+  /****************************************** Define the prescaler parameters */
+#endif // STM32F1XX
+#endif // USING_RTC
+  /****************************************************************************
+   *                                                                          *
+   *                             PLL CONFIGURATION                            *
+   *                                                                          *
+   ****************************************************************************/
 
   /* Do you want to use the PLL? **********************************************/
 //#define USING_PLL
   /******* Comment the macro above to answer no, otherwise your answer is yes */
 
 #ifdef USING_PLL
-#if defined STM32F2XX || \
-    defined STM32F4XX || \
-    (defined CONNECTIVITY_LINE && \
-     (defined USING_EXTERNAL_CRYSTAL || \
-      defined USING_EXTERNAL_CLOCK))
-
-  /* Do you want to use the PLL for the I2S module? ***************************/
-#define USING_I2S_PLL
-  /******* Comment the macro above to answer no, otherwise your answer is yes */
-
-#endif
-#if defined STM32F2XX || \
-    defined STM32F4XX || \
-    (not defined VALUE_LINE && \
-     (defined EXTERNAL_CLOCK || \
-      defined EXTERNAL_CRYSTAL))
-
-  /* Are you going to use the USB module? *************************************/
-#define USING_USB
-  /******* Comment the macro above to answer no, otherwise your answer is yes */
-
-#endif /* STM32F2XX || STM32F4XX || ~VALUE_LINE */
-#endif /* USING_PLL */
 
 #ifdef STM32F1XX
-
-  /****************************************************************************
-   *                              STM32F1 FAMILY                              *
-   ****************************************************************************/
-
-#ifdef USING_PLL
-#if defined USING_EXTERNAL_CLOCK || \
-    defined USING_EXTERNAL_CRYSTAL
+  /*****************************************************************************
+   *
+   * PREDIV1_OUTPUT------+
+   *                     |
+   *                     +----> PLLSRC
+   *                     |
+   * (HSI / 2)-----------+
+   *
+   * Select the PLL source ****************************************************/
+  enum {
+    __PLLSRC = rcc::registers::cfgr::bits::pllsrc::states::
+    USE_PREDIV1_OUTPUT_AS_PLL_SOURCE
+  };
+  /**************************************************** Select the PLL source */
+#ifndef CONNECTIVITY_LINE
 #ifdef VALUE_LINE
+  /*****************************************************************************
+   *
+   *      1 / PREDIV1
+   * HSE -------------> PREDIV1_OUTPUT
+   *
+   * Select the PREDIV1 source ************************************************/
+  enum {
+    _PREDIV1 = 1
+  };
+  /************************************************ Select the PREDIV1 source */
+#else // VALUE_LINE
+  /*****************************************************************************
+   *
+   *      1 / (PLLXTPRE + 1)
+   * HSE --------------------> PREDIV1_OUTPUT
+   *
+   * Select the PREDIV1 source ************************************************/
+  enum {
+    _PLLXTPRE = 0
+  };
+  /************************************************ Select the PREDIV1 source */
+#endif // VALUE_LINE
+#else // !CONNECTIVITY_LINE
+  /*****************************************************************************
+   *
+   *
+   *
+   *     1 / PREDIV2    x (PLL2MUL + 2)
+   * HSE---------------------------------> PLL2
+   *                   x(PLL2MUL=15 + 5)
+   *
+   * Configure the PLL parameters *********************************************/
+  enum {
+    _PREDIV2 = 2,
+    _PLL2MUL = 7,
+  };
+  /********************************************* Configure the PLL parameters */
 
   /*****************************************************************************
-   * The PLL clocking scheme is as shown below:
    *
-   *      x(2 + PLLMUL)/(PREDIV1 + 1)
-   * HSE -----------------------------> SYSTEM
+   * HSE-----+
+   *         | 1 / PREDIV1
+   *         +-------------> PREDIV1_OUTPUT
+   *         |
+   * PLL2----+
    *
-   * Define the PLL parameters below  *****************************************/
+   * Select the PREDIV1 source ************************************************/
   enum {
-    _PREDIV1 = 0,
-    _PLLMUL = 1,
+    _PREDIV1SRC = rcc::registers::cfgr2::bits::prediv1src::states::
+    USE_PLL2_AS_PREDIV1_INPUT,
+    _PREDIV1 = 1
   };
-  /******************************************* Define the PLL paramters above */
-
-#elif defined CONNECTIVITY_LINE
-#ifdef USING_I2S_PLL
-
+  /************************************************ Select the PREDIV1 source */
+#endif // !CONNECTIVITY_LINE
   /*****************************************************************************
-   * The PLL clocking scheme is as shown below:
    *
-   *                        x (PLL2MUL + 2)   x (PLLMUL + 2)  / (PREDIV1 + 1)
-   *                      +---------------------------------------------------+
-   *      1/(PREDIV2 + 1) |x(PLL2MUL=15 + 5) x(PLLMUL=13 / 2)                 |
-   * HSE -----------------+                                          SYSTEM <-+
-   *                      | x (PLL3MUL + 2)
-   *                      +-----------------> I2S
-   *                       x(PLL3MUL=15 + 5)
+   *         x PLLMUL
+   * PLLSRC ----------> PLL
    *
-   * Define the PLL parameters below  *****************************************/
+   * Select the PLL parameters ************************************************/
   enum {
-    _PREDIV1 = 4,
-    _PREDIV2 = 4,
-    _PLLMUL = 7,
-    _PLL2MUL = 6,
-    _PLL3MUL = 15,
+    _PLLMUL = 2
   };
-  /******************************************* Define the PLL paramters above */
-
-#else /* USING_I2S_PLL */
-
-  /*****************************************************************************
-   * The PLL clocking scheme is as shown below:
-   *
-   *      1/(PREDIV2 + 1)  x (PLL2MUL + 2)   x (PLLMUL + 2)  / (PREDIV1 + 1)
-   * HSE --------------------------------------------------------------------+
-   *                      x(PLL2MUL=15 + 5) x(PLLMUL=13 / 2)                 |
-   *                                                                         |
-   *                                                                 SYSTEM<-+
-   *
-   * Define the PLL parameters below  *****************************************/
-  enum {
-    _PREDIV1 = 0,
-    _PREDIV2 = 0,
-    _PLLMUL = 0,
-    _PLLMUL2 = 0,
-  };
-  /******************************************* Define the PLL paramters above */
-
-#endif /* USING_I2S_PLL */
-#else /* VALUE_LINE */
-
-  /*****************************************************************************
-   * The PLL clocking scheme is as shown below:
-   *
-   *      x(2 + PLLMUL) / (1 + PLLXTPRE)
-   * HSE --------------------------------> SYSTEM / I2S
-   *
-   * Define the PLL parameters below  *****************************************/
-  enum {
-    _PLLXTPRE = 0,
-    _PLLMUL = 0,
-  };
-  /******************************************* Define the PLL paramters above */
-
-#endif /* VALUE_LINE */
-#else /* EXTERNAL_CLOCK || EXTERNAL_CRYSTAL */
-
-  /*****************************************************************************
-   * The PLL clocking scheme is as shown below:
-   *
-   *             x (2 + PLLMUL)
-   * (HSI / 2) -----------------> SYSTEM
-   *            x(PLLMUL=13 / 2)
-   * Define the PLL parameters below  *****************************************/
-  enum {
-    _PLLMUL = 7,
-  };
-  /******************************************* Define the PLL paramters above */
-
-#endif /* EXTERNAL_CLOCK || EXTERNAL_CRYSTAL */
-#endif /* USING_PLL */
-#ifdef USING_USB
-
-  /*****************************************************************************
-   * The USB bus clocking scheme is as shown below:
-   *
-   *         x 2 / (3 - USBPRE)
-   * SYSTEM --------------------> USB
-   *
-   * Define the USB prescaler below  ******************************************/
-  enum {
-    _USBPRE = 0,
-  };
-  /******************************************* Define the USB prescaler above */
-
-#endif
-
-  /*****************************************************************************
-   * The bus clocking scheme is shown below:
-   *                            1/2^PPRE1
-   *                          +----------->APB1CLK
-   *        1/2^HPRE          |
-   * SYSCLK---------->AHBCLK--+
-   *                          | 1/2^PPRE2          1/(2*ADCPRE + 2)
-   *                          +----------->APB2CLK------------------>ADCCLK
-   * Define the prescaler parameters below ************************************/
-  enum {
-    _HPRE = 0,
-    _PPRE1 = 0,
-    _PPRE2 = 0,
-    _ADCPRE = 0,
-  };
-  /************************************ Define the prescaler parameters above */
-
-#else /* STM32F1XX */
-
+  /************************************************ Select the PLL paraneters */
+#else // STM32F1XX
   /****************************************************************************
-   *                        STM32F2 AND STM32F4 FAMILY                        *
-   ****************************************************************************/
-
-#ifdef USING_PLL
+   *
+   * HSE----+
+   *        |
+   *        +----> PLLSRC
+   *        |
+   * HSI----+
+   *
+   * Select the PLL source  ***************************************************/
+  enum {
+    __PLLSRC = rcc::registers::pllcfgr::bits::pllsrc::states::
+    USE_HSE_CLOCK_AS_PLL_CLOCK_SOURCE
+  };
+  /*************************************************** Select the PLL source  */
 
   /*****************************************************************************
    * The PLL clocking scheme is as shown below:
    *
-   *                                        1/PLLP
-   * (HSE 1/PLLM         xPLLN             +------> SYSTEM
-   *  or -------->VCO_IN------->VCO_OUT----|
-   * HSI)                                  +------> USB/SDIO/RNG
-   *                                        1/PLLQ
+   *                                             1/PLLP
+   *          1/PLLM         xPLLN             +--------> SYSTEM
+   * PLL_SRC -------->VCO_IN------->VCO_OUT----|
+   *                                           +--------> USB/SDIO/RNG
+   *                                             1/PLLQ
    *
    * Define the PLL parameters below  *****************************************/
   enum {
     _PLLM = 4,
-    _PLLN = 168,
-    _PLLP = 2,
-    _PLLQ = 7,
+    _PLLN = 144,
+    _PLLP = 8,
+    _PLLQ = 6,
   };
   /****************************************** Define the PLL parameters above */
 
-#endif /* USING_PLL */
+#endif // STM32F1XX
+#endif // USING_PLL
+  /****************************************************************************
+   *                                                                          *
+   *                          SYSTEM CLOCK SELECTION                          *
+   *                                                                          *
+   ****************************************************************************/
 
-#ifdef USING_I2S_PLL
+  /* Select the system clock source *******************************************/
+  enum {
+    _SW = rcc::registers::cfgr::bits::sw::states::
+    HSI_OSCILLATOR_SELECTED_AS_SYSTEM_CLOCK
+  };
+  /******************************************* Select the system clock source */
+  /****************************************************************************
+   *                                                                          *
+   *                             PERIPHERAL CLOCKS                            *
+   *                                                                          *
+   ****************************************************************************/
+
+#if defined USING_PLL && \
+    (defined STM32F2XX || \
+     defined STM32F4XX || \
+     (not defined VALUE_LINE && \
+      not defined CONNECTIVITY_LINE))
+
+  /* Are you going to use the USB module? *************************************/
+//#define USING_USB
+  /******* Comment the macro above to answer no, otherwise your answer is yes */
+
+#if defined USING_USB && \
+    not defined STM32F2XX && \
+    not defined STM32F4XX
 
   /*****************************************************************************
-   * The PLL clocking scheme is shown below:
    *
-   * (HSE 1/PLLM         xPLLI2SN              1/PLLI2SR
-   *  or -------->VCO_IN---------->VCO_I2S_OUT----------->I2SCLK
-   * HSI)
+   *      2 / (USBPRE + 2)
+   * PLL ------------------> USB
    *
-   * Define the I2S PLL parameters below  *************************************/
+   * Define the USB prescaler *************************************************/
   enum {
-    _PLLI2SN = 192,
-    _PLLI2SR = 4,
+    _USBPRE = 0
   };
-  /************************************** Define the I2S PLL parameters above */
+  /************************************************* Define the USB prescaler */
 
-#endif /* USING_I2S_PLL */
+#endif
+
+#endif // STM32F2XX || STM32F4XX || (!VALUE_LINE && !CONNECTIVITY_LINE)
+#if defined CONNECTIVITY_LINE || \
+    defined STM32F2XX || \
+    defined STM32F4XX
+
+  /* Are you going to use the Ethernet module? ********************************/
+//#define USING_ETHERNET
+  /******* Comment the macro above to answer no, otherwise your answer is yes */
+
+#endif // CONNECTIVITY_LINE || STM32F2XX || STM32F4XX
+#ifndef VALUE_LINE
+
+  /* Are you going to use the I2S module? *************************************/
+//#define USING_I2S
+  /******* Comment the macro above to answer no, otherwise your answer is yes */
+
+#ifdef USING_I2S
+
+#ifdef STM32F1XX
+#ifdef CONNECTIVITY_LINE
+
+  /* Do you want to use the I2S PLL? ******************************************/
+#define USING_I2S_PLL
+  /******* Comment the macro above to answer no, otherwise your answer is yes */
+
+#ifdef USING_I2S_PLL
+  /*****************************************************************************
+   *
+   *
+   *
+   *     1 / PREDIV2    x (PLL3MUL + 2)
+   * HSE---------------------------------> PLL3
+   *                   x(PLL3MUL=15 + 5)
+   *
+   * Configure the PLL parameters *********************************************/
+  enum {
+#ifndef USING_PLL
+    _PREDIV2 = 2,
+#endif // USING_PLL
+    _PLL3MUL = 7,
+  };
+  /********************************************* Configure the PLL parameters */
+#endif // USING_I2S_PL
+  /*****************************************************************************
+   *
+   * PLL3------+
+   *           |
+   *           +----> I2S2/I2S3
+   *           |
+   * SYSTEM----+
+   *
+   * Define the I2S sources below  ********************************************/
+  enum {
+    _I2S2SRC = rcc::registers::cfgr2::bits::i2s2src::states::
+    USE_SYSTEM_CLOCK_AS_I2S2_CLOCK,
+    _I2S3SRC = rcc::registers::cfgr2::bits::i2s3src::states::
+    USE_SYSTEM_CLOCK_AS_I2S3_CLOCK,
+  };
+  /********************************************* Define the I2S sources below */
+#endif // CONNECTIVITY_LINE
+#else // STM32F1XX
+  /* Do you want to use the I2S PLL? ******************************************/
+#define USING_I2S_PLL
+  /******* Comment the macro above to answer no, otherwise your answer is yes */
+
+#ifdef USING_I2S_PLL
+#ifndef USING_PLL
+  /****************************************************************************
+   *
+   * HSE----+
+   *        |
+   *        +----> PLLSRC
+   *        |
+   * HSI----+
+   *
+   * Select the PLL source  ***************************************************/
+  enum {
+    __PLLSRC = rcc::registers::pllcfgr::bits::pllsrc::states::
+    USE_HSE_CLOCK_AS_PLL_CLOCK_SOURCE
+  };
+  /*************************************************** Select the PLL source  */
+#endif // USING_PLL
+  /*****************************************************************************
+   * The PLL clocking scheme is as shown below:
+   *
+   *          1 / PLLM         xPLLI2SN              1 / PLLI2SR
+   * PLL_SRC ---------->VCO_IN---------->VCO_I2S_OUT------------->PLLI2S----+
+   *                                                                        |
+   *                                                               I2S <----+
+   *
+   * Define the PLL parameters below  *****************************************/
+  enum {
+#ifndef USING_PLL
+    _PLLM = 4,
+#endif
+    _PLLI2SN = 192,
+    _PLLI2SR = 2,
+  };
+  /****************************************** Define the PLL parameters above */
+#else // USING_I2S_PLL
+  /*****************************************************************************
+   *
+   * I2S_CKIN---->I2S
+   *
+   ****************************************************************************/
+#endif // USING_I2S_PLL
+#endif // STM32F1XX
+#endif // USING_I2S
+#endif // !VALUE_LINE
+  /****************************************************************************
+   *                                                                          *
+   *                              BUS PRESCALERS                              *
+   *                                                                          *
+   ****************************************************************************/
 
   /*****************************************************************************
    * The bus clocking scheme is shown below:
+   *
    *                            1/2^PPRE1
    *                          +----------->APB1CLK
    *        1/2^HPRE          |
    * SYSCLK---------->AHBCLK--+
    *                          | 1/2^PPRE2
    *                          +----------->APB2CLK
+   *
    * Define the prescaler parameters below ************************************/
   enum {
     _HPRE = 0,
@@ -276,44 +460,83 @@ namespace clock {
   };
   /************************************ Define the prescaler parameters above */
 
-#if defined USING_EXTERNAL_CRYSTAL || \
-  defined USING_EXTERNAL_CLOCK
+#ifdef STM32F1XX
+  /*****************************************************************************
+   * The ADC bus clocking scheme is shown below:
+   *
+   *         1 / (2 *ADCPRE + 2)
+   * APB2CLK-------------------->ADCCLK
+   *
+   * Define the prescaler parameters below ************************************/
+  enum {
+    _ADCPRE = 1,
+  };
+  /************************************ Define the prescaler parameters above */
+#endif
 
-  /* Do you want to use the external clock to drive the RTC? ******************/
-//#define USING_HSE_FOR_RTC
+  /****************************************************************************
+   *                                                                          *
+   *                       MICROCONTROLLER CLOCK OUTPUT                       *
+   *                                                                          *
+   ****************************************************************************/
+
+  /* Do you want to use the Microcontroller Clock Output? *********************/
+//#define USING_MCO
   /******* Comment the macro above to answer no, otherwise your answer is yes */
 
-#endif /* USING_EXTERNAL_CRYSTAL || USING_EXTERNAL_CLOCK */
-#ifdef USING_HSE_FOR_RTC
+#ifdef USING_MCO
 
-  /* Insert the RC prescaler value in the following line **********************/
-  enum {_RTCPRE = 8};
-  /********************** Insert the RTC prescaler value in the previous line */
-
-#endif /* USING_HSE_FOR_RTC */
-#endif /* STM32F1XX */
-
-  /* Insert the flash access latency (in wait states) in the following line ***/
+#ifdef STM32F1XX
+  /*****************************************************************************
+   * The microcontroller clock output scheme is shown bellow:
+   *
+   * (SYSTEM | HSI | HSE | PLL | XT1) ----> MCO
+   *
+   ****************************************************************************/
   enum {
-    _LATENCY = 0
+    _MCO = rcc::registers::cfgr::bits::mco::states::OUTPUT_HSE_CLOCK
   };
-  /****** Insert the flash access latency (in wait states) in the previous line */
-  /* IMPORTANT: USING A LOW LATENCY AT HIGH CLOCK FREQUENCIES MIGHT RESULT IN
-   *            FLASH ACCESS ERRORS AT RUN TIME. ******************************/
+#else // STM32F1XX
+  /*****************************************************************************
+   * The microcontroller clock output scheme is shown bellow:
+   *
+   *                          1 / MCOPRE1
+   * (HSI | LSE | HSE | PLL) -------------> MCO1
+   *
+   *                                1 / MCOPRE2
+   * (SYSTEM | PLLI2S | HSE | PLL) -------------> MCO2
+   *
+   *
+   ****************************************************************************/
+  enum {
+    _MCO1 = rcc::registers::cfgr::bits::mco1::states::OUTPUT_HSI_CLOCK,
+    _MCO2 = rcc::registers::cfgr::bits::mco2::states::OUTPUT_HSE_CLOCK,
+    _MCO1PRE = 1,
+    _MCO2PRE = 1,
+  };
+#endif // STM32F1XX
+#endif // USING_MCO
+#ifndef VALUE_LINE
+  /****************************************************************************
+   *                                                                          *
+   *                        FLASH MEMORY ACCESS LATENCY                       *
+   *                                                                          *
+   ****************************************************************************/
 
+  /* Select the flash memory access latency ***********************************/
+  enum {
+    _LATENCY = flash::registers::acr::bits::latency::states::ZERO_WAIT_STATE
+  };
+  /*********************************** Select the flash memory access latency */
+  /* IMPORTANT: USING A LOW LATENCY AT HIGH CORE'S FREQUENCY MIGHT RESULT IN
+   *            FLASH MEMORY ACCESS ERRORS AT RUN TIME. ***********************/
+#endif // !VALUE_LINE
   /**
-   * @brief Configures the clock, using the configuration inputted in clock.hpp
-   * @note  Call this function as early as possible in you program.
+   * @brief Initializes the clock.
+   * @note  Call this function as early as possible in your program.
+   * @note  The configuration of the clock is specified in clock.hpp
    */
   static INLINE void initialize();
-
-#if defined USING_EXTERNAL_CRYSTAL || defined USING_EXTERNAL_CLOCK
-  /**
-   * @brief This function handles the failure of the HSE oscillator.
-   * @note  The user must define this function.
-   */
-  static INLINE void hseFailureHandler(void);
-#endif
 }  // namespace clock
 
 #include "../bits/clock.tcc"

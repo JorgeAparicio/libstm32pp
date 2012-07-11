@@ -41,12 +41,29 @@
 namespace rcc {
   class Functions {
     public:
-      static INLINE void enableHsi();
-      static INLINE void disableHsi();
-      static INLINE bool isHsiStable();
       static INLINE void enableHse();
       static INLINE void disableHse();
       static INLINE bool isHseStable();
+      static INLINE void enableHseOscillator();
+      static INLINE void disableHseOscillator();
+
+      static INLINE void enableLse();
+      static INLINE void disableLse();
+      static INLINE bool isLseStable();
+      static INLINE void enableLseOscillator();
+      static INLINE void disableLseOscillator();
+
+      static INLINE void enableHsi();
+      static INLINE void disableHsi();
+      static INLINE bool isHsiStable();
+
+      static INLINE void enableLsi();
+      static INLINE void disableLsi();
+      static INLINE bool isLsiStable();
+
+      static INLINE void enableRtc();
+      static INLINE void disableRtc();
+
       static INLINE void enablePll();
       static INLINE void disablePll();
       static INLINE bool isPllStable();
@@ -59,14 +76,17 @@ namespace rcc {
       static INLINE void disablePll3();
       static INLINE bool isPll3Stable();
 #endif // CONNECTIVITY_LINE
+      static INLINE bool isSystemClockSourceStable();
+
       template<
           rcc::registers::cfgr::bits::sw::states::E
       >
       static INLINE void selectSystemClockSource();
 
-      static INLINE bool isSystemClockSourceStable();
-      static INLINE void enableOscillator();
-      static INLINE void disableOscillator();
+      template<
+          rcc::registers::bdcr::bits::rtcsel::states::E
+      >
+      static INLINE void selectRtcClockSource();
 
       template<
           rcc::registers::apb1enr::bits::E...
@@ -110,9 +130,16 @@ namespace rcc {
       static INLINE void disableClocks();
 
       template<
+      rcc::registers::cfgr::bits::mco::states::E
+      >
+      static INLINE void configureClockOutput();
+
+#ifdef CONNECTIVITY_LINE
+      template<
       rcc::registers::ahbrstr::bits::E ...
       >
       static INLINE void resetPeripherals();
+#endif
 
 #ifdef VALUE_LINE
       template<
@@ -140,8 +167,8 @@ namespace rcc {
       u8 PREDIV1
       >
       static INLINE void configurePll();
-
-#elif defined CONNECTIVITY_LINE
+#else // VALUE_LINE
+#ifdef CONNECTIVITY_LINE
       template<
       rcc::registers::cfgr::bits::pllsrc::states::E,
       u8 PLLMUL,
@@ -155,7 +182,7 @@ namespace rcc {
       >
       static INLINE void configurePll();
 
-#else // VALUE_LINE
+#else // CONNECTIVITY_LINE
       template <
       rcc::registers::cfgr::bits::pllsrc::states::E,
       u8 PLLXTPRE,
@@ -163,6 +190,7 @@ namespace rcc {
       >
       static INLINE void configurePll();
 
+#endif // CONNECTIVITY_LINE
 #endif // VALUE_LINE
 #else // STM32F1XX
       template<
@@ -213,20 +241,24 @@ namespace rcc {
       template<
       u8 HPRE,
       u8 PPRE1,
-      u8 PPRE2
+      u8 PPRE2,
+      u8 RTCPRE
       >
       static INLINE void configurePrescalers();
 
       template<
-      u8 RTCPRE
+      rcc::registers::cfgr::bits::mco1::states::E,
+      rcc::registers::cfgr::bits::mco2::states::E,
+      u8 MCOPRE1,
+      u8 MCOPRE2
       >
-      static INLINE void configureRtcPrescaler();
+      static INLINE void configureClockOutput();
 
 #endif // STM32F1XX
       private:
       Functions();
     };
-  }
+  }  // namespace rcc
 
 #include "../../bits/rcc.tcc"
 

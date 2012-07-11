@@ -59,7 +59,7 @@ namespace flash {
       static INLINE void configure(void);
 #else
       template<
-      u8 LATENCY,
+      flash::registers::acr::bits::latency::states::E,
       flash::registers::acr::bits::hlfcya::states::E,
       flash::registers::acr::bits::prftbe::states::E
       >
@@ -74,7 +74,7 @@ namespace flash {
       static INLINE void disableInstructionCache(void);
 
       template<
-          u8 LATENCY,
+          flash::registers::acr::bits::latency::states::E,
           flash::registers::acr::bits::prften::states::E,
           flash::registers::acr::bits::dcen::states::E,
           flash::registers::acr::bits::icen::states::E

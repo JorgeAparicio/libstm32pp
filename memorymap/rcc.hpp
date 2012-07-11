@@ -27,87 +27,87 @@ namespace rcc {
 #ifdef STM32F1XX
   struct Registers
   {
-      __RW
-      u32 CR;        // 0x00: Clock control
-      __RW
-      u32 CFGR;      // 0x04: Clock configuration
-      __RW
-      u32 CIR;       // 0x08: Clock interrupt
-      __RW
-      u32 APB2RSTR;  // 0x0C: APB2 peripheral reset
-      __RW
-      u32 APB1RSTR;  // 0x10: APB1 peripheral reset
-      __RW
-      u32 AHBENR;    // 0x14: AHB peripheral clock enable
-      __RW
-      u32 APB2ENR;   // 0x18: APB2 peripheral clock enable
-      __RW
-      u32 APB1ENR;   // 0x1C: APB1 peripheral clock enable
-      __RW
-      u32 BDCR;      // 0x20: Backup domain control
-      __RW
-      u32 CSR;       // 0x24: Control/status
-      __RW
-      u32 AHBRSTR;   // 0x28: AHB peripheral clock reset
-      __RW
-      u32 CFGR2;     // 0x2C: Clock configuration 2
+    __RW
+    u32 CR;  // 0x00: Clock control
+    __RW
+    u32 CFGR;// 0x04: Clock configuration
+    __RW
+    u32 CIR;// 0x08: Clock interrupt
+    __RW
+    u32 APB2RSTR;// 0x0C: APB2 peripheral reset
+    __RW
+    u32 APB1RSTR;// 0x10: APB1 peripheral reset
+    __RW
+    u32 AHBENR;// 0x14: AHB peripheral clock enable
+    __RW
+    u32 APB2ENR;// 0x18: APB2 peripheral clock enable
+    __RW
+    u32 APB1ENR;// 0x1C: APB1 peripheral clock enable
+    __RW
+    u32 BDCR;// 0x20: Backup domain control
+    __RW
+    u32 CSR;// 0x24: Control/status
+    __RW
+    u32 AHBRSTR;// 0x28: AHB peripheral clock reset
+    __RW
+    u32 CFGR2;// 0x2C: Clock configuration 2
   };
 #else // STM32F1XX
   struct Registers
   {
-    __RW
-    u32 CR;            // 0x00: Clock control
-    __RW
-    u32 PLLCFGR;// 0x04: PLL configuration
-    __RW
-    u32 CFGR;// 0x08: Clock configuration
-    __RW
-    u32 CIR; // 0x0C: Clock interrupt
-    __RW
-    u32 AHB1RSTR;// 0x10: AHB1 peripheral reset
-    __RW
-    u32 AHB2RSTR;// 0x14: AHB2 peripheral reset
-    __RW
-    u32 AHB3RSTR;// 0x18: AHB3 peripheral reset
-    u32 _RESERVED0;// _RESERVED
-    __RW
-    u32 APB1RSTR;// 0x20: APB1 peripheral reset
-    __RW
-    u32 APB2RSTR;// 0x24: APB2 peripheral reset
-    u32 _RESERVED1[2];
-    __RW
-    u32 AHB1ENR;// 0x30: AHB1 peripheral clock enable
-    __RW
-    u32 AHB2ENR;// 0x34: AHB2 peripheral clock enable
-    __RW
-    u32 AHB3ENR;// 0x38: AHB3 peripheral clock enable
-    u32 _RESERVED2;// _RESERVED
-    __RW
-    u32 APB1ENR;// 0x40: APB1 peripheral clock enable
-    __RW
-    u32 APB2ENR;// 0x44: APB2 peripheral clock enable
-    u32 _RESERVED3[2];
-    __RW
-    u32 AHB1LPENR;// 0x50: AHB1 peripheral clock enable in low power
-    __RW
-    u32 AHB2LPENR;// 0x54: AHB2 peripheral clock enable in low power
-    __RW
-    u32 AHB3LPENR;// 0x58: AHB3 peripheral clock enable in low power
-    u32 _RESERVED4;
-    __RW
-    u32 APB1LPENR;// 0x60: APB1 peripheral clock enable in low power
-    __RW
-    u32 APB2LPENR;// 0x64: APB2 peripheral clock enable in low power
-    u32 _RESERVED5[2];// _RESERVED
-    __RW
-    u32 BDCR;// 0x70: Backup domain control
-    __RW
-    u32 CSR; // 0x74: Clock control and status
-    u32 _RESERVED6[2];
-    __RW
-    u32 SSCGR;// 0x80: Spread spectrum clock generation
-    __RW
-    u32 PLLI2SCFGR;// 0x84: PLLI2S configuration
+      __RW
+      u32 CR;  // 0x00: Clock control
+      __RW
+      u32 PLLCFGR;  // 0x04: PLL configuration
+      __RW
+      u32 CFGR;  // 0x08: Clock configuration
+      __RW
+      u32 CIR;  // 0x0C: Clock interrupt
+      __RW
+      u32 AHB1RSTR;  // 0x10: AHB1 peripheral reset
+      __RW
+      u32 AHB2RSTR;  // 0x14: AHB2 peripheral reset
+      __RW
+      u32 AHB3RSTR;  // 0x18: AHB3 peripheral reset
+      u32 _RESERVED0;  // _RESERVED
+      __RW
+      u32 APB1RSTR;  // 0x20: APB1 peripheral reset
+      __RW
+      u32 APB2RSTR;  // 0x24: APB2 peripheral reset
+      u32 _RESERVED1[2];
+      __RW
+      u32 AHB1ENR;  // 0x30: AHB1 peripheral clock enable
+      __RW
+      u32 AHB2ENR;  // 0x34: AHB2 peripheral clock enable
+      __RW
+      u32 AHB3ENR;  // 0x38: AHB3 peripheral clock enable
+      u32 _RESERVED2;  // _RESERVED
+      __RW
+      u32 APB1ENR;  // 0x40: APB1 peripheral clock enable
+      __RW
+      u32 APB2ENR;  // 0x44: APB2 peripheral clock enable
+      u32 _RESERVED3[2];
+      __RW
+      u32 AHB1LPENR;  // 0x50: AHB1 peripheral clock enable in low power
+      __RW
+      u32 AHB2LPENR;  // 0x54: AHB2 peripheral clock enable in low power
+      __RW
+      u32 AHB3LPENR;  // 0x58: AHB3 peripheral clock enable in low power
+      u32 _RESERVED4;
+      __RW
+      u32 APB1LPENR;  // 0x60: APB1 peripheral clock enable in low power
+      __RW
+      u32 APB2LPENR;  // 0x64: APB2 peripheral clock enable in low power
+      u32 _RESERVED5[2];  // _RESERVED
+      __RW
+      u32 BDCR;  // 0x70: Backup domain control
+      __RW
+      u32 CSR;  // 0x74: Clock control and status
+      u32 _RESERVED6[2];
+      __RW
+      u32 SSCGR;  // 0x80: Spread spectrum clock generation
+      __RW
+      u32 PLLI2SCFGR;  // 0x84: PLLI2S configuration
   };
 #endif // STM32F1XX
 #ifdef STM32F1XX
@@ -120,7 +120,6 @@ namespace rcc {
   };
 #endif
 
-#ifdef STM32F1XX
   namespace registers {
     namespace cr {
       enum {
@@ -136,8 +135,8 @@ namespace rcc {
           };
           namespace states {
             enum E {
-              HSI_OSCILLATOR_OFF = 0 << POSITION,
-              HSI_OSCILLATOR_ON = 1 << POSITION,
+              INTERNAL_OSCILLATOR_OFF = 0 << POSITION,
+              INTERNAL_OSCILLATOR_ON = 1 << POSITION,
             };
           }  // namespace states
         }  // namespace hsion
@@ -150,8 +149,8 @@ namespace rcc {
           };
           namespace states {
             enum E {
-              HSI_OSCILLATOR_NOT_READY = 0 << POSITION,
-              HSI_OSCILLATOR_READY = 1 << POSITION,
+              INTERNAL_OSCILLATOR_NOT_READY = 0 << POSITION,
+              INTERNAL_OSCILLATOR_READY = 1 << POSITION,
             };
           }  // namespace states
         }  // namespace hsirdy
@@ -245,7 +244,37 @@ namespace rcc {
             };
           }  // namespace states
         }  // namespace pllrdy
-#ifdef CONNECTIVITY_LINE
+#ifndef STM32F1XX
+        namespace plli2son {
+          enum {
+            POSITION = 26
+          };
+          enum {
+            MASK = 1 << POSITION
+          };
+          namespace states {
+            enum E {
+              PLLI2S_OFF = 0 << POSITION,
+              PLLI2S_ON = 1 << POSITION,
+            };
+          }  // namespace states
+        }  // namespace plli2son
+
+        namespace plli2srdy {
+          enum {
+            POSITION = 27
+          };
+          enum {
+            MASK = 1 << POSITION
+          };
+          namespace states {
+            enum E {
+              PLLI2S_UNLOCKED = 0 << POSITION,
+              PLLI2S_LOCKED = 1 << POSITION,
+            };
+          }  // namespace states
+        }  // namespace plli2srdy
+#elif defined CONNECTIVITY_LINE
         namespace pll2on {
           enum {POSITION = 26};
           enum {MASK = 1 << POSITION};
@@ -293,10 +322,75 @@ namespace rcc {
       }  // namespace bits
     }  // namespace cr
 
-    namespace cfgr {
+#ifndef STM32F1XX
+    namespace pllcfgr {
       enum {
         OFFSET = 0x04
       };
+      namespace bits {
+        namespace pllm {
+          enum {
+            POSITION = 0
+          };
+          enum {
+            MASK = 0b111111 << POSITION
+          };
+        }  // namespace pllm
+
+        namespace plln {
+          enum {
+            POSITION = 6
+          };
+          enum {
+            MASK = 0b111111111 << POSITION
+          };
+        }  // namespace plln
+
+        namespace pllp {
+          enum {
+            POSITION = 16
+          };
+          enum {
+            MASK = 0b11 << POSITION
+          };
+        }  // namespace pllp
+
+        namespace pllsrc {
+          enum {
+            POSITION = 22
+          };
+          enum {
+            MASK = 1 << POSITION
+          };
+          namespace states {
+            enum E {
+              USE_HSI_CLOCK_AS_PLL_CLOCK_SOURCE = 0 << POSITION,
+              USE_HSE_CLOCK_AS_PLL_CLOCK_SOURCE = 1 << POSITION,
+            };
+          }  // namespace states
+        }  // namespace pllsrc
+
+        namespace pllq {
+          enum {
+            POSITION = 24
+          };
+          enum {
+            MASK = 0b1111 << POSITION
+          };
+        }  // namespace pllq
+      }  // namespace bits
+    }  // namespace pllcfgr
+#endif // !STM32F1XX
+    namespace cfgr {
+#ifdef STM32F1XX
+      enum {
+        OFFSET = 0x04
+      };
+#else // STM32F1XX
+      enum {
+        OFFSET = 0x08
+      };
+#endif // STM32F1XX
       namespace bits {
         namespace sw {
           enum {
@@ -307,9 +401,9 @@ namespace rcc {
           };
           namespace states {
             enum E {
-              HSI = 0 << POSITION,
-              HSE = 1 << POSITION,
-              PLL = 2 << POSITION,
+              HSI_OSCILLATOR_SELECTED_AS_SYSTEM_CLOCK = 0 << POSITION,
+              HSE_OSCILLATOR_SELECTED_AS_SYSTEM_CLOCK = 1 << POSITION,
+              PLL_SELECTED_AS_SYSTEM_CLOCK = 2 << POSITION,
             };
           }  // namespace states
         }  // namespace sw
@@ -323,9 +417,9 @@ namespace rcc {
           };
           namespace states {
             enum E {
-              HSI = 0 << POSITION,
-              HSE = 1 << POSITION,
-              PLL = 2 << POSITION,
+              HSI_OSCILLATOR_USED_AS_SYSTEM_CLOCK = 0 << POSITION,
+              HSE_OSCILLATOR_USED_AS_SYSTEM_CLOCK = 1 << POSITION,
+              PLL_USED_AS_SYSTEM_CLOCK = 2 << POSITION,
             };
           }  // namespace states
         }  // namespace sws
@@ -339,51 +433,63 @@ namespace rcc {
           };
           namespace states {
             enum E {
-              SYSCLK_DIV_BY_1 = 0 << POSITION,
-              SYSCLK_DIV_BY_2 = 8 << POSITION,
-              SYSCLK_DIV_BY_4 = 9 << POSITION,
-              SYSCLK_DIV_BY_8 = 10 << POSITION,
-              SYSCLK_DIV_BY_16 = 11 << POSITION,
-              SYSCLK_DIV_BY_64 = 12 << POSITION,
-              SYSCLK_DIV_BY_128 = 13 << POSITION,
-              SYSCLK_DIV_BY_256 = 14 << POSITION,
-              SYSCLK_DIV_BY_512 = 15 << POSITION,
+              SYSCLK_NOT_DIVIDED = 0 << POSITION,
+              SYSCLK_DIVIDED_BY_2 = 8 << POSITION,
+              SYSCLK_DIVIDED_BY_4 = 9 << POSITION,
+              SYSCLK_DIVIDED_BY_8 = 10 << POSITION,
+              SYSCLK_DIVIDED_BY_16 = 11 << POSITION,
+              SYSCLK_DIVIDED_BY_64 = 12 << POSITION,
+              SYSCLK_DIVIDED_BY_128 = 13 << POSITION,
+              SYSCLK_DIVIDED_BY_256 = 14 << POSITION,
+              SYSCLK_DIVIDED_BY_512 = 15 << POSITION,
             };
           }  // namespace states
         }  // namespace hpre
 
         namespace ppre1 {
+#ifdef STM32F1XX
           enum {
             POSITION = 8
           };
+#else // STM32F1XX
+          enum {
+            POSITION = 10
+          };
+#endif // STM32F1XX
           enum {
             MASK = 0b111 << POSITION
           };
           namespace states {
             enum E {
-              HCLK_DIV_BY_1 = 0 << POSITION,
-              HCLK_DIV_BY_2 = 4 << POSITION,
-              HCLK_DIV_BY_4 = 5 << POSITION,
-              HCLK_DIV_BY_8 = 6 << POSITION,
-              HCLK_DIV_BY_16 = 7 << POSITION,
+              HCLK_NOT_DIVIDED = 0 << POSITION,
+              HCLK_DIVIDED_BY_2 = 4 << POSITION,
+              HCLK_DIVIDED_BY_4 = 5 << POSITION,
+              HCLK_DIVIDED_BY_8 = 6 << POSITION,
+              HCLK_DIVIDED_BY_16 = 7 << POSITION,
             };
           }  // namespace states
         }  // namespace ppre1
 
         namespace ppre2 {
+#ifdef STM32F1XX
           enum {
             POSITION = 11
           };
+#else // STM32F1XX
+          enum {
+            POSITION = 13
+          };
+#endif // STM32F1XX
           enum {
             MASK = 0b111 << POSITION
           };
           namespace states {
             enum E {
-              HCLK_DIV_BY_1 = 0 << POSITION,
-              HCLK_DIV_BY_2 = 4 << POSITION,
-              HCLK_DIV_BY_4 = 5 << POSITION,
-              HCLK_DIV_BY_8 = 6 << POSITION,
-              HCLK_DIV_BY_16 = 7 << POSITION,
+              HCLK_NOT_DIVIDED = 0 << POSITION,
+              HCLK_DIVIDED_BY_2 = 4 << POSITION,
+              HCLK_DIVIDED_BY_4 = 5 << POSITION,
+              HCLK_DIVIDED_BY_8 = 6 << POSITION,
+              HCLK_DIVIDED_BY_16 = 7 << POSITION,
             };
           }  // namespace states
         }  // namespace ppre2
@@ -397,14 +503,14 @@ namespace rcc {
           };
           namespace states {
             enum E {
-              P2CLK_DIV_BY_2 = 0 << POSITION,
-              P2CLK_DIV_BY_4 = 1 << POSITION,
-              P2CLK_DIV_BY_6 = 2 << POSITION,
-              P2CLK_DIV_BY_8 = 3 << POSITION,
+              P2CLK_DIVIDED_BY_2 = 0 << POSITION,
+              P2CLK_DIVIDED_BY_4 = 1 << POSITION,
+              P2CLK_DIVIDED_BY_6 = 2 << POSITION,
+              P2CLK_DIVIDED_BY_8 = 3 << POSITION,
             };
           }  // namespace states
         }  // namespace adcpre
-
+#ifdef STM32F1XX
         namespace pllsrc {
           enum {
             POSITION = 16
@@ -429,8 +535,8 @@ namespace rcc {
           };
           namespace states {
             enum E {
-              HSE_AS_PLL_SOURCE = 0 << POSITION,
-              HSE_OVER_2_AS_PLL_SOURCE = 1 << POSITION,
+              HSE_SELECTED_AS_PREDIV1_SOURCE = 0 << POSITION,
+              HSE_OVER_2_SELECTED_AS_PREDIV1_SOURCE = 1 << POSITION,
             };
           }  // namespace states
         }  // namespace pllxtpre
@@ -445,25 +551,25 @@ namespace rcc {
           namespace states {
             enum E {
 #ifndef CONNECTIVITY_LINE
-              INPUT_CLOCK_X_2 = 0 << POSITION,
-              INPUT_CLOCK_X_3 = 1 << POSITION,
-              #endif // CONNECTIVITY_LINE
-              INPUT_CLOCK_X_4 = 2 << POSITION,
-              INPUT_CLOCK_X_5 = 3 << POSITION,
-              INPUT_CLOCK_X_6 = 4 << POSITION,
-              INPUT_CLOCK_X_7 = 5 << POSITION,
-              INPUT_CLOCK_X_8 = 6 << POSITION,
-              INPUT_CLOCK_X_9 = 7 << POSITION,
-              #ifndef CONNECTIVITY_LINE
-              INPUT_CLOCK_X_10 = 8 << POSITION,
-              INPUT_CLOCK_X_11 = 9 << POSITION,
-              INPUT_CLOCK_X_12 = 10 << POSITION,
-              INPUT_CLOCK_X_13 = 11 << POSITION,
-              INPUT_CLOCK_X_14 = 12 << POSITION,
-              INPUT_CLOCK_X_15 = 13 << POSITION,
-              INPUT_CLOCK_X_16 = 14 << POSITION,
+              PLL_INPUT_CLOCK_X_2 = 0 << POSITION,
+              PLL_INPUT_CLOCK_X_3 = 1 << POSITION,
+#endif // CONNECTIVITY_LINE
+              PLL_INPUT_CLOCK_X_4 = 2 << POSITION,
+              PLL_INPUT_CLOCK_X_5 = 3 << POSITION,
+              PLL_INPUT_CLOCK_X_6 = 4 << POSITION,
+              PLL_INPUT_CLOCK_X_7 = 5 << POSITION,
+              PLL_INPUT_CLOCK_X_8 = 6 << POSITION,
+              PLL_INPUT_CLOCK_X_9 = 7 << POSITION,
+#ifndef CONNECTIVITY_LINE
+              PLL_INPUT_CLOCK_X_10 = 8 << POSITION,
+              PLL_INPUT_CLOCK_X_11 = 9 << POSITION,
+              PLL_INPUT_CLOCK_X_12 = 10 << POSITION,
+              PLL_INPUT_CLOCK_X_13 = 11 << POSITION,
+              PLL_INPUT_CLOCK_X_14 = 12 << POSITION,
+              PLL_INPUT_CLOCK_X_15 = 13 << POSITION,
+              PLL_INPUT_CLOCK_X_16 = 14 << POSITION,
 #else // !CONNECTIVITY_LINE
-            INPUT_CLOCK_X_6_DOT_5 = 13 << POSITION,
+              PLL_INPUT_CLOCK_X_6_DOT_5 = 13 << POSITION,
 #endif // !CONNECTIVITY_LINE
             };
           }  // namespace states
@@ -478,8 +584,8 @@ namespace rcc {
           };
           namespace states {
             enum E {
-              PLL_CLOCK_NOT_DIVIDED = 0 << POSITION,
-              PLL_CLOCK_DIVIDED_BY_1_DOT_5 = 1 << POSITION,
+              PLL_CLOCK_DIVIDED_BY_1_DOT_5 = 0 << POSITION,
+              PLL_CLOCK_NOT_DIVIDED = 1 << POSITION,
             };
           }  // namespace states
         }
@@ -489,14 +595,14 @@ namespace rcc {
           enum {MASK = 0b1111 << POSITION};
           namespace states {
             enum E {
-              NO_CLOCK = 0b0000 << POSITION,
-              SYSTEM_CLOCK = 0b0100 << POSITION,
-              HSI_CLOCK = 0b0101 << POSITION,
-              HSE_CLOCK = 0b0110 << POSITION,
-              PLL_CLOCK_OVER_2 = 0b0111 << POSITION,
-              PLL2_CLOCK = 0b1000 << POSITION,
-              XT1_CLOCK = 0b1010 << POSITION,
-              PLL3_CLOCK = 0b1011 << POSITION,
+              NO_CLOCK_OUTPUT = 0b0000 << POSITION,
+              OUTPUT_SYSTEM_CLOCK = 0b0100 << POSITION,
+              OUTPUT_HSI_CLOCK = 0b0101 << POSITION,
+              OUTPUT_HSE_CLOCK = 0b0110 << POSITION,
+              OUTPUT_PLL_CLOCK_OVER_2 = 0b0111 << POSITION,
+              OUTPUT_PLL2_CLOCK = 0b1000 << POSITION,
+              OUTPUT_XT1_CLOCK = 0b1010 << POSITION,
+              OUTPUT_PLL3_CLOCK = 0b1011 << POSITION,
             };
           }  // namespace states
         }  // namespace mco
@@ -510,25 +616,111 @@ namespace rcc {
           };
           namespace states {
             enum E {
-              NO_CLOCK = 0b000 << POSITION,
-              SYSTEM_CLOCK = 0b100 << POSITION,
-              HSI_CLOCK = 0b101 << POSITION,
-              HSE_CLOCK = 0b110 << POSITION,
-              PLL_CLOCK_OVER_2 = 0b111 << POSITION,
+              NO_CLOCK_OUTPUT = 0b000 << POSITION,
+              OUTPUT_SYSTEM_CLOCK = 0b100 << POSITION,
+              OUTPUT_HSI_CLOCK = 0b101 << POSITION,
+              OUTPUT_HSE_CLOCK = 0b110 << POSITION,
+              OUTPUT_PLL_CLOCK_OVER_2 = 0b111 << POSITION,
             };
           }  // namespace states
         }  // namespace mco
 #endif // CONNECTIVITY_LINE
+#else // STM32F1XX
+        namespace rtcpre {
+          enum {
+            POSITION = 16
+          };
+          enum {
+            MASK = 0b11111 << POSITION
+          };
+        }  // namespace rtcpre
+
+        namespace mco1 {
+          enum {
+            POSITION = 21
+          };
+          enum {
+            MASK = 0b11 << POSITION
+          };
+          namespace states {
+            enum E {
+              OUTPUT_HSI_CLOCK = 0 << POSITION,
+              OUTPUT_LSE_CLOCK = 1 << POSITION,
+              OUTPUT_HSE_CLOCK = 2 << POSITION,
+              OUTPUT_PLL_CLOCK = 3 << POSITION,
+            };
+          }  // namespace states
+        }  // namespace mco1
+
+        namespace i2ssrc {
+          enum {
+            POSITION = 23
+          };
+          enum {
+            MASK = 1 << POSITION
+          };
+          namespace states {
+            enum E {
+              PLLI2S_USED_AS_I2S_CLOCK_SOURCE = 0 << POSITION,
+              I2S_CKIN_USED_AS_I2S_CLOCK_SOURCE = 1 << POSITION,
+            };
+          }  // namespace states
+        }  // namespace i2ssrc
+
+        namespace mco1pre {
+          enum {
+            POSITION = 24
+          };
+          enum {
+            MASK = 0b111 << POSITION
+          };
+        }  // namespace mco1pre
+
+        namespace mco2pre {
+          enum {
+            POSITION = 27
+          };
+          enum {
+            MASK = 0b111 << POSITION
+          };
+        }  // namespace mco2pre
+
+        namespace mco2 {
+          enum {
+            POSITION = 30
+          };
+          enum {
+            MASK = 0b11 << POSITION
+          };
+          namespace states {
+            enum E {
+              OUTPUT_SYSTEM_CLOCK = 0 << POSITION,
+              OUTPUT_PLLI2S_CLOCK = 1 << POSITION,
+              OUTPUT_HSE_CLOCK = 2 << POSITION,
+              OUTPUT_PLL_CLOCK = 3 << POSITION,
+            };
+          }  // namespace states
+        }  // namespace mco2
+#endif // STM32F1XX
       }  // namespace bits
     }  // namespace cfgr
-
     namespace cir {
+#ifdef STM32F1XX
       enum {
         OFFSET = 0x08
       };
+#else // STM32F1XX
+      enum {
+        OFFSET = 0x0C
+      };
+#endif // STM32F1XX
+      namespace bits {
+      // TODO RCC CIR bits
+      }// namespace bits
     }  // namespace cir
 
     namespace apb2rstr {
+#ifdef STM32F1XX
       enum {
         OFFSET = 0x0C
       };
@@ -557,9 +749,30 @@ namespace rcc {
           TIM11 = 1 << 21,
         };
       }  // namespace bits
+#else // STM32F1XX
+      enum {
+        OFFSET = 0x24
+      };
+      namespace bits {
+        enum E {
+          TIM1 = 1 << 0,
+          TIM8 = 1 << 1,
+          USART1 = 1 << 4,
+          USART6 = 1 << 5,
+          ADC = 1 << 8,
+          SDIO = 1 << 11,
+          SPI1 = 1 << 12,
+          SYSCFG = 1 << 14,
+          TIM9 = 1 << 16,
+          TIM10 = 1 << 17,
+          TIM11 = 1 << 18,
+        };
+      }  // namespace states
+#endif // STM32F1XX
     }  // namespace apb2rstr
 
     namespace apb1rstr {
+#ifdef STM32F1XX
       enum {
         OFFSET = 0x10
       };
@@ -592,8 +805,41 @@ namespace rcc {
           CEC = 1 << 30,
         };
       }  // namespace bits
+#else // STM32F1XX
+      enum {
+        OFFSET = 0x20
+      };
+      namespace bits {
+        enum E {
+          TIM2 = 1 << 0,
+          TIM3 = 1 << 1,
+          TIM4 = 1 << 2,
+          TIM5 = 1 << 3,
+          TIM6 = 1 << 4,
+          TIM7 = 1 << 5,
+          TIM12 = 1 << 6,
+          TIM13 = 1 << 7,
+          TIM14 = 1 << 8,
+          WWDG = 1 << 11,
+          SPI2 = 1 << 14,
+          SPI3 = 1 << 15,
+          USART2 = 1 << 17,
+          USART3 = 1 << 18,
+          UART4 = 1 << 19,
+          UART5 = 1 << 20,
+          I2C1 = 1 << 21,
+          I2C2 = 1 << 22,
+          I2C3 = 1 << 23,
+          CAN1 = 1 << 25,
+          CAN2 = 1 << 26,
+          PWR = 1 << 28,
+          DAC = 1 << 29,
+        };
+      }  // namespace states
+#endif // STM32F1XX
     }  // namespace apb1rstr
 
+#ifdef STM32F1XX
     namespace ahbenr {
       enum {
         OFFSET = 0x14
@@ -614,8 +860,9 @@ namespace rcc {
         };
       }  // namespace bits
     }  // namespace ahbenr
-
+#endif // STM32F1XX
     namespace apb2enr {
+#ifdef STM32F1XX
       enum {
         OFFSET = 0x18
       };
@@ -645,9 +892,32 @@ namespace rcc {
           RESET = 0,
         };
       }  // namespace bits
+#else // STM32F1XX
+      enum {
+        OFFSET = 0x44
+      };
+      namespace bits {
+        enum E {
+          TIM1 = 1 << 0,
+          TIM8 = 1 << 1,
+          USART1 = 1 << 4,
+          USART6 = 1 << 5,
+          ADC1 = 1 << 8,
+          ADC2 = 1 << 9,
+          ADC3 = 1 << 10,
+          SDIO = 1 << 11,
+          SPI1 = 1 << 12,
+          SYSCFG = 1 << 14,
+          TIM9 = 1 << 16,
+          TIM10 = 1 << 17,
+          TIM11 = 1 << 18,
+        };
+      }  // namespace states
+#endif // STM32F1XX
     }  // namespace apb2enr
 
     namespace apb1enr {
+#ifdef STM32F1XX
       enum {
         OFFSET = 0x1C
       };
@@ -681,20 +951,309 @@ namespace rcc {
           RESET = 0,
         };
       }  // namespace bits
+#else // STM32F1XX
+      enum {
+        OFFSET = 0x40
+      };
+      namespace bits {
+        enum E {
+          TIM2 = 1 << 0,
+          TIM3 = 1 << 1,
+          TIM4 = 1 << 2,
+          TIM5 = 1 << 3,
+          TIM6 = 1 << 4,
+          TIM7 = 1 << 5,
+          TIM12 = 1 << 6,
+          TIM13 = 1 << 7,
+          TIM14 = 1 << 8,
+          WWDG = 1 << 11,
+          SPI2 = 1 << 14,
+          SPI3 = 1 << 15,
+          USART2 = 1 << 17,
+          USART3 = 1 << 18,
+          UART4 = 1 << 19,
+          UART5 = 1 << 20,
+          I2C1 = 1 << 21,
+          I2C2 = 1 << 22,
+          I2C3 = 1 << 23,
+          CAN1 = 1 << 25,
+          CAN2 = 1 << 26,
+          PWR = 1 << 28,
+          DAC = 1 << 29,
+        };
+      }  // namespace states
+#endif // STM32F1XX
     }  // namespace apb1enr
 
     namespace bdcr {
+#ifdef STM32F1XX
       enum {
         OFFSET = 0x20
       };
+#else // STM32F1XX
+      enum {
+        OFFSET = 0x70
+      };
+#endif // STM32F1XX
+      namespace bits {
+        namespace lseon {
+          enum {
+            POSITION = 0
+          };
+          enum {
+            MASK = 1 << POSITION
+          };
+          namespace states {
+            enum E {
+              LSE_CLOCK_OFF = 0 << POSITION,
+              LSE_CLOCK_ON = 1 << POSITION,
+            };
+          }  // namespace states
+        }  // namespace lseon
+
+        namespace lserdy {
+          enum {
+            POSITION = 1
+          };
+          enum {
+            MASK = 1 << POSITION
+          };
+          namespace states {
+            enum E {
+              LSE_CLOCK_NOT_READY = 0 << POSITION,
+              LSE_CLOCK_READY = 1 << POSITION,
+            };
+          }  // namespace states
+        }  // namespace lserdy
+
+        namespace lsebyp {
+          enum {
+            POSITION = 2
+          };
+          enum {
+            MASK = 1 << POSITION
+          };
+          namespace states {
+            enum E {
+              LSE_OSCILLATOR_NOT_BYPASSED = 0 << POSITION,
+              LSE_OSCILLATOR_BYPASSED = 1 << POSITION,
+            };
+          }  // namespace states
+        }  // namespace lsebyp
+
+        namespace rtcsel {
+          enum {
+            POSITION = 8
+          };
+          enum {
+            MASK = 0b11 << POSITION
+          };
+          namespace states {
+            enum E {
+              NO_RTC_CLOCK_SOURCE = 0 << POSITION,
+              LSE_CLOCK_AS_RTC_SOURCE = 1 << POSITION,
+              LSI_CLOCK_AS_RTC_SOURCE = 2 << POSITION,
+              HSE_CLOCK_AS_RTC_SOURCE = 3 << POSITION,
+            };
+          }  // namespace states
+        }  // namespace rtcsel
+
+        namespace rtcen {
+          enum {
+            POSITION = 15
+          };
+          enum {
+            MASK = 1 << POSITION
+          };
+          namespace states {
+            enum E {
+              RTC_CLOCK_DISABLED = 0 << POSITION,
+              RTC_CLOCK_ENABLED = 1 << POSITION,
+            };
+          }  // namespace states
+        }  // namespace rtcen
+
+        namespace bdrst {
+          enum {
+            POSITION = 16
+          };
+          enum {
+            MASK = 1 << POSITION
+          };
+          namespace states {
+            enum E {
+              BACKUP_DOMAIN_NOT_RESETTED = 0 << POSITION,
+              RESET_THE_BACKUP_DOMAIN = 1 << POSITION,
+            };
+          }  // namespace states
+        }  // namespace bdrst
+      }  // namespace bits
     }  // namespace bdcr
 
     namespace csr {
+#ifdef STM32F1XX
       enum {
         OFFSET = 0x24
       };
+#else // STM32F1XX
+      enum {
+        OFFSET = 0x74
+      };
+#endif // STM32F1XX
+      namespace bits {
+        namespace lsion {
+          enum {
+            POSITION = 0
+          };
+          enum {
+            MASK = 1 << POSITION
+          };
+          namespace states {
+            enum E {
+              LSI_OSCILLATOR_OFF = 0 << POSITION,
+              LSI_OSCILLATOR_ON = 1 << POSITION,
+            };
+          }  // namespace states
+        }  // namespace lsion
+
+        namespace lsirdy {
+          enum {
+            POSITION = 1
+          };
+          enum {
+            MASK = 1 << POSITION
+          };
+          namespace states {
+            enum E {
+              LSI_OSCILLATOR_NOT_READY = 0 << POSITION,
+              LSI_OSCILLATOR_READY = 1 << POSITION,
+            };
+          }  // namespace states
+        }  // namespace lsirdy
+
+        namespace rmvf {
+          enum {
+            POSITION = 24
+          };
+          enum {
+            MASK = 1 << POSITION
+          };
+          namespace states {
+            enum E {
+              NO_EFFECT = 0 << POSITION,
+              CLEAR_THE_RESET_FLAGS = 1 << POSITION,
+            };
+          }  // namespace states
+        }  // namespace rmvf
+
+        namespace borrstf {
+          enum {
+            POSITION = 25
+          };
+          enum {
+            MASK = 1 << POSITION
+          };
+          namespace states {
+            enum E {
+              NO_POR_PDR_BOR_RESET_OCCURRED = 0 << POSITION,
+              POR_PDR_BOR_RESET_OCCURRED = 1 << POSITION,
+            };
+          }  // namespace states
+        }  // namespace borrstf
+
+        namespace pinrstf {
+          enum {
+            POSITION = 26
+          };
+          enum {
+            MASK = 1 << POSITION
+          };
+          namespace states {
+            enum E {
+              NO_NRST_PIN_RESET_OCCURRED = 0 << POSITION,
+              NRST_PIN_RESET_OCCURRED = 1 << POSITION,
+            };
+          }  // namespace states
+        }  // namespace pinrstf
+
+        namespace porrstf {
+          enum {
+            POSITION = 27
+          };
+          enum {
+            MASK = 1 << POSITION
+          };
+          namespace states {
+            enum E {
+              NO_POR_PDR_RESET_OCCURRED = 0 << POSITION,
+              POR_PDR_RESET_OCCURRED = 1 << POSITION,
+            };
+          }  // namespace states
+        }  // namespace porrstf
+
+        namespace sftrstf {
+          enum {
+            POSITION = 28
+          };
+          enum {
+            MASK = 1 << POSITION
+          };
+          namespace states {
+            enum E {
+              NO_SOFTWARE_RESET_OCCURRED = 0 << POSITION,
+              SOFTWARE_RESET_OCCURRED = 1 << POSITION,
+            };
+          }  // namespace states
+        }  // namespace sftrstf
+
+        namespace iwdgrstf {
+          enum {
+            POSITION = 29
+          };
+          enum {
+            MASK = 1 << POSITION
+          };
+          namespace states {
+            enum E {
+              NO_WATCHDOG_RESET_OCCURRED = 0 << POSITION,
+              WATCHDOG_RESET_OCCURRED = 1 << POSITION,
+            };
+          }  // namespace states
+        }  // namespace iwdgrstf
+
+        namespace wwdgrstf {
+          enum {
+            POSITION = 30
+          };
+          enum {
+            MASK = 1 << POSITION
+          };
+          namespace states {
+            enum E {
+              NO_WINDOW_WATCHDOG_RESET_OCCURRED = 0 << POSITION,
+              WINDOW_WATCHDOG_RESET_OCCURRED = 1 << POSITION,
+            };
+          }  // namespace states
+        }  // namespace wwdgrstf
+
+        namespace lpwrrstf {
+          enum {
+            POSITION = 31
+          };
+          enum {
+            MASK = 1 << POSITION
+          };
+          namespace states {
+            enum E {
+              NO_LOW_POWER_MANAGEMENT_RESET_OCCURRED = 0 << POSITION,
+              LOW_POWER_MANAGEMENT_RESET_OCCURRED = 1 << POSITION,
+            };
+          }  // namespace states
+        }  // namespace lpwrrstf
+      }  // namespace bits
     }  // namespace csr
 
+#ifdef CONNECTIVITY_LINE
     namespace ahbrstr {
       enum {
         OFFSET = 0x28
@@ -706,7 +1265,6 @@ namespace rcc {
         };
       }  // namespace states
     }  // namespace ahbrstr
-
     namespace cfgr2 {
       enum {
         OFFSET = 0x2C
@@ -757,7 +1315,7 @@ namespace rcc {
           };
           namespace states {
             enum E {
-              USE_HSE_AS_PREDIV1_INPUT = 0 << POSITION,
+              USE_HSE_OSCILLATOR_AS_PREDIV1_INPUT = 0 << POSITION,
               USE_PLL2_AS_PREDIV1_INPUT = 1 << POSITION
             };
           }  // namespace states
@@ -794,389 +1352,25 @@ namespace rcc {
         }  // namespace i2s3src
       }  // namespace bits
     }  // namespace cfgr2
-  }  // namespace registers
-#else // STM32F1XX
-  namespace registers {
-    namespace cr {
+#endif // CONNECTIVITY_LINE
+#ifdef VALUE_LINE
+    namespace cfgr2 {
       enum {
-        OFFSET = 0x00
+        OFFSET = 0x2C
       };
       namespace bits {
-        namespace hsion {
+        namespace prediv1 {
           enum {
             POSITION = 0
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              HSI_OFF = 0 << POSITION,
-              HSI_ON = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace hsion
-
-        namespace hsirdy {
-          enum {
-            POSITION = 1
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              HSI_NOT_READY = 0 << POSITION,
-              HSI_READY = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace hsirdy
-
-        namespace hseon {
-          enum {
-            POSITION = 16
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              HSE_OFF = 0 << POSITION,
-              HSE_ON = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace hseon
-
-        namespace hserdy {
-          enum {
-            POSITION = 17
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              HSE_NOT_READY = 0 << POSITION,
-              HSE_READY = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace hserdy
-
-        namespace hsebyp {
-          enum {
-            POSITION = 18
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              HSE_NOT_BYPASSED = 0 << POSITION,
-              HSE_BYPASSED_WITH_EXTERNAL_CLOCK = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace hsebyp
-
-        namespace csson {
-          enum {
-            POSITION = 19
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              CLOCK_DETECTOR_OFF = 0 << POSITION,
-              CLOCK_DETECTOR_ON = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace csson
-
-        namespace pllon {
-          enum {
-            POSITION = 24
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              PLL_OFF = 0 << POSITION,
-              PLL_ON = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace pllon
-
-        namespace pllrdy {
-          enum {
-            POSITION = 25
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              PLL_UNLOCKED = 0 << POSITION,
-              PLL_LOCKED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace pllrdy
-
-        namespace plli2son {
-          enum {
-            POSITION = 26
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              PLLI2S_OFF = 0 << POSITION,
-              PLLI2S_ON = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace plli2son
-
-        namespace plli2srdy {
-          enum {
-            POSITION = 27
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              PLLI2S_UNLOCKED = 0 << POSITION,
-              PLLI2S_LOCKED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace plli2srdy
-      }  // namespace bits
-    }  // namespace cr
-
-    namespace pllcfgr {
-      enum {
-        OFFSET = 0x04
-      };
-      namespace bits {
-        namespace pllm {
-          enum {
-            POSITION = 0
-          };
-          enum {
-            MASK = 0b111111 << POSITION
-          };
-        }  // namespace pllm
-
-        namespace plln {
-          enum {
-            POSITION = 6
-          };
-          enum {
-            MASK = 0b111111111 << POSITION
-          };
-        }  // namespace plln
-
-        namespace pllp {
-          enum {
-            POSITION = 16
-          };
-          enum {
-            MASK = 0b11 << POSITION
-          };
-        }  // namespace pllp
-
-        namespace pllsrc {
-          enum {
-            POSITION = 22
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              HSI = 0 << 22,
-              HSE = 1 << 22,
-            };
-          }  // namespace states
-        }  // namespace pllsrc
-
-        namespace pllq {
-          enum {
-            POSITION = 24
           };
           enum {
             MASK = 0b1111 << POSITION
           };
-        }  // namespace pllq
+        }  // namespace prediv1
       }  // namespace bits
-    }  // namespace pllcfgr
-
-    namespace cfgr {
-      enum {
-        OFFSET = 0x08
-      };
-      namespace bits {
-        namespace sw {
-          enum {
-            POSITION = 0
-          };
-          enum {
-            MASK = 0b11 << POSITION
-          };
-          namespace states {
-            enum E {
-              HSI = 0 << POSITION,
-              HSE = 1 << POSITION,
-              PLL = 2 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace sw
-        namespace sws {
-          enum {
-            POSITION = 2
-          };
-          enum {
-            MASK = 0b11 << POSITION
-          };
-          namespace states {
-            enum E {
-              HSI = 0 << POSITION,
-              HSE = 1 << POSITION,
-              PLL = 2 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace sws
-
-        namespace hpre {
-          enum {
-            POSITION = 4
-          };
-          enum {
-            MASK = 0b1111 << POSITION
-          };
-        }  // namespace hpre
-
-        namespace ppre1 {
-          enum {
-            POSITION = 10
-          };
-          enum {
-            MASK = 0b111 << POSITION
-          };
-        }  // namespace ppre1
-
-        namespace ppre2 {
-          enum {
-            POSITION = 13
-          };
-          enum {
-            MASK = 0b111 << POSITION
-          };
-        }  // namespace ppre2
-
-        namespace rtcpre {
-          enum {
-            POSITION = 16
-          };
-          enum {
-            MASK = 0b11111 << POSITION
-          };
-        }  // namespace rtcpre
-
-        namespace mco1 {
-          enum {
-            POSITION = 21
-          };
-          enum {
-            MASK = 0b11 << POSITION
-          };
-          namespace states {
-            enum E {
-              HSI = 0 << POSITION,
-              LSE = 1 << POSITION,
-              HSE = 2 << POSITION,
-              PLL = 3 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace mco1
-
-        namespace i2ssrc {
-          enum {
-            POSITION = 23
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              PLLI2S = 0,
-              I2S_CKIN = 1,
-            };
-          }  // namespace states
-        }  // namespace i2ssrc
-
-        namespace mco1pre {
-          enum {
-            POSITION = 24
-          };
-          enum {
-            MASK = 0b111 << POSITION
-          };
-          namespace states {
-            enum E {
-              NO_DIV = 0,
-              DIV_BY_2 = 4,
-              DIV_BY_3 = 5,
-              DIV_BY_4 = 6,
-              DIV_BY_5 = 7,
-            };
-          }  // namespace states
-        }  // namespace mco1pre
-
-        namespace mco2pre {
-          enum {
-            POSITION = 27
-          };
-          enum {
-            MASK = 0b111 << POSITION
-          };
-          namespace states {
-            enum E {
-              NO_DIV = 0,
-              DIV_BY_2 = 4,
-              DIV_BY_3 = 5,
-              DIV_BY_4 = 6,
-              DIV_BY_5 = 7,
-            };
-          }  // namespace states
-        }  // namespace mco2pre
-
-        namespace mco2 {
-          enum {
-            POSITION = 30
-          };
-          enum {
-            MASK = 0b11 << POSITION
-          };
-          namespace states {
-            enum E {
-              SYSCLK = 0,
-              PLLI2S = 1,
-              HSE = 2,
-              PLL = 3,
-            };
-          }  // namespace states
-        }  // namespace mco2
-      }  // namespace bits
-    }  // namespace cfgr
-
-    namespace cir {
-      enum {
-        OFFSET = 0x0C
-      };
-    }  // namespace cir
-
+    }  // namespace cfgr2
+#endif // VALUE_LINE
+#ifndef STM32F1XX
     namespace ahb1rstr {
       enum {
         OFFSET = 0x10
@@ -1227,60 +1421,6 @@ namespace rcc {
       }  // namespace states
     }  // namespace ahb3rstr
 
-    namespace apb1rstr {
-      enum {
-        OFFSET = 0x20
-      };
-      namespace bits {
-        enum E {
-          TIM2 = 1 << 0,
-          TIM3 = 1 << 1,
-          TIM4 = 1 << 2,
-          TIM5 = 1 << 3,
-          TIM6 = 1 << 4,
-          TIM7 = 1 << 5,
-          TIM12 = 1 << 6,
-          TIM13 = 1 << 7,
-          TIM14 = 1 << 8,
-          WWDG = 1 << 11,
-          SPI2 = 1 << 14,
-          SPI3 = 1 << 15,
-          USART2 = 1 << 17,
-          USART3 = 1 << 18,
-          UART4 = 1 << 19,
-          UART5 = 1 << 20,
-          I2C1 = 1 << 21,
-          I2C2 = 1 << 22,
-          I2C3 = 1 << 23,
-          CAN1 = 1 << 25,
-          CAN2 = 1 << 26,
-          PWR = 1 << 28,
-          DAC = 1 << 29,
-        };
-      }  // namespace states
-    }  // namespace apb1rstr
-
-    namespace apb2rstr {
-      enum {
-        OFFSET = 0x24
-      };
-      namespace bits {
-        enum E {
-          TIM1 = 1 << 0,
-          TIM8 = 1 << 1,
-          USART1 = 1 << 4,
-          USART6 = 1 << 5,
-          ADC = 1 << 8,
-          SDIO = 1 << 11,
-          SPI1 = 1 << 12,
-          SYSCFG = 1 << 14,
-          TIM9 = 1 << 16,
-          TIM10 = 1 << 17,
-          TIM11 = 1 << 18,
-        };
-      }  // namespace states
-    }  // namespace apb2rstr
-
     namespace ahb1enr {
       enum {
         OFFSET = 0x30
@@ -1298,9 +1438,9 @@ namespace rcc {
           GPIOI = 1 << 8,
           CRC = 1 << 12,
           BKPSRAM = 1 << 18,
-#ifdef STM32F4XX
+          #ifdef STM32F4XX
           CCMDATARAM = 1 << 20,
-#endif // STM32F2XX
+          #endif // STM32F2XX
           DMA1 = 1 << 21,
           DMA2 = 1 << 22,
           ETHMAC = 1 << 25,
@@ -1339,62 +1479,6 @@ namespace rcc {
       }  // namespace states
     }  // namespace ahb3enr
 
-    namespace apb1enr {
-      enum {
-        OFFSET = 0x40
-      };
-      namespace bits {
-        enum E {
-          TIM2 = 1 << 0,
-          TIM3 = 1 << 1,
-          TIM4 = 1 << 2,
-          TIM5 = 1 << 3,
-          TIM6 = 1 << 4,
-          TIM7 = 1 << 5,
-          TIM12 = 1 << 6,
-          TIM13 = 1 << 7,
-          TIM14 = 1 << 8,
-          WWDG = 1 << 11,
-          SPI2 = 1 << 14,
-          SPI3 = 1 << 15,
-          USART2 = 1 << 17,
-          USART3 = 1 << 18,
-          UART4 = 1 << 19,
-          UART5 = 1 << 20,
-          I2C1 = 1 << 21,
-          I2C2 = 1 << 22,
-          I2C3 = 1 << 23,
-          CAN1 = 1 << 25,
-          CAN2 = 1 << 26,
-          PWR = 1 << 28,
-          DAC = 1 << 29,
-        };
-      }  // namespace states
-    }  // namespace apb1enr
-
-    namespace apb2enr {
-      enum {
-        OFFSET = 0x44
-      };
-      namespace bits {
-        enum E {
-          TIM1 = 1 << 0,
-          TIM8 = 1 << 1,
-          USART1 = 1 << 4,
-          USART6 = 1 << 5,
-          ADC1 = 1 << 8,
-          ADC2 = 1 << 9,
-          ADC3 = 1 << 10,
-          SDIO = 1 << 11,
-          SPI1 = 1 << 12,
-          SYSCFG = 1 << 14,
-          TIM9 = 1 << 16,
-          TIM10 = 1 << 17,
-          TIM11 = 1 << 18,
-        };
-      }  // namespace states
-    }  // namespace apb2enr
-
     namespace ahb1lpenr {
       enum {
         OFFSET = 0x50
@@ -1425,22 +1509,13 @@ namespace rcc {
       };
     }  // namespace apb2lpenr
 
-    namespace bdcr {
-      enum {
-        OFFSET = 0x70
-      };
-    }  // namespace bdcr
-
-    namespace csr {
-      enum {
-        OFFSET = 0x74
-      };
-    }  // namespace csr
-
     namespace sscgr {
       enum {
         OFFSET = 0x80
       };
+      namespace bits {
+      // TODO RCC SSCGR bits
+      }// namespace bits
     }  // namespace sscgr
 
     namespace plli2scfgr {
@@ -1467,6 +1542,6 @@ namespace rcc {
         }  // namespace plli2sr
       }  // namespace bits
     }  // namespace plli2scfgr
+#endif // !STM32F1XX
   }  // namespace registers
-#endif
 }  // namespace rcc

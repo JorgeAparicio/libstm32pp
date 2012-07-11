@@ -27,6 +27,116 @@
 namespace rcc {
 
   /**
+   * @brief Enables the external oscillator circuitry.
+   */
+  void Functions::enableHse()
+  {
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::cr::OFFSET,
+        registers::cr::bits::hseon::POSITION
+    >::address) = 1;
+  }
+
+  /**
+   * @brief Disables the external oscillator circuitry.
+   */
+  void Functions::disableHse()
+  {
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::cr::OFFSET,
+        registers::cr::bits::hseon::POSITION
+    >::address) = 0;
+  }
+
+  /**
+   * @brief Returns true if the HSE oscillator is stable.
+   */
+  bool Functions::isHseStable()
+  {
+    return *(bool*) (bitband::Peripheral<
+        ADDRESS + registers::cr::OFFSET,
+        registers::cr::bits::hserdy::POSITION
+    >::address);
+  }
+
+  /**
+   * @brief Enables the HSE oscillator for a external crystal/resonator.
+   */
+  void Functions::enableHseOscillator()
+  {
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::cr::OFFSET,
+        registers::cr::bits::hsebyp::POSITION
+    >::address) = 0;
+  }
+
+  /**
+   * @brief Bypasses the HSE oscillator with an external clock.
+   */
+  void Functions::disableHseOscillator()
+  {
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::cr::OFFSET,
+        registers::cr::bits::hsebyp::POSITION
+    >::address) = 1;
+  }
+
+  /**
+   * @brief Enables the external oscillator circuitry.
+   */
+  void Functions::enableLse()
+  {
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::bdcr::OFFSET,
+        registers::bdcr::bits::lseon::POSITION
+    >::address) = 1;
+  }
+
+  /**
+   * @brief Disables the external oscillator circuitry.
+   */
+  void Functions::disableLse()
+  {
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::bdcr::OFFSET,
+        registers::bdcr::bits::lseon::POSITION
+    >::address) = 0;
+  }
+
+  /**
+   * @brief Returns true if the HSE oscillator is stable.
+   */
+  bool Functions::isLseStable()
+  {
+    return *(bool*) (bitband::Peripheral<
+        ADDRESS + registers::bdcr::OFFSET,
+        registers::bdcr::bits::lserdy::POSITION
+    >::address);
+  }
+
+  /**
+   * @brief Enables the LSE oscillator for a external crystal/resonator.
+   */
+  void Functions::enableLseOscillator()
+  {
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::bdcr::OFFSET,
+        registers::bdcr::bits::lsebyp::POSITION
+    >::address) = 0;
+  }
+
+  /**
+   * @brief Bypasses the LSE oscillator with an external clock.
+   */
+  void Functions::disableLseOscillator()
+  {
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::bdcr::OFFSET,
+        registers::bdcr::bits::lsebyp::POSITION
+    >::address) = 1;
+  }
+
+  /**
    * @brief Enables the HSI oscillator.
    */
   void Functions::enableHsi()
@@ -60,36 +170,58 @@ namespace rcc {
   }
 
   /**
-   * @brief Enables the external oscillator circuitry.
+   * @brief Enables the HSI oscillator.
    */
-  void Functions::enableHse()
+  void Functions::enableLsi()
   {
     *(u32*) (bitband::Peripheral<
-        ADDRESS + registers::cr::OFFSET,
-        registers::cr::bits::hseon::POSITION
+        ADDRESS + registers::csr::OFFSET,
+        registers::csr::bits::lsion::POSITION
     >::address) = 1;
   }
 
   /**
-   * @brief Disables the external oscillator circuitry.
+   * @brief Enables the HSI oscillator.
    */
-  void Functions::disableHse()
+  void Functions::disableLsi()
   {
     *(u32*) (bitband::Peripheral<
-        ADDRESS + registers::cr::OFFSET,
-        registers::cr::bits::hseon::POSITION
+        ADDRESS + registers::csr::OFFSET,
+        registers::csr::bits::lsion::POSITION
     >::address) = 0;
   }
 
   /**
-   * @brief Returns true if the HSE oscillator is stable.
+   * @brief Enables the HSI oscillator.
    */
-  bool Functions::isHseStable()
+  bool Functions::isLsiStable()
   {
     return *(bool*) (bitband::Peripheral<
-        ADDRESS + registers::cr::OFFSET,
-        registers::cr::bits::hserdy::POSITION
+        ADDRESS + registers::csr::OFFSET,
+        registers::csr::bits::lsirdy::POSITION
     >::address);
+  }
+
+  /**
+   * @brief Enables the Real Time Clock.
+   */
+  void Functions::enableRtc()
+  {
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::bdcr::OFFSET,
+        registers::bdcr::bits::rtcen::POSITION
+    >::address) = 1;
+  }
+
+  /**
+   * @brief Disables the Real Time Clock.
+   */
+  void Functions::disableRtc()
+  {
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::bdcr::OFFSET,
+        registers::bdcr::bits::rtcen::POSITION
+    >::address) = 0;
   }
 
   /**
@@ -194,18 +326,6 @@ namespace rcc {
 #endif
 
   /**
-   * @brief Selects the system clock source.
-   */
-  template<
-      registers::cfgr::bits::sw::states::E SW
-  >
-  void Functions::selectSystemClockSource()
-  {
-    _RCC->CFGR &= ~registers::cfgr::bits::sw::MASK;
-    _RCC->CFGR |= SW;
-  }
-
-  /**
    * @brief Tests if the system clock source is stable.
    */
   bool Functions::isSystemClockSourceStable()
@@ -218,25 +338,27 @@ namespace rcc {
   }
 
   /**
-   * @brief Enables oscillator circuitry for external crystal/resonator.
+   * @brief Selects the system clock source.
    */
-  void Functions::enableOscillator()
+  template<
+      registers::cfgr::bits::sw::states::E SW
+  >
+  void Functions::selectSystemClockSource()
   {
-    *(u32*) (bitband::Peripheral<
-        ADDRESS + registers::cr::OFFSET,
-        registers::cr::bits::hsebyp::POSITION
-    >::address) = 0;
+    _RCC->CFGR &= ~registers::cfgr::bits::sw::MASK;
+    _RCC->CFGR |= SW;
   }
 
   /**
-   * @brief Bypasses the oscillator with an external clock.
+   * @brief Selects the RTC clock source.
    */
-  void Functions::disableOscillator()
+  template<
+      rcc::registers::bdcr::bits::rtcsel::states::E RTCSEL
+  >
+  void Functions::selectRtcClockSource()
   {
-    *(u32*) (bitband::Peripheral<
-        ADDRESS + registers::cr::OFFSET,
-        registers::cr::bits::hsebyp::POSITION
-    >::address) = 1;
+    _RCC->BDCR &= ~registers::bdcr::bits::rtcsel::MASK;
+    _RCC->BDCR |= RTCSEL;
   }
 
   /**
@@ -329,6 +451,17 @@ namespace rcc {
     _RCC->AHBENR &= ~cSum<AHBENR...>::value;
   }
 
+  template<
+  rcc::registers::cfgr::bits::mco::states::E MCO
+  >
+  void Functions::configureClockOutput()
+  {
+    _RCC->CFGR &= ~(rcc::registers::cfgr::bits::mco::MASK);
+
+    _RCC->CFGR |= MCO;
+  }
+
+#ifdef CONNECTIVITY_LINE
   /**
    * @brief Resets these peripherals. (AHB)
    */
@@ -339,6 +472,7 @@ namespace rcc {
   {
     _RCC->AHBRSTR = cSum<AHBRSTR...>::value;
   }
+#endif
 
 #ifdef VALUE_LINE
 
@@ -429,14 +563,14 @@ namespace rcc {
   /**
    * @brief Configures the various PLL prescalers and multipliers.
    * @note  The PLL circuitry must be off during configuration
-   * @note: Overrides the old configuration.
+   * @note  Overrides the old configuration.
    */
   template<
   rcc::registers::cfgr::bits::pllsrc::states::E PLLSRC,
   u8 PLLMUL,
   u8 PREDIV1
   >
-  static INLINE void configurePll()
+  void Functions::configurePll()
   {
     static_assert(PLLMUL < 16,
         "PLLMUL must be between 0 and 15. (inclusive)");
@@ -455,8 +589,8 @@ namespace rcc {
     _RCC->CFGR2 =
     (PREDIV1 << registers::cfgr2::bits::prediv1::POSITION);
   }
-
-#elif defined CONNECTIVITY_LINE
+#else // VALUE_LINE
+#ifdef CONNECTIVITY_LINE
 
   /**
    * @brief Configures the various PLL prescalers and multipliers.
@@ -502,14 +636,13 @@ namespace rcc {
     PREDIV1SRC + I2S2SRC + I2S3SRC;
   }
 
-#else
-
+#else // CONNECTIVITY_LINE
   /**
    * @brief Configures the various PLL prescalers and multipliers.
    * @note  The PLL circuitry must be off during the configuration
    * @note  Overrides the old configuration.
    */
-  template <
+  template<
   rcc::registers::cfgr::bits::pllsrc::states::E PLLSRC,
   u8 PLLXTPRE,
   u8 PLLMUL
@@ -530,7 +663,7 @@ namespace rcc {
     (PLLXTPRE << registers::cfgr::bits::pllxtpre::POSITION) +
     (PLLMUL << registers::cfgr::bits::pllmul::POSITION);
   }
-
+#endif // CONNECTIVITY_LINE
 #endif // VALUE_LINE
 #else // STM32F1XX
   /**
@@ -642,7 +775,8 @@ namespace rcc {
   >
   void Functions::configureI2sPll()
   {
-    _RCC->PLLCFGR |= registers::cfgr::bits::i2ssrc::states::PLLI2S;
+    _RCC->PLLCFGR |= registers::cfgr::bits::i2ssrc::states::
+        PLLI2S_USED_AS_I2S_CLOCK_SOURCE;
 
     _RCC->PLLI2SCFGR =
         (PLLI2SN << registers::plli2scfgr::bits::plli2sn::POSITION) +
@@ -656,7 +790,8 @@ namespace rcc {
   template<
       u8 HPRE,
       u8 PPRE1,
-      u8 PPRE2
+      u8 PPRE2,
+      u8 RTCPRE
   >
   void Functions::configurePrescalers()
   {
@@ -669,31 +804,35 @@ namespace rcc {
     static_assert(PPRE2 < 8,
         "The APB2 prescaler (PPRE2) must be lower than 8. (inclusive)");
 
+    static_assert(RTCPRE < 32,
+        "The RTC prescaler (RTCPRE) must be lower than 32. (inclusive)");
+
     _RCC->CFGR &=
         ~(registers::cfgr::bits::hpre::MASK +
             registers::cfgr::bits::ppre1::MASK +
-            registers::cfgr::bits::ppre2::MASK)
+            registers::cfgr::bits::ppre2::MASK +
+            registers::cfgr::bits::rtcpre::MASK)
         ;
     _RCC->CFGR |=
         (HPRE << registers::cfgr::bits::hpre::POSITION) +
             (PPRE1 << registers::cfgr::bits::ppre1::POSITION) +
-            (PPRE2 << registers::cfgr::bits::ppre2::POSITION)
+            (PPRE2 << registers::cfgr::bits::ppre2::POSITION) +
+            (RTCPRE << registers::cfgr::bits::rtcpre::POSITION)
             ;
   }
 
-  /**
-   * @brief Configures the HSE prescaler for the RTC.
-   * @note  Overrides the old configuration.
-   */
   template<
-      u8 RTCPRE
+      rcc::registers::cfgr::bits::mco1::states::E,
+      rcc::registers::cfgr::bits::mco2::states::E,
+      u8 MCOPRE1,
+      u8 MCOPRE2
   >
-  void Functions::configureRtcPrescaler()
+  void Functions::configureClockOutput()
   {
-    static_assert(RTCPRE < 32,
-        "The RTC prescaler (RTCPRE) must be lower than 32. (inclusive)");
-    _RCC->CFGR &= ~registers::cfgr::bits::rtcpre::MASK;
-    _RCC->CFGR |= (RTCPRE << registers::cfgr::bits::rtcpre::POSITION);
+    _RCC->CFGR &= ~(rcc::registers::cfgr::bits::mco1::MASK +
+        rcc::registers::cfgr::bits::mco2::MASK +
+        rcc::registers::cfgr::bits::mco1pre::MASK +
+        rcc::registers::cfgr::bits::mco2pre::MASK);
   }
 
 #endif // STM32F1XX

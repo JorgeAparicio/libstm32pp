@@ -26,7 +26,7 @@
 namespace flash {
   struct Registers {
       __RW
-      u32 ACR; // 0x00: Access control
+      u32 ACR;  // 0x00: Access control
   };
 
 #ifdef STM32F1XX
