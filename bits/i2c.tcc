@@ -34,7 +34,6 @@ namespace i2c {
       i2c::registers::cr1::bits::enpec::states::E ENPEC,
       i2c::registers::cr1::bits::engc::states::E ENGC,
       i2c::registers::cr1::bits::nostretch::states::E NOSTRETCH,
-      u8 FREQ,
       i2c::registers::cr2::bits::iterren::states::E ITERREN,
       i2c::registers::cr2::bits::itevten::states::E ITVEN,
       i2c::registers::cr2::bits::itbufen::states::E ITBUFEN,
@@ -43,14 +42,15 @@ namespace i2c {
   >
   void Standard<I>::configure()
   {
-    static_assert((FREQ >= 2) || (FREQ <= 42),
+    static_assert((FREQUENCY >= 2000000) || (FREQUENCY <= 42000000),
         "I2C Frequency must be between 2 MHz and 42 MHz (inclusive)");
 
     reinterpret_cast<Registers*>(I)->CR1 =
         PE + ENPEC + ENGC + NOSTRETCH;
 
     reinterpret_cast<Registers*>(I)->CR2 =
-        ITERREN + ITVEN + ITBUFEN + DMAEN + LAST + FREQ;
+        ITERREN + ITVEN + ITBUFEN + DMAEN + LAST +
+            ((FREQUENCY / 1000000) << registers::cr2::bits::freq::POSITION);
   }
 
   /**
@@ -62,20 +62,32 @@ namespace i2c {
    */
   template<address::E I>
   template<
-      i2c::registers::ccr::bits::f_s::states::E F_S,
-      i2c::registers::ccr::bits::duty::states::E DUTY,
-      u16 CCR
+      registers::ccr::bits::f_s::states::E F_S,
+      registers::ccr::bits::duty::states::E DUTY,
+      u32 FREQUENCY_HZ
   >
   void Standard<I>::configureClock()
   {
+    enum {
+      CCR = FREQUENCY
+          / (FREQUENCY_HZ
+              *
+              (F_S == registers::ccr::bits::f_s::states::STANDARD_MODE ?
+                  2 :
+                  (DUTY
+                      == registers::ccr::bits::duty::states::T_LOW_16_T_HIGH_9 ?
+                      25 :
+                      3)))
+    };
+
     static_assert(CCR < 2048,
-        "The maximum value for CCR is 2047.");
+        "This frequency can't be archived with this configuration.");
     static_assert((CCR >= 1) ||
         (F_S == registers::ccr::bits::f_s::states::STANDARD_MODE),
-        "The minimum value for CCR in FAST MODE is 1");
+        "This frequency can't be archived with this configuration.");
     static_assert((CCR >= 4) ||
         (F_S == registers::ccr::bits::f_s::states::FAST_MODE),
-        "The minimum value for CCR in STANDARD MODE is 4");
+        "This frequency can't be archived with this configuration.");
 
     reinterpret_cast<Registers*>(I)->CCR = F_S + DUTY + CCR;
   }

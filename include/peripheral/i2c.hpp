@@ -44,12 +44,15 @@ namespace i2c {
   template<address::E I>
   class Standard {
     public:
+      enum {
+        FREQUENCY = clock::APB1
+      };
+
       template<
           i2c::registers::cr1::bits::pe::states::E,
           i2c::registers::cr1::bits::enpec::states::E,
           i2c::registers::cr1::bits::engc::states::E,
           i2c::registers::cr1::bits::nostretch::states::E,
-          u8 FREQ,
           i2c::registers::cr2::bits::iterren::states::E,
           i2c::registers::cr2::bits::itevten::states::E,
           i2c::registers::cr2::bits::itbufen::states::E,
@@ -61,7 +64,7 @@ namespace i2c {
       template<
           i2c::registers::ccr::bits::f_s::states::E,
           i2c::registers::ccr::bits::duty::states::E,
-          u16 CCR
+          u32 FREQUENCY_HZ
       >
       static INLINE void configureClock();
 
