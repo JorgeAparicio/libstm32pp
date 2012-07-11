@@ -57,7 +57,7 @@ namespace clock {
 
   /* Insert the allowed HSE clock stabilization's time (in cycles) ************/
   enum {
-    _HSE_TIMEOUT = 0x100
+    _HSE_TIMEOUT = 0x800
   };
   /************ Insert the allowed HSE clock stabilization's time (in cycles) */
 
@@ -65,7 +65,7 @@ namespace clock {
    * @brief This function is called when the external clock fails.
    * @note  The user must define this function.
    */
-  static INLINE void hseFailureHandler(void);
+  void hseFailureHandler(void);
 
 #endif // USING_HSE_CRYSTAL || USING_HSE_CLOCK
   /* Are you using an external low speed crystal, resonator or oscillator? ****/
@@ -90,7 +90,7 @@ namespace clock {
 
   /* Insert the allowed LSE clock stabilization's time (in cycles) ************/
   enum {
-    _LSE_TIMEOUT = 0x400
+    _LSE_TIMEOUT = 0x800
   };
   /************ Insert the allowed LSE clock stabilization's time (in cycles) */
 
@@ -98,7 +98,7 @@ namespace clock {
    * @brief This function is called when the external clock fails.
    * @note  The user must define this function.
    */
-  static INLINE void lseFailureHandler(void);
+  void lseFailureHandler(void);
 
 #endif // USING_LSE_CRYSTAL || USING_LSE_CLOCK
   /* Do you want to use the LSI? **********************************************/
