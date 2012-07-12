@@ -42,8 +42,8 @@ namespace nvic {
       u32 IABR[3];  // 0x200: Active bit
       u32 _RESERVED4[61];
       __RW
-      u8 IPR[21];  // 0x300: Priority
-      u32 _RESERVED5[695];
+      u32 IPR[21];  // 0x300: Priority
+      u32 _RESERVED5[683];
       __W
       u32 STIR;  // 0xE00: Software trigger
   };
@@ -53,6 +53,10 @@ namespace nvic {
   };
 
   namespace irqn {
+    enum {
+      MASK = 0b1111
+    };
+
     enum E {
       WWDG = 0,
       PVD = 1,
