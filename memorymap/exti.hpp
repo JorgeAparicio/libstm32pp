@@ -26,17 +26,17 @@
 namespace exti {
   struct Registers {
       __RW
-      u32 IMR;    // 0x00: Interrupt mask
+      u32 IMR;  // 0x00: Interrupt mask
       __RW
-      u32 EMR;    // 0x04: Event mask
+      u32 EMR;  // 0x04: Event mask
       __RW
-      u32 RTSR;   // 0x08: Rising trigger selection
+      u32 RTSR;  // 0x08: Rising trigger selection
       __RW
-      u32 FTSR;   // 0x0C: Falling trigger selection
+      u32 FTSR;  // 0x0C: Falling trigger selection
       __RW
       u32 SWIER;  // 0x10: Software interrupt event
       __RW
-      u32 PR;     // 0x14: Pending
+      u32 PR;  // 0x14: Pending
   };
 
 #ifdef STM32F1XX
@@ -50,6 +50,41 @@ namespace exti {
 #endif
 
   namespace registers {
-  // TODO EXTI register bits
-  }// namespace registers
+    namespace imr {
+      enum {
+        OFFSET = 0x00
+      };
+    }  // namespace imr
+
+    namespace emr {
+      enum {
+        OFFSET = 0x04
+      };
+    }  // namespace imr
+
+    namespace rtsr {
+      enum {
+        OFFSET = 0x08
+      };
+    }  // namespace rtsr
+
+    namespace ftsr {
+      enum {
+        OFFSET = 0x0C
+      };
+    }  // namespace ftsr
+
+    namespace swier {
+      enum {
+        OFFSET = 0x10
+      };
+    }  // namespace swier
+
+    namespace pr {
+      enum {
+        OFFSET = 0x14
+      };
+    }  // namespace pr
+  }  // namespace registers
+
 }  // namespace exti
