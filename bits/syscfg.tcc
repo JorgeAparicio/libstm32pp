@@ -22,6 +22,18 @@
 #pragma once
 
 namespace syscfg {
-// TODO SYSCFG functions implementation
-}// namespace syscfg
+  /**
+   * @brief Maps the selected pin to select EXTI line.
+   */
+  template<
+      u8 LINE,
+      registers::exticr::states::E EXTICR
+  >
+  void Functions::selectExtiPin()
+  {
+    _SYSCFG->EXTICR[LINE / 4] &= (registers::exticr::MASK << (4 * (LINE % 4)));
+
+    _SYSCFG->EXTICR[LINE / 4] |= EXTICR << (4 * (LINE % 4));
+  }
+}  // namespace syscfg
 

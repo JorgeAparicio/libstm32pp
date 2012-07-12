@@ -44,14 +44,19 @@
 namespace syscfg {
   class Functions {
     public:
-      // TODO SYSCFG functions declaration
+      template<
+          u8 LINE,
+          syscfg::registers::exticr::states::E
+      >
+      static INLINE void selectExtiPin();
+
     private:
       Functions();
   };
 }  // namespace syscfg
 
 // High-level access to the peripheral
-// TODO SYSCFG high-level access
+typedef syscfg::Functions SYSCFG;
 
 #include "../../bits/syscfg.tcc"
 
