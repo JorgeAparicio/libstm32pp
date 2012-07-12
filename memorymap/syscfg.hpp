@@ -41,6 +41,70 @@ namespace syscfg {
   };
 
   namespace registers {
-  // TODO SYSCFG register bits
+    namespace memrmp {
+      enum {
+        OFFSET = 0x00
+      };
+    // TODO SYSCFG MEMRMP bits
+    }// namespace memrmp
+
+    namespace pmc {
+      enum {
+        OFFSET = 0x04
+      };
+    // TODO SYSCFG PMC bits
+    }// namespace pmc
+
+    namespace exticr1 {
+      enum {
+        OFFSET = 0x08
+      };
+    }  // namespace exticr1
+
+    namespace exticr2 {
+      enum {
+        OFFSET = 0x0C
+      };
+    }  // namespace exticr2
+
+    namespace exticr3 {
+      enum {
+        OFFSET = 0x10
+      };
+    }  // namespace exticr3
+
+    namespace exticr4 {
+      enum {
+        OFFSET = 0x14
+      };
+    }  // namespace exticr4
+
+    namespace exticr {
+      enum {
+        MASK = 0b1111
+      };
+
+      namespace states {
+        enum E {
+          PA = 0,
+          PB = 1,
+          PC = 2,
+          PD = 3,
+          PE = 4,
+          PF = 5,
+          PG = 6,
+          PH = 7,
+          PI = 8,
+        };
+      }  // namespace states
+
+    }  // namespace exticr
+
+    namespace cmpcr {
+      enum {
+        OFFSET = 0x20
+      };
+    }  // namespace cmpcr
+  // TODO SYSCFG CMPCR bits
   }// namespace registers
 }  // namespace syscfg
