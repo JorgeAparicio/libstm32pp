@@ -22,5 +22,223 @@
 #pragma once
 
 namespace exti {
-  // TODO EXTI function implementation
+  /**
+   * @brief Clears the pending interrupt/event flag.
+   */
+  template<u8 N>
+  void Functions<N>::clearPendingFlag()
+  {
+    static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
+
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::pr::OFFSET,
+        N
+    >::address) = 1;
+  }
+
+  /**
+   * @brief Disables both the event and the interrupt.
+   */
+  template<u8 N>
+  void Functions<N>::disable()
+  {
+    static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
+
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::emr::OFFSET,
+        N
+    >::address) = 0;
+
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::imr::OFFSET,
+        N
+    >::address) = 0;
+
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::ftsr::OFFSET,
+        N
+    >::address) = 0;
+
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::rtsr::OFFSET,
+        N
+    >::address) = 0;
+
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::swier::OFFSET,
+        N
+    >::address) = 0;
+  }
+
+  /**
+   * @brief Disables the event.
+   */
+  template<u8 N>
+  void Functions<N>::disableEvent()
+  {
+    static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
+
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::emr::OFFSET,
+        N
+    >::address) = 0;
+
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::ftsr::OFFSET,
+        N
+    >::address) = 0;
+
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::rtsr::OFFSET,
+        N
+    >::address) = 0;
+
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::swier::OFFSET,
+        N
+    >::address) = 0;
+  }
+
+  /**
+   * @brief Disables the interrupt.
+   */
+  template<u8 N>
+  void Functions<N>::disableInterrupt()
+  {
+    static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
+
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::imr::OFFSET,
+        N
+    >::address) = 0;
+
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::ftsr::OFFSET,
+        N
+    >::address) = 0;
+
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::rtsr::OFFSET,
+        N
+    >::address) = 0;
+
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::swier::OFFSET,
+        N
+    >::address) = 0;
+  }
+
+  /**
+   * @brief Enables the hardware event by falling edge.
+   */
+  template<u8 N>
+  void Functions<N>::enableHardwareEventByFallingEdge()
+  {
+    static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
+
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::emr::OFFSET,
+        N
+    >::address) = 1;
+
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::ftsr::OFFSET,
+        N
+    >::address) = 1;
+  }
+
+  /**
+   * @brief Enables the hardware event by rising edge.
+   */
+  template<u8 N>
+  void Functions<N>::enableHardwareEventByRisingEdge()
+  {
+    static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
+
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::emr::OFFSET,
+        N
+    >::address) = 1;
+
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::rtsr::OFFSET,
+        N
+    >::address) = 1;
+  }
+
+  /**
+   * @brief Enables the hardware interrupt by falling edge.
+   */
+  template<u8 N>
+  void Functions<N>::enableHardwareInterruptByFallingEdge()
+  {
+    static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
+
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::imr::OFFSET,
+        N
+    >::address) = 1;
+
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::ftsr::OFFSET,
+        N
+    >::address) = 1;
+  }
+
+  /**
+   * @brief Enables the hardware interrupt by rising edge.
+   */
+  template<u8 N>
+  void Functions<N>::enableHardwareInterruptByRisingEdge()
+  {
+    static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
+
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::imr::OFFSET,
+        N
+    >::address) = 1;
+
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::rtsr::OFFSET,
+        N
+    >::address) = 1;
+  }
+
+  /**
+   * @brief Enables the software event.
+   */
+  template<u8 N>
+  void Functions<N>::enableSoftwareEvent()
+  {
+    static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
+
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::emr::OFFSET,
+        N
+    >::address) = 1;
+
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::swier::OFFSET,
+        N
+    >::address) = 1;
+  }
+
+  /**
+   * @brief Enables the software interrupt.
+   */
+  template<u8 N>
+  void Functions<N>::enableSoftwareInterrupt()
+  {
+    static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
+
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::emr::OFFSET,
+        N
+    >::address) = 1;
+
+    *(u32*) (bitband::Peripheral<
+        ADDRESS + registers::swier::OFFSET,
+        N
+    >::address) = 1;
+  }
 }  // namespace exti

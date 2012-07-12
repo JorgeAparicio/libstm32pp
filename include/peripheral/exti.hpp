@@ -37,15 +37,48 @@
 
 // High-level functions
 namespace exti {
+  template<u8 LINE>
   class Functions {
     public:
-      // TODO EXTI functions declaration
+      static INLINE void clearPendingFlag();
+      static INLINE void disable();
+      static INLINE void disableEvent();
+      static INLINE void disableInterrupt();
+      static INLINE void enableHardwareEventByFallingEdge();
+      static INLINE void enableHardwareEventByRisingEdge();
+      static INLINE void enableHardwareInterruptByFallingEdge();
+      static INLINE void enableHardwareInterruptByRisingEdge();
+      static INLINE void enableSoftwareEvent();
+      static INLINE void enableSoftwareInterrupt();
+
     private:
       Functions();
   };
 }  // namespace exti
 
 // High-level access to the peripheral
-// TODO EXTI high-level access
+typedef exti::Functions<0> EXTI0;
+typedef exti::Functions<1> EXTI1;
+typedef exti::Functions<2> EXTI2;
+typedef exti::Functions<3> EXTI3;
+typedef exti::Functions<4> EXTI4;
+typedef exti::Functions<5> EXTI5;
+typedef exti::Functions<6> EXTI6;
+typedef exti::Functions<7> EXTI7;
+typedef exti::Functions<8> EXTI8;
+typedef exti::Functions<9> EXTI9;
+typedef exti::Functions<10> EXTI10;
+typedef exti::Functions<11> EXTI11;
+typedef exti::Functions<12> EXTI12;
+typedef exti::Functions<13> EXTI13;
+typedef exti::Functions<14> EXTI14;
+typedef exti::Functions<15> EXTI15;
+typedef exti::Functions<16> EXTI16;
+typedef exti::Functions<17> EXTI17;
+typedef exti::Functions<18> EXTI18;
+typedef exti::Functions<19> EXTI19;
+typedef exti::Functions<20> EXTI20;
+typedef exti::Functions<21> EXTI21;
+typedef exti::Functions<22> EXTI22;
 
 #include "../../bits/exti.tcc"
