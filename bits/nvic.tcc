@@ -28,7 +28,7 @@ namespace nvic {
   template<irqn::E I>
   void Functions::enableInterrupt(void)
   {
-    reinterpret_cast<Registers*>(ADDRESS)->ISER[I >> 5] = 1 << (I & 0x1F);
+    reinterpret_cast<Registers*>(ADDRESS)->ISER[I >> 5] = 1 << (I % 32);
   }
 
   /**
@@ -37,16 +37,23 @@ namespace nvic {
   template<irqn::E I>
   void Functions::disableInterrupt(void)
   {
-    reinterpret_cast<Registers*>(ADDRESS)->ICER[I >> 5] = 1 << (I & 0x1F);
+    reinterpret_cast<Registers*>(ADDRESS)->ICER[I >> 5] = 1 << (I % 32);
   }
 
   /**
    * @brief Sets the interrupt priority level.
+   * @note  A lower priority number, means higher priority.
    */
   template<irqn::E I, u8 P>
   void Functions::setInterruptPriority()
   {
-    static_assert(P >= 7, "The minimum interrupt level is 7");
-    reinterpret_cast<Registers*>(ADDRESS)->IPR[I >> 2] = P << (8 * (I % 4));
+    static_assert(P % 32 == 31,
+        "The priority number must have it 4 lower bits set to 1.");
+
+    reinterpret_cast<Registers*>(ADDRESS)->IPR[I >> 2] &=
+        irqn::MASK << (8 * (I % 4));
+
+    reinterpret_cast<Registers*>(ADDRESS)->IPR[I >> 2] |=
+        P << (8 * (I % 4));
   }
 }  // namespace nvic
