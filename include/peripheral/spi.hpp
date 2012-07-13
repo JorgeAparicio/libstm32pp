@@ -41,15 +41,49 @@
 
 // High-level functions
 namespace spi {
+  template<address::E S>
   class Functions {
     public:
-      // TODO SPI functions declaration
+      static INLINE void sendByte(const u8);
+      static INLINE u8 getByte();
+      static INLINE void sendWord(const u16);
+      static INLINE u16 getWord();
+      static INLINE void enable();
+      static INLINE void disable();
+      static INLINE bool candSendData();
+      static INLINE bool hasReceivedData();
+
+      template<
+          spi::registers::cr1::bits::cpha::states::E,
+          spi::registers::cr1::bits::cpol::states::E,
+          spi::registers::cr1::bits::msrt::states::E,
+          spi::registers::cr1::bits::br::states::E,
+          spi::registers::cr1::bits::lsbfirst::states::E,
+          spi::registers::cr1::bits::ssm::states::E,
+          spi::registers::cr1::bits::rxonly::states::E,
+          spi::registers::cr1::bits::dff::states::E,
+          spi::registers::cr1::bits::crcnext::states::E,
+          spi::registers::cr1::bits::crcen::states::E,
+          spi::registers::cr1::bits::bidioe::states::E,
+          spi::registers::cr1::bits::bidimode::states::E,
+          spi::registers::cr2::bits::errie::states::E,
+          spi::registers::cr2::bits::frf::states::E,
+          spi::registers::cr2::bits::rxdmaen::states::E,
+          spi::registers::cr2::bits::rxneie::states::E,
+          spi::registers::cr2::bits::ssoe::states::E,
+          spi::registers::cr2::bits::txdmaen::states::E,
+          spi::registers::cr2::bits::txeie::states::E
+      >
+      static INLINE void configure();
+
     private:
       Functions();
   };
 }  // namespace spi
 
 // High-level access to the peripheral
-// TODO SPI high-level access
+typedef spi::Functions<spi::address::SPI1> SPI1;
+typedef spi::Functions<spi::address::SPI2> SPI2;
+typedef spi::Functions<spi::address::SPI3> SPI3;
 
 #include "../../bits/spi.tcc"
