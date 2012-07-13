@@ -31,6 +31,9 @@ namespace syscfg {
   >
   void Functions::selectExtiPin()
   {
+    static_assert(LINE < 16,
+        "Only the first 16 EXTI lines can be mapped to GPIO pins");
+
     _SYSCFG->EXTICR[LINE / 4] &= (registers::exticr::MASK << (4 * (LINE % 4)));
 
     _SYSCFG->EXTICR[LINE / 4] |= EXTICR << (4 * (LINE % 4));
