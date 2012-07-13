@@ -254,6 +254,11 @@ namespace rcc {
       >
       static INLINE void configureClockOutput();
 
+      template<
+      rcc::registers::cfgr::bits::i2ssrc::states::E
+      >
+      static INLINE void selectI2sSource();
+
 #endif // STM32F1XX
       private:
       Functions();

@@ -845,6 +845,17 @@ namespace rcc {
         (MCOPRE2 << registers::cfgr::bits::mco2pre::POSITION);
   }
 
+
+  template<
+      registers::cfgr::bits::i2ssrc::states::E I2SSRC
+  >
+  void Functions::selectI2sSource()
+  {
+    _RCC->CFGR &= registers::cfgr::bits::i2ssrc::MASK;
+
+    _RCC->CFGR |= I2SSRC;
+  }
+
 #endif // STM32F1XX
 }  // namespace rcc
 
