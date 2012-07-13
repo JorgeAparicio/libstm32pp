@@ -65,15 +65,21 @@ namespace usart {
   }
 
   /**
-   * @brief Configures the baud rate.
-   * @note               BUS CLOCK
-   *         BAUD RATE = --------- (ONLY IF SELECTED OVERSAMPLING_BY_16)
-   *                     USARTDIV
+   * @brief Sets the baud rate.
+   * @note  Only valid for OVERSAMPLING_BY_16 configuration
    */
   template<address::E A>
-  void Asynchronous<A>::setBaudRate(u16 const usartdiv)
+  template<u32 BAUD_RATE>
+  void Asynchronous<A>::setBaudRate()
   {
-    reinterpret_cast<Registers*>(A)->BRR = usartdiv;
+    enum {
+      _BRR = FREQUENCY / BAUD_RATE
+    };
+
+    static_assert(_BRR < 65536,
+        "This baud rate can't be achieved with the current APB clock.");
+
+    reinterpret_cast<Registers*>(A)->BRR = _BRR;
   }
 
   /**

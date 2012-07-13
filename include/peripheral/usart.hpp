@@ -48,11 +48,18 @@ namespace usart {
   template<address::E U>
   class Asynchronous {
     public:
+      enum {
+        FREQUENCY = u32(U) > u32(alias::address::APB2) ?
+                                                         clock::APB2 :
+                                                         clock::APB1
+      };
+
       static INLINE void sendData(u8 const data);
       static INLINE u8 getData(void);
       static INLINE bool canSendDataYet(void);
       static INLINE bool isThereDataAvailable(void);
-      static INLINE void setBaudRate(u16 const);
+      template<u32 BAUD_RATE>
+      static INLINE void setBaudRate();
 
       /**
        * @brief Configures the USART for asynchronous operation.
