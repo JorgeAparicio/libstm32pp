@@ -79,8 +79,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              FIRST_CLOCK_TRANSITION_IS_FIRST_DATA_CAPTURED_EDGE = 0,
-              SECOND_CLOCK_TRANSITION_IS_FIRST_DATA_CAPTURED_EDGE = 1
+              FIRST_CLOCK_TRANSITION_IS_FIRST_DATA_CAPTURED_EDGE = 0 << POSITION,
+              SECOND_CLOCK_TRANSITION_IS_FIRST_DATA_CAPTURED_EDGE = 1 << POSITION
             };
           }  // namespace states
         }  // namespace cpha
@@ -94,8 +94,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              CK_TO_0_WHEN_IDLE = 0,
-              CK_TO_1_WHEN_IDLE = 1
+              CK_TO_0_WHEN_IDLE = 0 << POSITION,
+              CK_TO_1_WHEN_IDLE = 1 << POSITION
             };
           }  // namespace states
         }  // namespace cpol
@@ -109,8 +109,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              SLAVE_CONFIGURATION = 0,
-              MASTER_CONFIGURATION = 1
+              SLAVE_CONFIGURATION = 0 << POSITION,
+              MASTER_CONFIGURATION = 1 << POSITION
             };
           }  // namespace states
         }  // namespace msrt
@@ -124,14 +124,14 @@ namespace spi {
           };
           namespace states {
             enum E {
-              BAUD_RATE_CONTROL_DIV_2 = 0,
-              BAUD_RATE_CONTROL_DIV_4 = 1,
-              BAUD_RATE_CONTROL_DIV_8 = 2,
-              BAUD_RATE_CONTROL_DIV_16 = 3,
-              BAUD_RATE_CONTROL_DIV_32 = 4,
-              BAUD_RATE_CONTROL_DIV_64 = 5,
-              BAUD_RATE_CONTROL_DIV_128 = 6,
-              BAUD_RATE_CONTROL_DIV_256 = 7,
+              BAUD_RATE_CONTROL_DIV_2 = 0 << POSITION,
+              BAUD_RATE_CONTROL_DIV_4 = 1 << POSITION,
+              BAUD_RATE_CONTROL_DIV_8 = 2 << POSITION,
+              BAUD_RATE_CONTROL_DIV_16 = 3 << POSITION,
+              BAUD_RATE_CONTROL_DIV_32 = 4 << POSITION,
+              BAUD_RATE_CONTROL_DIV_64 = 5 << POSITION,
+              BAUD_RATE_CONTROL_DIV_128 = 6 << POSITION,
+              BAUD_RATE_CONTROL_DIV_256 = 7 << POSITION
             };
           }  // namespace states
         }  // namespace br
@@ -145,8 +145,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              PERIPHERAL_DISABLED = 0,
-              PERIPHERAL_ENABLED = 1
+              PERIPHERAL_DISABLED = 0 << POSITION,
+              PERIPHERAL_ENABLED = 1 << POSITION
             };
           }  // namespace states
         }  // namespace spe
@@ -160,8 +160,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              MSB_TRANSMITTED_FIRST = 0,
-              LSB_TRANSMITTED_FIRST = 1
+              MSB_TRANSMITTED_FIRST = 0 << POSITION,
+              LSB_TRANSMITTED_FIRST = 1 << POSITION
             };
           }  // namespace states
         }  // namespace lsbfirst
@@ -184,8 +184,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              SOFTWARE_SLAVE_MANAGEMENT_DISABLED = 0,
-              SOFTWARE_SLAVE_MANAGEMENT_ENABLED = 1
+              SOFTWARE_SLAVE_MANAGEMENT_DISABLED = 0 << POSITION,
+              SOFTWARE_SLAVE_MANAGEMENT_ENABLED = 1 << POSITION
             };
           }  // namespace states
         }  // namespace ssm
@@ -199,8 +199,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              FULL_DUPLEX = 0,
-              OUTPUT_DISABLE = 1
+              FULL_DUPLEX = 0 << POSITION,
+              OUTPUT_DISABLE = 1 << POSITION
             };
           }  // namespace states
         }  // namespace rxonly
@@ -214,8 +214,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              DATA_FRAME_FORMAT_8_BIT = 0,
-              DATA_FRAME_FORMAT_16_BIT = 1
+              DATA_FRAME_FORMAT_8_BIT = 0 << POSITION,
+              DATA_FRAME_FORMAT_16_BIT = 1 << POSITION
             };
           }  // namespace states
         }  // namespace dff
@@ -229,8 +229,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              NO_CRC_PHASE = 0,
-              CRC_PHASE = 1
+              NO_CRC_PHASE = 0 << POSITION,
+              CRC_PHASE = 1 << POSITION
             };
           }  // namespace states
         }  // namespace crcnext
@@ -244,8 +244,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              CRC_CALCULATION_DISABLED = 0,
-              CRC_CALCULATION_ENABLED = 1
+              CRC_CALCULATION_DISABLED = 0 << POSITION,
+              CRC_CALCULATION_ENABLED = 1 << POSITION
             };
           }  // namespace states
         }  // namespace crcen
@@ -259,8 +259,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              OUTPUT_DISABLED = 0,
-              OUTPUT_ENABLED = 1
+              OUTPUT_DISABLED = 0 << POSITION,
+              OUTPUT_ENABLED = 1 << POSITION
             };
           }  // namespace states
         }  // namespace bidioe
@@ -274,8 +274,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              DATA_MODE_2LINE_UNIDIRECTIONAL = 0,
-              DATA_MODE_1LINE_BIDIRECTIONAL = 1
+              DATA_MODE_2LINE_UNIDIRECTIONAL = 0 << POSITION,
+              DATA_MODE_1LINE_BIDIRECTIONAL = 1 << POSITION
             };
           }  // namespace states
         }  // namespace bidimode
@@ -296,8 +296,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              RX_BUFFER_DMA_DISABLED = 0,
-              RX_BUFFER_DMA_ENABLED = 1
+              RX_BUFFER_DMA_DISABLED = 0 << POSITION,
+              RX_BUFFER_DMA_ENABLED = 1 << POSITION
             };
           }  // namespace states
         }  // namespace rxdmaen
@@ -311,8 +311,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              TX_BUFFER_DMA_DISABLED = 0,
-              TX_BUFFER_DMA_ENABLED = 1
+              TX_BUFFER_DMA_DISABLED = 0 << POSITION,
+              TX_BUFFER_DMA_ENABLED = 1 << POSITION
             };
           }  // namespace states
         }  // namespace txdmaen
@@ -326,23 +326,23 @@ namespace spi {
           };
           namespace states {
             enum E {
-              SS_OUTPUT_DISABLED_MASTER_MODE = 0,
-              SS_OUTPUT_ENABLED_MASTER_MODE = 1
+              SS_OUTPUT_DISABLED_MASTER_MODE = 0 << POSITION,
+              SS_OUTPUT_ENABLED_MASTER_MODE = 1 << POSITION
             };
           }  // namespace states
         }  // namespace ssoe
 
         namespace frf {
           enum {
-            POSITION = 3
+            POSITION = 4
           };
           enum {
             MASK = 1 << POSITION
           };
           namespace states {
             enum E {
-              SPI_MOTOROLA_MODE = 0,
-              SPI_TI_MODE = 1
+              SPI_MOTOROLA_MODE = 0 << POSITION,
+              SPI_TI_MODE = 1 << POSITION
             };
           }  // namespace states
         }  // namespace frf
@@ -356,8 +356,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              ERROR_INTERRUPT_IS_MASKED = 0,
-              ERROR_INTERRUPT_ENABLED = 1
+              ERROR_INTERRUPT_DISABLED = 0 << POSITION,
+              ERROR_INTERRUPT_ENABLED = 1 << POSITION
             };
           }  // namespace states
         }  // namespace errie
@@ -371,8 +371,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              RXNE_INTERRUPT_MASKED = 0,
-              RXNE_INTERRUPT_ENABLED = 1
+              RXNE_INTERRUPT_DISABLED = 0 << POSITION,
+              RXNE_INTERRUPT_ENABLED = 1 << POSITION
             };
           }  // namespace states
         }  // namespace rxneie
@@ -386,8 +386,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              TXE_INTERRUPT_MASKED = 0,
-              TXE_INTERRUPT_ENABLED = 1
+              TXE_INTERRUPT_DISABLED = 0 << POSITION,
+              TXE_INTERRUPT_ENABLED = 1 << POSITION
             };
           }  // namespace states
         }  // namespace txeie
@@ -409,8 +409,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              RX_BUFFER_EMPTY = 0,
-              RX_BUFFER_NOT_EMPTY = 1
+              RX_BUFFER_EMPTY = 0 << POSITION,
+              RX_BUFFER_NOT_EMPTY = 1 << POSITION
             };
           }  // namespace states
         }  // namespace rxne
@@ -424,8 +424,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              TX_BUFFER_NOT_EMPTY = 0,
-              TX_BUFFER_EMPTY = 1
+              TX_BUFFER_NOT_EMPTY = 0 << POSITION,
+              TX_BUFFER_EMPTY = 1 << POSITION
             };
           }  // namespace states
         }  // namespace txe
@@ -439,8 +439,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              CHANNEL_LEFT_TO_BE_TRANSMITED_OR_HAS_BEEN_RECEIVED = 0,
-              CHANNEL_RIGHT_TO_BE_TRANSMITED_OR_HAS_BEEN_RECEIVED = 1
+              CHANNEL_LEFT_TO_BE_TRANSMITED_OR_HAS_BEEN_RECEIVED = 0 << POSITION,
+              CHANNEL_RIGHT_TO_BE_TRANSMITED_OR_HAS_BEEN_RECEIVED = 1 << POSITION
             };
           }  // namespace states
         }  // namespace chside
@@ -454,8 +454,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              NO_UNDERRUN_OCURRED = 0,
-              UNDERRUN_OCURRED = 1
+              NO_UNDERRUN_OCURRED = 0 << POSITION,
+              UNDERRUN_OCURRED = 1 << POSITION
             };
           }  // namespace states
         }  // namespace udr
@@ -469,8 +469,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              CRC_RECEIVED_MATCHES_SPI_RXCRCR_VALUE = 0,
-              CRC_RECEIVED_DOESNT_MATCH_SPI_RXCRCR_VALUE = 1
+              CRC_RECEIVED_MATCHES_SPI_RXCRCR_VALUE = 0 << POSITION,
+              CRC_RECEIVED_DOESNT_MATCH_SPI_RXCRCR_VALUE = 1 << POSITION
             };
           }  // namespace states
         }  // namespace crcerr
@@ -484,8 +484,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              NO_MODE_FAULT_OCURRED = 0,
-              MODE_FAULT_OCURRED = 1
+              NO_MODE_FAULT_OCURRED = 0 << POSITION,
+              MODE_FAULT_OCURRED = 1 << POSITION
             };
           }  // namespace states
         }  // namespace modf
@@ -499,8 +499,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              NO_OVERRUN_OCURRED = 0,
-              OVERRUN_OCURRED = 1
+              NO_OVERRUN_OCURRED = 0 << POSITION,
+              OVERRUN_OCURRED = 1 << POSITION
             };
           }  // namespace states
         }  // namespace ovr
@@ -514,8 +514,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              SPI_OR_I2S_NOT_BUSY = 0,
-              SPI_OR_I2S_BUSY = 1
+              SPI_OR_I2S_NOT_BUSY = 0 << POSITION,
+              SPI_OR_I2S_BUSY = 1 << POSITION
             };
           }  // namespace states
         }  // namespace bsy
@@ -529,8 +529,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              NO_FRAME_FORMAT_ERROR = 0,
-              FRAME_FORMAT_ERROR_OCURRED = 1
+              NO_FRAME_FORMAT_ERROR = 0 << POSITION,
+              FRAME_FORMAT_ERROR_OCURRED = 1 << POSITION
             };
           }  // namespace states
         }  // namespace tifrfe
@@ -576,8 +576,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              CHANNEL_LENGTH_16BIT = 0,
-              CHANNEL_LENGTH_32BIT = 1
+              CHANNEL_LENGTH_16BIT = 0 << POSITION,
+              CHANNEL_LENGTH_32BIT = 1 << POSITION
             };
           }  // namespace states
         }  // namespace chlen
@@ -591,9 +591,9 @@ namespace spi {
           };
           namespace states {
             enum E {
-              DATA_LENGTH_16BIT = 0,
-              DATA_LENGTH_24BIT = 1,
-              DATA_LENGTH_32BIT = 2,
+              DATA_LENGTH_16BIT = 0 << POSITION,
+              DATA_LENGTH_24BIT = 1 << POSITION,
+              DATA_LENGTH_32BIT = 2 << POSITION
             };
           }  // namespace states
         }  // namespace datlen
@@ -607,8 +607,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              I2S_CLOCK_STEADY_STATE_LOW_LEVEL = 0,
-              I2S_CLOCK_STEADY_STATE_HIGH_LEVEL = 1,
+              I2S_CLOCK_STEADY_STATE_LOW_LEVEL = 0 << POSITION,
+              I2S_CLOCK_STEADY_STATE_HIGH_LEVEL = 1 << POSITION
             };
           }  // namespace states
         }  // namespace ckpol
@@ -622,10 +622,10 @@ namespace spi {
           };
           namespace states {
             enum E {
-              I2S_PHILIP_STANDARD = 0,
-              MSB_JUSTIFIED_STANDARD = 1,
-              LSB_JUSTIFIED_STANDARD = 2,
-              PCM_STANDARD = 3
+              I2S_PHILIP_STANDARD = 0 << POSITION,
+              MSB_JUSTIFIED_STANDARD = 1 << POSITION,
+              LSB_JUSTIFIED_STANDARD = 2 << POSITION,
+              PCM_STANDARD = 3 << POSITION
             };
           }  // namespace states
         }  // namespace i2sstd
@@ -639,8 +639,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              SHORT_FRAME_SYNCHRONIZATION = 0,
-              LONG_FRAME_SYNCHRONIZATION = 1,
+              SHORT_FRAME_SYNCHRONIZATION = 0 << POSITION,
+              LONG_FRAME_SYNCHRONIZATION = 1 << POSITION
             };
           }  // namespace states
         }  // namespace pcmsync
@@ -654,10 +654,10 @@ namespace spi {
           };
           namespace states {
             enum E {
-              SLAVE_TRANSMIT = 0,
-              SLAVE_RECEIVE = 1,
-              MASTER_TRANSMIT = 2,
-              MASTER_RECEIVE = 3
+              SLAVE_TRANSMIT = 0 << POSITION,
+              SLAVE_RECEIVE = 1 << POSITION,
+              MASTER_TRANSMIT = 2 << POSITION,
+              MASTER_RECEIVE = 3 << POSITION
             };
           }  // namespace states
         }  // namespace i2scfg
@@ -671,8 +671,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              I2S_DISABLED = 0,
-              I2S_ENABLED = 1,
+              I2S_DISABLED = 0 << POSITION,
+              I2S_ENABLED = 1 << POSITION
             };
           }  // namespace states
         }  // namespace i2se
@@ -686,8 +686,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              SPI_MODE_SELECTED = 0,
-              I2S_MODE_SELECTED = 1,
+              SPI_MODE_SELECTED = 0 << POSITION,
+              I2S_MODE_SELECTED = 1 << POSITION
             };
           }  // namespace states
         }  // namespace i2smod
@@ -709,8 +709,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              REAL_DIVIDER_VALUE_I2SDIVx2 = 0,
-              REAL_DIVIDER_VALUE_I2SDIVx2_PLUS_1 = 1
+              REAL_DIVIDER_VALUE_I2SDIVx2 = 0 << POSITION,
+              REAL_DIVIDER_VALUE_I2SDIVx2_PLUS_1 = 1 << POSITION
             };
           }  // namespace states
         }  // namespace odd
@@ -724,8 +724,8 @@ namespace spi {
           };
           namespace states {
             enum E {
-              MASTER_CLOCK_OUTPUT_DISABLED = 0,
-              MASTER_CLOCK_OUTPUT_ENABLED = 1
+              MASTER_CLOCK_OUTPUT_DISABLED = 0 << POSITION,
+              MASTER_CLOCK_OUTPUT_ENABLED = 1 << POSITION
             };
           }  // namespace states
         }  // namespace mckoe
