@@ -353,7 +353,7 @@ namespace rcc {
    * @brief Selects the RTC clock source.
    */
   template<
-      rcc::registers::bdcr::bits::rtcsel::states::E RTCSEL
+      registers::bdcr::bits::rtcsel::states::E RTCSEL
   >
   void Functions::selectRtcClockSource()
   {
@@ -444,7 +444,7 @@ namespace rcc {
    * @brief Disables these peripherals. (AHB)
    */
   template<
-  rcc::registers::ahbenr::bits::E ... AHBENR
+  registers::ahbenr::bits::E ... AHBENR
   >
   void Functions::disableClocks()
   {
@@ -452,11 +452,11 @@ namespace rcc {
   }
 
   template<
-  rcc::registers::cfgr::bits::mco::states::E MCO
+  registers::cfgr::bits::mco::states::E MCO
   >
   void Functions::configureClockOutput()
   {
-    _RCC->CFGR &= ~(rcc::registers::cfgr::bits::mco::MASK);
+    _RCC->CFGR &= ~(registers::cfgr::bits::mco::MASK);
 
     _RCC->CFGR |= MCO;
   }
@@ -466,7 +466,7 @@ namespace rcc {
    * @brief Resets these peripherals. (AHB)
    */
   template<
-  rcc::registers::ahbrstr::bits::E ... AHBRSTR
+  registers::ahbrstr::bits::E ... AHBRSTR
   >
   void Functions::resetPeripherals()
   {
@@ -566,7 +566,7 @@ namespace rcc {
    * @note  Overrides the old configuration.
    */
   template<
-  rcc::registers::cfgr::bits::pllsrc::states::E PLLSRC,
+  registers::cfgr::bits::pllsrc::states::E PLLSRC,
   u8 PLLMUL,
   u8 PREDIV1
   >
@@ -598,15 +598,15 @@ namespace rcc {
    * @note  Overrides the old configuration.
    */
   template<
-  rcc::registers::cfgr::bits::pllsrc::states::E PLLSRC,
+  registers::cfgr::bits::pllsrc::states::E PLLSRC,
   u8 PLLMUL,
   u8 PREDIV1,
   u8 PREDIV2,
   u8 PLL2MUL,
   u8 PLL3MUL,
-  rcc::registers::cfgr2::bits::prediv1src::states::E PREDIV1SRC,
-  rcc::registers::cfgr2::bits::i2s2src::states::E I2S2SRC,
-  rcc::registers::cfgr2::bits::i2s3src::states::E I2S3SRC
+  registers::cfgr2::bits::prediv1src::states::E PREDIV1SRC,
+  registers::cfgr2::bits::i2s2src::states::E I2S2SRC,
+  registers::cfgr2::bits::i2s3src::states::E I2S3SRC
   >
   void Functions::configurePll()
   {
@@ -643,7 +643,7 @@ namespace rcc {
    * @note  Overrides the old configuration.
    */
   template<
-  rcc::registers::cfgr::bits::pllsrc::states::E PLLSRC,
+  registers::cfgr::bits::pllsrc::states::E PLLSRC,
   u8 PLLXTPRE,
   u8 PLLMUL
   >
@@ -670,7 +670,7 @@ namespace rcc {
    * @brief Enables these peripherals. (AHB1)
    */
   template<
-      rcc::registers::ahb1enr::bits::E ... AHB1ENR
+      registers::ahb1enr::bits::E ... AHB1ENR
   >
   void Functions::enableClocks()
   {
@@ -681,7 +681,7 @@ namespace rcc {
    * @brief Disables these peripherals. (AHB1)
    */
   template<
-      rcc::registers::ahb1enr::bits::E ... AHB1ENR
+      registers::ahb1enr::bits::E ... AHB1ENR
   >
   void Functions::disableClocks()
   {
@@ -692,7 +692,7 @@ namespace rcc {
    * @brief Resets these peripherals. (AHB1)
    */
   template<
-      rcc::registers::ahb1rstr::bits::E ... AHB1RSTR
+      registers::ahb1rstr::bits::E ... AHB1RSTR
   >
   void Functions::resetPeripherals()
   {
@@ -703,7 +703,7 @@ namespace rcc {
    * @brief Enables these peripherals. (AHB2)
    */
   template<
-      rcc::registers::ahb2enr::bits::E ... AHB2ENR
+      registers::ahb2enr::bits::E ... AHB2ENR
   >
   void Functions::enableClocks()
   {
@@ -714,7 +714,7 @@ namespace rcc {
    * @brief Disables these peripherals. (AHB2)
    */
   template<
-      rcc::registers::ahb2enr::bits::E ... AHB2ENR
+      registers::ahb2enr::bits::E ... AHB2ENR
   >
   void Functions::disableClocks()
   {
@@ -725,7 +725,7 @@ namespace rcc {
    * @brief Resets these peripherals. (AHB2)
    */
   template<
-      rcc::registers::ahb2rstr::bits::E ... AHB2RSTR
+      registers::ahb2rstr::bits::E ... AHB2RSTR
   >
   void Functions::resetPeripherals()
   {
@@ -738,7 +738,7 @@ namespace rcc {
    * @note  Overrides the old configuration.
    */
   template<
-      rcc::registers::pllcfgr::bits::pllsrc::states::E PLLSRC,
+      registers::pllcfgr::bits::pllsrc::states::E PLLSRC,
       u8 PLLM,
       u16 PLLN,
       u8 PLLP,
@@ -822,17 +822,27 @@ namespace rcc {
   }
 
   template<
-      rcc::registers::cfgr::bits::mco1::states::E,
-      rcc::registers::cfgr::bits::mco2::states::E,
+      registers::cfgr::bits::mco1::states::E MCO1,
+      registers::cfgr::bits::mco2::states::E MCO2,
       u8 MCOPRE1,
       u8 MCOPRE2
   >
   void Functions::configureClockOutput()
   {
-    _RCC->CFGR &= ~(rcc::registers::cfgr::bits::mco1::MASK +
-        rcc::registers::cfgr::bits::mco2::MASK +
-        rcc::registers::cfgr::bits::mco1pre::MASK +
-        rcc::registers::cfgr::bits::mco2pre::MASK);
+    static_assert(MCOPRE1 < 0b1000,
+        "MCOPRE1 can't exceed 0b1000");
+
+    static_assert(MCOPRE2 < 0b1000,
+        "MCOPRE2 can't exceed 0b1000");
+
+    _RCC->CFGR &= ~(registers::cfgr::bits::mco1::MASK +
+        registers::cfgr::bits::mco2::MASK +
+        registers::cfgr::bits::mco1pre::MASK +
+        registers::cfgr::bits::mco2pre::MASK);
+
+    _RCC->CFGR |= MCO1 + MCO2 +
+        (MCOPRE1 << registers::cfgr::bits::mco1pre::POSITION) +
+        (MCOPRE2 << registers::cfgr::bits::mco2pre::POSITION);
   }
 
 #endif // STM32F1XX
