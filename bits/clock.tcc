@@ -732,6 +732,14 @@ namespace clock {
     (rcc::registers::cfgr2::bits::i2s2src::states::E) _I2S2SRC,
     (rcc::registers::cfgr2::bits::i2s3src::states::E) _I2S3SRC
     >();
+    RCC::selectI2sSource<
+    rcc::registers::cfgr::bits::i2ssrc::states::PLLI2S_USED_AS_I2S_CLOCK_SOURCE
+    >();
+#else // USING_I2S_PLL
+    RCC::selectI2sSource<
+        rcc::registers::cfgr::bits::i2ssrc::states::
+        I2S_CKIN_USED_AS_I2S_CLOCK_SOURCE
+    >();
 #endif // USING_I2S_PLL
 #endif // USING_PLL
     /* Microcontroller Clock Output *******************************************/
@@ -744,8 +752,8 @@ namespace clock {
     RCC::configureClockOutput<
     (rcc::registers::cfgr::bits::mco1::states::E)_MCO1,
     (rcc::registers::cfgr::bits::mco2::states::E)_MCO2,
-    _MCO1PRE,
-    _MCO2PRE
+    _MCO1PRE + 0b10,
+    _MCO2PRE + 0b10
     >();
 #endif // STM32F1XX
 #endif // USING_MCO
