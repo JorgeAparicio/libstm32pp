@@ -92,10 +92,14 @@ namespace dma {
     template<dma::common::address::E D, address::E C>
     void Functions<D, C>::clearGlobalFlag()
     {
+      enum {
+        Channel = (C - 8) / 20
+      };
+
       // TODO DMA, replace the hard-coded numbers
       *(u32*) (bitband::Peripheral<
           D + C + dma::common::registers::ifcr::OFFSET,
-          (C - 8) / 5>::address) = 1;
+          4 * Channel>::address) = 1;
     }
 
     /**
@@ -107,7 +111,7 @@ namespace dma {
       // TODO DMA, replace the hard-coded numbers
       *(u32*) (bitband::Peripheral<
           D + C + dma::common::registers::ifcr::OFFSET,
-          (C - 3) / 5>::address) = 1;
+          4 * Channel + 1>::address) = 1;
     }
 
     /**
@@ -119,7 +123,7 @@ namespace dma {
       // TODO DMA, replace the hard-coded numbers
       *(u32*) (bitband::Peripheral<
           D + C + dma::common::registers::ifcr::OFFSET,
-          (C + 2) / 5>::address) = 1;
+          4 * Channel + 2>::address) = 1;
     }
 
     /**
@@ -131,7 +135,7 @@ namespace dma {
       // TODO DMA, replace the hard-coded numbers
       *(u32*) (bitband::Peripheral<
           D + C + dma::common::registers::ifcr::OFFSET,
-          (C + 7) / 5>::address) = 1;
+          4 * Channel + 3>::address) = 1;
     }
 
     /**
@@ -232,17 +236,21 @@ namespace dma {
     template<dma::common::address::E D, address::E S>
     void Functions<D, S>::clearFifoErrorFlag()
     {
+      enum {
+        Stream = (S - 0x10) / 0x18
+      };
+
       *(u32*) (bitband::Peripheral<
-          (S > 3 ?
-                   D + S + dma::common::registers::hifcr::OFFSET :
-                   D + S + dma::common::registers::lifcr::OFFSET),
-          (S % 4 == 0 ?
-                        0 :
-                        (S % 4 == 1 ?
-                                      6 :
-                                      (S % 4 == 2 ?
-                                                    16 :
-                                                    22)))
+          (Stream > 3 ?
+                        D + dma::common::registers::hifcr::OFFSET :
+                        D + dma::common::registers::lifcr::OFFSET),
+          (Stream % 4 == 0 ?
+                             0 :
+                             (Stream % 4 == 1 ?
+                                                6 :
+                                                (Stream % 4 == 2 ?
+                                                                   16 :
+                                                                   22)))
       >::address) = 1;
     }
 
@@ -252,17 +260,21 @@ namespace dma {
     template<dma::common::address::E D, address::E S>
     void Functions<D, S>::clearDirectModeErrorFlag()
     {
+      enum {
+        Stream = (S - 0x10) / 0x18
+      };
+
       *(u32*) (bitband::Peripheral<
-          (S > 3 ?
-                   D + S + dma::common::registers::hifcr::OFFSET :
-                   D + S + dma::common::registers::lifcr::OFFSET),
-          (S % 4 == 0 ?
-                        2 :
-                        (S % 4 == 1 ?
-                                      8 :
-                                      (S % 4 == 2 ?
-                                                    18 :
-                                                    24)))
+          (Stream > 3 ?
+                        D + dma::common::registers::hifcr::OFFSET :
+                        D + dma::common::registers::lifcr::OFFSET),
+          (Stream % 4 == 0 ?
+                             2 :
+                             (Stream % 4 == 1 ?
+                                                8 :
+                                                (Stream % 4 == 2 ?
+                                                                   18 :
+                                                                   24)))
       >::address) = 1;
     }
 
@@ -272,17 +284,21 @@ namespace dma {
     template<dma::common::address::E D, address::E S>
     void Functions<D, S>::clearTransferErrorFlag()
     {
+      enum {
+        Stream = (S - 0x10) / 0x18
+      };
+
       *(u32*) (bitband::Peripheral<
-          (S > 3 ?
-                   D + S + dma::common::registers::hifcr::OFFSET :
-                   D + S + dma::common::registers::lifcr::OFFSET),
-          (S % 4 == 0 ?
-                        3 :
-                        (S % 4 == 1 ?
-                                      9 :
-                                      (S % 4 == 2 ?
-                                                    19 :
-                                                    25)))
+          (Stream > 3 ?
+                        D + dma::common::registers::hifcr::OFFSET :
+                        D + dma::common::registers::lifcr::OFFSET),
+          (Stream % 4 == 0 ?
+                             3 :
+                             (Stream % 4 == 1 ?
+                                                9 :
+                                                (Stream % 4 == 2 ?
+                                                                   19 :
+                                                                   25)))
       >::address) = 1;
     }
 
@@ -292,17 +308,21 @@ namespace dma {
     template<dma::common::address::E D, address::E S>
     void Functions<D, S>::clearHalfTransferFlag()
     {
+      enum {
+        Stream = (S - 0x10) / 0x18
+      };
+
       *(u32*) (bitband::Peripheral<
-          (S > 3 ?
-                   D + S + dma::common::registers::hifcr::OFFSET :
-                   D + S + dma::common::registers::lifcr::OFFSET),
-          (S % 4 == 0 ?
-                        4 :
-                        (S % 4 == 1 ?
-                                      10 :
-                                      (S % 4 == 2 ?
-                                                    20 :
-                                                    25)))
+          (Stream > 3 ?
+                        D + dma::common::registers::hifcr::OFFSET :
+                        D + dma::common::registers::lifcr::OFFSET),
+          (Stream % 4 == 0 ?
+                             4 :
+                             (Stream % 4 == 1 ?
+                                                10 :
+                                                (Stream % 4 == 2 ?
+                                                                   20 :
+                                                                   26)))
       >::address) = 1;
     }
 
@@ -312,17 +332,21 @@ namespace dma {
     template<dma::common::address::E D, address::E S>
     void Functions<D, S>::clearTransferCompleteFlag()
     {
+      enum {
+        Stream = (S - 0x10) / 0x18
+      };
+
       *(u32*) (bitband::Peripheral<
-          (S > 3 ?
-                   D + S + dma::common::registers::hifcr::OFFSET :
-                   D + S + dma::common::registers::lifcr::OFFSET),
-          (S % 4 == 0 ?
-                        4 :
-                        (S % 4 == 1 ?
-                                      10 :
-                                      (S % 4 == 2 ?
-                                                    20 :
-                                                    25)))
+          (Stream > 3 ?
+                        D + dma::common::registers::hifcr::OFFSET :
+                        D + dma::common::registers::lifcr::OFFSET),
+          (Stream % 4 == 0 ?
+                             5 :
+                             (Stream % 4 == 1 ?
+                                                11 :
+                                                (Stream % 4 == 2 ?
+                                                                   21 :
+                                                                   27)))
       >::address) = 1;
     }
 
