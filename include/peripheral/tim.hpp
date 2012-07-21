@@ -74,6 +74,9 @@ namespace tim {
 
       static INLINE void startCounter();
       static INLINE void stopCounter();
+      static INLINE void setMicroSecondResolution();
+      static INLINE void setMiliSecondResolution();
+      static void delay(u16 const);
       static INLINE void setPrescaler(u16 const);
       static INLINE void setAutoReload(u16 const);
       static INLINE void setCounter(u16 const);
@@ -84,6 +87,7 @@ namespace tim {
       static INLINE void clearUpdateFlag();
       static INLINE void enableUpdateDma();
       static INLINE void disableUpdateDma();
+      static INLINE bool hasUpdateEventOccurred();
 
       template<
           u32

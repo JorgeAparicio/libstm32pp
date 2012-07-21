@@ -49,6 +49,55 @@ namespace tim {
   }
 
   /**
+   * @brief Configures the prescaler, so the counter counts in microseconds.
+   */
+  template<address::E T>
+  void Functions<T>::setMicroSecondResolution()
+  {
+    enum {
+      PSC = (FREQUENCY / 1000000) - 1
+    };
+
+    static_assert(PSC < 65536,
+        "Can't configure the timer to count in microseconds.");
+
+    setPrescaler(PSC);
+  }
+
+  /**
+   * @brief Configures the prescaler, so the counter counts in miliseconds.
+   */
+  template<address::E T>
+  void Functions<T>::setMiliSecondResolution()
+  {
+    enum {
+      PSC = (FREQUENCY / 1000) - 1
+    };
+
+    static_assert(PSC < 65536,
+        "Can't configure the timer to count in miliseconds.");
+
+    setPrescaler(PSC);
+  }
+
+  /**
+   * @brief Waits for <N> counts.
+   * @note  Timer must be configured to generate an update request only on
+   *        overflow or underflow.
+   * @note  If N = 0, the processor will be trapped in an infinite loop.
+   */
+  template<address::E T>
+  void Functions<T>::delay(u16 const N)
+  {
+    setAutoReload(N);
+    generateUpdate();
+    clearUpdateFlag();
+    startCounter();
+    while (!hasUpdateEventOccurred()) {}
+    stopCounter();
+  }
+
+  /**
    * @brief Sets the prescaler value of the counter.
    * @note  A value of 0 indicates no prescaler, a value of 1 indicates
    *        prescaling by 2, and so on.
@@ -157,6 +206,18 @@ namespace tim {
         T + registers::dier::OFFSET,
         registers::dier::bits::ude::POSITION
     >::address) = 0;
+  }
+
+  /**
+   * @brief Returns true if an update event has occurred.
+   */
+  template<address::E T>
+  bool Functions<T>::hasUpdateEventOccurred()
+  {
+    return *(bool*) (bitband::Peripheral<
+        T + registers::sr::OFFSET,
+        registers::sr::bits::uif::POSITION
+    >::address);
   }
 
   /**
