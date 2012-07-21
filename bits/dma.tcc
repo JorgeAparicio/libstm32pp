@@ -186,6 +186,18 @@ namespace dma {
     }
 
     /**
+     * @brief Returns true if the the DMA stream is enabled.
+     */
+    template<dma::common::address::E D, address::E S>
+    bool Functions<D, S>::isEnabled()
+    {
+      return *(u32*) (bitband::Peripheral<
+          D + S + registers::cr::OFFSET,
+          registers::cr::bits::en::POSITION
+      >::address);
+    }
+
+    /**
      * @brief Specifies the amount of data to be transfered.
      */
     template<dma::common::address::E D, address::E S>
@@ -255,6 +267,32 @@ namespace dma {
     }
 
     /**
+     * @brief Clears the fifo error interrupt flag.
+     */
+    template<dma::common::address::E D, address::E S>
+    bool Functions<D, S>::hasFifoErrorOccurred()
+    {
+      // FIXME DMA *(*bool) cast generates Hard Fault exception.
+
+      enum {
+        Stream = (S - 0x10) / 0x18
+      };
+
+      return *(u32*) (bitband::Peripheral<
+          (Stream > 3 ?
+                        D + dma::common::registers::hisr::OFFSET :
+                        D + dma::common::registers::lisr::OFFSET),
+          (Stream % 4 == 0 ?
+                             0 :
+                             (Stream % 4 == 1 ?
+                                                6 :
+                                                (Stream % 4 == 2 ?
+                                                                   16 :
+                                                                   22)))
+      >::address);
+    }
+
+    /**
      * @brief Clears the direct mode error interrupt flag.
      */
     template<dma::common::address::E D, address::E S>
@@ -276,6 +314,32 @@ namespace dma {
                                                                    18 :
                                                                    24)))
       >::address) = 1;
+    }
+
+    /**
+     * @brief Returns true if a direct mode error has occurred.
+     */
+    template<dma::common::address::E D, address::E S>
+    bool Functions<D, S>::hasDirectModeErrorOccurred()
+    {
+      // FIXME DMA *(*bool) cast generates Hard Fault exception.
+
+      enum {
+        Stream = (S - 0x10) / 0x18
+      };
+
+      return *(u32*) (bitband::Peripheral<
+          (Stream > 3 ?
+                        D + dma::common::registers::hisr::OFFSET :
+                        D + dma::common::registers::lisr::OFFSET),
+          (Stream % 4 == 0 ?
+                             2 :
+                             (Stream % 4 == 1 ?
+                                                8 :
+                                                (Stream % 4 == 2 ?
+                                                                   18 :
+                                                                   24)))
+      >::address);
     }
 
     /**
@@ -303,6 +367,32 @@ namespace dma {
     }
 
     /**
+     * @brief Returns true if half of the transfer has occurred.
+     */
+    template<dma::common::address::E D, address::E S>
+    bool Functions<D, S>::hasTransferErrorOccurred()
+    {
+      // FIXME DMA *(*bool) cast generates Hard Fault exception.
+
+      enum {
+        Stream = (S - 0x10) / 0x18
+      };
+
+      return *(u32*) (bitband::Peripheral<
+          (Stream > 3 ?
+                        D + dma::common::registers::hisr::OFFSET :
+                        D + dma::common::registers::lisr::OFFSET),
+          (Stream % 4 == 0 ?
+                             3 :
+                             (Stream % 4 == 1 ?
+                                                9 :
+                                                (Stream % 4 == 2 ?
+                                                                   19 :
+                                                                   25)))
+      >::address);
+    }
+
+    /**
      * @brief Clears the half transfer interrupt flag.
      */
     template<dma::common::address::E D, address::E S>
@@ -327,6 +417,32 @@ namespace dma {
     }
 
     /**
+     * @brief Returns true if half of the transfer has occurred.
+     */
+    template<dma::common::address::E D, address::E S>
+    bool Functions<D, S>::hasHalfTransferOccurred()
+    {
+      // FIXME DMA *(*bool) cast generates Hard Fault exception.
+
+      enum {
+        Stream = (S - 0x10) / 0x18
+      };
+
+      return *(u32*) (bitband::Peripheral<
+          (Stream > 3 ?
+                        D + dma::common::registers::hisr::OFFSET :
+                        D + dma::common::registers::lisr::OFFSET),
+          (Stream % 4 == 0 ?
+                             4 :
+                             (Stream % 4 == 1 ?
+                                                10 :
+                                                (Stream % 4 == 2 ?
+                                                                   20 :
+                                                                   26)))
+      >::address);
+    }
+
+    /**
      * @brief Clears the transfer complete interrupt flag.
      */
     template<dma::common::address::E D, address::E S>
@@ -348,6 +464,46 @@ namespace dma {
                                                                    21 :
                                                                    27)))
       >::address) = 1;
+    }
+
+    /**
+     * @brief Returns true if a complete transfer has occurred.
+     */
+    template<dma::common::address::E D, address::E S>
+    bool Functions<D, S>::hasTransferCompleteOccurred()
+    {
+      // FIXME DMA *(*bool) cast generates Hard Fault exception.
+
+      enum {
+        Stream = (S - 0x10) / 0x18
+      };
+
+      return *(u32*) (bitband::Peripheral<
+          (Stream > 3 ?
+                        D + dma::common::registers::hisr::OFFSET :
+                        D + dma::common::registers::lisr::OFFSET),
+          (Stream % 4 == 0 ?
+                             5 :
+                             (Stream % 4 == 1 ?
+                                                11 :
+                                                (Stream % 4 == 2 ?
+                                                                   21 :
+                                                                   27)))
+      >::address);
+    }
+
+    /**
+     * @brief Returns true if memory 1 is the current target of the DMA.
+     */
+    template<dma::common::address::E D, address::E S>
+    bool Functions<D, S>::isMemory1TheCurrentTarget()
+    {
+      // FIXME DMA *(*bool) cast generates Hard Fault exception.
+
+      return *(u32 *) (bitband::Peripheral<
+          D + S + registers::cr::OFFSET,
+          registers::cr::bits::ct::POSITION
+      >::address);
     }
 
     /**

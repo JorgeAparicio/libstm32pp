@@ -168,16 +168,23 @@ namespace dma {
       public:
         static INLINE void enable();
         static INLINE void disable();
+        static INLINE bool isEnabled();
         static INLINE void setNumberOfTransactions(u16 const);
         static INLINE void setPeripheralAddress(volatile void*);
         static INLINE void setPeripheralAddress(void*);
         static INLINE void setMemory0Address(void*);
         static INLINE void setMemory1Address(void*);
         static INLINE void clearFifoErrorFlag();
+        static INLINE bool hasFifoErrorOccurred();
         static INLINE void clearDirectModeErrorFlag();
+        static INLINE bool hasDirectModeErrorOccurred();
         static INLINE void clearTransferErrorFlag();
+        static INLINE bool hasTransferErrorOccurred();
         static INLINE void clearHalfTransferFlag();
+        static INLINE bool hasHalfTransferOccurred();
         static INLINE void clearTransferCompleteFlag();
+        static INLINE bool hasTransferCompleteOccurred();
+        static INLINE bool isMemory1TheCurrentTarget();
 
         template<
             dma::stream::registers::cr::bits::dmeie::states::E,
