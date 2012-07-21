@@ -31,6 +31,7 @@
 
 #include "../defs.hpp"
 
+#include "../clock.hpp"
 #include "../../memorymap/usart.hpp"
 
 // Low-level access to the registers
