@@ -33,6 +33,9 @@ namespace bitband {
           "This is not a valid Peripheral address for bitbanding."
       );
 
+      static_assert(Bit < 32,
+          "Only 32 bits can be bitbanded.");
+
       enum {
         address = address::PERIPH +
             ((Address - alias::address::PERIPH) << 5) +
@@ -47,6 +50,9 @@ namespace bitband {
           ((Address - alias::address::SRAM) < 0x100000),
           "This is not a valid RAM address for bitbanding."
       );
+
+      static_assert(Bit < 32,
+          "Only 32 bits can be bitbanded.");
 
       enum {
         address = address::SRAM +
