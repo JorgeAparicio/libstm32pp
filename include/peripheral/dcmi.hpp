@@ -49,8 +49,10 @@ namespace dcmi {
 
   class Functions {
     public:
-      static INLINE void enable();
-      static INLINE void disable();
+      static INLINE void enableClock();
+      static INLINE void disableClock();
+      static INLINE void enablePeripheral();
+      static INLINE void disablePeripheral();
       static INLINE void startCapture();
       static INLINE void stopCapture();
       static INLINE bool isInLineSynchronization();

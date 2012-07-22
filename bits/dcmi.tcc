@@ -20,26 +20,49 @@
  ******************************************************************************/
 
 #pragma once
+#include "../include/peripheral/rcc.hpp"
 
 namespace dcmi {
   /**
-   * @brief: Enables the DCMI.
+   * @brief Enables the DCMI's clock.
+   * @note  Registers can't be written when the clock is disabled.
    */
-  void Functions::enable()
+  void Functions::enableClock()
+  {
+    RCC::enableClocks<
+      rcc::registers::ahb2enr::bits::DCMI
+    >();
+  }
+
+  /**
+   * @brief Disables the DCMI's clock.
+   * @note  Registers can't be written when the clock is disabled.
+   */
+  void Functions::disableClock()
+  {
+    RCC::disableClocks<
+      rcc::registers::ahb2enr::bits::DCMI
+    >();
+  }
+
+  /**
+   * @brief Enables the DCMI.
+   */
+  void Functions::enablePeripheral()
   {
     _DCMI->CR |= registers::cr::bits::enable::states::DCMI_ENABLED;
   }
 
   /**
-   * @brief: Disables the DCMI.
+   * @brief Disables the DCMI.
    */
-  void Functions::disable()
+  void Functions::disablePeripheral()
   {
     _DCMI->CR &= ~registers::cr::bits::enable::states::DCMI_ENABLED;
   }
 
   /**
-   * @brief: Stars the frame capture.
+   * @brief Stars the frame capture.
    */
   void Functions::startCapture()
   {
@@ -47,7 +70,7 @@ namespace dcmi {
   }
 
   /**
-   * @brief: Stops the frame capture.
+   * @brief Stops the frame capture.
    */
   void Functions::stopCapture()
   {
@@ -55,7 +78,7 @@ namespace dcmi {
   }
 
   /**
-   * @brief: Returns true if the DCMI is in line synchronization.
+   * @brief Returns true if the DCMI is in line synchronization.
    */
   bool Functions::isInLineSynchronization()
   {
@@ -63,7 +86,7 @@ namespace dcmi {
   }
 
   /**
-   * @brief: Returns true if the DCMI is in frame synchronization.
+   * @brief Returns true if the DCMI is in frame synchronization.
    */
   bool Functions::isInFrameSynchronization()
   {
@@ -71,7 +94,7 @@ namespace dcmi {
   }
 
   /**
-   * @brief: Returns true if a buffer overrun error occurred.
+   * @brief Returns true if a buffer overrun error occurred.
    */
   bool Functions::hasBufferOverrunOccurred()
   {
@@ -79,7 +102,7 @@ namespace dcmi {
   }
 
   /**
-   * @brief: Returns true if a synchronization error occurred.
+   * @brief Returns true if a synchronization error occurred.
    */
   bool Functions::hasErrorSynchronizationOccurred()
   {
@@ -87,7 +110,7 @@ namespace dcmi {
   }
 
   /**
-   * @brief: Enables the capture complete interrupt.
+   * @brief Enables the capture complete interrupt.
    */
   void Functions::enableCaptureCompleInterrupt()
   {
@@ -96,7 +119,7 @@ namespace dcmi {
   }
 
   /**
-   * @brief: Disables the capture complete interrupt.
+   * @brief Disables the capture complete interrupt.
    */
   void Functions::disableCaptureCompleteInterrupt()
   {
@@ -105,7 +128,7 @@ namespace dcmi {
   }
 
   /**
-   * @brief: Clears the capture complete interrupt flag.
+   * @brief Clears the capture complete interrupt flag.
    */
   void Functions::clearCaptureCompleteFlag()
   {
@@ -114,7 +137,7 @@ namespace dcmi {
   }
 
   /**
-   * @brief: Enables the buffer overrun interrupt.
+   * @brief Enables the buffer overrun interrupt.
    */
   void Functions::enableBufferOverrunInterrupt()
   {
@@ -123,7 +146,7 @@ namespace dcmi {
   }
 
   /**
-   * @brief: Disables the buffer overrun interrupt.
+   * @brief Disables the buffer overrun interrupt.
    */
   void Functions::disableBufferOverrunInterrupt()
   {
@@ -132,7 +155,7 @@ namespace dcmi {
   }
 
   /**
-   * @brief: Clears the buffer overrun interrupt flag.
+   * @brief Clears the buffer overrun interrupt flag.
    */
   void Functions::clearBufferOverrunFlag()
   {
@@ -141,7 +164,7 @@ namespace dcmi {
   }
 
   /**
-   * @brief: Enables the synchronization error interrupt.
+   * @brief Enables the synchronization error interrupt.
    */
   void Functions::enableSynchronizationErrorInterrupt()
   {
@@ -150,7 +173,7 @@ namespace dcmi {
   }
 
   /**
-   * @brief: Disables the synchronization error interrupt.
+   * @brief Disables the synchronization error interrupt.
    */
   void Functions::disableSynchronizationErrorInterrupt()
   {
@@ -159,7 +182,7 @@ namespace dcmi {
   }
 
   /**
-   * @brief: Clears the synchronization error interrupt flag.
+   * @brief Clears the synchronization error interrupt flag.
    */
   void Functions::clearSynchronizationErrorFlag()
   {
@@ -168,7 +191,7 @@ namespace dcmi {
   }
 
   /**
-   * @brief: Enables the vertical synchronization interrupt.
+   * @brief Enables the vertical synchronization interrupt.
    */
   void Functions::enableVerticalSynchronizationInterrupt()
   {
@@ -177,7 +200,7 @@ namespace dcmi {
   }
 
   /**
-   * @brief: Disables the vertical synchronization interrupt.
+   * @brief Disables the vertical synchronization interrupt.
    */
   void Functions::disableVerticalSynchronizationInterrupt()
   {
@@ -186,7 +209,7 @@ namespace dcmi {
   }
 
   /**
-   * @brief: Clears the vertical synchronization interrupt flag.
+   * @brief Clears the vertical synchronization interrupt flag.
    */
   void Functions::clearVerticalSynchronizationFlag()
   {
@@ -195,7 +218,7 @@ namespace dcmi {
   }
 
   /**
-   * @brief: Enables the line received interrupt.
+   * @brief Enables the line received interrupt.
    */
   void Functions::enableLineReceivedInterrupt()
   {
@@ -204,7 +227,7 @@ namespace dcmi {
   }
 
   /**
-   * @brief: Disables the line received interrupt.
+   * @brief Disables the line received interrupt.
    */
   void Functions::disableLineReceivedInterrupt()
   {
@@ -213,7 +236,7 @@ namespace dcmi {
   }
 
   /**
-   * @brief: Clears the line received interrupt flag.
+   * @brief Clears the line received interrupt flag.
    */
   void Functions::clearLineReceivedFlag()
   {
@@ -222,7 +245,7 @@ namespace dcmi {
   }
 
   /**
-   * @brief: Clears all the interrupt flags.
+   * @brief Clears all the interrupt flags.
    */
   void Functions::clearAllFlags()
   {
@@ -230,7 +253,7 @@ namespace dcmi {
   }
 
   /**
-   * @brief: Configures the DCMI.
+   * @brief Configures the DCMI.
    */
   template<
       registers::cr::bits::capture::states::E CAPTURE,
