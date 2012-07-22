@@ -69,8 +69,10 @@ namespace i2c {
       >
       static INLINE void configureClock();
 
-      static INLINE void enable();
-      static INLINE void disable();
+      static INLINE void enableClock();
+      static INLINE void disableClock();
+      static INLINE void enablePeripheral();
+      static INLINE void disablePeripheral();
       static INLINE void sendStart();
       static INLINE void sendStop();
       static INLINE void sendData(u8 const data);
@@ -88,11 +90,13 @@ namespace i2c {
       static INLINE bool canSendData();
       static INLINE bool hasTranferFinished();
       static INLINE bool isTheBusBusy();
-      static void writeSlaveRegister(u8 const slaveAddress,
-                                     u8 const registerAddress,
-                                     u8 const value);
-      static u8 readSlaveRegister(u8 const slaveAddress,
-                                  u8 const registerAddress);
+      static void writeSlaveRegister(
+          u8 const slaveAddress,
+          u8 const registerAddress,
+          u8 const value);
+      static u8 readSlaveRegister(
+          u8 const slaveAddress,
+          u8 const registerAddress);
 
       // TODO I2C state machine functions
 

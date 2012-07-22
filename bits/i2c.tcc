@@ -22,6 +22,7 @@
 #pragma once
 
 #include "bitband.hpp"
+#include "../include/peripheral/i2c.hpp"
 
 namespace i2c {
   /**
@@ -55,7 +56,7 @@ namespace i2c {
 
   /**
    * @brief Configures the I2C clock.
-   * @note: In standard mode, CCR >= 4 and in fast mode, CCR  >= 1
+   * @note  In standard mode, CCR >= 4 and in fast mode, CCR  >= 1
    *                           APB1
    * FREQ = -----------------------------------------
    *        CCR *(NORMAL:2, FAST:2 + 1, FAST: 16 + 9)
@@ -93,10 +94,54 @@ namespace i2c {
   }
 
   /**
-   * @brief Enables the I2C clock.
+   * @brief Enables the I2C's clock.
+   * @note  Registers can't be written when the clock is disabled.
    */
   template<address::E I>
-  void Standard<I>::enable()
+  void Standard<I>::enableClock()
+  {
+    RCC::enableClocks<
+        I == address::I2C1 ?
+            rcc::registers::apb1enr::bits::I2C1 :
+            (I == address::I2C2 ?
+                rcc::registers::apb1enr::bits::I2C2 :
+                #ifdef STM32F1XX
+                0)
+#else // STM32F1XX
+                (I == address::I2C3 ?
+                                      rcc::registers::apb1enr::bits::I2C3 :
+                                      0))
+    #endif // STM32F1XX
+    >();
+  }
+
+  /**
+   * @brief Disables the I2C's clock.
+   * @note  Registers can't be written when the clock is disabled.
+   */
+  template<address::E I>
+  void Standard<I>::disableClock()
+  {
+    RCC::disableClocks<
+        I == address::I2C1 ?
+            rcc::registers::apb1enr::bits::I2C1 :
+            (I == address::I2C2 ?
+                rcc::registers::apb1enr::bits::I2C2 :
+                #ifdef STM32F1XX
+                0)
+#else // STM32F1XX
+                (I == address::I2C3 ?
+                                      rcc::registers::apb1enr::bits::I2C3 :
+                                      0))
+    #endif // STM32F1XX
+    >();
+  }
+
+  /**
+   * @brief Turns on the I2C peripheral.
+   */
+  template<address::E I>
+  void Standard<I>::enablePeripheral()
   {
     *(u32*) (bitband::Peripheral<
         I + registers::cr1::OFFSET,
@@ -105,10 +150,10 @@ namespace i2c {
   }
 
   /**
-   * @brief Disables the I2C clock.
+   * @brief Turns off the I2C peripheral.
    */
   template<address::E I>
-  void Standard<I>::disable()
+  void Standard<I>::disablePeripheral()
   {
     *(u32*) (bitband::Peripheral<
         I + registers::cr1::OFFSET,
