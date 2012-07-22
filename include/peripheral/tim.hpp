@@ -72,6 +72,8 @@ namespace tim {
                                                          clock::APB1_TIMERS
       };
 
+      static INLINE void enableClock();
+      static INLINE void disableClock();
       static INLINE void startCounter();
       static INLINE void stopCounter();
       static INLINE void setMicroSecondResolution();
