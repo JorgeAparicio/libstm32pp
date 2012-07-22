@@ -517,7 +517,7 @@ namespace rcc {
 #else // VALUE_LINE
   /**
    * @brief Configures the various bus prescalers.
-   * @note: Overrides the old configuration.
+   * @note  Overrides the old configuration.
    */
   template<
   u8 HPRE,
@@ -785,7 +785,7 @@ namespace rcc {
 
   /**
    * @brief Configures the various bus prescalers.
-   * @note: Overrides the old configuration.
+   * @note  Overrides the old configuration.
    */
   template<
       u8 HPRE,
