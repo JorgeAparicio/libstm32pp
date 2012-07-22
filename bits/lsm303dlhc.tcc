@@ -24,7 +24,7 @@
 namespace lsm303dlhc {
 
   /**
-   * @brief: Configures the accelerometer.
+   * @brief Configures the accelerometer.
    */
   template<i2c::address::E I>
   template<
@@ -137,7 +137,7 @@ namespace lsm303dlhc {
   }
 
   /**
-   * @brief: Sets the magnetometer reading range.
+   * @brief Sets the magnetometer reading range.
    */
   template<i2c::address::E I>
   template<
@@ -152,7 +152,7 @@ namespace lsm303dlhc {
   }
 
   /**
-   * @brief: Sets the magnetometer sampling mode.
+   * @brief Sets the magnetometer sampling mode.
    */
   template<i2c::address::E I>
   template<
@@ -233,7 +233,7 @@ namespace lsm303dlhc {
   }
 
   /**
-   * @brief: Disables the thermometer.
+   * @brief Disables the thermometer.
    */
   template<i2c::address::E I>
   void Thermometer<I>::disable()
@@ -250,7 +250,7 @@ namespace lsm303dlhc {
   }
 
   /**
-   * @brief: Enables the thermometer.
+   * @brief Enables the thermometer.
    */
   template<i2c::address::E I>
   void Thermometer<I>::enable()
