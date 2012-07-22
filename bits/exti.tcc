@@ -37,10 +37,10 @@ namespace exti {
   }
 
   /**
-   * @brief Disables both the event and the interrupt.
+   * @brief Disables both the events and the interrupts.
    */
   template<u8 N>
-  void Functions<N>::disable()
+  void Functions<N>::disableAll()
   {
     static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
 

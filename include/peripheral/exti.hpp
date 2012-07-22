@@ -41,7 +41,7 @@ namespace exti {
   class Functions {
     public:
       static INLINE void clearPendingFlag();
-      static INLINE void disable();
+      static INLINE void disableAll();
       static INLINE void disableEvent();
       static INLINE void disableInterrupt();
       static INLINE void enableHardwareEventByFallingEdge();
