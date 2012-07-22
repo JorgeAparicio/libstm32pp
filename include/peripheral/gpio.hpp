@@ -63,10 +63,11 @@ namespace gpio {
       >::address,
     };
 
+    static INLINE void enableClock();
     static INLINE void setHigh();
     static INLINE void setLow();
-    static INLINE void output(u32 const value);
-    static INLINE u32 input();
+    static INLINE void setOutput(u32 const value);
+    static INLINE u32 getInput();
     static INLINE void pullUp();
     static INLINE void pullDown();
     static INLINE bool isHigh();
@@ -83,6 +84,9 @@ namespace gpio {
   template<address::E P>
   class Port {
     public:
+    static INLINE void enableClock();
+    static INLINE void disableClock();
+
     template<
     gpio::registers::cr::states::E, /* 0 */
     gpio::registers::cr::states::E, /* 1 */
@@ -107,8 +111,8 @@ namespace gpio {
     >
     static INLINE void configureHigherPins();
 
-    static INLINE void setValue(u32 const value);
-    static INLINE u32 getValue();
+    static INLINE void setOutput(u32 const value);
+    static INLINE u32 getInput();
 
     private:
     Port();
@@ -131,10 +135,11 @@ namespace gpio {
         >::address,
       };
 
+      static INLINE void enableClock();
       static INLINE void setHigh();
       static INLINE void setLow();
-      static INLINE void output(u32 const value);
-      static INLINE u32 input();
+      static INLINE void setOutput(u32 const value);
+      static INLINE u32 getInput();
       static INLINE bool isHigh();
 
       template<
@@ -170,8 +175,10 @@ namespace gpio {
   template<address::E P>
   class Port {
     public:
-      static INLINE void output(u16 const);
-      static INLINE u16 input();
+      static INLINE void enableClock();
+      static INLINE void disableClock();
+      static INLINE void setOutput(u16 const);
+      static INLINE u16 getInput();
 
       template<
           gpio::registers::moder::states::E, /* 0 */

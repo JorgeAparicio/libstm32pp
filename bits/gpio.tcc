@@ -22,74 +22,101 @@
 #pragma once
 
 #include "bitband.hpp"
+#include "../include/peripheral/rcc.hpp"
 
 namespace gpio {
 #ifdef STM32F1XX
-   /**
-    * @brief Sets the pin to 1, if it is in any of the output modes.
-    */
-   template<address::E P, u8 N>
-   void Pin<P, N>::setHigh()
-   {
-     reinterpret_cast<Registers *>(P)->BSRR = 1 << N;
-   }
+  /**
+   * @brief Enables the port's clock.
+   * @note  Registers can't be written when the clock is disabled.
+   */
+  template<address::E P, u8 N>
+  void Pin<P, N>::enableClock()
+  {
+    RCC::enableClocks<
+    P == gpio::address::GPIOA?
+    rcc::registers::apb2enr::IOPA :
+    (P == gpio::address::GPIOB?
+        rcc::registers::apb2enr::IOPB :
+        (P == gpio::address::GPIOC?
+            rcc::registers::apb2enr::IOPC :
+            (P == gpio::address::GPIOD?
+                rcc::registers::apb2enr::IOPD :
+                (P == gpio::address::GPIOE?
+                    rcc::registers::apb2enr::IOPE :
+                    (P == gpio::address::GPIOF?
+                        rcc::registers::apb2enr::IOPF :
+                        (P == gpio::address::GPIOG?
+                            rcc::registers::apb2enr::IOPG :
+                            0))))))
+    >();
+  }
 
-   /**
-    * @brief Sets the pin to 0, if it is in any of the output modes.
-    */
-   template<address::E P, u8 N>
-   void Pin<P, N>::setLow()
-   {
-     reinterpret_cast<Registers *>(P)->BRR = 1 << N;
-   }
+  /**
+   * @brief Sets the pin to 1, if it is in any of the output modes.
+   */
+  template<address::E P, u8 N>
+  void Pin<P, N>::setHigh()
+  {
+    reinterpret_cast<Registers *>(P)->BSRR = 1 << N;
+  }
 
-   /**
-    * @brief Outputs the desired logic state through the pin.
-    */
-   template<address::E P, u8 N>
-   void Pin<P, N>::output(u32 const value)
-   {
-     *(u32*) (OUT_ADDRESS) = value;
-   }
+  /**
+   * @brief Sets the pin to 0, if it is in any of the output modes.
+   */
+  template<address::E P, u8 N>
+  void Pin<P, N>::setLow()
+  {
+    reinterpret_cast<Registers *>(P)->BRR = 1 << N;
+  }
 
-   /**
-    * @brief Gets the logic state of the pin.
-    */
-   template<address::E P, u8 N>
-   u32 Pin<P, N>::input()
-   {
-     return *(u32*) (IN_ADDRESS);
-   }
+  /**
+   * @brief Outputs the desired logic state through the pin.
+   */
+  template<address::E P, u8 N>
+  void Pin<P, N>::setOutput(u32 const value)
+  {
+    *(u32*) (OUT_ADDRESS) = value;
+  }
 
-   /**
-    * @brief Enables the pull-up circuit on this pin. (MODE_INPUT_PULL_X only).
-    */
-   template<address::E P, u8 N>
-   void Pin<P, N>::pullUp()
-   {
-     setHigh();
-   }
+  /**
+   * @brief Gets the logic state of the pin.
+   */
+  template<address::E P, u8 N>
+  u32 Pin<P, N>::getInput()
+  {
+    return *(u32*) (IN_ADDRESS);
+  }
 
-   /**
-    * @brief Enables the pull-down circuit on this pin. (MODE_INPUT_PULL_X only).
-    */
-   template<address::E P, u8 N>
-   void Pin<P, N>::pullDown()
-   {
-     setLow();
-   }
+  /**
+   * @brief Enables the pull-up circuit on this pin. (MODE_INPUT_PULL_X only).
+   */
+  template<address::E P, u8 N>
+  void Pin<P, N>::pullUp()
+  {
+    setHigh();
+  }
 
-   /**
-    * @brief Returns true if the pin is high.
-    */
-   template<address::E P, u8 N>
-   bool Pin<P, N>::isHigh()
-   {
-     return *(bool*) (bitband::Peripheral<
-         P + registers::idr::OFFSET,
-         N
-         >::address);
-   }
+  /**
+   * @brief Enables the pull-down circuit on this pin. (MODE_INPUT_PULL_X only).
+   */
+  template<address::E P, u8 N>
+  void Pin<P, N>::pullDown()
+  {
+    setLow();
+  }
+
+  /**
+   * @brief Returns true if the pin is high.
+   */
+  template<address::E P, u8 N>
+  bool Pin<P, N>::isHigh()
+  {
+    return *(bool*) (bitband::Peripheral<
+        P + registers::idr::OFFSET,
+        N
+        >::address);
+  }
 
   /**
    * @brief Changes the I/O mode.
@@ -104,6 +131,58 @@ namespace gpio {
 
     reinterpret_cast<Registers*>(P)->CR[N > 7 ? 1 : 0] |=
     CR << registers::cr::POSITION * (N > 7 ? (N - 8) : N);
+  }
+
+  /**
+   * @brief Enables the port's clock.
+   * @note  Registers can't be written when the clock is disabled.
+   */
+  template<address::E P>
+  void Port<P>::enableClock()
+  {
+    RCC::enableClocks<
+    P == gpio::address::GPIOA?
+    rcc::registers::apb2enr::bits::IOPA :
+    (P == gpio::address::GPIOB?
+        rcc::registers::apb2enr::bits::IOPB :
+        (P == gpio::address::GPIOC?
+            rcc::registers::apb2enr::bits::IOPC :
+            (P == gpio::address::GPIOD?
+                rcc::registers::apb2enr::bits::IOPD :
+                (P == gpio::address::GPIOE?
+                    rcc::registers::apb2enr::bits::IOPE :
+                    (P == gpio::address::GPIOF?
+                        rcc::registers::apb2enr::bits::IOPF :
+                        (P == gpio::address::GPIOG?
+                            rcc::registers::apb2enr::bits::IOPG :
+                            0))))))
+    >();
+  }
+
+  /**
+   * @brief Disables the port's clock.
+   * @note  Registers can't be written when the clock is disabled.
+   */
+  template<address::E P>
+  void Port<P>::disableClock()
+  {
+    RCC::disableClocks<
+    P == gpio::address::GPIOA?
+    rcc::registers::apb2enr::IOPA :
+    (P == gpio::address::GPIOB?
+        rcc::registers::apb2enr::IOPB :
+        (P == gpio::address::GPIOC?
+            rcc::registers::apb2enr::IOPC :
+            (P == gpio::address::GPIOD?
+                rcc::registers::apb2enr::IOPD :
+                (P == gpio::address::GPIOE?
+                    rcc::registers::apb2enr::IOPE :
+                    (P == gpio::address::GPIOF?
+                        rcc::registers::apb2enr::IOPF :
+                        (P == gpio::address::GPIOG?
+                            rcc::registers::apb2enr::IOPG :
+                            0))))))
+    >();
   }
 
   /**
@@ -173,6 +252,32 @@ namespace gpio {
 
 #else // STM32F1XX
   /**
+   * @brief Enables the port's clock.
+   * @note  Registers can't be written when the clock is disabled.
+   */
+  template<address::E P, u8 N>
+  void Pin<P, N>::enableClock()
+  {
+    RCC::enableClocks<
+        P == gpio::address::GPIOA ?
+            rcc::registers::ahb1enr::bits::GPIOA :
+            (P == gpio::address::GPIOB ?
+                rcc::registers::ahb1enr::bits::GPIOB :
+                (P == gpio::address::GPIOC ?
+                    rcc::registers::ahb1enr::bits::GPIOC :
+                    (P == gpio::address::GPIOD ?
+                        rcc::registers::ahb1enr::bits::GPIOD :
+                        (P == gpio::address::GPIOE ?
+                            rcc::registers::ahb1enr::bits::GPIOE :
+                            (P == gpio::address::GPIOF ?
+                                rcc::registers::ahb1enr::bits::GPIOF :
+                                (P == gpio::address::GPIOG ?
+                                    rcc::registers::ahb1enr::bits::GPIOG :
+                                    0))))))
+    >();
+  }
+
+  /**
    * @brief Sets the pin to 1, if it is in output mode.
    */
   template<address::E P, u8 N>
@@ -194,7 +299,7 @@ namespace gpio {
    * @brief Outputs the logic state on the pin.
    */
   template<address::E P, u8 N>
-  void Pin<P, N>::output(u32 const value)
+  void Pin<P, N>::setOutput(u32 const value)
   {
     *(u32*) (OUT_ADDRESS) = value;
   }
@@ -203,7 +308,7 @@ namespace gpio {
    * @brief Gets the logic state of the pin.
    */
   template<address::E P, u8 N>
-  u32 Pin<P, N>::input()
+  u32 Pin<P, N>::getInput()
   {
     return *(u32*) (IN_ADDRESS);
   }
@@ -288,10 +393,62 @@ namespace gpio {
   }
 
   /**
+   * @brief Enables the port's clock.
+   * @note  Registers can't be written when the clock is disabled.
+   */
+  template<address::E P>
+  void Port<P>::enableClock()
+  {
+    RCC::enableClocks<
+        P == gpio::address::GPIOA ?
+            rcc::registers::ahb1enr::bits::GPIOA :
+            (P == gpio::address::GPIOB ?
+                rcc::registers::ahb1enr::bits::GPIOB :
+                (P == gpio::address::GPIOC ?
+                    rcc::registers::ahb1enr::bits::GPIOC :
+                    (P == gpio::address::GPIOD ?
+                        rcc::registers::ahb1enr::bits::GPIOD :
+                        (P == gpio::address::GPIOE ?
+                            rcc::registers::ahb1enr::bits::GPIOE :
+                            (P == gpio::address::GPIOF ?
+                                rcc::registers::ahb1enr::bits::GPIOF :
+                                (P == gpio::address::GPIOG ?
+                                    rcc::registers::ahb1enr::bits::GPIOG :
+                                    0))))))
+    >();
+  }
+
+  /**
+   * @brief Disables the port's clock.
+   * @note  Registers can't be written when the clock is disabled.
+   */
+  template<address::E P>
+  void Port<P>::disableClock()
+  {
+    RCC::disableClocks<
+        P == gpio::address::GPIOA ?
+            rcc::registers::ahb1enr::bits::GPIOA :
+            (P == gpio::address::GPIOB ?
+                rcc::registers::ahb1enr::bits::GPIOB :
+                (P == gpio::address::GPIOC ?
+                    rcc::registers::ahb1enr::bits::GPIOC :
+                    (P == gpio::address::GPIOD ?
+                        rcc::registers::ahb1enr::bits::GPIOD :
+                        (P == gpio::address::GPIOE ?
+                            rcc::registers::ahb1enr::bits::GPIOE :
+                            (P == gpio::address::GPIOF ?
+                                rcc::registers::ahb1enr::bits::GPIOF :
+                                (P == gpio::address::GPIOG ?
+                                    rcc::registers::ahb1enr::bits::GPIOG :
+                                    0))))))
+    >();
+  }
+
+  /**
    * @brief Outputs the logic states on the port.
    */
   template<address::E P>
-  void Port<P>::output(u16 const value)
+  void Port<P>::setOutput(u16 const value)
   {
     reinterpret_cast<Registers*>(P)->ODR = value;
   }
@@ -300,7 +457,7 @@ namespace gpio {
    * @brief Gets the logic state of the port.
    */
   template<address::E P>
-  u16 Port<P>::input()
+  u16 Port<P>::getInput()
   {
     return reinterpret_cast<Registers*>(P)->IDR;
   }
