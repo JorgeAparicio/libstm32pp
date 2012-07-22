@@ -39,9 +39,65 @@
 
 // High-level functions
 namespace dcmi {
+  namespace format {
+    enum E {
+      MONOCHROME = 1,
+      YCBCR422 = 2,
+      RGB565 = 2
+    };
+  }  // namespace format
+
   class Functions {
     public:
-      // TODO DCMI functions declaration
+      static INLINE void enable();
+      static INLINE void disable();
+      static INLINE void startCapture();
+      static INLINE void stopCapture();
+      static INLINE bool isInLineSynchronization();
+      static INLINE bool isInFrameSynchronization();
+      static INLINE bool hasBufferOverrunOccurred();
+      static INLINE bool hasErrorSynchronizationOccurred();
+      static INLINE void enableCaptureCompleInterrupt();
+      static INLINE void disableCaptureCompleteInterrupt();
+      static INLINE void clearCaptureCompleteFlag();
+      static INLINE void enableBufferOverrunInterrupt();
+      static INLINE void disableBufferOverrunInterrupt();
+      static INLINE void clearBufferOverrunFlag();
+      static INLINE void enableSynchronizationErrorInterrupt();
+      static INLINE void disableSynchronizationErrorInterrupt();
+      static INLINE void clearSynchronizationErrorFlag();
+      static INLINE void enableVerticalSynchronizationInterrupt();
+      static INLINE void disableVerticalSynchronizationInterrupt();
+      static INLINE void clearVerticalSynchronizationFlag();
+      static INLINE void enableLineReceivedInterrupt();
+      static INLINE void disableLineReceivedInterrupt();
+      static INLINE void clearLineReceivedFlag();
+      static INLINE void clearAllFlags();
+
+      template<
+          dcmi::registers::cr::bits::capture::states::E,
+          dcmi::registers::cr::bits::cm::states::E,
+          dcmi::registers::cr::bits::crop::states::E,
+          dcmi::registers::cr::bits::jpeg::states::E,
+          dcmi::registers::cr::bits::ess::states::E,
+          dcmi::registers::cr::bits::pckpol::states::E,
+          dcmi::registers::cr::bits::hspol::states::E,
+          dcmi::registers::cr::bits::vspol::states::E,
+          dcmi::registers::cr::bits::fcrc::states::E,
+          dcmi::registers::cr::bits::edm::states::E,
+          dcmi::registers::cr::bits::enable::states::E
+      >
+      static INLINE void configure();
+
+      template<
+          u32, /* Left */
+          u32, /* Top */
+          u32, /* Width */
+          u32 /* Height */,
+          format::E
+      >
+      static INLINE void setCropDimensions();
+
     private:
       Functions();
   };
@@ -50,6 +106,6 @@ namespace dcmi {
 #include "../../bits/dcmi.tcc"
 
 // High-level access to the peripheral
-// TODO
+typedef dcmi::Functions DCMI;
 
 #endif
