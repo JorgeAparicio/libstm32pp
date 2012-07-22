@@ -20,8 +20,31 @@
  ******************************************************************************/
 
 #pragma once
+#include "../include/peripheral/syscfg.hpp"
 
 namespace syscfg {
+  /**
+   * @brief Enables the System Configuration Controller clock.
+   * @note  Registers can't be written when the clock is disabled.
+   */
+  static INLINE void enableClock()
+  {
+    RCC::enableClocks<
+        rcc::registers::apb2enr::bits::SYSCFG
+    >();
+  }
+
+  /**
+   * @brief Disables the System Configuration Controller clock.
+   * @note  Registers can't be written when the clock is disabled.
+   */
+  static INLINE void disableClock()
+  {
+    RCC::disableClocks<
+        rcc::registers::apb2enr::bits::SYSCFG
+    >();
+  }
+
   /**
    * @brief Maps the selected pin to select EXTI line.
    */

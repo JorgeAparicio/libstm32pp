@@ -44,6 +44,8 @@
 namespace syscfg {
   class Functions {
     public:
+      static INLINE void enableClock();
+      static INLINE void disableClock();
       template<
           u8 LINE,
           syscfg::registers::exticr::states::E
