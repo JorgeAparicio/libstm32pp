@@ -22,8 +22,57 @@
 #pragma once
 
 #include "bitband.hpp"
+#include "../include/peripheral/rcc.hpp"
 
 namespace usart {
+  /**
+   * @brief Enables the USART's clock.
+   * @note  Registers can't be written when the clock is disabled.
+   */
+  template<address::E A>
+  void Asynchronous<A>::enableClock()
+  {
+    RCC::enableClocks<
+        A == address::USART1 ?
+            rcc::registers::apb2enr::bits::USART1 :
+            (A == address::USART2 ?
+                rcc::registers::apb1enr::bits::USART2 :
+                (A == address::USART3 ?
+                    rcc::registers::apb1enr::bits::USART3 :
+                    (A == address::UART4 ?
+                        rcc::registers::apb1enr::bits::UART4 :
+                        (A == address::UART5 ?
+                            rcc::registers::apb1enr::bits::UART5 :
+                            (A == address::USART6 ?
+                                rcc::registers::apb2enr::bits::USART6 :
+                                0)))))
+    >();
+  }
+
+  /**
+   * @brief Disables the USART's clock.
+   * @note  Registers can't be written when the clock is disabled.
+   */
+  template<address::E A>
+  void Asynchronous<A>::disableClock()
+  {
+    RCC::disableClocks<
+        A == address::USART1 ?
+            rcc::registers::apb2enr::bits::USART1 :
+            (A == address::USART2 ?
+                rcc::registers::apb1enr::bits::USART2 :
+                (A == address::USART3 ?
+                    rcc::registers::apb1enr::bits::USART3 :
+                    (A == address::UART4 ?
+                        rcc::registers::apb1enr::bits::UART4 :
+                        (A == address::UART5 ?
+                            rcc::registers::apb1enr::bits::UART5 :
+                            (A == address::USART6 ?
+                                rcc::registers::apb2enr::bits::USART6 :
+                                0)))))
+    >();
+  }
+
   /**
    * @brief Sends data through the UART.
    */

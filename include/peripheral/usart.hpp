@@ -55,6 +55,8 @@ namespace usart {
                                                          clock::APB1
       };
 
+      static INLINE void enableClock();
+      static INLINE void disableClock();
       static INLINE void sendData(u8 const data);
       static INLINE u8 getData(void);
       static INLINE bool canSendDataYet(void);
