@@ -88,8 +88,11 @@ namespace i2c {
       static INLINE bool canSendData();
       static INLINE bool hasTranferFinished();
       static INLINE bool isTheBusBusy();
-      static void writeSlaveRegister(u8 const, u8 const, u8 const);
-      static u8 readSlaveRegister(u8 const, u8 const);
+      static void writeSlaveRegister(u8 const slaveAddress,
+                                     u8 const registerAddress,
+                                     u8 const value);
+      static u8 readSlaveRegister(u8 const slaveAddress,
+                                  u8 const registerAddress);
 
       // TODO I2C state machine functions
 

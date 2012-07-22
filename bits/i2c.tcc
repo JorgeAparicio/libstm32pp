@@ -279,9 +279,6 @@ namespace i2c {
 
   /**
    * @brief Writes a value to a slave device register.
-   * @param slaveAddress The slave device address.
-   * @param registerAddress The register device address.
-   * @param value The value to be written in the register.
    */
   template<address::E I>
   void Standard<I>::writeSlaveRegister(
@@ -319,9 +316,6 @@ namespace i2c {
 
   /**
    * @brief Reads a value from a slave device register.
-   * @param slaveAddress The slave device address left shifted by one. (<< 1)
-   * @param registerAddress The slave device register address.
-   * @return
    */
   template<address::E I>
   u8 Standard<I>::readSlaveRegister(
