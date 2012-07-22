@@ -45,8 +45,10 @@ namespace adc {
   template<address::E>
   class Functions {
     public:
-      static INLINE void enable();
-      static INLINE void disable();
+      static INLINE void enableClock();
+      static INLINE void disableClock();
+      static INLINE void enablePeripheral();
+      static INLINE void disablePeripheral();
       static INLINE void startRegularConversions();
       static INLINE void startInjectedConversions();
       static INLINE void enableContinuousConversion();
@@ -57,7 +59,7 @@ namespace adc {
       static INLINE u16 getWatchdogHigherThreshold();
       static INLINE bool hasRegularConversionEnded();
       static INLINE bool hasInjectedConversionEnded();
-      static INLINE u32 getConversionResult();
+      static INLINE u16 getConversionResult();
 
       template<u32>
       static INLINE void setNumberOfRegularChannels();

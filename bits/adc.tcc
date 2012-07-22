@@ -21,26 +21,67 @@
 
 #pragma once
 #include "bitband.hpp"
+#include "../include/peripheral/rcc.hpp"
 
 namespace adc {
   /**
-   * @brief Turns on the ADC.
+   * @brief Enables the ADC's clock.
+   * @note  Registers can't be written when the clock is disabled.
    */
   template<address::E A>
-  void Functions<A>::enable()
+  void Functions<A>::enableClock()
   {
-    reinterpret_cast<Registers*>(A)->CR1 |=
-        registers::cr2::bits::adon::states::ADC_ENABLED;
+    RCC::enableClocks<
+        A == address::ADC1 ?
+            rcc::registers::apb2enr::bits::ADC1 :
+            (A == address::ADC2 ?
+                rcc::registers::apb2enr::bits::ADC2 :
+                (A == address::ADC3 ?
+                                      rcc::registers::apb2enr::bits::ADC3 :
+                                      0))
+    >();
   }
 
   /**
-   * @brief Turns off the ADC
+   * @brief Disables the ADC's clock.
+   * @note  Registers can't be written when the clock is disabled.
    */
   template<address::E A>
-  void Functions<A>::disable()
+  void Functions<A>::disableClock()
   {
-    reinterpret_cast<Registers*>(A)->CR1 &=
-        ~registers::cr2::bits::adon::states::ADC_ENABLED;
+    RCC::disableClocks<
+        A == address::ADC1 ?
+            rcc::registers::apb2enr::bits::ADC1 :
+            (A == address::ADC2 ?
+                rcc::registers::apb2enr::bits::ADC2 :
+                (A == address::ADC3 ?
+                                      rcc::registers::apb2enr::bits::ADC3 :
+                                      0))
+    >();
+  }
+
+  /**
+   * @brief Turns on the ADC peripheral.
+   */
+  template<address::E A>
+  void Functions<A>::enablePeripheral()
+  {
+    *(u32*) (bitband::Peripheral<
+        A + registers::cr1::OFFSET,
+        registers::cr2::bits::adon::POSITION
+    >::address) = 1;
+  }
+
+  /**
+   * @brief Turns off the ADC peripheral.
+   */
+  template<address::E A>
+  void Functions<A>::disablePeripheral()
+  {
+    *(u32*) (bitband::Peripheral<
+        A + registers::cr1::OFFSET,
+        registers::cr2::bits::adon::POSITION
+    >::address) = 0;
   }
 
   /**
@@ -180,7 +221,7 @@ namespace adc {
    * @brief Returns the result of the conversion.
    */
   template<address::E A>
-  u32 Functions<A>::getConversionResult()
+  u16 Functions<A>::getConversionResult()
   {
     return reinterpret_cast<Registers*>(A)->DR;
   }
@@ -192,7 +233,7 @@ namespace adc {
   template<u32 N>
   void Functions<A>::setNumberOfRegularChannels()
   {
-    static_assert(N > 0, "There must be at least one connversion.");
+    static_assert(N > 0, "There must be at least one conversion.");
     static_assert(N <= 16, "The maximum number of regular conversions is 16.");
 
     reinterpret_cast<Registers*>(A)->SQR[0] &=
@@ -209,7 +250,7 @@ namespace adc {
   template<u32 N>
   void Functions<A>::setNumberOfInjectedChannels()
   {
-    static_assert(N > 0, "There must be at least one connversion.");
+    static_assert(N > 0, "There must be at least one conversion.");
     static_assert(N <= 4, "The maximum number of injected conversions is 4.");
 
     reinterpret_cast<Registers*>(A)->JSQR &=
@@ -253,8 +294,8 @@ namespace adc {
   template<u32 O, u32 C>
   void Functions<A>::setInjectedSequenceOrder()
   {
-    static_assert((O > 0) && (O < 17), "Order range goes from 1 to 16");
-    static_assert((C > 0) && (C < 16), "Conversion range goes from 0 to 18");
+    static_assert((O >= 1) && (O <= 4), "Order range goes from 1 to 4");
+    static_assert((C >= 0) && (C <= 18), "Conversion range goes from 0 to 18");
 
     reinterpret_cast<Registers*>(A)->JSQR &=
         ~registers::jsq::MASK << registers::jsq::POSITION * (O - 1);
