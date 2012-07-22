@@ -20,8 +20,37 @@
  ******************************************************************************/
 
 #pragma once
+#include "../include/peripheral/rcc.hpp"
 
 namespace spi {
+  template<address::E S>
+  void Functions<S>::enableClock()
+  {
+    RCC::enableClocks<
+        S == address::SPI1 ?
+            rcc::registers::apb2enr::bits::SPI1 :
+            (S == address::SPI2 ?
+                rcc::registers::apb1enr::bits::SPI2 :
+                (S == address::SPI3 ?
+                                      rcc::registers::apb1enr::bits::SPI3 :
+                                      0))
+    >();
+  }
+
+  template<address::E S>
+  void Functions<S>::disableClock()
+  {
+    RCC::disableClocks<
+        S == address::SPI1 ?
+            rcc::registers::apb2enr::bits::SPI1 :
+            (S == address::SPI2 ?
+                rcc::registers::apb1enr::bits::SPI2 :
+                (S == address::SPI3 ?
+                                      rcc::registers::apb1enr::bits::SPI3 :
+                                      0))
+    >();
+  }
+
   template<address::E S>
   void Functions<S>::sendByte(const u8 byte)
   {
@@ -49,7 +78,7 @@ namespace spi {
   template<address::E S>
   void Functions<S>::enable()
   {
-    *(u32*)(bitband::Peripheral<
+    *(u32*) (bitband::Peripheral<
         S + registers::cr1::OFFSET,
         registers::cr1::bits::spe::POSITION
     >::address) = 1;
@@ -58,7 +87,7 @@ namespace spi {
   template<address::E S>
   void Functions<S>::disable()
   {
-    *(u32*)(bitband::Peripheral<
+    *(u32*) (bitband::Peripheral<
         S + registers::cr1::OFFSET,
         registers::cr1::bits::spe::POSITION
     >::address) = 0;

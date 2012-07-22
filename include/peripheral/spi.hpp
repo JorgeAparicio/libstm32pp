@@ -44,6 +44,8 @@ namespace spi {
   template<address::E S>
   class Functions {
     public:
+      static INLINE void enableClock();
+      static INLINE void disableClock();
       static INLINE void sendByte(const u8);
       static INLINE u8 getByte();
       static INLINE void sendWord(const u16);
