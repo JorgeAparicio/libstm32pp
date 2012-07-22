@@ -20,12 +20,35 @@
  ******************************************************************************/
 
 #pragma once
+#include "../include/peripheral/rcc.hpp"
 
 namespace rng {
   /**
+   * @brief Enables the Random Number Generator clock.
+   * @note  Registers can't be written when the clock is disabled.
+   */
+  void Functions::enableClock()
+  {
+    RCC::enableClocks<
+      rcc::registers::ahb2enr::bits::RNG
+    >();
+  }
+
+  /**
+   * @brief Disables the Random Number Generator clock.
+   * @note  Registers can't be written when the clock is disabled.
+   */
+  void Functions::disableClock()
+  {
+    RCC::disableClocks<
+      rcc::registers::ahb2enr::bits::RNG
+    >();
+  }
+
+  /**
    * @brief Enables the Random Number Generator.
    */
-  void Functions::enableGenerator(void)
+  void Functions::startGenerator()
   {
     _RNG->CR |=
         registers::cr::bits::rngen::states::RANDOM_NUMBER_GENERATOR_ENABLED;
@@ -34,7 +57,7 @@ namespace rng {
   /**
    * @brief Disables the Random Number Generator.
    */
-  void Functions::disableGenerator(void)
+  void Functions::stopGenerator()
   {
     _RNG->CR &=
         ~registers::cr::bits::rngen::states::RANDOM_NUMBER_GENERATOR_ENABLED;
@@ -43,7 +66,7 @@ namespace rng {
   /**
    * @brief Enables the interrupt.
    */
-  void Functions::enableInterrupts(void)
+  void Functions::enableInterrupts()
   {
     _RNG->CR |=
         registers::cr::bits::ie::states::INTERRUPT_ENABLED;
@@ -52,7 +75,7 @@ namespace rng {
   /**
    * @brief Disables the interrupt.
    */
-  void Functions::disableInterrupts(void)
+  void Functions::disableInterrupts()
   {
     _RNG->CR &=
         ~registers::cr::bits::ie::states::INTERRUPT_ENABLED;
@@ -63,7 +86,7 @@ namespace rng {
    * @note  User should check if the random number is valid first.
    */
   template<typename T>
-  T Functions::getValue(void)
+  T Functions::getValue()
   {
     return *(T*) (ADDRESS + registers::dr::OFFSET);
   }
@@ -71,7 +94,7 @@ namespace rng {
   /**
    * @brief Returns true if there is data ready to be read.
    */
-  bool Functions::isDataReady(void)
+  bool Functions::isDataReady()
   {
     return (_RNG->SR &
         registers::sr::bits::drdy::states::VALID_RANDOM_DATA_READY);
@@ -80,7 +103,7 @@ namespace rng {
   /**
    * @brief Returns true if the seed is valid.
    */
-  bool Functions::isSeedValid(void)
+  bool Functions::isSeedValid()
   {
     return (_RNG->SR & registers::sr::bits::secs::states::SEED_OK);
   }
@@ -88,7 +111,7 @@ namespace rng {
   /**
    * @brief Returns true if the clock is valid.
    */
-  bool Functions::isClockValid(void)
+  bool Functions::isClockValid()
   {
     return (_RNG->SR & registers::sr::bits::cecs::states::CLOCK_OK);
   }
@@ -96,7 +119,7 @@ namespace rng {
   /**
    * @brief Clears the seed error flag.
    */
-  void Functions::clearSeedErrorFlag(void)
+  void Functions::clearSeedErrorFlag()
   {
     _RNG->SR &=
         ~registers::sr::bits::seis::states::SEED_ERROR_DETECTED;
@@ -105,7 +128,7 @@ namespace rng {
   /**
    * @brief Clears the seed error flag.
    */
-  void Functions::clearClockErrorFlag(void)
+  void Functions::clearClockErrorFlag()
   {
     _RNG->SR &=
         ~registers::sr::bits::ceis::states::CLOCK_ERROR_DETECTED;

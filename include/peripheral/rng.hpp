@@ -42,8 +42,10 @@
 namespace rng {
   class Functions {
     public:
-      static INLINE void enableGenerator();
-      static INLINE void disableGenerator();
+      static INLINE void enableClock();
+      static INLINE void disableClock();
+      static INLINE void startGenerator();
+      static INLINE void stopGenerator();
       static INLINE void enableInterrupts();
       static INLINE void disableInterrupts();
 
