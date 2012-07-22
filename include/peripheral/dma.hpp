@@ -127,13 +127,26 @@
 #endif // STM32F1XX
 // High-level functions
 namespace dma {
+  namespace common {
+    template<dma::common::address::E>
+    class Functions {
+      public:
+        static INLINE void enableClock();
+        static INLINE void disableClock();
+
+      private:
+        Functions();
+    };
+  }  // namespace common
+
 #ifdef STM32F1XX
   namespace channel {
     template<dma::common::address::E, dma::channel::address::E>
     class Functions {
       public:
-      static INLINE void enable();
-      static INLINE void disable();
+      static INLINE void enableClock();
+      static INLINE void enablePeripheral();
+      static INLINE void disablePeripheral();
       static INLINE void setNumberOfTransactions(u16 const);
       static INLINE void setPeripheralAddress(volatile void const*);
       static INLINE void setPeripheralAddress(void const*);
@@ -166,8 +179,9 @@ namespace dma {
     template<common::address::E D, address::E S>
     class Functions {
       public:
-        static INLINE void enable();
-        static INLINE void disable();
+        static INLINE void enableClock();
+        static INLINE void enablePeripheral();
+        static INLINE void disablePeripheral();
         static INLINE bool isEnabled();
         static INLINE void setNumberOfTransactions(u16 const);
         static INLINE void setPeripheralAddress(volatile void*);
@@ -219,152 +233,154 @@ namespace dma {
         Functions();
 
     };
-  }// namespace stream
+  }  // namespace stream
 #endif
 }  // namespace dma
 
 // High-level access to the peripheral
+typedef dma::common::Functions<dma::common::address::DMA1> DMA1;
+typedef dma::common::Functions<dma::common::address::DMA2> DMA2;
+
 #ifdef STM32F1XX
-  typedef dma::channel::Functions<
-  dma::common::address::DMA1,
-  dma::channel::address::CHANNEL_1
-  > DMA1_CHANNEL1;
+typedef dma::channel::Functions<
+dma::common::address::DMA1,
+dma::channel::address::CHANNEL_1
+> DMA1_CHANNEL1;
 
-  typedef dma::channel::Functions<
-  dma::common::address::DMA1,
-  dma::channel::address::CHANNEL_2
-  > DMA1_CHANNEL2;
+typedef dma::channel::Functions<
+dma::common::address::DMA1,
+dma::channel::address::CHANNEL_2
+> DMA1_CHANNEL2;
 
-  typedef dma::channel::Functions<
-  dma::common::address::DMA1,
-  dma::channel::address::CHANNEL_3
-  > DMA1_CHANNEL3;
+typedef dma::channel::Functions<
+dma::common::address::DMA1,
+dma::channel::address::CHANNEL_3
+> DMA1_CHANNEL3;
 
-  typedef dma::channel::Functions<
-  dma::common::address::DMA1,
-  dma::channel::address::CHANNEL_4
-  > DMA1_CHANNEL4;
+typedef dma::channel::Functions<
+dma::common::address::DMA1,
+dma::channel::address::CHANNEL_4
+> DMA1_CHANNEL4;
 
-  typedef dma::channel::Functions<
-  dma::common::address::DMA1,
-  dma::channel::address::CHANNEL_5
-  > DMA1_CHANNEL5;
+typedef dma::channel::Functions<
+dma::common::address::DMA1,
+dma::channel::address::CHANNEL_5
+> DMA1_CHANNEL5;
 
-  typedef dma::channel::Functions<
-  dma::common::address::DMA1,
-  dma::channel::address::CHANNEL_6
-  > DMA1_CHANNEL6;
+typedef dma::channel::Functions<
+dma::common::address::DMA1,
+dma::channel::address::CHANNEL_6
+> DMA1_CHANNEL6;
 
-  typedef dma::channel::Functions<
-  dma::common::address::DMA1,
-  dma::channel::address::CHANNEL_7
-  > DMA1_CHANNEL7;
+typedef dma::channel::Functions<
+dma::common::address::DMA1,
+dma::channel::address::CHANNEL_7
+> DMA1_CHANNEL7;
 
-  typedef dma::channel::Functions<
-  dma::common::address::DMA2,
-  dma::channel::address::CHANNEL_1
-  > DMA2_CHANNEL1;
+typedef dma::channel::Functions<
+dma::common::address::DMA2,
+dma::channel::address::CHANNEL_1
+> DMA2_CHANNEL1;
 
-  typedef dma::channel::Functions<
-  dma::common::address::DMA2,
-  dma::channel::address::CHANNEL_2
-  > DMA2_CHANNEL2;
+typedef dma::channel::Functions<
+dma::common::address::DMA2,
+dma::channel::address::CHANNEL_2
+> DMA2_CHANNEL2;
 
-  typedef dma::channel::Functions<
-  dma::common::address::DMA2,
-  dma::channel::address::CHANNEL_3
-  > DMA2_CHANNEL3;
+typedef dma::channel::Functions<
+dma::common::address::DMA2,
+dma::channel::address::CHANNEL_3
+> DMA2_CHANNEL3;
 
-  typedef dma::channel::Functions<
-  dma::common::address::DMA2,
-  dma::channel::address::CHANNEL_4
-  > DMA2_CHANNEL4;
+typedef dma::channel::Functions<
+dma::common::address::DMA2,
+dma::channel::address::CHANNEL_4
+> DMA2_CHANNEL4;
 
-  typedef dma::channel::Functions<
-  dma::common::address::DMA2,
-  dma::channel::address::CHANNEL_5
-  > DMA2_CHANNEL5;
+typedef dma::channel::Functions<
+dma::common::address::DMA2,
+dma::channel::address::CHANNEL_5
+> DMA2_CHANNEL5;
 
 #else // STM32F1XX
-  typedef dma::stream::Functions<
-      dma::common::address::DMA1,
-      dma::stream::address::STREAM_0
-  > DMA1_STREAM0;
+typedef dma::stream::Functions<
+    dma::common::address::DMA1,
+    dma::stream::address::STREAM_0
+> DMA1_STREAM0;
 
-  typedef dma::stream::Functions<
-      dma::common::address::DMA1,
-      dma::stream::address::STREAM_1
-  > DMA1_STREAM1;
+typedef dma::stream::Functions<
+    dma::common::address::DMA1,
+    dma::stream::address::STREAM_1
+> DMA1_STREAM1;
 
-  typedef dma::stream::Functions<
-      dma::common::address::DMA1,
-      dma::stream::address::STREAM_2
-  > DMA1_STREAM2;
+typedef dma::stream::Functions<
+    dma::common::address::DMA1,
+    dma::stream::address::STREAM_2
+> DMA1_STREAM2;
 
-  typedef dma::stream::Functions<
-      dma::common::address::DMA1,
-      dma::stream::address::STREAM_3
-  > DMA1_STREAM3;
+typedef dma::stream::Functions<
+    dma::common::address::DMA1,
+    dma::stream::address::STREAM_3
+> DMA1_STREAM3;
 
-  typedef dma::stream::Functions<
-      dma::common::address::DMA1,
-      dma::stream::address::STREAM_4
-  > DMA1_STREAM4;
+typedef dma::stream::Functions<
+    dma::common::address::DMA1,
+    dma::stream::address::STREAM_4
+> DMA1_STREAM4;
 
-  typedef dma::stream::Functions<
-      dma::common::address::DMA1,
-      dma::stream::address::STREAM_5
-  > DMA1_STREAM5;
+typedef dma::stream::Functions<
+    dma::common::address::DMA1,
+    dma::stream::address::STREAM_5
+> DMA1_STREAM5;
 
-  typedef dma::stream::Functions<
-      dma::common::address::DMA1,
-      dma::stream::address::STREAM_6
-  > DMA1_STREAM6;
+typedef dma::stream::Functions<
+    dma::common::address::DMA1,
+    dma::stream::address::STREAM_6
+> DMA1_STREAM6;
 
-  typedef dma::stream::Functions<
-      dma::common::address::DMA1,
-      dma::stream::address::STREAM_7
-  > DMA1_STREAM7;
+typedef dma::stream::Functions<
+    dma::common::address::DMA1,
+    dma::stream::address::STREAM_7
+> DMA1_STREAM7;
 
-  typedef dma::stream::Functions<
-      dma::common::address::DMA2,
-      dma::stream::address::STREAM_0
-  > DMA2_STREAM0;
+typedef dma::stream::Functions<
+    dma::common::address::DMA2,
+    dma::stream::address::STREAM_0
+> DMA2_STREAM0;
 
-  typedef dma::stream::Functions<
-      dma::common::address::DMA2,
-      dma::stream::address::STREAM_1
-  > DMA2_STREAM1;
+typedef dma::stream::Functions<
+    dma::common::address::DMA2,
+    dma::stream::address::STREAM_1
+> DMA2_STREAM1;
 
-  typedef dma::stream::Functions<
-      dma::common::address::DMA2,
-      dma::stream::address::STREAM_2
-  > DMA2_STREAM2;
+typedef dma::stream::Functions<
+    dma::common::address::DMA2,
+    dma::stream::address::STREAM_2
+> DMA2_STREAM2;
 
-  typedef dma::stream::Functions<
-      dma::common::address::DMA2,
-      dma::stream::address::STREAM_3
-  > DMA2_STREAM3;
+typedef dma::stream::Functions<
+    dma::common::address::DMA2,
+    dma::stream::address::STREAM_3
+> DMA2_STREAM3;
 
-  typedef dma::stream::Functions<
-      dma::common::address::DMA2,
-      dma::stream::address::STREAM_4
-  > DMA2_STREAM4;
+typedef dma::stream::Functions<
+    dma::common::address::DMA2,
+    dma::stream::address::STREAM_4
+> DMA2_STREAM4;
 
-  typedef dma::stream::Functions<
-      dma::common::address::DMA2,
-      dma::stream::address::STREAM_5
-  > DMA2_STREAM5;
+typedef dma::stream::Functions<
+    dma::common::address::DMA2,
+    dma::stream::address::STREAM_5
+> DMA2_STREAM5;
 
-  typedef dma::stream::Functions<
-      dma::common::address::DMA2,
-      dma::stream::address::STREAM_6
-  > DMA2_STREAM6;
+typedef dma::stream::Functions<
+    dma::common::address::DMA2,
+    dma::stream::address::STREAM_6
+> DMA2_STREAM6;
 
-  typedef dma::stream::Functions<
-      dma::common::address::DMA2,
-      dma::stream::address::STREAM_7
-  > DMA2_STREAM7;
+typedef dma::stream::Functions<
+    dma::common::address::DMA2,
+    dma::stream::address::STREAM_7
+> DMA2_STREAM7;
 #endif // STM32F1XX
-
 #include "../../bits/dma.tcc"

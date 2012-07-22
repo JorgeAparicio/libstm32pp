@@ -22,15 +22,67 @@
 #pragma once
 
 #include "bitband.hpp"
+#include "../include/peripheral/rcc.hpp"
 
 namespace dma {
+  namespace common {
+    /**
+     * @brief Enables the DMA's clock.
+     * @note  Registers can't be written when the clock is disabled.
+     */
+    template<address::E D>
+    void Functions<D>::enableClock()
+    {
+      RCC::enableClocks<
+          D == address::DMA1 ?
+              rcc::registers::ahb1enr::bits::DMA1 :
+              (D == address::DMA2 ?
+                                    rcc::registers::ahb1enr::bits::DMA2 :
+                                    0)
+      >();
+    }
+
+    /**
+     * @brief Disables the DMA's clock.
+     * @note  Registers can't be written when the clock is disabled.
+     */
+    template<address::E D>
+    void Functions<D>::disableClock()
+    {
+      RCC::disableClocks<
+          D == address::DMA1 ?
+              rcc::registers::ahb1enr::bits::DMA1 :
+              (D == address::DMA2 ?
+                                    rcc::registers::ahb1enr::bits::DMA2 :
+                                    0)
+      >();
+    }
+
+  }  // namespace common
+
 #ifdef STM32F1XX
   namespace channel {
+    /**
+     * @brief Enables the DMA's clock.
+     * @note  Registers can't be written when the clock is disabled.
+     */
+    template<dma::common::address::E D, address::E C>
+    void Functions<D, C>::enableClock()
+    {
+      RCC::enableClocks<
+          D == common::address::DMA1 ?
+              rcc::registers::ahb1enr::bits::DMA1 :
+              (D == common::address::DMA2 ?
+                                    rcc::registers::ahb1enr::bits::DMA2 :
+                                    0)
+      >();
+    }
+
     /**
      * @brief Enables the DMA channel.
      */
     template<dma::common::address::E D, address::E C>
-    void Functions<D, C>::enable()
+    void Functions<D, C>::enablePeripheral()
     {
       *(u32*) (bitband::Peripheral<
           D + C + registers::cr::OFFSET,
@@ -42,7 +94,7 @@ namespace dma {
      * @brief Disables the DMA channel.
      */
     template<dma::common::address::E D, address::E C>
-    void Functions<D, C>::disable()
+    void Functions<D, C>::disablePeripheral()
     {
       *(u32*) (bitband::Peripheral<
           D + C + registers::cr::OFFSET,
@@ -166,23 +218,43 @@ namespace dma {
 #else
   namespace stream {
     /**
+     * @brief Enables the DMA's clock.
+     * @note  Registers can't be written when the clock is disabled.
+     */
+    template<dma::common::address::E D, address::E S>
+    void Functions<D, S>::enableClock()
+    {
+      RCC::enableClocks<
+          D == common::address::DMA1 ?
+              rcc::registers::ahb1enr::bits::DMA1 :
+              (D == common::address::DMA2 ?
+                                    rcc::registers::ahb1enr::bits::DMA2 :
+                                    0)
+      >();
+    }
+
+    /**
      * @brief Enables the DMA stream.
      */
     template<dma::common::address::E D, address::E S>
-    void Functions<D, S>::enable()
+    void Functions<D, S>::enablePeripheral()
     {
-      reinterpret_cast<Registers*>(D + S)->CR |=
-          stream::registers::cr::bits::en::states::STREAM_ENABLED;
+      *(u32*) (bitband::Peripheral<
+          D + S + registers::cr::OFFSET,
+          registers::cr::bits::en::POSITION
+      >::address) = 1;
     }
 
     /**
      * @brief Disables the DMA stream.
      */
     template<dma::common::address::E D, address::E S>
-    void Functions<D, S>::disable()
+    void Functions<D, S>::disablePeripheral()
     {
-      reinterpret_cast<Registers*>(D + S)->CR &=
-          ~stream::registers::cr::bits::en::states::STREAM_ENABLED;
+      *(u32*) (bitband::Peripheral<
+          D + S + registers::cr::OFFSET,
+          registers::cr::bits::en::POSITION
+      >::address) = 0;
     }
 
     /**
@@ -191,6 +263,7 @@ namespace dma {
     template<dma::common::address::E D, address::E S>
     bool Functions<D, S>::isEnabled()
     {
+      // FIXME DMA *(*bool) cast generates Hard Fault exception.
       return *(u32*) (bitband::Peripheral<
           D + S + registers::cr::OFFSET,
           registers::cr::bits::en::POSITION
