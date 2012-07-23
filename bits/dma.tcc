@@ -38,7 +38,7 @@ namespace dma {
               rcc::registers::ahb1enr::bits::DMA1 :
               (D == address::DMA2 ?
                                     rcc::registers::ahb1enr::bits::DMA2 :
-                                    0)
+                                    rcc::registers::ahb1enr::bits::E(0))
       >();
     }
 
@@ -54,7 +54,7 @@ namespace dma {
               rcc::registers::ahb1enr::bits::DMA1 :
               (D == address::DMA2 ?
                                     rcc::registers::ahb1enr::bits::DMA2 :
-                                    0)
+                                    rcc::registers::ahb1enr::bits::E(0))
       >();
     }
 
@@ -70,11 +70,11 @@ namespace dma {
     void Functions<D, C>::enableClock()
     {
       RCC::enableClocks<
-          D == common::address::DMA1 ?
-              rcc::registers::ahb1enr::bits::DMA1 :
-              (D == common::address::DMA2 ?
-                                    rcc::registers::ahb1enr::bits::DMA2 :
-                                    0)
+      D == common::address::DMA1 ?
+      rcc::registers::ahb1enr::bits::DMA1 :
+      (D == common::address::DMA2 ?
+          rcc::registers::ahb1enr::bits::DMA2 :
+          rcc::registers::ahb1enr::bits::E(0))
       >();
     }
 
@@ -228,8 +228,8 @@ namespace dma {
           D == common::address::DMA1 ?
               rcc::registers::ahb1enr::bits::DMA1 :
               (D == common::address::DMA2 ?
-                                    rcc::registers::ahb1enr::bits::DMA2 :
-                                    0)
+                  rcc::registers::ahb1enr::bits::DMA2 :
+                  rcc::registers::ahb1enr::bits::E(0))
       >();
     }
 

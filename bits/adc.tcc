@@ -38,7 +38,7 @@ namespace adc {
                 rcc::registers::apb2enr::bits::ADC2 :
                 (A == address::ADC3 ?
                                       rcc::registers::apb2enr::bits::ADC3 :
-                                      0))
+                                      rcc::registers::apb2enr::bits::E(0)))
     >();
   }
 
@@ -56,7 +56,7 @@ namespace adc {
                 rcc::registers::apb2enr::bits::ADC2 :
                 (A == address::ADC3 ?
                                       rcc::registers::apb2enr::bits::ADC3 :
-                                      0))
+                                      rcc::registers::apb2enr::bits::E(0)))
     >();
   }
 

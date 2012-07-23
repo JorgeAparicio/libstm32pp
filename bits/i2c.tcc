@@ -110,7 +110,7 @@ namespace i2c {
 #else // STM32F1XX
                 (I == address::I2C3 ?
                                       rcc::registers::apb1enr::bits::I2C3 :
-                                      0))
+                                      rcc::registers::apb1enr::bits::E(0)))
     #endif // STM32F1XX
     >();
   }
@@ -132,7 +132,7 @@ namespace i2c {
 #else // STM32F1XX
                 (I == address::I2C3 ?
                                       rcc::registers::apb1enr::bits::I2C3 :
-                                      0))
+                                      rcc::registers::apb1enr::bits::E(0)))
     #endif // STM32F1XX
     >();
   }

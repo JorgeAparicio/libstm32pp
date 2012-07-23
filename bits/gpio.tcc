@@ -48,7 +48,7 @@ namespace gpio {
                         rcc::registers::apb2enr::IOPF :
                         (P == gpio::address::GPIOG?
                             rcc::registers::apb2enr::IOPG :
-                            0))))))
+                            rcc::registers::apb2enr::E(0)))))))
     >();
   }
 
@@ -155,7 +155,7 @@ namespace gpio {
                         rcc::registers::apb2enr::bits::IOPF :
                         (P == gpio::address::GPIOG?
                             rcc::registers::apb2enr::bits::IOPG :
-                            0))))))
+                            rcc::registers::apb2enr::E(0)))))))
     >();
   }
 
@@ -181,7 +181,7 @@ namespace gpio {
                         rcc::registers::apb2enr::IOPF :
                         (P == gpio::address::GPIOG?
                             rcc::registers::apb2enr::IOPG :
-                            0))))))
+                            rcc::registers::apb2enr::E(0)))))))
     >();
   }
 
@@ -273,7 +273,7 @@ namespace gpio {
                                 rcc::registers::ahb1enr::bits::GPIOF :
                                 (P == gpio::address::GPIOG ?
                                     rcc::registers::ahb1enr::bits::GPIOG :
-                                    0))))))
+                                    rcc::registers::ahb1enr::bits::E(0)))))))
     >();
   }
 
@@ -414,7 +414,7 @@ namespace gpio {
                                 rcc::registers::ahb1enr::bits::GPIOF :
                                 (P == gpio::address::GPIOG ?
                                     rcc::registers::ahb1enr::bits::GPIOG :
-                                    0))))))
+                                    rcc::registers::ahb1enr::bits::E(0)))))))
     >();
   }
 
@@ -440,7 +440,7 @@ namespace gpio {
                                 rcc::registers::ahb1enr::bits::GPIOF :
                                 (P == gpio::address::GPIOG ?
                                     rcc::registers::ahb1enr::bits::GPIOG :
-                                    0))))))
+                                    rcc::registers::ahb1enr::bits::E(0)))))))
     >();
   }
 

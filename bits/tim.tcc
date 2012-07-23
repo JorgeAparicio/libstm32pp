@@ -31,6 +31,78 @@ namespace tim {
   template<address::E T>
   void Functions<T>::enableClock()
   {
+    RCC::enableClocks
+    <
+        (T == address::
+            TIM2 ?
+            rcc::
+            registers::
+            apb1enr::
+            bits::
+            TIM2 :
+            (T == address::
+                TIM3 ?
+                rcc::
+                registers::
+                apb1enr::
+                bits::
+                TIM3 :
+                (T == address::
+                    TIM4 ?
+                    rcc::
+                    registers::
+                    apb1enr::
+                    bits::
+                    TIM4 :
+                    (T == address::
+                        TIM5 ?
+                        rcc::
+                        registers::
+                        apb1enr::
+                        bits::
+                        TIM5 :
+                        (T == address::
+                            TIM6 ?
+                            rcc::
+                            registers::
+                            apb1enr::
+                            bits::
+                            TIM6 :
+                            (T == address::
+                                TIM7 ?
+                                rcc::
+                                registers::
+                                apb1enr::
+                                bits::
+                                TIM7 :
+                                (T == address::
+                                    TIM12 ?
+                                            rcc::
+                                            registers::
+                                            apb1enr::
+                                            bits::
+                                            TIM12 :
+                                            (T == address::
+                                                TIM13 ?
+                                                        rcc::
+                                                        registers::
+                                                        apb1enr::
+                                                        bits::
+                                                        TIM13 :
+                                                        (T == address::
+                                                            TIM14 ?
+                                                                    rcc::
+                                                                    registers::
+                                                                    apb1enr::
+                                                                    bits::
+                                                                    TIM14 :
+                                                                    rcc::
+                                                                    registers::
+                                                                    apb1enr::
+                                                                    bits::
+                                                                    E(0))))))))))
+    >();
+
     RCC::enableClocks<
         T == address::
             TIM1 ?
@@ -40,123 +112,69 @@ namespace tim {
             bits::
             TIM1 :
             (T == address::
-                TIM2 ?
+                TIM8 ?
                 rcc::
                 registers::
-                apb1enr::
+                apb2enr::
                 bits::
-                TIM2 :
+                TIM8 :
                 (T == address::
-                    TIM3 ?
-                    rcc::
-                    registers::
-                    apb1enr::
-                    bits::
-                    TIM3 :
-                    (T == address::
-                        TIM4 ?
-                        rcc::
-                        registers::
-                        apb1enr::
-                        bits::
-                        TIM4 :
-                        (T == address::
-                            TIM5 ?
-                            rcc::
-                            registers::
-                            apb1enr::
-                            bits::
-                            TIM5 :
-                            (T == address::
-                                TIM6 ?
-                                rcc::
-                                registers::
-                                apb1enr::
-                                bits::
-                                TIM6 :
-                                (T == address::
-                                    TIM7 ?
-                                    rcc::
-                                    registers::
-                                    apb1enr::
-                                    bits::
-                                    TIM7 :
-                                    (T == address::
-                                        TIM8 ?
-                                        rcc::
-                                        registers::
-                                        apb2enr::
-                                        bits::
-                                        TIM8 :
-                                        (T == address::
-                                            TIM9 ?
-                                            rcc::
-                                            registers::
-                                            apb2enr::
-                                            bits::
-                                            TIM9 :
-                                            (T == address::
-                                                TIM10 ?
-                                                rcc::
-                                                registers::
-                                                apb2enr::
-                                                bits::
-                                                TIM10 :
-                                                (T == address::
-                                                    TIM11 ?
-                                                    rcc::
-                                                    registers::
-                                                    apb2enr::
-                                                    bits::
-                                                    TIM11 :
-                                                    (T == address::
-                                                        TIM12 ?
-                                                        rcc::
-                                                        registers::
-                                                        apb1enr::
-                                                        bits::
-                                                        TIM12 :
-                                                        (T == address::
-                                                            TIM13 ?
-                                                            rcc::
-                                                            registers::
-                                                            apb1enr::
-                                                            bits::
-                                                            TIM13 :
-                                                            (T == address::
-                                                                TIM14 ?
-                                                                rcc::
-                                                                registers::
-                                                                apb1enr::
-                                                                bits::
-                                                                TIM14 :
+                    TIM9 ?
+                           rcc::
+                           registers::
+                           apb2enr::
+                           bits::
+                           TIM9 :
+                           (T == address::
+                               TIM10 ?
+                                       rcc::
+                                       registers::
+                                       apb2enr::
+                                       bits::
+                                       TIM10 :
+                                       (T == address::
+                                           TIM11 ?
+                                                   rcc::
+                                                   registers::
+                                                   apb2enr::
+                                                   bits::
+                                                   TIM11 :
 #ifdef VALUE_LINE
-                                                                (T == address::
-                                                                    TIM15 ?
-                                                                    rcc::
-                                                                    registers::
-                                                                    apb2enr::
-                                                                    bits::
-                                                                    TIM15 :
-                                                                    (T == address::
-                                                                        TIM16 ?
-                                                                        rcc::
-                                                                        registers::
-                                                                        apb2enr::
-                                                                        bits::
-                                                                        TIM16 :
-                                                                        (T == address::
-                                                                            TIM17 ?
-                                                                            rcc::
-                                                                            registers::
-                                                                            apb2enr::
-                                                                            bits::
-                                                                            TIM17 :
-                                                                            0))))))))))))))))
+                                                   (T == address::
+                                                       TIM15 ?
+                                                       rcc::
+                                                       registers::
+                                                       apb2enr::
+                                                       bits::
+                                                       TIM15 :
+                                                       (T == address::
+                                                           TIM16 ?
+                                                           rcc::
+                                                           registers::
+                                                           apb2enr::
+                                                           bits::
+                                                           TIM16 :
+                                                           (T == address::
+                                                               TIM17 ?
+                                                               rcc::
+                                                               registers::
+                                                               apb2enr::
+                                                               bits::
+                                                               TIM17 :
+                                                               rcc::
+                                                               registers::
+                                                               apb2enr::
+                                                               bits::
+                                                               E(0))))))))
 #else // VALUE_LINE
-                                                                0)))))))))))))
-    #endif // VALUE_LINE
-    >();
+                                                   rcc::
+                                                   registers::
+                                                   apb2enr::
+                                                   bits::
+                                                   E(0)))))
+
+#endif // VALUE_LINE
+>();
   }
 
   /**
@@ -165,6 +183,78 @@ namespace tim {
   template<address::E T>
   void Functions<T>::disableClock()
   {
+    RCC::disableClocks
+    <
+        (T == address::
+            TIM2 ?
+            rcc::
+            registers::
+            apb1enr::
+            bits::
+            TIM2 :
+            (T == address::
+                TIM3 ?
+                rcc::
+                registers::
+                apb1enr::
+                bits::
+                TIM3 :
+                (T == address::
+                    TIM4 ?
+                    rcc::
+                    registers::
+                    apb1enr::
+                    bits::
+                    TIM4 :
+                    (T == address::
+                        TIM5 ?
+                        rcc::
+                        registers::
+                        apb1enr::
+                        bits::
+                        TIM5 :
+                        (T == address::
+                            TIM6 ?
+                            rcc::
+                            registers::
+                            apb1enr::
+                            bits::
+                            TIM6 :
+                            (T == address::
+                                TIM7 ?
+                                rcc::
+                                registers::
+                                apb1enr::
+                                bits::
+                                TIM7 :
+                                (T == address::
+                                    TIM12 ?
+                                            rcc::
+                                            registers::
+                                            apb1enr::
+                                            bits::
+                                            TIM12 :
+                                            (T == address::
+                                                TIM13 ?
+                                                        rcc::
+                                                        registers::
+                                                        apb1enr::
+                                                        bits::
+                                                        TIM13 :
+                                                        (T == address::
+                                                            TIM14 ?
+                                                                    rcc::
+                                                                    registers::
+                                                                    apb1enr::
+                                                                    bits::
+                                                                    TIM14 :
+                                                                    rcc::
+                                                                    registers::
+                                                                    apb1enr::
+                                                                    bits::
+                                                                    E(0))))))))))
+    >();
+
     RCC::disableClocks<
         T == address::
             TIM1 ?
@@ -174,123 +264,69 @@ namespace tim {
             bits::
             TIM1 :
             (T == address::
-                TIM2 ?
+                TIM8 ?
                 rcc::
                 registers::
-                apb1enr::
+                apb2enr::
                 bits::
-                TIM2 :
+                TIM8 :
                 (T == address::
-                    TIM3 ?
-                    rcc::
-                    registers::
-                    apb1enr::
-                    bits::
-                    TIM3 :
-                    (T == address::
-                        TIM4 ?
-                        rcc::
-                        registers::
-                        apb1enr::
-                        bits::
-                        TIM4 :
-                        (T == address::
-                            TIM5 ?
-                            rcc::
-                            registers::
-                            apb1enr::
-                            bits::
-                            TIM5 :
-                            (T == address::
-                                TIM6 ?
-                                rcc::
-                                registers::
-                                apb1enr::
-                                bits::
-                                TIM6 :
-                                (T == address::
-                                    TIM7 ?
-                                    rcc::
-                                    registers::
-                                    apb1enr::
-                                    bits::
-                                    TIM7 :
-                                    (T == address::
-                                        TIM8 ?
-                                        rcc::
-                                        registers::
-                                        apb2enr::
-                                        bits::
-                                        TIM8 :
-                                        (T == address::
-                                            TIM9 ?
-                                            rcc::
-                                            registers::
-                                            apb2enr::
-                                            bits::
-                                            TIM9 :
-                                            (T == address::
-                                                TIM10 ?
-                                                rcc::
-                                                registers::
-                                                apb2enr::
-                                                bits::
-                                                TIM10 :
-                                                (T == address::
-                                                    TIM11 ?
-                                                    rcc::
-                                                    registers::
-                                                    apb2enr::
-                                                    bits::
-                                                    TIM11 :
-                                                    (T == address::
-                                                        TIM12 ?
-                                                        rcc::
-                                                        registers::
-                                                        apb1enr::
-                                                        bits::
-                                                        TIM12 :
-                                                        (T == address::
-                                                            TIM13 ?
-                                                            rcc::
-                                                            registers::
-                                                            apb1enr::
-                                                            bits::
-                                                            TIM13 :
-                                                            (T == address::
-                                                                TIM14 ?
-                                                                rcc::
-                                                                registers::
-                                                                apb1enr::
-                                                                bits::
-                                                                TIM14 :
+                    TIM9 ?
+                           rcc::
+                           registers::
+                           apb2enr::
+                           bits::
+                           TIM9 :
+                           (T == address::
+                               TIM10 ?
+                                       rcc::
+                                       registers::
+                                       apb2enr::
+                                       bits::
+                                       TIM10 :
+                                       (T == address::
+                                           TIM11 ?
+                                                   rcc::
+                                                   registers::
+                                                   apb2enr::
+                                                   bits::
+                                                   TIM11 :
 #ifdef VALUE_LINE
-                                                                (T == address::
-                                                                    TIM15 ?
-                                                                    rcc::
-                                                                    registers::
-                                                                    apb2enr::
-                                                                    bits::
-                                                                    TIM15 :
-                                                                    (T == address::
-                                                                        TIM16 ?
-                                                                        rcc::
-                                                                        registers::
-                                                                        apb2enr::
-                                                                        bits::
-                                                                        TIM16 :
-                                                                        (T == address::
-                                                                            TIM17 ?
-                                                                            rcc::
-                                                                            registers::
-                                                                            apb2enr::
-                                                                            bits::
-                                                                            TIM17 :
-                                                                            0))))))))))))))))
+                                                   (T == address::
+                                                       TIM15 ?
+                                                       rcc::
+                                                       registers::
+                                                       apb2enr::
+                                                       bits::
+                                                       TIM15 :
+                                                       (T == address::
+                                                           TIM16 ?
+                                                           rcc::
+                                                           registers::
+                                                           apb2enr::
+                                                           bits::
+                                                           TIM16 :
+                                                           (T == address::
+                                                               TIM17 ?
+                                                               rcc::
+                                                               registers::
+                                                               apb2enr::
+                                                               bits::
+                                                               TIM17 :
+                                                               rcc::
+                                                               registers::
+                                                               apb2enr::
+                                                               bits::
+                                                               E(0))))))))
 #else // VALUE_LINE
-                                                                0)))))))))))))
-    #endif // VALUE_LINE
-    >();
+                                                   rcc::
+                                                   registers::
+                                                   apb2enr::
+                                                   bits::
+                                                   E(0)))))
+
+#endif // VALUE_LINE
+>();
   }
 
   /**

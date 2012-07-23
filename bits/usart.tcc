@@ -33,19 +33,23 @@ namespace usart {
   void Asynchronous<A>::enableClock()
   {
     RCC::enableClocks<
+        A == address::USART2 ?
+            rcc::registers::apb1enr::bits::USART2 :
+            (A == address::USART3 ?
+                rcc::registers::apb1enr::bits::USART3 :
+                (A == address::UART4 ?
+                    rcc::registers::apb1enr::bits::UART4 :
+                    (A == address::UART5 ?
+                        rcc::registers::apb1enr::bits::UART5 :
+                        rcc::registers::apb1enr::bits::E(0))))
+    >();
+
+    RCC::enableClocks<
         A == address::USART1 ?
             rcc::registers::apb2enr::bits::USART1 :
-            (A == address::USART2 ?
-                rcc::registers::apb1enr::bits::USART2 :
-                (A == address::USART3 ?
-                    rcc::registers::apb1enr::bits::USART3 :
-                    (A == address::UART4 ?
-                        rcc::registers::apb1enr::bits::UART4 :
-                        (A == address::UART5 ?
-                            rcc::registers::apb1enr::bits::UART5 :
-                            (A == address::USART6 ?
-                                rcc::registers::apb2enr::bits::USART6 :
-                                0)))))
+            (A == address::USART6 ?
+                                    rcc::registers::apb2enr::bits::USART6 :
+                                    rcc::registers::apb2enr::bits::E(0))
     >();
   }
 
@@ -57,19 +61,23 @@ namespace usart {
   void Asynchronous<A>::disableClock()
   {
     RCC::disableClocks<
+        A == address::USART2 ?
+            rcc::registers::apb1enr::bits::USART2 :
+            (A == address::USART3 ?
+                rcc::registers::apb1enr::bits::USART3 :
+                (A == address::UART4 ?
+                    rcc::registers::apb1enr::bits::UART4 :
+                    (A == address::UART5 ?
+                        rcc::registers::apb1enr::bits::UART5 :
+                        rcc::registers::apb1enr::bits::E(0))))
+    >();
+
+    RCC::disableClocks<
         A == address::USART1 ?
             rcc::registers::apb2enr::bits::USART1 :
-            (A == address::USART2 ?
-                rcc::registers::apb1enr::bits::USART2 :
-                (A == address::USART3 ?
-                    rcc::registers::apb1enr::bits::USART3 :
-                    (A == address::UART4 ?
-                        rcc::registers::apb1enr::bits::UART4 :
-                        (A == address::UART5 ?
-                            rcc::registers::apb1enr::bits::UART5 :
-                            (A == address::USART6 ?
-                                rcc::registers::apb2enr::bits::USART6 :
-                                0)))))
+            (A == address::USART6 ?
+                                    rcc::registers::apb2enr::bits::USART6 :
+                                    rcc::registers::apb2enr::bits::E(0))
     >();
   }
 
