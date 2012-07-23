@@ -24,3 +24,4 @@
 #include "driver/l3gd20.hpp"
 #include "driver/lsm303dlhc.hpp"
 #include "driver/servo.hpp"
+#include "driver/sccb.hpp"
