@@ -148,8 +148,9 @@ namespace servo {
     do {
       *pin[sortedIndices[servoIndex]] = 0;
       servoIndex++;
-    } while (value[sortedIndices[servoIndex - 1]] ==
-        value[sortedIndices[servoIndex]]);
+    } while ((value[sortedIndices[servoIndex - 1]] ==
+        value[sortedIndices[servoIndex]]) &&
+        servoIndex != N);
 
     if (servoIndex == N) {
       DutyCycleTimer::stopCounter();
