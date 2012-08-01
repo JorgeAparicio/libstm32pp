@@ -90,6 +90,22 @@ namespace servo {
   }
 
   /**
+   * @brief Loads values into the servo controller buffer
+   */
+  template<
+      tim::address::E P,
+      u32 F,
+      tim::address::E D,
+      u16 M,
+      u8 N
+  >
+  void Functions<P, F, D, M, N>::load(s16 const (&newValues)[N])
+  {
+    for (int i = 0; i < N; i++)
+      buffer[i] = newValues[i];
+  }
+
+  /**
    * @brief Call this function on the PeriodTimer interrupt.
    * @note  This function clears the interrupt flag.
    */
@@ -154,6 +170,9 @@ namespace servo {
 
     if (servoIndex == N) {
       DutyCycleTimer::stopCounter();
+
+      for (int i = 0; i < N; i++)
+        value[i] = buffer[i];
     } else {
       DutyCycleTimer::setAutoReload(
           value[sortedIndices[servoIndex]] -

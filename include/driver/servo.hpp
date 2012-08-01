@@ -72,7 +72,7 @@ namespace servo {
   >
   class Functions {
     public:
-      static s16 value[N];
+      static s16 buffer[N];
       static u32* pin[N];
 
       typedef tim::Functions<PeriodTimerAddress> PeriodTimer;
@@ -81,10 +81,12 @@ namespace servo {
       static INLINE void initialize();
       static INLINE void start();
       static INLINE void stop();
+      static INLINE void load(s16 const (&)[N]);
       static INLINE void onPeriodTimerInterrupt();
       static INLINE void onDutyCycleTimerInterrupt();
 
     private:
+      static s16 value[N];
       static u8 sortedIndices[N];
       static u8 servoIndex;
       Functions();
