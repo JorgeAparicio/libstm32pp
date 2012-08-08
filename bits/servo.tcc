@@ -23,6 +23,37 @@
 
 namespace servo {
   /**
+   * @brief Constructor
+   */
+  template<
+      tim::address::E P,
+      u32 F,
+      tim::address::E D,
+      u16 M,
+      u8 N
+  >
+  Functions<P, F, D, M, N>::Functions()
+  {
+    for (u8 i = 0; i < N; i++)
+      value[i] = 0;
+  }
+
+  /**
+   * @brief Constructor
+   */
+  template<
+      tim::address::E P,
+      u32 F,
+      tim::address::E D,
+      u16 M,
+      u8 N
+  >
+  void Functions<P, F, D, M, N>::setPin(u8 const index, u32* const pinAddres)
+  {
+    pin[index] = pinAddres;
+  }
+
+  /**
    * @brief Configures the controller for operation.
    * @note  Only call this function once.
    */
@@ -68,8 +99,13 @@ namespace servo {
   void Functions<P, F, D, M, N>::start()
   {
     servoIndex = 0;
-    for (u8 i = 0; i < N; i++)
+
+    for (u8 i = 0; i < N; i++) {
+      if (pin[i] == 0)
+        return;
+
       sortedIndices[i] = i;
+    }
 
     PeriodTimer::startCounter();
   }
@@ -139,7 +175,7 @@ namespace servo {
     DutyCycleTimer::setAutoReload(M + value[sortedIndices[0]]);
 
     for (u8 i = 0; i < N; i++)
-      *pin[i] = 1;
+      *(pin[i]) = 1;
 
     DutyCycleTimer::startCounter();
 
@@ -159,24 +195,24 @@ namespace servo {
   >
   void Functions<P, F, D, M, N>::onDutyCycleTimerInterrupt()
   {
+    DutyCycleTimer::stopCounter();
     DutyCycleTimer::clearUpdateFlag();
 
     do {
-      *pin[sortedIndices[servoIndex]] = 0;
+      *(pin[sortedIndices[servoIndex]]) = 0;
       servoIndex++;
-    } while ((value[sortedIndices[servoIndex - 1]] ==
-        value[sortedIndices[servoIndex]]) &&
+    } while (((value[sortedIndices[servoIndex]] -
+        value[sortedIndices[servoIndex - 1]]) == 0) &&
         servoIndex != N);
 
     if (servoIndex == N) {
-      DutyCycleTimer::stopCounter();
-
       for (int i = 0; i < N; i++)
         value[i] = buffer[i];
     } else {
-      DutyCycleTimer::setAutoReload(
-          value[sortedIndices[servoIndex]] -
-              value[sortedIndices[servoIndex - 1]]);
+      DutyCycleTimer::setAutoReload(value[sortedIndices[servoIndex]] -
+          value[sortedIndices[servoIndex - 1]]);
+
+      DutyCycleTimer::startCounter();
     }
   }
 }  // namespace servo

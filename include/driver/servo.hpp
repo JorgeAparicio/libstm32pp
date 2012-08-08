@@ -72,24 +72,25 @@ namespace servo {
   >
   class Functions {
     public:
-      static s16 buffer[N];
-      static u32* pin[N];
+      Functions();
 
       typedef tim::Functions<PeriodTimerAddress> PeriodTimer;
       typedef tim::Functions<DutyCycleTimerAddress> DutyCycleTimer;
 
-      static INLINE void initialize();
-      static INLINE void start();
-      static INLINE void stop();
-      static INLINE void load(s16 const (&)[N]);
-      static INLINE void onPeriodTimerInterrupt();
-      static INLINE void onDutyCycleTimerInterrupt();
+      INLINE void initialize();
+      INLINE void setPin(u8 const, u32* const);
+      INLINE void start();
+      INLINE void stop();
+      INLINE void load(s16 const (&)[N]);
+      INLINE void onPeriodTimerInterrupt();
+      INLINE void onDutyCycleTimerInterrupt();
 
     private:
-      static s16 value[N];
-      static u8 sortedIndices[N];
-      static u8 servoIndex;
-      Functions();
+      s16 buffer[N];
+      u32* pin[N];
+      s16 value[N];
+      u8 sortedIndices[N];
+      u8 servoIndex;
   };
 }  // namespace servo
 
