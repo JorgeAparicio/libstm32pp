@@ -28,7 +28,7 @@ namespace bitband {
   template<u32 Address, u8 Bit>
   struct Peripheral {
       static_assert(
-          ((Address - alias::address::PERIPH) > 0) &&
+          ((Address - alias::address::PERIPH) >= 0) &&
           ((Address - alias::address::PERIPH) < 0x100000),
           "This is not a valid Peripheral address for bitbanding."
       );
@@ -46,7 +46,7 @@ namespace bitband {
   template<u32 Address, u8 Bit>
   struct Ram {
       static_assert(
-          ((Address - alias::address::SRAM) > 0) &&
+          ((Address - alias::address::SRAM) >= 0) &&
           ((Address - alias::address::SRAM) < 0x100000),
           "This is not a valid RAM address for bitbanding."
       );
