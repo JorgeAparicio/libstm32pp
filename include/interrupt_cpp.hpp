@@ -19,9 +19,10 @@
  *
  ******************************************************************************/
 
-// This is actually a source file, include this in ONLY ONE source file in your
-// project. e.g. include this in a source file called "interrupt.cpp" and
-// nowhere else.
+// This file places the STM32 microcontrollers' interrupts in an appropriate
+// memory section. This header file is actually a source file, include it in
+// another source file. e.g. for the bareCortexM project, include this file
+// ONLY in the file named "interrupt.cpp"
 
 #pragma once
 
