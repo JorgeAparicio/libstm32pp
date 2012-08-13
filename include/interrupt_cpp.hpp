@@ -25,15 +25,9 @@
 
 #pragma once
 
-#include <stdint.h>
 #include "interrupt.hpp"
 
-extern char __StackTop;
-
-typedef uint32_t u32;
 typedef void (* pvf)();
-
-extern "C" void resetHandler();
 
 namespace interrupt {
   __attribute__ ((section(".interrupt_vector")))
