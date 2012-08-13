@@ -31,13 +31,13 @@
 extern char __StackTop;
 
 typedef uint32_t u32;
-typedef void (* const pvf)();
+typedef void (* pvf)();
 
 extern "C" void resetHandler();
 
 namespace interrupt {
   __attribute__ ((section(".interrupt_vector")))
-  void (* const interruptVector[])() = {
+  pvf interruptVector[] = {
     WWDG,// 0x0040
     PVD,// 0x0044
 #if defined VALUE_LINE || \
