@@ -27,22 +27,22 @@ namespace usart {
 #ifdef STM32F1XX
   namespace address {
     enum E {
-      USART1 = alias::address::APB2 + 0x3800,
-      USART2 = alias::address::APB1 + 0x4400,
-      USART3 = alias::address::APB1 + 0x4800,
-      UART4 = alias::address::APB1 + 0x4C00,
-      UART5 = alias::address::APB1 + 0x5000,
+      USART1 = alias::APB2 + 0x3800,
+      USART2 = alias::APB1 + 0x4400,
+      USART3 = alias::APB1 + 0x4800,
+      UART4 = alias::APB1 + 0x4C00,
+      UART5 = alias::APB1 + 0x5000,
     };
   }  // namespace address
 #else
   namespace address {
     enum E {
-      USART1 = alias::address::APB2 + 0x1000,
-      USART2 = alias::address::APB1 + 0x4400,
-      USART3 = alias::address::APB1 + 0x4800,
-      UART4 = alias::address::APB1 + 0x4C00,
-      UART5 = alias::address::APB1 + 0x5000,
-      USART6 = alias::address::APB2 + 0x1400,
+      USART1 = alias::APB2 + 0x1000,
+      USART2 = alias::APB1 + 0x4400,
+      USART3 = alias::APB1 + 0x4800,
+      UART4 = alias::APB1 + 0x4C00,
+      UART5 = alias::APB1 + 0x5000,
+      USART6 = alias::APB2 + 0x1400,
     };
   }  // namespace address
 #endif

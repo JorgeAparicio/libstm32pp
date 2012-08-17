@@ -54,7 +54,7 @@ namespace dac {
   };
 
   enum {
-    ADDRESS = alias::address::APB1 + 0x7400
+    ADDRESS = alias::APB1 + 0x7400
   };
 
   namespace registers {

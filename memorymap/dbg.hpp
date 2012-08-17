@@ -38,7 +38,7 @@ namespace dbg {
   };
 
   enum {
-    ADDRESS = alias::address::DBG
+    ADDRESS = alias::DBG
   };
 
   namespace registers {

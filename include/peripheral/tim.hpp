@@ -67,7 +67,7 @@ namespace tim {
   class Functions {
     public:
       enum {
-        FREQUENCY = u32(A) > u32(alias::address::APB2) ?
+        FREQUENCY = u32(A) > u32(alias::APB2) ?
                                                          clock::APB2_TIMERS :
                                                          clock::APB1_TIMERS
       };

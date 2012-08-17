@@ -155,9 +155,9 @@ namespace usb_fs {
 
   enum {
 #ifdef STM32F1XX
-    ADDRESS = alias::address::USB
+    ADDRESS = alias::USB
 #else
-    ADDRESS = alias::address::AHB2
+    ADDRESS = alias::AHB2
 #endif
   };
 

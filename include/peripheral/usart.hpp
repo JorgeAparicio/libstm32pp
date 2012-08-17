@@ -50,7 +50,7 @@ namespace usart {
   class Asynchronous {
     public:
       enum {
-        FREQUENCY = u32(U) > u32(alias::address::APB2) ?
+        FREQUENCY = u32(U) > u32(alias::APB2) ?
                                                          clock::APB2 :
                                                          clock::APB1
       };

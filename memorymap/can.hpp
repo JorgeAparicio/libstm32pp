@@ -91,8 +91,8 @@ namespace can {
 
   namespace address {
     enum E {
-      CAN1 = alias::address::APB1 + 0x6400,
-      CAN2 = alias::address::APB1 + 0x6800
+      CAN1 = alias::APB1 + 0x6400,
+      CAN2 = alias::APB1 + 0x6800
     };
   }  // namespace address
 

@@ -35,10 +35,10 @@ namespace crc {
 
 #ifdef STM32F1XX
   enum {
-    ADDRESS = alias::address::AHB + 0x3000
+    ADDRESS = alias::AHB + 0x3000
   };
 #else
-  enum {ADDRESS = alias::address::AHB1 + 0x3000};
+  enum {ADDRESS = alias::AHB1 + 0x3000};
 #endif
 
   namespace registers {

@@ -45,15 +45,15 @@ namespace dma {
 #ifdef STM32F1XX
     namespace address {
       enum E {
-        DMA1 = alias::address::AHB + 0x0000,
-        DMA2 = alias::address::AHB + 0x0400,
+        DMA1 = alias::AHB + 0x0000,
+        DMA2 = alias::AHB + 0x0400,
       };
     }  // namespace address
 #else // STM32F1XX
     namespace address {
       enum E {
-        DMA1 = alias::address::AHB1 + 0x6000,
-        DMA2 = alias::address::AHB1 + 0x6400,
+        DMA1 = alias::AHB1 + 0x6000,
+        DMA2 = alias::AHB1 + 0x6400,
       };
     }  // namespace address
 #endif // STM32F1XX

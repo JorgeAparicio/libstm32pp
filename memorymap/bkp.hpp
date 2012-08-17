@@ -26,7 +26,7 @@
 namespace bkp {
   namespace address {
     enum E {
-      BKP = alias::address::APB1 + 0x6C00,
+      BKP = alias::APB1 + 0x6C00,
     };
   }  // namespace address
 

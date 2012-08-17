@@ -29,7 +29,7 @@ namespace fsmc {
   };
 
   enum {
-    ADDRESS = alias::address::FSMC
+    ADDRESS = alias::FSMC
   };
 
   namespace registers {

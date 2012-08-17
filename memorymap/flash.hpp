@@ -31,11 +31,11 @@ namespace flash {
 
 #ifdef STM32F1XX
   enum {
-    ADDRESS = alias::address::AHB + 0x2000
+    ADDRESS = alias::AHB + 0x2000
   };
 #else
   enum {
-    ADDRESS = alias::address::AHB1 + 0x3C00
+    ADDRESS = alias::AHB1 + 0x3C00
   };
 #endif
 

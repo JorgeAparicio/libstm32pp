@@ -49,7 +49,7 @@ namespace nvic {
   };
 
   enum {
-    ADDRESS = alias::address::PPB + 0x100
+    ADDRESS = alias::PPB + 0x100
   };
 
   namespace irqn {

@@ -36,7 +36,7 @@ namespace stk {
   };
 
   enum {
-    ADDRESS = alias::address::PPB + 0x10
+    ADDRESS = alias::PPB + 0x10
   };
 
   namespace registers {

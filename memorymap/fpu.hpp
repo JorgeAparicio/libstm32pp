@@ -38,7 +38,7 @@ namespace fpu {
   };
 
   enum {
-    ADDRESS = alias::address::PPB + 0xD88
+    ADDRESS = alias::PPB + 0xD88
   };
 
   namespace registers {

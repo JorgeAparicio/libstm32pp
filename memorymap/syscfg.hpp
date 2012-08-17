@@ -37,7 +37,7 @@ namespace syscfg {
   };
 
   enum {
-    ADDRESS = alias::address::APB2 + 0x3800
+    ADDRESS = alias::APB2 + 0x3800
   };
 
   namespace registers {

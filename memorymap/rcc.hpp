@@ -112,11 +112,11 @@ namespace rcc {
 #endif // STM32F1XX
 #ifdef STM32F1XX
   enum {
-    ADDRESS = alias::address::AHB + 0x1000
+    ADDRESS = alias::AHB + 0x1000
   };
 #else
   enum {
-    ADDRESS = alias::address::AHB1 + 0x3800
+    ADDRESS = alias::AHB1 + 0x3800
   };
 #endif
 

@@ -47,11 +47,11 @@ namespace i2c {
 
   namespace address {
     enum E {
-      I2C1 = alias::address::APB1 + 0x5400,
-      I2C2 = alias::address::APB1 + 0x5800,
+      I2C1 = alias::APB1 + 0x5400,
+      I2C2 = alias::APB1 + 0x5800,
 
 #ifndef STM32F1XX
-    I2C3 = alias::address::APB1 + 0x5C00
+    I2C3 = alias::APB1 + 0x5C00
 #endif // !STM32F1XX
     };
   }  // namespace address

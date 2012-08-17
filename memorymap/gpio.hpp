@@ -65,23 +65,23 @@ namespace gpio {
   namespace address {
     enum E {
 #ifdef STM32F1XX
-      GPIOA = alias::address::APB2 + 0x0800,
-      GPIOB = alias::address::APB2 + 0x0C00,
-      GPIOC = alias::address::APB2 + 0x1000,
-      GPIOD = alias::address::APB2 + 0x1400,
-      GPIOE = alias::address::APB2 + 0x1800,
-      GPIOF = alias::address::APB2 + 0x1C00,
-      GPIOG = alias::address::APB2 + 0x2000,
+      GPIOA = alias::APB2 + 0x0800,
+      GPIOB = alias::APB2 + 0x0C00,
+      GPIOC = alias::APB2 + 0x1000,
+      GPIOD = alias::APB2 + 0x1400,
+      GPIOE = alias::APB2 + 0x1800,
+      GPIOF = alias::APB2 + 0x1C00,
+      GPIOG = alias::APB2 + 0x2000,
 #else  // STM32F1XX
-      GPIOA = alias::address::AHB1 + 0x0000,
-      GPIOB = alias::address::AHB1 + 0x0400,
-      GPIOC = alias::address::AHB1 + 0x0800,
-      GPIOD = alias::address::AHB1 + 0x0C00,
-      GPIOE = alias::address::AHB1 + 0x1000,
-      GPIOF = alias::address::AHB1 + 0x1400,
-      GPIOG = alias::address::AHB1 + 0x1800,
-      GPIOH = alias::address::AHB1 + 0x1C00,
-      GPIOI = alias::address::AHB1 + 0x2000,
+      GPIOA = alias::AHB1 + 0x0000,
+      GPIOB = alias::AHB1 + 0x0400,
+      GPIOC = alias::AHB1 + 0x0800,
+      GPIOD = alias::AHB1 + 0x0C00,
+      GPIOE = alias::AHB1 + 0x1000,
+      GPIOF = alias::AHB1 + 0x1400,
+      GPIOG = alias::AHB1 + 0x1800,
+      GPIOH = alias::AHB1 + 0x1C00,
+      GPIOI = alias::AHB1 + 0x2000,
 #endif  // STM32F1XX
     };
   }  // namespace address

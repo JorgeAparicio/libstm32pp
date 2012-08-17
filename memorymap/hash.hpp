@@ -43,7 +43,7 @@ namespace hash {
   };
 
   enum {
-    ADDRESS = alias::address::AHB2 + 0x60400
+    ADDRESS = alias::AHB2 + 0x60400
   };
 
   namespace registers {

@@ -56,7 +56,7 @@ namespace cryp {
   };
 
   enum {
-    ADDRESS = alias::address::AHB2 + 0x60000
+    ADDRESS = alias::AHB2 + 0x60000
   };
 
   namespace registers {

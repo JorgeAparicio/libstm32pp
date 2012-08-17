@@ -41,11 +41,11 @@ namespace exti {
 
 #ifdef STM32F1XX
   enum {
-    ADDRESS = alias::address::APB2 + 0x0400
+    ADDRESS = alias::APB2 + 0x0400
   };
 #else
   enum {
-    ADDRESS = alias::address::APB2 + 0x3C00
+    ADDRESS = alias::APB2 + 0x3C00
   };
 #endif
 

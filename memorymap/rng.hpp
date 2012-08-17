@@ -34,7 +34,7 @@ namespace rng {
   };
 
   enum {
-    ADDRESS = alias::address::AHB2 + 0x60800
+    ADDRESS = alias::AHB2 + 0x60800
   };
 
   namespace registers {

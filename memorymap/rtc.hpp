@@ -108,7 +108,7 @@ namespace rtc {
   };
 
   enum {
-    ADDRESS = alias::address::APB1 + 0x2800
+    ADDRESS = alias::APB1 + 0x2800
   };
 
   namespace registers {

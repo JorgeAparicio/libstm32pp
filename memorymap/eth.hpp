@@ -275,11 +275,11 @@ namespace eth {
 
 #ifdef STM32F1XX
   enum {
-    ADDRESS = alias::address::AHB + 0x8000
+    ADDRESS = alias::AHB + 0x8000
   };
 #else
   enum {
-    ADDRESS = alias::address::AHB1 + 0x8000
+    ADDRESS = alias::AHB1 + 0x8000
   };
 #endif
 

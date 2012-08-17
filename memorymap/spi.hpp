@@ -48,17 +48,17 @@ namespace spi {
 #ifdef STM32F1XX
   namespace address {
     enum E {
-      SPI1 = alias::address::APB2 + 0x3000,
-      SPI2 = alias::address::APB1 + 0x3800,
-      SPI3 = alias::address::APB1 + 0x3C00
+      SPI1 = alias::APB2 + 0x3000,
+      SPI2 = alias::APB1 + 0x3800,
+      SPI3 = alias::APB1 + 0x3C00
     };
   }  // namespace address
 #else
   namespace address {
     enum E {
-      SPI1 = alias::address::APB2 + 0x3000,
-      SPI2 = alias::address::APB1 + 0x3800,
-      SPI3 = alias::address::APB1 + 0x3C00
+      SPI1 = alias::APB2 + 0x3000,
+      SPI2 = alias::APB1 + 0x3800,
+      SPI3 = alias::APB1 + 0x3C00
     };
   }  // namespace address
 #endif

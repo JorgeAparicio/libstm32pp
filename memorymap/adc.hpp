@@ -27,18 +27,18 @@ namespace adc {
 #ifdef SMT32F1XX
   namespace address {
     enum E {
-      ADC1 = alias::address::APB2 + 0x2400,
-      ADC2 = alias::address::APB2 + 0x2800,
-      ADC3 = alias::address::APB2 + 0x3C00,
+      ADC1 = alias::APB2 + 0x2400,
+      ADC2 = alias::APB2 + 0x2800,
+      ADC3 = alias::APB2 + 0x3C00,
     };
   }  // namespace address
 #else
   namespace address {
     enum E {
-      ADC1 = alias::address::APB2 + 0x2000,
-      ADC2 = alias::address::APB2 + 0x2100,
-      ADC3 = alias::address::APB2 + 0x2200,
-      ADC = alias::address::APB2 + 0x2300,
+      ADC1 = alias::APB2 + 0x2000,
+      ADC2 = alias::APB2 + 0x2100,
+      ADC3 = alias::APB2 + 0x2200,
+      ADC = alias::APB2 + 0x2300,
     };
   }  // namespace address
 #endif

@@ -32,7 +32,7 @@ namespace pwr {
   };
 
   enum {
-    ADDRESS = alias::address::APB1 + 0x7000
+    ADDRESS = alias::APB1 + 0x7000
   };
 
   namespace registers {

@@ -36,7 +36,7 @@ namespace iwdg {
   };
 
   enum {
-    ADDRESS = alias::address::APB1 + 0x3000
+    ADDRESS = alias::APB1 + 0x3000
   };
 
   namespace registers {

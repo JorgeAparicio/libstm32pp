@@ -41,7 +41,7 @@ namespace cec {
   };
 
   enum {
-    ADDRESS = alias::address::APB1 + 0x7800
+    ADDRESS = alias::APB1 + 0x7800
   };
 
   namespace registers {

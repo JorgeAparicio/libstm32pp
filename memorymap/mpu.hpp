@@ -38,7 +38,7 @@ namespace mpu {
   };
 
   enum {
-    ADDRESS = alias::address::PPB + 0xD90
+    ADDRESS = alias::PPB + 0xD90
   };
 
   namespace registers {

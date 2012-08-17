@@ -26,7 +26,7 @@
 namespace afio {
   namespace address {
     enum e {
-      AFIO = alias::address::APB2 + 0x0000
+      AFIO = alias::APB2 + 0x0000
     };
   }  // namespace address
 

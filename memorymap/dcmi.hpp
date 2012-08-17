@@ -50,7 +50,7 @@ namespace dcmi {
   };
 
   enum {
-    ADDRESS = alias::address::AHB2 + 0x50000
+    ADDRESS = alias::AHB2 + 0x50000
   };
 
   namespace registers {

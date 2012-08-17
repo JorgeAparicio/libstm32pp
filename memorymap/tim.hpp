@@ -78,39 +78,39 @@ namespace tim {
   namespace address {
     enum E {
 #ifdef STM32F1XX
-      TIM1 = alias::address::APB2 + 0x2C00,
-      TIM8 = alias::address::APB2 + 0x3400,
+      TIM1 = alias::APB2 + 0x2C00,
+      TIM8 = alias::APB2 + 0x3400,
 #else
-      TIM1 = alias::address::APB2 + 0x0000,
-      TIM8 = alias::address::APB2 + 0x0400,
+      TIM1 = alias::APB2 + 0x0000,
+      TIM8 = alias::APB2 + 0x0400,
       #endif
-      TIM2 = alias::address::APB1 + 0x0000,
-      TIM3 = alias::address::APB1 + 0x0400,
-      TIM4 = alias::address::APB1 + 0x0800,
-      TIM5 = alias::address::APB1 + 0x0C00,
+      TIM2 = alias::APB1 + 0x0000,
+      TIM3 = alias::APB1 + 0x0400,
+      TIM4 = alias::APB1 + 0x0800,
+      TIM5 = alias::APB1 + 0x0C00,
 
-      TIM9 = alias::address::APB2 + 0x4000,
-      TIM12 = alias::address::APB1 + 0x1800,
+      TIM9 = alias::APB2 + 0x4000,
+      TIM12 = alias::APB1 + 0x1800,
 
 #ifdef STM32F1XX
-      TIM10 = alias::address::APB2 + 0x5000,
-      TIM11 = alias::address::APB2 + 0x5400,
+      TIM10 = alias::APB2 + 0x5000,
+      TIM11 = alias::APB2 + 0x5400,
 #else
-      TIM10 = alias::address::APB2 + 0x4400,
-      TIM11 = alias::address::APB2 + 0x4800,
+      TIM10 = alias::APB2 + 0x4400,
+      TIM11 = alias::APB2 + 0x4800,
 
 #endif
-      TIM13 = alias::address::APB1 + 0x1C00,
-      TIM14 = alias::address::APB1 + 0x2000,
+      TIM13 = alias::APB1 + 0x1C00,
+      TIM14 = alias::APB1 + 0x2000,
 
 #ifdef VALUE_LINE
-      TIM15 = alias::address::APB2 + 0x4000,
-      TIM16 = alias::address::APB2 + 0x4400,
-      TIM17 = alias::address::APB2 + 0x4800,
+      TIM15 = alias::APB2 + 0x4000,
+      TIM16 = alias::APB2 + 0x4400,
+      TIM17 = alias::APB2 + 0x4800,
 #endif
 
-      TIM6 = alias::address::APB1 + 0x1000,
-      TIM7 = alias::address::APB1 + 0x1400,
+      TIM6 = alias::APB1 + 0x1000,
+      TIM7 = alias::APB1 + 0x1400,
     };
   }  // namespace address
 

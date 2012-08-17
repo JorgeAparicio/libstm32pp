@@ -60,10 +60,10 @@ namespace sdio {
   };
 
 #ifdef STM32F1XX
-  enum {ADDRESS = alias::address::PERIPH + 0x18000};
+  enum {ADDRESS = alias::PERIPH + 0x18000};
 #else
   enum {
-    ADDRESS = alias::address::APB2 + 0x2C00
+    ADDRESS = alias::APB2 + 0x2C00
   };
 #endif
 

@@ -172,7 +172,7 @@ namespace usb_hs {
   };
 
   enum {
-    ADDRESS = alias::address::AHB1 + 0x20000
+    ADDRESS = alias::AHB1 + 0x20000
   };
 
   namespace registers {

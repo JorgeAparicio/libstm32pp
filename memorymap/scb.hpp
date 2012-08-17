@@ -57,7 +57,7 @@ namespace scb {
   };
 
   enum {
-    ADDRESS = alias::address::PPB + 0xD00
+    ADDRESS = alias::PPB + 0xD00
   };
 
   namespace registers {
