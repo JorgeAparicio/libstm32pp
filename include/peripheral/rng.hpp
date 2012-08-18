@@ -36,7 +36,7 @@
 #include "../../memorymap/rng.hpp"
 
 // Low-level access to registers
-#define _RNG reinterpret_cast<rng::Registers *>(rng::ADDRESS)
+#define RNG_REGS reinterpret_cast<rng::Registers *>(rng::ADDRESS)
 
 // High-level functions
 namespace rng {

@@ -34,16 +34,16 @@
 #include "../../memorymap/gpio.hpp"
 
 // Low-level access to the registers
-#define _GPIOA  ((gpio::Registers *) gpio::address::E::GPIOA)
-#define _GPIOB  ((gpio::Registers *) gpio::address::E::GPIOB)
-#define _GPIOC  ((gpio::Registers *) gpio::address::E::GPIOC)
-#define _GPIOD  ((gpio::Registers *) gpio::address::E::GPIOD)
-#define _GPIOE  ((gpio::Registers *) gpio::address::E::GPIOE)
-#define _GPIOF  ((gpio::Registers *) gpio::address::E::GPIOF)
-#define _GPIOG  ((gpio::Registers *) gpio::address::E::GPIOG)
+#define GPIOA_REGS  ((gpio::Registers *) gpio::address::E::GPIOA)
+#define GPIOB_REGS  ((gpio::Registers *) gpio::address::E::GPIOB)
+#define GPIOC_REGS  ((gpio::Registers *) gpio::address::E::GPIOC)
+#define GPIOD_REGS  ((gpio::Registers *) gpio::address::E::GPIOD)
+#define GPIOE_REGS  ((gpio::Registers *) gpio::address::E::GPIOE)
+#define GPIOF_REGS  ((gpio::Registers *) gpio::address::E::GPIOF)
+#define GPIOG_REGS  ((gpio::Registers *) gpio::address::E::GPIOG)
 #ifdef STM32F4XX
-#define _GPIOH  ((gpio::Registers *) gpio::address::E::GPIOH)
-#define _GPIOI  ((gpio::Registers *) gpio::address::E::GPIOI)
+#define GPIOH_REGS  ((gpio::Registers *) gpio::address::E::GPIOH)
+#define GPIOI_REGS  ((gpio::Registers *) gpio::address::E::GPIOI)
 #endif
 
 // High-level functions

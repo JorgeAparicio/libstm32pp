@@ -33,7 +33,7 @@
 #include "../../memorymap/crc.hpp"
 
 // Low-level access to the registers
-#define _CRC reinterpret_cast<crc::Registers *>(crc::ADDRESS)
+#define CRC_REGS reinterpret_cast<crc::Registers *>(crc::ADDRESS)
 
 // High-level functions
 namespace crc {

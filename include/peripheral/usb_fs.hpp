@@ -36,7 +36,7 @@
 #include "../../memorymap/usb_fs.hpp"
 
 // Low-level access to the registers
-#define _USB_FS reinterpret_cast<usb_fs::Registers*>(usb_fs::ADDRESS)
+#define USB_FS_REGS reinterpret_cast<usb_fs::Registers*>(usb_fs::ADDRESS)
 
 // High-level functions
 namespace usb_fs {

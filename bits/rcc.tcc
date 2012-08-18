@@ -330,10 +330,10 @@ namespace rcc {
    */
   bool Functions::isSystemClockSourceStable()
   {
-    return (((_RCC->CFGR & cfgr::sw::MASK)
+    return (((RCC_REGS->CFGR & cfgr::sw::MASK)
         >> cfgr::sw::POSITION)
         ==
-        ((_RCC->CFGR & cfgr::sws::MASK)
+        ((RCC_REGS->CFGR & cfgr::sws::MASK)
             >> cfgr::sws::POSITION));
   }
 
@@ -342,8 +342,8 @@ namespace rcc {
    */
   void Functions::setSystemClockSource(cfgr::sw::States SW)
   {
-    _RCC->CFGR &= ~cfgr::sw::MASK;
-    _RCC->CFGR |= SW;
+    RCC_REGS->CFGR &= ~cfgr::sw::MASK;
+    RCC_REGS->CFGR |= SW;
   }
 
   /**
@@ -351,8 +351,8 @@ namespace rcc {
    */
   void Functions::setRtcClockSource(bdcr::rtcsel::States RTCSEL)
   {
-    _RCC->BDCR &= ~bdcr::rtcsel::MASK;
-    _RCC->BDCR |= RTCSEL;
+    RCC_REGS->BDCR &= ~bdcr::rtcsel::MASK;
+    RCC_REGS->BDCR |= RTCSEL;
   }
 
   /**
@@ -363,7 +363,7 @@ namespace rcc {
   >
   void Functions::enableClocks()
   {
-    _RCC->APB1ENR |= cSum<APB1ENR...>::value;
+    RCC_REGS->APB1ENR |= cSum<APB1ENR...>::value;
   }
 
   /**
@@ -374,7 +374,7 @@ namespace rcc {
   >
   void Functions::disableClocks()
   {
-    _RCC->APB1ENR &= ~cSum<APB1ENR...>::value;
+    RCC_REGS->APB1ENR &= ~cSum<APB1ENR...>::value;
   }
 
   /**
@@ -385,7 +385,7 @@ namespace rcc {
   >
   void Functions::resetPeripherals()
   {
-    _RCC->APB1RSTR |= cSum<APB1RSTR...>::value;
+    RCC_REGS->APB1RSTR |= cSum<APB1RSTR...>::value;
   }
 
   /**
@@ -396,7 +396,7 @@ namespace rcc {
   >
   void Functions::enableClocks()
   {
-    _RCC->APB2ENR |= cSum<APB2ENR...>::value;
+    RCC_REGS->APB2ENR |= cSum<APB2ENR...>::value;
   }
 
   /**
@@ -407,7 +407,7 @@ namespace rcc {
   >
   void Functions::disableClocks()
   {
-    _RCC->APB2ENR &= ~cSum<APB2ENR...>::value;
+    RCC_REGS->APB2ENR &= ~cSum<APB2ENR...>::value;
   }
 
   /**
@@ -418,7 +418,7 @@ namespace rcc {
   >
   void Functions::resetPeripherals()
   {
-    _RCC->APB2RSTR = cSum<APB2RSTR...>::value;
+    RCC_REGS->APB2RSTR = cSum<APB2RSTR...>::value;
   }
 
 #ifdef STM32F1XX
@@ -431,7 +431,7 @@ namespace rcc {
   >
   void Functions::enableClocks()
   {
-    _RCC->AHBENR |= cSum<AHBENR...>::value;
+    RCC_REGS->AHBENR |= cSum<AHBENR...>::value;
   }
 
   /**
@@ -442,14 +442,14 @@ namespace rcc {
   >
   void Functions::disableClocks()
   {
-    _RCC->AHBENR &= ~cSum<AHBENR...>::value;
+    RCC_REGS->AHBENR &= ~cSum<AHBENR...>::value;
   }
 
   void Functions::configureClockOutput(cfgr::mco::States MCO)
   {
-    _RCC->CFGR &= ~(cfgr::mco::MASK);
+    RCC_REGS->CFGR &= ~(cfgr::mco::MASK);
 
-    _RCC->CFGR |= MCO;
+    RCC_REGS->CFGR |= MCO;
   }
 
 #ifdef CONNECTIVITY_LINE
@@ -461,7 +461,7 @@ namespace rcc {
   >
   void Functions::resetPeripherals()
   {
-    _RCC->AHBRSTR = cSum<AHBRSTR...>::value;
+    RCC_REGS->AHBRSTR = cSum<AHBRSTR...>::value;
   }
 #endif
 
@@ -491,14 +491,14 @@ namespace rcc {
     static_assert(ADCPRE < 4,
         "The ADC prescaler (ADCPRE) must be lower than 3. (inclusive)");
 
-    _RCC->CFGR &=
+    RCC_REGS->CFGR &=
     cfgr::sw::MASK +
     cfgr::pllsrc::MASK +
     cfgr::pllxtpre::MASK +
     cfgr::pllmul::MASK +
     cfgr::mco::MASK;
 
-    _RCC->CFGR |=
+    RCC_REGS->CFGR |=
     (HPRE << cfgr::hpre::POSITION) +
     (PPRE1 << cfgr::ppre1::POSITION) +
     (PPRE2 << cfgr::ppre2::POSITION) +
@@ -534,13 +534,13 @@ namespace rcc {
     static_assert(USBPRE < 2,
         "The USB prescaler can only be 0 or 1.");
 
-    _RCC->CFGR &=
+    RCC_REGS->CFGR &=
     cfgr::sw::MASK +
     cfgr::pllsrc::MASK +
     cfgr::pllxtpre::MASK +
     cfgr::pllmul::MASK +
     cfgr::mco::MASK;
-    _RCC->CFGR |=
+    RCC_REGS->CFGR |=
     (HPRE << cfgr::hpre::POSITION) +
     (PPRE1 << cfgr::ppre1::POSITION) +
     (PPRE2 << cfgr::ppre2::POSITION) +
@@ -568,16 +568,16 @@ namespace rcc {
     static_assert(PREDIV1 < 16,
         "PREDIV1 must be between 0 and 15. (inclusive)");
 
-    _RCC->CFGR &=
+    RCC_REGS->CFGR &=
     ~(cfgr::pllsrc::MASK +
         cfgr::pllmul::MASK +
         cfgr::pllxtpre::MASK);
 
-    _RCC->CFGR |=
+    RCC_REGS->CFGR |=
     PLLSRC +
     (PLLMUL << cfgr::pllmul::POSITION);
 
-    _RCC->CFGR2 =
+    RCC_REGS->CFGR2 =
     (PREDIV1 << cfgr2::prediv1::POSITION);
   }
 #else // VALUE_LINE
@@ -612,14 +612,14 @@ namespace rcc {
     static_assert(PLL3MUL >= 6 && PLL3MUL <= 15 && (PLL3MUL != 13),
         "PLL3MUL must be between 6 and 15 (inclusive) and not 13.");
 
-    _RCC->CFGR &=
+    RCC_REGS->CFGR &=
     ~(cfgr::pllsrc::MASK +
         cfgr::pllmul::MASK +
         cfgr::pllxtpre::MASK);
-    _RCC->CFGR |=
+    RCC_REGS->CFGR |=
     PLLSRC +
     (PLLMUL << cfgr::pllmul::POSITION);
-    _RCC->CFGR2 =
+    RCC_REGS->CFGR2 =
     (PREDIV1 << cfgr2::prediv1::POSITION) +
     (PREDIV2 << cfgr2::prediv2::POSITION) +
     (PLL2MUL << cfgr2::pll2mul::POSITION) +
@@ -645,11 +645,11 @@ namespace rcc {
     static_assert(PLLMUL < 16,
         "PLLMUL must be between 0 and 15. (inclusive)");
 
-    _RCC->CFGR &=
+    RCC_REGS->CFGR &=
     ~(cfgr::pllsrc::MASK +
         cfgr::pllxtpre::MASK +
         cfgr::pllmul::MASK);
-    _RCC->CFGR |=
+    RCC_REGS->CFGR |=
     PLLSRC +
     (PLLXTPRE << cfgr::pllxtpre::POSITION) +
     (PLLMUL << cfgr::pllmul::POSITION);
@@ -665,7 +665,7 @@ namespace rcc {
   >
   void Functions::enableClocks()
   {
-    _RCC->AHB1ENR |= cSum<AHB1ENR...>::value;
+    RCC_REGS->AHB1ENR |= cSum<AHB1ENR...>::value;
   }
 
   /**
@@ -676,7 +676,7 @@ namespace rcc {
   >
   void Functions::disableClocks()
   {
-    _RCC->AHB1ENR &= ~cSum<AHB1ENR...>::value;
+    RCC_REGS->AHB1ENR &= ~cSum<AHB1ENR...>::value;
   }
 
   /**
@@ -687,7 +687,7 @@ namespace rcc {
   >
   void Functions::resetPeripherals()
   {
-    _RCC->AHB1RSTR = cSum<AHB1RSTR...>::value;
+    RCC_REGS->AHB1RSTR = cSum<AHB1RSTR...>::value;
   }
 
   /**
@@ -698,7 +698,7 @@ namespace rcc {
   >
   void Functions::enableClocks()
   {
-    _RCC->AHB2ENR |= cSum<AHB2ENR...>::value;
+    RCC_REGS->AHB2ENR |= cSum<AHB2ENR...>::value;
   }
 
   /**
@@ -709,7 +709,7 @@ namespace rcc {
   >
   void Functions::disableClocks()
   {
-    _RCC->AHB2ENR &= ~cSum<AHB2ENR...>::value;
+    RCC_REGS->AHB2ENR &= ~cSum<AHB2ENR...>::value;
   }
 
   /**
@@ -720,7 +720,7 @@ namespace rcc {
   >
   void Functions::resetPeripherals()
   {
-    _RCC->AHB2RSTR = cSum<AHB2RSTR...>::value;
+    RCC_REGS->AHB2RSTR = cSum<AHB2RSTR...>::value;
   }
 
   /**
@@ -746,7 +746,7 @@ namespace rcc {
     static_assert((PLLQ >= 2) && (PLLQ <= 15),
         "PLLQ must be between 2 and 15 (inclusive).");
 
-    _RCC->PLLCFGR =
+    RCC_REGS->PLLCFGR =
         (PLLM << pllcfgr::pllm::POSITION) +
             (PLLN << pllcfgr::plln::POSITION) +
             (((PLLP / 2) - 1) << pllcfgr::pllp::POSITION) +
@@ -766,9 +766,9 @@ namespace rcc {
   >
   void Functions::configureI2sPll()
   {
-    _RCC->PLLCFGR |= cfgr::i2ssrc::PLLI2S_USED_AS_I2S_CLOCK_SOURCE;
+    RCC_REGS->PLLCFGR |= cfgr::i2ssrc::PLLI2S_USED_AS_I2S_CLOCK_SOURCE;
 
-    _RCC->PLLI2SCFGR =
+    RCC_REGS->PLLI2SCFGR =
         (PLLI2SN << plli2scfgr::plli2sn::POSITION) +
             (PLLI2SR << plli2scfgr::plli2sr::POSITION);
   }
@@ -797,13 +797,13 @@ namespace rcc {
     static_assert(RTCPRE < 32,
         "The RTC prescaler (RTCPRE) must be lower than 32. (inclusive)");
 
-    _RCC->CFGR &=
+    RCC_REGS->CFGR &=
         ~(cfgr::hpre::MASK +
             cfgr::ppre1::MASK +
             cfgr::ppre2::MASK +
             cfgr::rtcpre::MASK)
         ;
-    _RCC->CFGR |=
+    RCC_REGS->CFGR |=
         (HPRE << cfgr::hpre::POSITION) +
             (PPRE1 << cfgr::ppre1::POSITION) +
             (PPRE2 << cfgr::ppre2::POSITION) +
@@ -825,21 +825,21 @@ namespace rcc {
     static_assert(MCOPRE2 < 0b1000,
         "MCOPRE2 can't exceed 0b1000");
 
-    _RCC->CFGR &= ~(cfgr::mco1::MASK +
+    RCC_REGS->CFGR &= ~(cfgr::mco1::MASK +
         cfgr::mco2::MASK +
         cfgr::mco1pre::MASK +
         cfgr::mco2pre::MASK);
 
-    _RCC->CFGR |= MCO1 + MCO2 +
+    RCC_REGS->CFGR |= MCO1 + MCO2 +
         (MCOPRE1 << cfgr::mco1pre::POSITION) +
         (MCOPRE2 << cfgr::mco2pre::POSITION);
   }
 
   void Functions::selectI2sSource(cfgr::i2ssrc::States I2SSRC)
   {
-    _RCC->CFGR &= cfgr::i2ssrc::MASK;
+    RCC_REGS->CFGR &= cfgr::i2ssrc::MASK;
 
-    _RCC->CFGR |= I2SSRC;
+    RCC_REGS->CFGR |= I2SSRC;
   }
 
 #endif // STM32F1XX

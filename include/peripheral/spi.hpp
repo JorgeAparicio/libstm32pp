@@ -35,9 +35,9 @@
 #include "../../memorymap/spi.hpp"
 
 // Low-level access to the registers
-#define _SPI1 reinterpret_cast<spi::Registers*>(spi::address::SPI1)
-#define _SPI2 reinterpret_cast<spi::Registers*>(spi::address::SPI2)
-#define _SPI3 reinterpret_cast<spi::Registers*>(spi::address::SPI3)
+#define SPI1_REGS reinterpret_cast<spi::Registers*>(spi::address::SPI1)
+#define SPI2_REGS reinterpret_cast<spi::Registers*>(spi::address::SPI2)
+#define SPI3_REGS reinterpret_cast<spi::Registers*>(spi::address::SPI3)
 
 // High-level functions
 namespace spi {

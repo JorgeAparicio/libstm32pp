@@ -38,7 +38,7 @@
 #include "../../memorymap/syscfg.hpp"
 
 // Low-level access to the registers
-#define _SYSCFG reinterpret_cast<syscfg::Registers *>(syscfg::ADDRESS)
+#define SYSCFG_REGS reinterpret_cast<syscfg::Registers *>(syscfg::ADDRESS)
 
 // High-level functions
 namespace syscfg {

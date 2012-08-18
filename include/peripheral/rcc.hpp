@@ -33,7 +33,7 @@
 #include "../../memorymap/rcc.hpp"
 
 // Low-level access to the registers
-#define _RCC  reinterpret_cast<rcc::Registers *>(rcc::ADDRESS)
+#define RCC_REGS  reinterpret_cast<rcc::Registers *>(rcc::ADDRESS)
 
 #include "cfunctions.hpp"
 

@@ -35,7 +35,7 @@
 #include "../../memorymap/cryp.hpp"
 
 // Low-level access to the registers
-#define _CRYP reinterpret_cast<cryp::Registers *>(cryp::ADDRESS)
+#define CRYP_REGS reinterpret_cast<cryp::Registers *>(cryp::ADDRESS)
 
 // High-level functions
 namespace cryp {

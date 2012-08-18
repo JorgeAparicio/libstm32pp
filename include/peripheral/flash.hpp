@@ -33,7 +33,7 @@
 #include "../../memorymap/flash.hpp"
 
 // Low-level access to the registers
-#define _FLASH  reinterpret_cast<flash::Registers*>(flash::ADDRESS)
+#define FLASH_REGS  reinterpret_cast<flash::Registers*>(flash::ADDRESS)
 
 // High-level functions
 namespace flash {

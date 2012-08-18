@@ -28,8 +28,8 @@ namespace flash {
       registers::acr::bits::latency::states::E LATENCY
   > void Functions::setLatency(void)
   {
-    _FLASH->ACR &= ~registers::acr::bits::latency::MASK;
-    _FLASH->ACR |= LATENCY;
+    FLASH_REGS->ACR &= ~registers::acr::bits::latency::MASK;
+    FLASH_REGS->ACR |= LATENCY;
   }
 #endif
 #ifdef STM32F1XX
@@ -39,7 +39,7 @@ namespace flash {
    */
   void Functions::enablePrefetch(void)
   {
-    _FLASH->ACR |= registers::acr::bits::prftbe::states::PREFETCH_ENABLED;
+    FLASH_REGS->ACR |= registers::acr::bits::prftbe::states::PREFETCH_ENABLED;
   }
 
   /**
@@ -47,7 +47,7 @@ namespace flash {
    */
   void Functions::disablePrefetch(void)
   {
-    _FLASH->ACR &= ~registers::acr::bits::prftbe::states::PREFETCH_ENABLED;
+    FLASH_REGS->ACR &= ~registers::acr::bits::prftbe::states::PREFETCH_ENABLED;
   }
 #endif
 
@@ -56,7 +56,7 @@ namespace flash {
    */
   void Functions::enableHalfCycleFlashAccess(void)
   {
-    _FLASH->ACR |=
+    FLASH_REGS->ACR |=
     registers::acr::bits::hlfcya::states::FLASH_HALF_CYCLE_ACCESS_ENABLED;
   }
 
@@ -65,7 +65,7 @@ namespace flash {
    */
   void Functions::disableHalfCycleFlashAccess(void)
   {
-    _FLASH->ACR &=
+    FLASH_REGS->ACR &=
     ~registers::acr::bits::hlfcya::states::FLASH_HALF_CYCLE_ACCESS_ENABLED;
   }
 #ifdef VALUE_LINE
@@ -79,7 +79,7 @@ namespace flash {
   >
   void Functions::configure(void)
   {
-    _FLASH->ACR = HLFCYA;
+    FLASH_REGS->ACR = HLFCYA;
   }
 
 #else // VALUE_LINE
@@ -94,7 +94,7 @@ namespace flash {
   >
   void Functions::configure(void)
   {
-    _FLASH->ACR = LATENCY + HLFCYA + PRFTBE;
+    FLASH_REGS->ACR = LATENCY + HLFCYA + PRFTBE;
   }
 #endif // VALUE_LINE
 #else
@@ -103,7 +103,7 @@ namespace flash {
    */
   void Functions::enablePrefetch(void)
   {
-    _FLASH->ACR |=
+    FLASH_REGS->ACR |=
         registers::acr::bits::prften::states::PREFETCH_ENABLED;
   }
 
@@ -112,7 +112,7 @@ namespace flash {
    */
   void Functions::disablePrefetch(void)
   {
-    _FLASH->ACR &=
+    FLASH_REGS->ACR &=
         ~registers::acr::bits::prften::states::PREFETCH_ENABLED;
   }
 
@@ -121,7 +121,7 @@ namespace flash {
    */
   void Functions::enableDataCache(void)
   {
-    _FLASH->ACR |=
+    FLASH_REGS->ACR |=
         registers::acr::bits::dcen::states::DATA_CACHE_ENABLED;
   }
 
@@ -130,7 +130,7 @@ namespace flash {
    */
   void Functions::disableDataCache(void)
   {
-    _FLASH->ACR &=
+    FLASH_REGS->ACR &=
         ~registers::acr::bits::dcen::states::DATA_CACHE_ENABLED;
   }
 
@@ -139,7 +139,7 @@ namespace flash {
    */
   void Functions::enableInstructionCache(void)
   {
-    _FLASH->ACR |=
+    FLASH_REGS->ACR |=
         registers::acr::bits::icen::states::INSTRUCTION_CACHE_ENABLED;
   }
 
@@ -148,7 +148,7 @@ namespace flash {
    */
   void Functions::disableInstructionCache(void)
   {
-    _FLASH->ACR &=
+    FLASH_REGS->ACR &=
         ~registers::acr::bits::icen::states::INSTRUCTION_CACHE_ENABLED;
   }
 
@@ -164,7 +164,7 @@ namespace flash {
   >
   void Functions::configure(void)
   {
-    _FLASH->ACR = LATENCY + PRFTEN + DCEN + ICEN;
+    FLASH_REGS->ACR = LATENCY + PRFTEN + DCEN + ICEN;
   }
 #endif
 

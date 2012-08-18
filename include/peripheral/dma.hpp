@@ -33,95 +33,95 @@
 #include "../../memorymap/dma.hpp"
 
 // Low-level access to the registers
-#define _DMA1 (reinterpret_cast<dma::common::Registers*>\
+#define DMA1_COMMON_REGS (reinterpret_cast<dma::common::Registers*>\
     (dma::common::address::DMA1))
-#define _DMA2 (reinterpret_cast<dma::common::Registers*>\
+#define DMA2_COMMON_REGS (reinterpret_cast<dma::common::Registers*>\
     (dma::common::address::DMA2))
 
 #ifdef STM32F1XX
-#define _DMA1_CHANNEL1 (reinterpret_cast<dma::channel::Registers*>\
+#define DMA1_CHANNEL1_REGS (reinterpret_cast<dma::channel::Registers*>\
         (dma::common::address::DMA1 + dma::channel::address::CHANNEL_1))
 
-#define _DMA1_CHANNEL2 (reinterpret_cast<dma::channel::Registers*>\
+#define DMA1_CHANNEL2_REGS (reinterpret_cast<dma::channel::Registers*>\
         (dma::common::address::DMA1 + dma::channel::address::CHANNEL_2))
 
-#define _DMA1_CHANNEL3 (reinterpret_cast<dma::channel::Registers*>\
+#define DMA1_CHANNEL3_REGS (reinterpret_cast<dma::channel::Registers*>\
         (dma::common::address::DMA1 + dma::channel::address::CHANNEL_3))
 
-#define _DMA1_CHANNEL4 (reinterpret_cast<dma::channel::Registers*>\
+#define DMA1_CHANNEL4_REGS (reinterpret_cast<dma::channel::Registers*>\
         (dma::common::address::DMA1 + dma::channel::address::CHANNEL_4))
 
-#define _DMA1_CHANNEL5 (reinterpret_cast<dma::channel::Registers*>\
+#define DMA1_CHANNEL5_REGS (reinterpret_cast<dma::channel::Registers*>\
         (dma::common::address::DMA1 + dma::channel::address::CHANNEL_5))
 
-#define _DMA1_CHANNEL6 (reinterpret_cast<dma::channel::Registers*>\
+#define DMA1_CHANNEL6_REGS (reinterpret_cast<dma::channel::Registers*>\
         (dma::common::address::DMA1 + dma::channel::address::CHANNEL_6))
 
-#define _DMA1_CHANNEL7 (reinterpret_cast<dma::channel::Registers*>\
+#define DMA1_CHANNEL7_REGS (reinterpret_cast<dma::channel::Registers*>\
         (dma::common::address::DMA1 + dma::channel::address::CHANNEL_7))
 
-#define _DMA2_CHANNEL1 (reinterpret_cast<dma::channel::Registers*>\
+#define DMA2_CHANNEL1_REGS (reinterpret_cast<dma::channel::Registers*>\
         (dma::common::address::DMA2 + dma::channel::address::CHANNEL_1))
 
-#define _DMA2_CHANNEL2 (reinterpret_cast<dma::channel::Registers*>\
+#define DMA2_CHANNEL2_REGS (reinterpret_cast<dma::channel::Registers*>\
         (dma::common::address::DMA2 + dma::channel::address::CHANNEL_2))
 
-#define _DMA2_CHANNEL3 (reinterpret_cast<dma::channel::Registers*>\
+#define DMA2_CHANNEL3_REGS (reinterpret_cast<dma::channel::Registers*>\
         (dma::common::address::DMA2 + dma::channel::address::CHANNEL_3))
 
-#define _DMA2_CHANNEL4 (reinterpret_cast<dma::channel::Registers*>\
+#define DMA2_CHANNEL4_REGS (reinterpret_cast<dma::channel::Registers*>\
         (dma::common::address::DMA2 + dma::channel::address::CHANNEL_4))
 
-#define _DMA2_CHANNEL5 (reinterpret_cast<dma::channel::Registers*>\
+#define DMA2_CHANNEL5_REGS (reinterpret_cast<dma::channel::Registers*>\
         (dma::common::address::DMA2 + dma::channel::address::CHANNEL_5))
 
 #else // STM32F1XX
-#define _DMA1_STREAM0 (reinterpret_cast<dma::stream::Registers*>\
+#define DMA1_STREAM0_REGS (reinterpret_cast<dma::stream::Registers*>\
         (dma::common::address::DMA1 + dma::stream::address::STREAM_0))
 
-#define _DMA1_STREAM1 (reinterpret_cast<dma::stream::Registers*>\
+#define DMA1_STREAM1_REGS (reinterpret_cast<dma::stream::Registers*>\
         (dma::common::address::DMA1 + dma::stream::address::STREAM_1))
 
-#define _DMA1_STREAM2 (reinterpret_cast<dma::stream::Registers*>\
+#define DMA1_STREAM2_REGS (reinterpret_cast<dma::stream::Registers*>\
         (dma::common::address::DMA1 + dma::stream::address::STREAM_2))
 
-#define _DMA1_STREAM3 (reinterpret_cast<dma::stream::Registers*>\
+#define DMA1_STREAM3_REGS (reinterpret_cast<dma::stream::Registers*>\
         (dma::common::address::DMA1 + dma::stream::address::STREAM_3))
 
-#define _DMA1_STREAM4 (reinterpret_cast<dma::stream::Registers*>\
+#define DMA1_STREAM4_REGS (reinterpret_cast<dma::stream::Registers*>\
         (dma::common::address::DMA1 + dma::stream::address::STREAM_4))
 
-#define _DMA1_STREAM5 (reinterpret_cast<dma::stream::Registers*>\
+#define DMA1_STREAM5_REGS (reinterpret_cast<dma::stream::Registers*>\
         (dma::common::address::DMA1 + dma::stream::address::STREAM_5))
 
-#define _DMA1_STREAM6 (reinterpret_cast<dma::stream::Registers*>\
+#define DMA1_STREAM6_REGS (reinterpret_cast<dma::stream::Registers*>\
         (dma::common::address::DMA1 + dma::stream::address::STREAM_6))
 
-#define _DMA1_STREAM7 (reinterpret_cast<dma::stream::Registers*>\
+#define DMA1_STREAM7_REGS (reinterpret_cast<dma::stream::Registers*>\
         (dma::common::address::DMA1 + dma::stream::address::STREAM_7))
 
-#define _DMA2_STREAM0 (reinterpret_cast<dma::stream::Registers*>\
+#define DMA2_STREAM0_REGS (reinterpret_cast<dma::stream::Registers*>\
         (dma::common::address::DMA2 + dma::stream::address::STREAM_0))
 
-#define _DMA2_STREAM1 (reinterpret_cast<dma::stream::Registers*>\
+#define DMA2_STREAM1_REGS (reinterpret_cast<dma::stream::Registers*>\
         (dma::common::address::DMA2 + dma::stream::address::STREAM_1))
 
-#define _DMA2_STREAM2 (reinterpret_cast<dma::stream::Registers*>\
+#define DMA2_STREAM2_REGS (reinterpret_cast<dma::stream::Registers*>\
         (dma::common::address::DMA2 + dma::stream::address::STREAM_2))
 
-#define _DMA2_STREAM3 (reinterpret_cast<dma::stream::Registers*>\
+#define DMA2_STREAM3_REGS (reinterpret_cast<dma::stream::Registers*>\
         (dma::common::address::DMA2 + dma::stream::address::STREAM_3))
 
-#define _DMA2_STREAM4 (reinterpret_cast<dma::stream::Registers*>\
+#define DMA2_STREAM4_REGS (reinterpret_cast<dma::stream::Registers*>\
         (dma::common::address::DMA2 + dma::stream::address::STREAM_4))
 
-#define _DMA2_STREAM5 (reinterpret_cast<dma::stream::Registers*>\
+#define DMA2_STREAM5_REGS (reinterpret_cast<dma::stream::Registers*>\
         (dma::common::address::DMA2 + dma::stream::address::STREAM_5))
 
-#define _DMA2_STREAM6 (reinterpret_cast<dma::stream::Registers*>\
+#define DMA2_STREAM6_REGS (reinterpret_cast<dma::stream::Registers*>\
         (dma::common::address::DMA2 + dma::stream::address::STREAM_6))
 
-#define _DMA2_STREAM7 (reinterpret_cast<dma::stream::Registers*>\
+#define DMA2_STREAM7_REGS (reinterpret_cast<dma::stream::Registers*>\
         (dma::common::address::DMA2 + dma::stream::address::STREAM_7))
 
 #endif // STM32F1XX

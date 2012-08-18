@@ -50,7 +50,7 @@ namespace rng {
    */
   void Functions::startGenerator()
   {
-    _RNG->CR |=
+    RNG_REGS->CR |=
         registers::cr::bits::rngen::states::RANDOM_NUMBER_GENERATOR_ENABLED;
   }
 
@@ -59,7 +59,7 @@ namespace rng {
    */
   void Functions::stopGenerator()
   {
-    _RNG->CR &=
+    RNG_REGS->CR &=
         ~registers::cr::bits::rngen::states::RANDOM_NUMBER_GENERATOR_ENABLED;
   }
 
@@ -68,7 +68,7 @@ namespace rng {
    */
   void Functions::enableInterrupts()
   {
-    _RNG->CR |=
+    RNG_REGS->CR |=
         registers::cr::bits::ie::states::INTERRUPT_ENABLED;
   }
 
@@ -77,7 +77,7 @@ namespace rng {
    */
   void Functions::disableInterrupts()
   {
-    _RNG->CR &=
+    RNG_REGS->CR &=
         ~registers::cr::bits::ie::states::INTERRUPT_ENABLED;
   }
 
@@ -96,7 +96,7 @@ namespace rng {
    */
   bool Functions::isDataReady()
   {
-    return (_RNG->SR &
+    return (RNG_REGS->SR &
         registers::sr::bits::drdy::states::VALID_RANDOM_DATA_READY);
   }
 
@@ -105,7 +105,7 @@ namespace rng {
    */
   bool Functions::isSeedValid()
   {
-    return (_RNG->SR & registers::sr::bits::secs::states::SEED_OK);
+    return (RNG_REGS->SR & registers::sr::bits::secs::states::SEED_OK);
   }
 
   /**
@@ -113,7 +113,7 @@ namespace rng {
    */
   bool Functions::isClockValid()
   {
-    return (_RNG->SR & registers::sr::bits::cecs::states::CLOCK_OK);
+    return (RNG_REGS->SR & registers::sr::bits::cecs::states::CLOCK_OK);
   }
 
   /**
@@ -121,7 +121,7 @@ namespace rng {
    */
   void Functions::clearSeedErrorFlag()
   {
-    _RNG->SR &=
+    RNG_REGS->SR &=
         ~registers::sr::bits::seis::states::SEED_ERROR_DETECTED;
   }
 
@@ -130,7 +130,7 @@ namespace rng {
    */
   void Functions::clearClockErrorFlag()
   {
-    _RNG->SR &=
+    RNG_REGS->SR &=
         ~registers::sr::bits::ceis::states::CLOCK_ERROR_DETECTED;
   }
 

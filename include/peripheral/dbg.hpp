@@ -33,7 +33,7 @@
 #include "../../memorymap/dbg.hpp"
 
 // Low-level access to the registers
-#define _DBG reinterpret_cast<dbg::Registers *>(dbg::ADDRESS)
+#define DBG_REGS reinterpret_cast<dbg::Registers *>(dbg::ADDRESS)
 
 // High-level functions
 namespace dbg {

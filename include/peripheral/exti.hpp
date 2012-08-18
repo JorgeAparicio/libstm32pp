@@ -33,7 +33,7 @@
 #include "../../memorymap/exti.hpp"
 
 // Low-level access to the registers
-#define _EXTI reinterpret_cast<exti::Registers *>(exti::ADDRESS)
+#define EXTI_REGS reinterpret_cast<exti::Registers *>(exti::ADDRESS)
 
 // High-level functions
 namespace exti {

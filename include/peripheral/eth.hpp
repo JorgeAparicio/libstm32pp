@@ -33,7 +33,7 @@
 #include "../../memorymap/eth.hpp"
 
 // Low-level access to the registers
-#define _ETH reinterpret_cast<eth::Registers *>(eth::ADDRESS)
+#define ETH_REGS reinterpret_cast<eth::Registers *>(eth::ADDRESS)
 
 // High-level functions
 namespace eth {

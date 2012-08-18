@@ -33,11 +33,11 @@
 #include "../../memorymap/adc.hpp"
 
 // Low-level access to the registers
-#define _ADC1 reinterpret_cast<adc::Registers *>(adc::Address::ADC1)
-#define _ADC2 reinterpret_cast<adc::Registers *>(adc::Address::ADC2)
+#define ADC1_REGS reinterpret_cast<adc::Registers *>(adc::Address::ADC1)
+#define ADC2_REGS reinterpret_cast<adc::Registers *>(adc::Address::ADC2)
 #ifndef STM32F1XX
-#define _ADC3 reinterpret_cast<adc::Registers *>(adc::Address::ADC3)
-#define _ADC  reinterpret_cast<adc::CommonRegisters *>(adc::Address::ADC)
+#define ADC3_REGS reinterpret_cast<adc::Registers *>(adc::Address::ADC3)
+#define ADC_COMMON_REGS  reinterpret_cast<adc::CommonRegisters *>(adc::Address::ADC)
 #endif
 
 // High-level functions

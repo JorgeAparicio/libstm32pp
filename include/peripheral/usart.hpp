@@ -35,13 +35,13 @@
 #include "../../memorymap/usart.hpp"
 
 // Low-level access to the registers
-#define _USART1 reinterpret_cast<usart::Registers*>(usart::address::USART1)
-#define _USART2 reinterpret_cast<usart::Registers*>(usart::address::USART2)
-#define _USART3 reinterpret_cast<usart::Registers*>(usart::address::USART3)
-#define _UART4  reinterpret_cast<usart::Registers*>(usart::address::UART4)
-#define _UART5  reinterpret_cast<usart::Registers*>(usart::address::UART5)
+#define USART1_REGS reinterpret_cast<usart::Registers*>(usart::address::USART1)
+#define USART2_REGS reinterpret_cast<usart::Registers*>(usart::address::USART2)
+#define USART3_REGS reinterpret_cast<usart::Registers*>(usart::address::USART3)
+#define UART4_REGS  reinterpret_cast<usart::Registers*>(usart::address::UART4)
+#define UART5_REGS  reinterpret_cast<usart::Registers*>(usart::address::UART5)
 #ifndef STM32F1XX
-#define _USART6 reinterpret_cast<usart::Registers*>(usart::address::USART6)
+#define USART6_REGS reinterpret_cast<usart::Registers*>(usart::address::USART6)
 #endif
 
 // High-level functions

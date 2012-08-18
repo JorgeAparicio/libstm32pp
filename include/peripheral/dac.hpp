@@ -33,7 +33,7 @@
 #include "../../memorymap/dac.hpp"
 
 // Low-level access to the registers
-#define _DAC reinterpret_cast<dac::Registers *>(dac::ADDRESS)
+#define DAC_REGS reinterpret_cast<dac::Registers *>(dac::ADDRESS)
 
 // High-level functions
 namespace dac {

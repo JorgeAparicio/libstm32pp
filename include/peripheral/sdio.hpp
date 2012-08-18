@@ -36,7 +36,7 @@
 #include "../../memorymap/sdio.hpp"
 
 // Low-level access to the registers
-#define _SDIO reinterpret_cast<sdio::Registers *>(sdio::ADDRESS)
+#define SDIO_REGS reinterpret_cast<sdio::Registers *>(sdio::ADDRESS)
 
 // High-level functions
 namespace sdio {

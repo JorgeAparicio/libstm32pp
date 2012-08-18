@@ -36,30 +36,30 @@
 #include "../../memorymap/tim.hpp"
 
 // Low-level access to the registers
-#define _TIM6   ((tim::_reserved::RegistersB*) tim::address::TIM6)
-#define _TIM7   ((tim::_reserved::RegistersB*) tim::address::TIM7)
+#define TIM6_REGS   ((tim::_reserved::RegistersB*) tim::address::TIM6)
+#define TIM7_REGS   ((tim::_reserved::RegistersB*) tim::address::TIM7)
 
-#define _TIM2   ((tim::_reserved::RegistersGP0*)tim::address::TIM2)
-#define _TIM3   ((tim::_reserved::RegistersGP1*)tim::address::TIM3)
-#define _TIM4   ((tim::_reserved::RegistersGP1*)tim::address::TIM4)
-#define _TIM5   ((tim::_reserved::RegistersGP2*)tim::address::TIM5)
+#define TIM2_REGS   ((tim::_reserved::RegistersGP0*)tim::address::TIM2)
+#define TIM3_REGS   ((tim::_reserved::RegistersGP1*)tim::address::TIM3)
+#define TIM4_REGS   ((tim::_reserved::RegistersGP1*)tim::address::TIM4)
+#define TIM5_REGS   ((tim::_reserved::RegistersGP2*)tim::address::TIM5)
 
-#define _TIM9   ((tim::_reserved::RegistersGP3*)tim::address::TIM9)
-#define _TIM12  ((tim::_reserved::RegistersGP3*)tim::address::TIM12)
+#define TIM9_REGS   ((tim::_reserved::RegistersGP3*)tim::address::TIM9)
+#define TIM12_REGS  ((tim::_reserved::RegistersGP3*)tim::address::TIM12)
 
-#define _TIM10  ((tim::_reserved::RegistersGP4*)tim::address::TIM10)
-#define _TIM11  ((tim::_reserved::RegistersGP5*)tim::address::TIM11)
-#define _TIM13  ((tim::_reserved::RegistersGP4*)tim::address::TIM13)
-#define _TIM14  ((tim::_reserved::RegistersGP4*)tim::address::TIM14)
+#define TIM10_REGS  ((tim::_reserved::RegistersGP4*)tim::address::TIM10)
+#define TIM11_REGS  ((tim::_reserved::RegistersGP5*)tim::address::TIM11)
+#define TIM13_REGS  ((tim::_reserved::RegistersGP4*)tim::address::TIM13)
+#define TIM14_REGS  ((tim::_reserved::RegistersGP4*)tim::address::TIM14)
 
 #ifdef VALUE_LINE
-#define _TIM15  ((tim::_reserved::RegistersGP6*)tim::address::E::TIM15)
-#define _TIM16  ((tim::_reserved::Registers*)tim::address::E::TIM16)
-#define _TIM17  ((tim::_reserved::Registers*)tim::address::E::TIM17)
+#define TIM15_REGS  ((tim::_reserved::RegistersGP6*)tim::address::E::TIM15)
+#define TIM16_REGS  ((tim::_reserved::Registers*)tim::address::E::TIM16)
+#define TIM17_REGS  ((tim::_reserved::Registers*)tim::address::E::TIM17)
 #endif
 
-#define _TIM1   ((tim::_reserved::RegistersAC*)tim::address::E::TIM1)
-#define _TIM8   ((tim::_reserved::RegistersAC*)tim::address::E::TIM8)
+#define TIM1_REGS   ((tim::_reserved::RegistersAC*)tim::address::E::TIM1)
+#define TIM8_REGS   ((tim::_reserved::RegistersAC*)tim::address::E::TIM8)
 
 // High-level functions
 namespace tim {

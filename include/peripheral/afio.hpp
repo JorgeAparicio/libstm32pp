@@ -37,7 +37,7 @@
 #include "../../memorymap/afio.hpp"
 
 // Low-level access to the registers
-#define _AFIO reinterpret_cast<afio::Registers *>(afio::ADDRESS)
+#define AFIO_REGS reinterpret_cast<afio::Registers *>(afio::ADDRESS)
 
 // High-level functions
 namespace afio {

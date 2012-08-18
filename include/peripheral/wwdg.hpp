@@ -33,7 +33,7 @@
 #include "../../memorymap/wwdg.hpp"
 
 // Low-level access to the registers
-#define _WWDG reinterpret_cast<wwdg::Registers *>(wwdg::ADDRESS)
+#define WWDG_REGS reinterpret_cast<wwdg::Registers *>(wwdg::ADDRESS)
 
 // High-level functions
 namespace wwdg {

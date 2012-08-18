@@ -33,7 +33,7 @@
 #include "../../memorymap/pwr.hpp"
 
 // Low-level access to the registers
-#define _PWR  reinterpret_cast<pwr::Registers*>(pwr::ADDRESS)
+#define PWR_REGS  reinterpret_cast<pwr::Registers*>(pwr::ADDRESS)
 
 // High-level functions
 namespace pwr {

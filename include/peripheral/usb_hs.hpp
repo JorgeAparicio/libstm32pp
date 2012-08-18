@@ -36,7 +36,7 @@
 #include "../../memorymap/usb_hs.hpp"
 
 // Low-level access to the registers
-#define _USB_HS reinterpret_cast<usb_hs::Registers*>(usb_hs::ADDRESS)
+#define USB_HS_REGS reinterpret_cast<usb_hs::Registers*>(usb_hs::ADDRESS)
 
 // High-level functions
 namespace usb_hs {

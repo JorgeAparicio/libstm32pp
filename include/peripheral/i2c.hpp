@@ -34,10 +34,10 @@
 #include "../../memorymap/i2c.hpp"
 
 // Low-level access to the registers
-#define _I2C1 reinterpret_cast<i2c::Registers*>(i2c::address::I2C1)
-#define _I2C2 reinterpret_cast<i2c::Registers*>(i2c::address::I2C2)
+#define I2C1_REGS reinterpret_cast<i2c::Registers*>(i2c::address::I2C1)
+#define I2C2_REGS reinterpret_cast<i2c::Registers*>(i2c::address::I2C2)
 #ifndef STM32F1XX
-#define _I2C3 reinterpret_cast<i2c::Registers*>(i2c::address::I2C3)
+#define I2C3_REGS reinterpret_cast<i2c::Registers*>(i2c::address::I2C3)
 #endif
 
 // High-level functions

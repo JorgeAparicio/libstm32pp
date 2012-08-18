@@ -34,8 +34,8 @@
 
 #include "../../memorymap/can.hpp"
 
-#define _CAN1 reinterpret_cast<can::Registers *>(can::address::E::CAN1)
-#define _CAN2 reinterpret_cast<can::Registers *>(can::address::E::CAN2)
+#define CAN1_REGS reinterpret_cast<can::Registers *>(can::address::E::CAN1)
+#define CAN2_REGS reinterpret_cast<can::Registers *>(can::address::E::CAN2)
 
 namespace can {
   template <address::E Address>

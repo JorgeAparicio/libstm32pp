@@ -33,7 +33,7 @@
 #include "../../memorymap/rtc.hpp"
 
 // Low-level access to the registers
-#define _RTC reinterpret_cast<rtc::Registers *>(rtc::ADDRESS)
+#define RTC_REGS reinterpret_cast<rtc::Registers *>(rtc::ADDRESS)
 
 // High-level functions
 namespace rtc {

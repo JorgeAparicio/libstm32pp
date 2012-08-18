@@ -35,7 +35,7 @@
 #include "../../memorymap/hash.hpp"
 
 // Low-level access to the registers
-#define _HASH reinterpret_cast<hash::Registers *>(hash::ADDRESS)
+#define HASH_REGS reinterpret_cast<hash::Registers *>(hash::ADDRESS)
 
 // High-level functions
 namespace hash {

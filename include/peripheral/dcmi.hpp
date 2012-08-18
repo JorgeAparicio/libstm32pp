@@ -35,7 +35,7 @@
 #include "../../memorymap/dcmi.hpp"
 
 // Low-level access to the registers
-#define _DCMI reinterpret_cast<dcmi::Registers *>(dcmi::ADDRESS)
+#define DCMI_REGS reinterpret_cast<dcmi::Registers *>(dcmi::ADDRESS)
 
 // High-level functions
 namespace dcmi {

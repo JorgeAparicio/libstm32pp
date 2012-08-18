@@ -35,7 +35,7 @@
 #include "../../memorymap/cec.hpp"
 
 // Low-level access to the registers
-#define _CEC reinterpret_cast<cec::Registers *>(cec::ADDRESS)
+#define CEC_REGS reinterpret_cast<cec::Registers *>(cec::ADDRESS)
 
 // High-level functions
 namespace cec {

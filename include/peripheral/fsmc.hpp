@@ -33,7 +33,7 @@
 #include "../../memorymap/fsmc.hpp"
 
 // Low-level access to the registers
-#define _FSMC reinterpret_cast<fsmc::Registers *>(fsmc::ADDRESS)
+#define FSMC_REGS reinterpret_cast<fsmc::Registers *>(fsmc::ADDRESS)
 
 // High-level functions
 namespace fsmc {

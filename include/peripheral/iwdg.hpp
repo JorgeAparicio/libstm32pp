@@ -33,7 +33,7 @@
 #include "../../memorymap/iwdg.hpp"
 
 // Low-level access to the registers
-#define _IWDG reinterpret_cast<iwdg::Registers *>(iwdg::ADDRESS)
+#define IWDG_REGS reinterpret_cast<iwdg::Registers *>(iwdg::ADDRESS)
 
 // High-level functions
 namespace iwdg {

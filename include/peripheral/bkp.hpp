@@ -35,7 +35,7 @@
 #include "../../memorymap/bkp.hpp"
 
 // Low-level access to the registers
-#define _BKP reinterpret_cast<bkp::Registers *>(bkp::address::BKP)
+#define BKP_REGS reinterpret_cast<bkp::Registers *>(bkp::address::BKP)
 
 // High-level functions
 namespace bkp {
