@@ -31,7 +31,7 @@ namespace dcmi {
   void Functions::enableClock()
   {
     RCC::enableClocks<
-      rcc::ahb2enr::DCMI
+        rcc::ahb2enr::DCMI
     >();
   }
 
@@ -42,7 +42,7 @@ namespace dcmi {
   void Functions::disableClock()
   {
     RCC::disableClocks<
-      rcc::ahb2enr::DCMI
+        rcc::ahb2enr::DCMI
     >();
   }
 
@@ -51,7 +51,7 @@ namespace dcmi {
    */
   void Functions::enablePeripheral()
   {
-    DCMI_REGS->CR |= registers::cr::bits::enable::states::DCMI_ENABLED;
+    DCMI_REGS->CR |= cr::enable::DCMI_ENABLED;
   }
 
   /**
@@ -59,7 +59,7 @@ namespace dcmi {
    */
   void Functions::disablePeripheral()
   {
-    DCMI_REGS->CR &= ~registers::cr::bits::enable::states::DCMI_ENABLED;
+    DCMI_REGS->CR &= ~cr::enable::DCMI_ENABLED;
   }
 
   /**
@@ -67,7 +67,7 @@ namespace dcmi {
    */
   void Functions::startCapture()
   {
-    DCMI_REGS->CR |= registers::cr::bits::capture::states::CAPTURE_ENABLED;
+    DCMI_REGS->CR |= cr::capture::CAPTURE_ENABLED;
   }
 
   /**
@@ -75,7 +75,7 @@ namespace dcmi {
    */
   void Functions::stopCapture()
   {
-    DCMI_REGS->CR &= ~registers::cr::bits::capture::states::CAPTURE_ENABLED;
+    DCMI_REGS->CR &= ~cr::capture::CAPTURE_ENABLED;
   }
 
   /**
@@ -83,7 +83,7 @@ namespace dcmi {
    */
   bool Functions::isInLineSynchronization()
   {
-    return (DCMI_REGS->SR & registers::sr::bits::hsync::MASK);
+    return (DCMI_REGS->SR & sr::hsync::MASK);
   }
 
   /**
@@ -91,7 +91,7 @@ namespace dcmi {
    */
   bool Functions::isInFrameSynchronization()
   {
-    return (DCMI_REGS->SR & registers::sr::bits::vsync::MASK);
+    return (DCMI_REGS->SR & sr::vsync::MASK);
   }
 
   /**
@@ -99,7 +99,7 @@ namespace dcmi {
    */
   bool Functions::hasBufferOverrunOccurred()
   {
-    return (DCMI_REGS->RISR & registers::risr::bits::ovr::MASK);
+    return (DCMI_REGS->RISR & risr::ovr::MASK);
   }
 
   /**
@@ -107,7 +107,7 @@ namespace dcmi {
    */
   bool Functions::hasErrorSynchronizationOccurred()
   {
-    return (DCMI_REGS->RISR & registers::risr::bits::err::MASK);
+    return (DCMI_REGS->RISR & risr::err::MASK);
   }
 
   /**
@@ -115,7 +115,7 @@ namespace dcmi {
    */
   void Functions::enableCaptureCompleInterrupt()
   {
-    DCMI_REGS->IER |= registers::ier::bits::frame::states::
+    DCMI_REGS->IER |= ier::frame::
         CAPTURE_COMPLETE_INTERRUPT_ENABLED;
   }
 
@@ -124,7 +124,7 @@ namespace dcmi {
    */
   void Functions::disableCaptureCompleteInterrupt()
   {
-    DCMI_REGS->IER &= ~registers::ier::bits::frame::states::
+    DCMI_REGS->IER &= ~ier::frame::
         CAPTURE_COMPLETE_INTERRUPT_ENABLED;
   }
 
@@ -133,7 +133,7 @@ namespace dcmi {
    */
   void Functions::clearCaptureCompleteFlag()
   {
-    DCMI_REGS->ICR = registers::icr::bits::frame::states::
+    DCMI_REGS->ICR = icr::frame::
         CLEARS_CAPTURE_COMPLETE_INTERRUPT_FLAG;
   }
 
@@ -142,7 +142,7 @@ namespace dcmi {
    */
   void Functions::enableBufferOverrunInterrupt()
   {
-    DCMI_REGS->IER |= registers::ier::bits::ovr::states::
+    DCMI_REGS->IER |= ier::ovr::
         OVERRUN_ERROR_INTERRUPT_ENABLED;
   }
 
@@ -151,7 +151,7 @@ namespace dcmi {
    */
   void Functions::disableBufferOverrunInterrupt()
   {
-    DCMI_REGS->IER &= ~registers::ier::bits::ovr::states::
+    DCMI_REGS->IER &= ~ier::ovr::
         OVERRUN_ERROR_INTERRUPT_ENABLED;
   }
 
@@ -160,7 +160,7 @@ namespace dcmi {
    */
   void Functions::clearBufferOverrunFlag()
   {
-    DCMI_REGS->ICR = registers::icr::bits::ovr::states::
+    DCMI_REGS->ICR = icr::ovr::
         CLEARS_OVERRUN_ERROR_INTERRUPT_FLAG;
   }
 
@@ -169,7 +169,7 @@ namespace dcmi {
    */
   void Functions::enableSynchronizationErrorInterrupt()
   {
-    DCMI_REGS->IER |= registers::ier::bits::err::states::
+    DCMI_REGS->IER |= ier::err::
         SYNCHRONIZATION_ERROR_INTERRUPT_ENABLED;
   }
 
@@ -178,7 +178,7 @@ namespace dcmi {
    */
   void Functions::disableSynchronizationErrorInterrupt()
   {
-    DCMI_REGS->IER &= ~registers::ier::bits::err::states::
+    DCMI_REGS->IER &= ~ier::err::
         SYNCHRONIZATION_ERROR_INTERRUPT_ENABLED;
   }
 
@@ -187,7 +187,7 @@ namespace dcmi {
    */
   void Functions::clearSynchronizationErrorFlag()
   {
-    DCMI_REGS->ICR = registers::icr::bits::err::states::
+    DCMI_REGS->ICR = icr::err::
         CLEARS_SYNCHRONIZATION_ERROR_INTERRUPT_FLAG;
   }
 
@@ -196,7 +196,7 @@ namespace dcmi {
    */
   void Functions::enableVerticalSynchronizationInterrupt()
   {
-    DCMI_REGS->IER |= registers::ier::bits::vsync::states::
+    DCMI_REGS->IER |= ier::vsync::
         NEW_FRAME_SYNCHRONIZATION_INTERRUPT_ENABLED;
   }
 
@@ -205,7 +205,7 @@ namespace dcmi {
    */
   void Functions::disableVerticalSynchronizationInterrupt()
   {
-    DCMI_REGS->IER &= ~registers::ier::bits::vsync::states::
+    DCMI_REGS->IER &= ~ier::vsync::
         NEW_FRAME_SYNCHRONIZATION_INTERRUPT_ENABLED;
   }
 
@@ -214,7 +214,7 @@ namespace dcmi {
    */
   void Functions::clearVerticalSynchronizationFlag()
   {
-    DCMI_REGS->ICR = registers::icr::bits::vsync::states::
+    DCMI_REGS->ICR = icr::vsync::
         CLEARS_NEW_FRAME_SYNCHRONIZATION_INTERRUPT_FLAG;
   }
 
@@ -223,7 +223,7 @@ namespace dcmi {
    */
   void Functions::enableLineReceivedInterrupt()
   {
-    DCMI_REGS->IER |= registers::ier::bits::line::states::
+    DCMI_REGS->IER |= ier::line::
         NEW_LINE_RECEIVED_INTERRUPT_ENABLED;
   }
 
@@ -232,7 +232,7 @@ namespace dcmi {
    */
   void Functions::disableLineReceivedInterrupt()
   {
-    DCMI_REGS->IER &= ~registers::ier::bits::line::states::
+    DCMI_REGS->IER &= ~ier::line::
         NEW_LINE_RECEIVED_INTERRUPT_ENABLED;
   }
 
@@ -241,7 +241,7 @@ namespace dcmi {
    */
   void Functions::clearLineReceivedFlag()
   {
-    DCMI_REGS->ICR = registers::icr::bits::line::states::
+    DCMI_REGS->ICR = icr::line::
         CLEARS_NEW_LINE_RECEIVED_INTERRUPT_FLAG;
   }
 
@@ -256,23 +256,21 @@ namespace dcmi {
   /**
    * @brief Configures the DCMI.
    */
-  template<
-      registers::cr::bits::capture::states::E CAPTURE,
-      registers::cr::bits::cm::states::E CM,
-      registers::cr::bits::crop::states::E CROP,
-      registers::cr::bits::jpeg::states::E JPEG,
-      registers::cr::bits::ess::states::E ESS,
-      registers::cr::bits::pckpol::states::E PCKPOL,
-      registers::cr::bits::hspol::states::E HSPOL,
-      registers::cr::bits::vspol::states::E VSPOL,
-      registers::cr::bits::fcrc::states::E FCRC,
-      registers::cr::bits::edm::states::E EDM,
-      registers::cr::bits::enable::states::E ENABLE
-  >
-  void Functions::configure()
+  void Functions::configure(
+      cr::capture::States CAPTURE,
+      cr::cm::States CM,
+      cr::crop::States CROP,
+      cr::jpeg::States JPEG,
+      cr::ess::States ESS,
+      cr::pckpol::States PCKPOL,
+      cr::hspol::States HSPOL,
+      cr::vspol::States VSPOL,
+      cr::fcrc::States FCRC,
+      cr::edm::States EDM,
+      cr::enable::States ENABLE)
   {
-    DCMI_REGS->CR = CAPTURE + CM + CROP + JPEG + ESS + PCKPOL + HSPOL + VSPOL + FCRC
-        + EDM + ENABLE;
+    DCMI_REGS->CR = CAPTURE + CM + CROP + JPEG + ESS + PCKPOL + HSPOL + VSPOL
+        + FCRC + EDM + ENABLE;
   }
 
   /**
@@ -284,7 +282,7 @@ namespace dcmi {
       u32 Top,
       u32 Width,
       u32 Height,
-      format::E FORMAT
+      Format FORMAT
   >
   void Functions::setCropDimensions()
   {
@@ -296,11 +294,11 @@ namespace dcmi {
     );
 
     DCMI_REGS->CWSTRTR =
-        ((Left * FORMAT) << registers::cwstrtr::bits::hoffcnt::POSITION) +
-            (Top << registers::cwstrtr::bits::vst::POSITION);
+        ((Left * FORMAT) << cwstrtr::hoffcnt::POSITION) +
+            (Top << cwstrtr::vst::POSITION);
 
     DCMI_REGS->CWSIZER =
-        ((FORMAT * Width - 1) << registers::cwsizer::bits::capcnt::POSITION) +
-            ((Height - 1) << registers::cwsizer::bits::vline::POSITION);
+        ((FORMAT * Width - 1) << cwsizer::capcnt::POSITION) +
+            ((Height - 1) << cwsizer::vline::POSITION);
   }
 }  // namespace dcmi

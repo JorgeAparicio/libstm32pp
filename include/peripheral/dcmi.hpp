@@ -28,10 +28,10 @@
 #pragma once
 
 #include "../device_select.hpp"
-#include "../defs.hpp"
 
 #ifndef STM32F1XX
 
+#include "../defs.hpp"
 #include "../../memorymap/dcmi.hpp"
 
 // Low-level access to the registers
@@ -39,13 +39,11 @@
 
 // High-level functions
 namespace dcmi {
-  namespace format {
-    enum E {
-      MONOCHROME = 1,
-      YCBCR422 = 2,
-      RGB565 = 2
-    };
-  }  // namespace format
+  enum Format {
+    MONOCHROME = 1,
+    YCBCR422 = 2,
+    RGB565 = 2
+  };
 
   class Functions {
     public:
@@ -76,27 +74,25 @@ namespace dcmi {
       static inline void clearLineReceivedFlag();
       static inline void clearAllFlags();
 
-      template<
-          dcmi::registers::cr::bits::capture::states::E,
-          dcmi::registers::cr::bits::cm::states::E,
-          dcmi::registers::cr::bits::crop::states::E,
-          dcmi::registers::cr::bits::jpeg::states::E,
-          dcmi::registers::cr::bits::ess::states::E,
-          dcmi::registers::cr::bits::pckpol::states::E,
-          dcmi::registers::cr::bits::hspol::states::E,
-          dcmi::registers::cr::bits::vspol::states::E,
-          dcmi::registers::cr::bits::fcrc::states::E,
-          dcmi::registers::cr::bits::edm::states::E,
-          dcmi::registers::cr::bits::enable::states::E
-      >
-      static inline void configure();
+      static inline void configure(
+          dcmi::cr::capture::States,
+          dcmi::cr::cm::States,
+          dcmi::cr::crop::States,
+          dcmi::cr::jpeg::States,
+          dcmi::cr::ess::States,
+          dcmi::cr::pckpol::States,
+          dcmi::cr::hspol::States,
+          dcmi::cr::vspol::States,
+          dcmi::cr::fcrc::States,
+          dcmi::cr::edm::States,
+          dcmi::cr::enable::States);
 
       template<
-          u32, /* Left */
-          u32, /* Top */
-          u32, /* Width */
-          u32 /* Height */,
-          format::E
+          u32,
+          u32,
+          u32,
+          u32,
+          Format
       >
       static inline void setCropDimensions();
 
