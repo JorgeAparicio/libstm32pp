@@ -739,9 +739,11 @@ void initialize()
   rcc::cfgr::i2ssrc::PLLI2S_USED_AS_I2S_CLOCK_SOURCE
   >();
 #else // USING_I2S_PLL
+#ifndef STM32F1XX
   RCC::selectI2sSource(
       rcc::cfgr::i2ssrc::
       I2S_CKIN_USED_AS_I2S_CLOCK_SOURCE);
+#endif // !STM32F1XX
 #endif // USING_I2S_PLL
 #endif // USING_PLL
   /* Microcontroller Clock Output *******************************************/
@@ -763,16 +765,16 @@ void initialize()
 #ifdef STM32F1XX
 #ifdef VALUE_LINE
   FLASH::configure<
-      flash::registers::acr::bits::hlfcya::states::
-      FLASH_HALF_CYCLE_ACCESS_ENABLED
+  flash::registers::acr::bits::hlfcya::states::
+  FLASH_HALF_CYCLE_ACCESS_ENABLED
   >();
 #else // VALUE_LINE
   FLASH::configure<
-  __LATENCY,
-  flash::registers::acr::bits::hlfcya::states::
-  FLASH_HALF_CYCLE_ACCESS_ENABLED,
-  flash::registers::acr::bits::prftbe::states::
-  PREFETCH_ENABLED
+      __LATENCY,
+      flash::registers::acr::bits::hlfcya::states::
+      FLASH_HALF_CYCLE_ACCESS_ENABLED,
+      flash::registers::acr::bits::prftbe::states::
+      PREFETCH_ENABLED
   >();
 #endif // VALUE_LINE
 #else // STM32F1XX
@@ -787,19 +789,19 @@ void initialize()
 #ifdef STM32F1XX
 #ifdef VALUE_LINE
   RCC::configureBusPrescalers<
-      __HPRE + 0b111,
-      __PPRE1 + 0b11,
-      __PPRE2 + 0b11,
-      __ADCPRE
+  __HPRE + 0b111,
+  __PPRE1 + 0b11,
+  __PPRE2 + 0b11,
+  __ADCPRE
   >();
 #else // VALUE_LINE
 #ifndef CONNECTIVITY_LINE
   RCC::configureBusPrescalers<
-  __HPRE + 0b111,
-  __PPRE1 + 0b11,
-  __PPRE2 + 0b11,
-  __ADCPRE,
-  __USBPRE
+      __HPRE + 0b111,
+      __PPRE1 + 0b11,
+      __PPRE2 + 0b11,
+      __ADCPRE,
+      __USBPRE
   >();
 #else // !CONNECTIVITY_LINE
 #endif // !CONNECTIVITY_LINE
