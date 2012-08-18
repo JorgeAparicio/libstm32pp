@@ -44,7 +44,45 @@ namespace cec {
     ADDRESS = alias::APB1 + 0x7800
   };
 
-  namespace registers {
-  // TODO CEC register bits
-  }// namespace registers
+  namespace cfgr {
+    enum {
+      OFFSET = 0x00
+    };
+  }  // namespace cfgr
+
+  namespace oar {
+    enum {
+      OFFSET = 0x04
+    };
+  }  // namespace oar
+
+  namespace pres {
+    enum {
+      OFFSET = 0x08
+    };
+  }  // namespace pres
+
+  namespace esr {
+    enum {
+      OFFSET = 0x0C
+    };
+  }  // namespace esr
+
+  namespace csr {
+    enum {
+      OFFSET = 0x10
+    };
+  }  // namespace csr
+
+  namespace txd {
+    enum {
+      OFFSET = 0x14
+    };
+  }  // namespace txd
+
+  namespace rxd {
+    enum {
+      OFFSET = 0x18
+    };
+  }  // namespace rxd
 }  // namespace cec
