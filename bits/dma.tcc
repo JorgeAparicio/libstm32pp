@@ -30,18 +30,18 @@ namespace dma {
      * @brief Enables the DMA's clock.
      * @note  Registers can't be written when the clock is disabled.
      */
-    template<address::E D>
+    template<Address D>
     void Functions<D>::enableClock()
     {
       switch (D) {
-        case address::DMA1:
+        case DMA1:
           #ifndef STM32F1XX
           RCC::enableClocks<rcc::ahb1enr::DMA1>();
 #else // STM32F1XX
           RCC::enableClocks<rcc::ahbenr::DMA1>();
 #endif // STM32F1XX
           break;
-        case address::DMA2:
+        case DMA2:
           #ifndef STM32F1XX
           RCC::enableClocks<rcc::ahb1enr::DMA2>();
 #else // STM32F1XX
@@ -55,18 +55,18 @@ namespace dma {
      * @brief Disables the DMA's clock.
      * @note  Registers can't be written when the clock is disabled.
      */
-    template<address::E D>
+    template<Address D>
     void Functions<D>::disableClock()
     {
       switch (D) {
-        case address::DMA1:
+        case DMA1:
           #ifndef STM32F1XX
           RCC::disableClocks<rcc::ahb1enr::DMA1>();
 #else // STM32F1XX
           RCC::disableClocks<rcc::ahbenr::DMA1>();
 #endif // STM32F1XX
           break;
-        case address::DMA2:
+        case DMA2:
           #ifndef STM32F1XX
           RCC::disableClocks<rcc::ahb1enr::DMA2>();
 #else // STM32F1XX
@@ -84,14 +84,14 @@ namespace dma {
      * @brief Enables the DMA's clock.
      * @note  Registers can't be written when the clock is disabled.
      */
-    template<dma::common::address::E D, address::E C>
+    template<dma::common::Address D, Address C>
     void Functions<D, C>::enableClock()
     {
       switch (D) {
-        case dma::common::address::DMA1:
+        case dma::common::DMA1:
         RCC::enableClocks<rcc::ahbenr::DMA1>();
         break;
-        case dma::common::address::DMA2:
+        case dma::common::DMA2:
         RCC::enableClocks<rcc::ahbenr::DMA2>();
         break;
       }
@@ -100,31 +100,31 @@ namespace dma {
     /**
      * @brief Enables the DMA channel.
      */
-    template<dma::common::address::E D, address::E C>
+    template<dma::common::Address D, Address C>
     void Functions<D, C>::enablePeripheral()
     {
       *(volatile u32*) (bitband::peripheral<
-          D + C + registers::cr::OFFSET,
-          registers::cr::bits::en::POSITION
+          D + C + cr::OFFSET,
+          cr::en::POSITION
           >()) = 1;
     }
 
     /**
      * @brief Disables the DMA channel.
      */
-    template<dma::common::address::E D, address::E C>
+    template<dma::common::Address D, Address C>
     void Functions<D, C>::disablePeripheral()
     {
       *(volatile u32*) (bitband::peripheral<
-          D + C + registers::cr::OFFSET,
-          registers::cr::bits::en::POSITION
+          D + C + cr::OFFSET,
+          cr::en::POSITION
           >()) = 0;
     }
 
     /**
      * @brief Specifies the amount of data to be transfered.
      */
-    template<dma::common::address::E D, address::E C>
+    template<dma::common::Address D, Address C>
     void Functions<D, C>::setNumberOfTransactions(u16 const N)
     {
       reinterpret_cast<Registers*>(D + C)->CNDTR = N;
@@ -133,7 +133,7 @@ namespace dma {
     /**
      * @brief Specifies the target peripheral memory address.
      */
-    template<dma::common::address::E D, address::E C>
+    template<dma::common::Address D, Address C>
     void Functions<D, C>::setPeripheralAddress(volatile void const* address)
     {
       reinterpret_cast<Registers*>(D + C)->CPAR = u32(address);
@@ -142,7 +142,7 @@ namespace dma {
     /**
      * @brief Specifies the target peripheral memory address.
      */
-    template<dma::common::address::E D, address::E C>
+    template<dma::common::Address D, Address C>
     void Functions<D, C>::setPeripheralAddress(void const* address)
     {
       reinterpret_cast<Registers*>(D + C)->CPAR = u32(address);
@@ -151,7 +151,7 @@ namespace dma {
     /**
      * @brief Specifies the target memory address.
      */
-    template<dma::common::address::E D, address::E C>
+    template<dma::common::Address D, Address C>
     void Functions<D, C>::setMemoryAddress(void const* address)
     {
       reinterpret_cast<Registers*>(D + C)->CMAR = u32(address);
@@ -160,7 +160,7 @@ namespace dma {
     /**
      * @brief Clears all the interrupt flags.
      */
-    template<dma::common::address::E D, address::E C>
+    template<dma::common::Address D, Address C>
     void Functions<D, C>::clearGlobalFlag()
     {
       enum {
@@ -169,14 +169,14 @@ namespace dma {
 
       // TODO DMA, replace the hard-coded numbers
       *(volatile u32*) (bitband::peripheral<
-          D + C + dma::common::registers::ifcr::OFFSET,
+          D + C + dma::common::ifcr::OFFSET,
           4 * Channel>()) = 1;
     }
 
     /**
      * @brief Clears the transfer complete interrupt flag.
      */
-    template<dma::common::address::E D, address::E C>
+    template<dma::common::Address D, Address C>
     void Functions<D, C>::clearTransferCompleteFlag()
     {
       enum {
@@ -185,14 +185,14 @@ namespace dma {
 
       // TODO DMA, replace the hard-coded numbers
       *(volatile u32*) (bitband::peripheral<
-          D + C + dma::common::registers::ifcr::OFFSET,
+          D + C + dma::common::ifcr::OFFSET,
           4 * Channel + 1>()) = 1;
     }
 
     /**
      * @brief Clears the half transfer interrupt flag.
      */
-    template<dma::common::address::E D, address::E C>
+    template<dma::common::Address D, Address C>
     void Functions<D, C>::clearHalfTransferFlag()
     {
       enum {
@@ -201,14 +201,14 @@ namespace dma {
 
       // TODO DMA, replace the hard-coded numbers
       *(volatile u32*) (bitband::peripheral<
-          D + C + dma::common::registers::ifcr::OFFSET,
+          D + C + dma::common::ifcr::OFFSET,
           4 * Channel + 2>()) = 1;
     }
 
     /**
      * @brief Clears the transfer error interrupt flag.
      */
-    template<dma::common::address::E D, address::E C>
+    template<dma::common::Address D, Address C>
     void Functions<D, C>::clearTransferErrorFlag()
     {
       enum {
@@ -217,7 +217,7 @@ namespace dma {
 
       // TODO DMA, replace the hard-coded numbers
       *(volatile u32*) (bitband::peripheral<
-          D + C + dma::common::registers::ifcr::OFFSET,
+          D + C + dma::common::ifcr::OFFSET,
           4 * Channel + 3>()) = 1;
     }
 
@@ -226,20 +226,19 @@ namespace dma {
      * @note  The channel must be disabled before the configuration.
      * @note  Overrides the old configuration.
      */
-    template<dma::common::address::E D, address::E C>
-    template<
-    registers::cr::bits::tcie::states::E TCIE,
-    registers::cr::bits::htie::states::E HTIE,
-    registers::cr::bits::teie::states::E TEIE,
-    registers::cr::bits::dir::states::E DIR,
-    registers::cr::bits::circ::states::E CIRC,
-    registers::cr::bits::pinc::states::E PINC,
-    registers::cr::bits::minc::states::E MINC,
-    registers::cr::bits::psize::states::E PSIZE,
-    registers::cr::bits::msize::states::E MSIZE,
-    registers::cr::bits::pl::states::E PL,
-    registers::cr::bits::mem2mem::states::E MEM2MEM
-    > void Functions<D, C>::configure()
+    template<dma::common::Address D, Address C>
+    void Functions<D, C>::configure(
+        cr::tcie::States TCIE,
+        cr::htie::States HTIE,
+        cr::teie::States TEIE,
+        cr::dir::States DIR,
+        cr::circ::States CIRC,
+        cr::pinc::States PINC,
+        cr::minc::States MINC,
+        cr::psize::States PSIZE,
+        cr::msize::States MSIZE,
+        cr::pl::States PL,
+        cr::mem2mem::States MEM2MEM)
     {
       reinterpret_cast<Registers*>(D + C)->CCR =
       TCIE + HTIE + TEIE + DIR + CIRC + PINC + MINC + PSIZE + MSIZE +
@@ -252,14 +251,14 @@ namespace dma {
      * @brief Enables the DMA's clock.
      * @note  Registers can't be written when the clock is disabled.
      */
-    template<dma::common::address::E D, address::E S>
+    template<dma::common::Address D, Address S>
     void Functions<D, S>::enableClock()
     {
       switch (D) {
-        case dma::common::address::DMA1:
+        case dma::common::DMA1:
           RCC::enableClocks<rcc::ahb1enr::DMA1>();
           break;
-        case dma::common::address::DMA2:
+        case dma::common::DMA2:
           RCC::enableClocks<rcc::ahb1enr::DMA2>();
           break;
       }
@@ -268,44 +267,44 @@ namespace dma {
     /**
      * @brief Enables the DMA stream.
      */
-    template<dma::common::address::E D, address::E S>
+    template<dma::common::Address D, Address S>
     void Functions<D, S>::enablePeripheral()
     {
       *(volatile u32*) (bitband::peripheral<
-          D + S + registers::cr::OFFSET,
-          registers::cr::bits::en::POSITION
+          D + S + cr::OFFSET,
+          cr::en::POSITION
       >()) = 1;
     }
 
     /**
      * @brief Disables the DMA stream.
      */
-    template<dma::common::address::E D, address::E S>
+    template<dma::common::Address D, Address S>
     void Functions<D, S>::disablePeripheral()
     {
       *(volatile u32*) (bitband::peripheral<
-          D + S + registers::cr::OFFSET,
-          registers::cr::bits::en::POSITION
+          D + S + cr::OFFSET,
+          cr::en::POSITION
       >()) = 0;
     }
 
     /**
      * @brief Returns true if the the DMA stream is enabled.
      */
-    template<dma::common::address::E D, address::E S>
+    template<dma::common::Address D, Address S>
     bool Functions<D, S>::isEnabled()
     {
       // FIXME DMA *(*bool) cast generates Hard Fault exception.
       return *(volatile u32*) (bitband::peripheral<
-          D + S + registers::cr::OFFSET,
-          registers::cr::bits::en::POSITION
+          D + S + cr::OFFSET,
+          cr::en::POSITION
       >());
     }
 
     /**
      * @brief Specifies the amount of data to be transfered.
      */
-    template<dma::common::address::E D, address::E S>
+    template<dma::common::Address D, Address S>
     void Functions<D, S>::setNumberOfTransactions(u16 const N)
     {
       reinterpret_cast<Registers*>(D + S)->NDTR = N;
@@ -314,7 +313,7 @@ namespace dma {
     /**
      * @brief Specifies the target peripheral memory address.
      */
-    template<dma::common::address::E D, address::E S>
+    template<dma::common::Address D, Address S>
     void Functions<D, S>::setPeripheralAddress(volatile void* address)
     {
       reinterpret_cast<Registers*>(D + S)->PAR = u32(address);
@@ -323,7 +322,7 @@ namespace dma {
     /**
      * @brief Specifies the target peripheral memory address.
      */
-    template<dma::common::address::E D, address::E S>
+    template<dma::common::Address D, Address S>
     void Functions<D, S>::setPeripheralAddress(void* address)
     {
       reinterpret_cast<Registers*>(D + S)->PAR = u32(address);
@@ -332,7 +331,7 @@ namespace dma {
     /**
      * @brief Specifies the target memory address.
      */
-    template<dma::common::address::E D, address::E S>
+    template<dma::common::Address D, Address S>
     void Functions<D, S>::setMemory0Address(void* address)
     {
       reinterpret_cast<Registers*>(D + S)->M0AR = u32(address);
@@ -341,7 +340,7 @@ namespace dma {
     /**
      * @brief Specifies the alternate target memory address.
      */
-    template<dma::common::address::E D, address::E S>
+    template<dma::common::Address D, Address S>
     void Functions<D, S>::setMemory1Address(void* address)
     {
       reinterpret_cast<Registers*>(D + S)->M1AR = u32(address);
@@ -350,7 +349,7 @@ namespace dma {
     /**
      * @brief Clears the fifo error interrupt flag.
      */
-    template<dma::common::address::E D, address::E S>
+    template<dma::common::Address D, Address S>
     void Functions<D, S>::clearFifoErrorFlag()
     {
       enum {
@@ -359,8 +358,8 @@ namespace dma {
 
       *(volatile u32*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::registers::hifcr::OFFSET :
-                        D + dma::common::registers::lifcr::OFFSET),
+                        D + dma::common::hifcr::OFFSET :
+                        D + dma::common::lifcr::OFFSET),
           (Stream % 4 == 0 ?
                              0 :
                              (Stream % 4 == 1 ?
@@ -374,7 +373,7 @@ namespace dma {
     /**
      * @brief Clears the fifo error interrupt flag.
      */
-    template<dma::common::address::E D, address::E S>
+    template<dma::common::Address D, Address S>
     bool Functions<D, S>::hasFifoErrorOccurred()
     {
       // FIXME DMA *(*bool) cast generates Hard Fault exception.
@@ -385,8 +384,8 @@ namespace dma {
 
       return *(volatile u32*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::registers::hisr::OFFSET :
-                        D + dma::common::registers::lisr::OFFSET),
+                        D + dma::common::hisr::OFFSET :
+                        D + dma::common::lisr::OFFSET),
           (Stream % 4 == 0 ?
                              0 :
                              (Stream % 4 == 1 ?
@@ -400,7 +399,7 @@ namespace dma {
     /**
      * @brief Clears the direct mode error interrupt flag.
      */
-    template<dma::common::address::E D, address::E S>
+    template<dma::common::Address D, Address S>
     void Functions<D, S>::clearDirectModeErrorFlag()
     {
       enum {
@@ -409,8 +408,8 @@ namespace dma {
 
       *(volatile u32*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::registers::hifcr::OFFSET :
-                        D + dma::common::registers::lifcr::OFFSET),
+                        D + dma::common::hifcr::OFFSET :
+                        D + dma::common::lifcr::OFFSET),
           (Stream % 4 == 0 ?
                              2 :
                              (Stream % 4 == 1 ?
@@ -424,7 +423,7 @@ namespace dma {
     /**
      * @brief Returns true if a direct mode error has occurred.
      */
-    template<dma::common::address::E D, address::E S>
+    template<dma::common::Address D, Address S>
     bool Functions<D, S>::hasDirectModeErrorOccurred()
     {
       // FIXME DMA *(*bool) cast generates Hard Fault exception.
@@ -435,8 +434,8 @@ namespace dma {
 
       return *(volatile u32*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::registers::hisr::OFFSET :
-                        D + dma::common::registers::lisr::OFFSET),
+                        D + dma::common::hisr::OFFSET :
+                        D + dma::common::lisr::OFFSET),
           (Stream % 4 == 0 ?
                              2 :
                              (Stream % 4 == 1 ?
@@ -450,7 +449,7 @@ namespace dma {
     /**
      * @brief Clears the transfer error interrupt flag.
      */
-    template<dma::common::address::E D, address::E S>
+    template<dma::common::Address D, Address S>
     void Functions<D, S>::clearTransferErrorFlag()
     {
       enum {
@@ -459,8 +458,8 @@ namespace dma {
 
       *(volatile u32*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::registers::hifcr::OFFSET :
-                        D + dma::common::registers::lifcr::OFFSET),
+                        D + dma::common::hifcr::OFFSET :
+                        D + dma::common::lifcr::OFFSET),
           (Stream % 4 == 0 ?
                              3 :
                              (Stream % 4 == 1 ?
@@ -474,7 +473,7 @@ namespace dma {
     /**
      * @brief Returns true if half of the transfer has occurred.
      */
-    template<dma::common::address::E D, address::E S>
+    template<dma::common::Address D, Address S>
     bool Functions<D, S>::hasTransferErrorOccurred()
     {
       // FIXME DMA *(*bool) cast generates Hard Fault exception.
@@ -485,8 +484,8 @@ namespace dma {
 
       return *(volatile u32*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::registers::hisr::OFFSET :
-                        D + dma::common::registers::lisr::OFFSET),
+                        D + dma::common::hisr::OFFSET :
+                        D + dma::common::lisr::OFFSET),
           (Stream % 4 == 0 ?
                              3 :
                              (Stream % 4 == 1 ?
@@ -500,7 +499,7 @@ namespace dma {
     /**
      * @brief Clears the half transfer interrupt flag.
      */
-    template<dma::common::address::E D, address::E S>
+    template<dma::common::Address D, Address S>
     void Functions<D, S>::clearHalfTransferFlag()
     {
       enum {
@@ -509,8 +508,8 @@ namespace dma {
 
       *(volatile u32*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::registers::hifcr::OFFSET :
-                        D + dma::common::registers::lifcr::OFFSET),
+                        D + dma::common::hifcr::OFFSET :
+                        D + dma::common::lifcr::OFFSET),
           (Stream % 4 == 0 ?
                              4 :
                              (Stream % 4 == 1 ?
@@ -524,7 +523,7 @@ namespace dma {
     /**
      * @brief Returns true if half of the transfer has occurred.
      */
-    template<dma::common::address::E D, address::E S>
+    template<dma::common::Address D, Address S>
     bool Functions<D, S>::hasHalfTransferOccurred()
     {
       // FIXME DMA *(*bool) cast generates Hard Fault exception.
@@ -535,8 +534,8 @@ namespace dma {
 
       return *(volatile u32*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::registers::hisr::OFFSET :
-                        D + dma::common::registers::lisr::OFFSET),
+                        D + dma::common::hisr::OFFSET :
+                        D + dma::common::lisr::OFFSET),
           (Stream % 4 == 0 ?
                              4 :
                              (Stream % 4 == 1 ?
@@ -550,7 +549,7 @@ namespace dma {
     /**
      * @brief Clears the transfer complete interrupt flag.
      */
-    template<dma::common::address::E D, address::E S>
+    template<dma::common::Address D, Address S>
     void Functions<D, S>::clearTransferCompleteFlag()
     {
       enum {
@@ -559,8 +558,8 @@ namespace dma {
 
       *(volatile u32*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::registers::hifcr::OFFSET :
-                        D + dma::common::registers::lifcr::OFFSET),
+                        D + dma::common::hifcr::OFFSET :
+                        D + dma::common::lifcr::OFFSET),
           (Stream % 4 == 0 ?
                              5 :
                              (Stream % 4 == 1 ?
@@ -574,7 +573,7 @@ namespace dma {
     /**
      * @brief Returns true if a complete transfer has occurred.
      */
-    template<dma::common::address::E D, address::E S>
+    template<dma::common::Address D, Address S>
     bool Functions<D, S>::hasTransferCompleteOccurred()
     {
       // FIXME DMA *(*bool) cast generates Hard Fault exception.
@@ -585,8 +584,8 @@ namespace dma {
 
       return *(volatile u32*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::registers::hisr::OFFSET :
-                        D + dma::common::registers::lisr::OFFSET),
+                        D + dma::common::hisr::OFFSET :
+                        D + dma::common::lisr::OFFSET),
           (Stream % 4 == 0 ?
                              5 :
                              (Stream % 4 == 1 ?
@@ -600,14 +599,14 @@ namespace dma {
     /**
      * @brief Returns true if memory 1 is the current target of the DMA.
      */
-    template<dma::common::address::E D, address::E S>
+    template<dma::common::Address D, Address S>
     bool Functions<D, S>::isMemory1TheCurrentTarget()
     {
       // FIXME DMA *(*bool) cast generates Hard Fault exception.
 
       return *(volatile u32 *) (bitband::peripheral<
-          D + S + registers::cr::OFFSET,
-          registers::cr::bits::ct::POSITION
+          D + S + cr::OFFSET,
+          cr::ct::POSITION
       >());
     }
 
@@ -616,28 +615,26 @@ namespace dma {
      * @note  The stream must be disabled before the setup.
      * @note  Overrides the old configuration.
      */
-    template<dma::common::address::E D, address::E S>
-    template<
-        registers::cr::bits::dmeie::states::E DMEIE,
-        registers::cr::bits::teie::states::E TEIE,
-        registers::cr::bits::htie::states::E HTIE,
-        registers::cr::bits::tcie::states::E TCIE,
-        registers::cr::bits::pfctrl::states::E PFCTRL,
-        registers::cr::bits::dir::states::E DIR,
-        registers::cr::bits::circ::states::E CIRC,
-        registers::cr::bits::pinc::states::E PINC,
-        registers::cr::bits::minc::states::E MINC,
-        registers::cr::bits::psize::states::E PSIZE,
-        registers::cr::bits::msize::states::E MSIZE,
-        registers::cr::bits::pincos::states::E PINCOS,
-        registers::cr::bits::pl::states::E PL,
-        registers::cr::bits::dbm::states::E DBM,
-        registers::cr::bits::ct::states::E CT,
-        registers::cr::bits::pburst::states::E PBURST,
-        registers::cr::bits::mburst::states::E MBURST,
-        registers::cr::bits::chsel::states::E CHSEL
-    >
-    void Functions<D, S>::configure()
+    template<dma::common::Address D, Address S>
+    void Functions<D, S>::configure(
+        cr::dmeie::States DMEIE,
+        cr::teie::States TEIE,
+        cr::htie::States HTIE,
+        cr::tcie::States TCIE,
+        cr::pfctrl::States PFCTRL,
+        cr::dir::States DIR,
+        cr::circ::States CIRC,
+        cr::pinc::States PINC,
+        cr::minc::States MINC,
+        cr::psize::States PSIZE,
+        cr::msize::States MSIZE,
+        cr::pincos::States PINCOS,
+        cr::pl::States PL,
+        cr::dbm::States DBM,
+        cr::ct::States CT,
+        cr::pburst::States PBURST,
+        cr::mburst::States MBURST,
+        cr::chsel::States CHSEL)
     {
       reinterpret_cast<stream::Registers*>(D + S)->CR =
           DMEIE + TEIE + HTIE + TCIE + PFCTRL + DIR + CIRC + PINC +
@@ -649,13 +646,11 @@ namespace dma {
      * @brief Configures the stream FIFO operation.
      * @note  Overrides the old configuration.
      */
-    template<dma::common::address::E D, stream::address::E S>
-    template<
-        registers::fcr::bits::fth::states::E FTH,
-        registers::fcr::bits::dmdis::states::E DMDIS,
-        registers::fcr::bits::feie::states::E FEIE
-    >
-    void Functions<D, S>::configureFIFO()
+    template<dma::common::Address D, stream::Address S>
+    void Functions<D, S>::configureFIFO(
+        fcr::fth::States FTH,
+        fcr::dmdis::States DMDIS,
+        fcr::feie::States FEIE)
     {
       reinterpret_cast<stream::Registers*>(D + S)->FCR = FTH + DMDIS + FEIE;
     }

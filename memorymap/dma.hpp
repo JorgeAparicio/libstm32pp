@@ -25,81 +25,82 @@
 
 namespace dma {
   namespace common {
+    enum Address {
 #ifdef STM32F1XX
-    struct Registers
-    {
-      __RW
-      u32 ISR;   // 0x00: Interrupt status
-      __RW
-      u32 IFCR;// 0x04: Interrupt flag clear
-    };
+      DMA1 = alias::AHB + 0x0000,
+      DMA2 = alias::AHB + 0x0400,
 #else // STM32F1XX
+      DMA1 = alias::AHB1 + 0x6000,
+      DMA2 = alias::AHB1 + 0x6400,
+#endif // STM32F1XX
+    };
+
     struct Registers
     {
+#ifdef STM32F1XX
+        __RW
+        u32 ISR;   // 0x00: Interrupt status
+        __RW
+        u32 IFCR;// 0x04: Interrupt flag clear
+#else // STM32F1XX
         __RW
         u32 ISR[2];  // 0x00, 0x04: Interrupt status
         __RW
         u32 IFCR[2];  // 0x08, 0x0C: Interrupt flag clear
+#endif // STM32F1XX
     };
-#endif // STM32F1XX
+
 #ifdef STM32F1XX
-    namespace address {
-      enum E {
-        DMA1 = alias::AHB + 0x0000,
-        DMA2 = alias::AHB + 0x0400,
+    namespace isr {
+      enum {
+        OFFSET = 0x00
       };
-    }  // namespace address
-#else // STM32F1XX
-    namespace address {
-      enum E {
-        DMA1 = alias::AHB1 + 0x6000,
-        DMA2 = alias::AHB1 + 0x6400,
+    }  // namespace isr
+
+    namespace ifcr {
+      enum {
+        OFFSET = 0x00
       };
-    }  // namespace address
-#endif // STM32F1XX
-    namespace registers {
-#ifdef STM32F1XX
-      namespace isr {
-        enum {
-          OFFSET = 0x00
-        };
-      }  // namespace isr
-
-      namespace ifcr {
-        enum {
-          OFFSET = 0x00
-        };
-      }  // namespace ifcr
+    }  // namespace ifcr
 #else // STM32F1XX
-      namespace lisr {
-        enum {
-          OFFSET = 0x00
-        };
-      }  // namespace lisr
+    namespace lisr {
+      enum {
+        OFFSET = 0x00
+      };
+    }  // namespace lisr
 
-      namespace hisr {
-        enum {
-          OFFSET = 0x04
-        };
-      }  // namespace hisr
+    namespace hisr {
+      enum {
+        OFFSET = 0x04
+      };
+    }  // namespace hisr
 
-      namespace lifcr {
-        enum {
-          OFFSET = 0x08
-        };
-      }  // namespace lifcr
+    namespace lifcr {
+      enum {
+        OFFSET = 0x08
+      };
+    }  // namespace lifcr
 
-      namespace hifcr {
-        enum {
-          OFFSET = 0x0C
-        };
-      }  // namespace hifcr
+    namespace hifcr {
+      enum {
+        OFFSET = 0x0C
+      };
+    }  // namespace hifcr
 #endif // STM32F1XX
-    }  // namespace registers
   }  // namespace common
 
 #ifdef STM32F1XX
   namespace channel {
+    enum Address {
+      CHANNEL_1 = 0x08,
+      CHANNEL_2 = 0x1C,
+      CHANNEL_3 = 0x30,
+      CHANNEL_4 = 0x44,
+      CHANNEL_5 = 0x58,
+      CHANNEL_6 = 0x6C,
+      CHANNEL_7 = 0x80,
+    };
+
     struct Registers {
       __RW
       u32 CCR;  // 0x00: Configuration
@@ -111,232 +112,179 @@ namespace dma {
       u32 CMAR;// 0x0C: Memory address
     };
 
-    namespace address {
-      enum E {
-        CHANNEL_1 = 0x08,
-        CHANNEL_2 = 0x1C,
-        CHANNEL_3 = 0x30,
-        CHANNEL_4 = 0x44,
-        CHANNEL_5 = 0x58,
-        CHANNEL_6 = 0x6C,
-        CHANNEL_7 = 0x80,
+    namespace cr {
+      enum {
+        OFFSET = 0x00
       };
-    }  // namespace address
-
-    namespace registers {
-      namespace cr {
+      namespace en {
         enum {
-          OFFSET = 0x00
+          POSITION = 0,
+          MASK = 1 << POSITION
         };
-        namespace bits {
-          namespace en {
-            enum {
-              POSITION = 0
-            };
-            enum {
-              MASK = 1 << POSITION
-            };
-            namespace states {
-              enum E {
-                CHANNEL_DISABLED = 0 << POSITION,
-                CHANNEL_ENABLED = 1 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace en
+        enum States {
+          CHANNEL_DISABLED = 0 << POSITION,
+          CHANNEL_ENABLED = 1 << POSITION,
+        };
+      }  // namespace en
 
-          namespace tcie {
-            enum {
-              POSITION = 1
-            };
-            enum {
-              MASK = 1 << POSITION
-            };
-            namespace states {
-              enum E {
-                TRANSFER_COMPLETE_INTERRUPT_DISABLE = 0 << POSITION,
-                TRANSFER_COMPLETE_INTERRUPT_ENABLE = 1 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace tcie
-
-          namespace htie {
-            enum {
-              POSITION = 2
-            };
-            enum {
-              MASK = 1 << POSITION
-            };
-            namespace states {
-              enum E {
-                HALF_TRANSFER_INTERRUPT_DISABLED = 0 << POSITION,
-                HALF_TRANSFER_INTERRUPT_ENABLED = 1 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace htie
-
-          namespace teie {
-            enum {
-              POSITION = 3
-            };
-            enum {
-              MASK = 1 << POSITION
-            };
-            namespace states {
-              enum E {
-                TRANSFER_ERROR_INTERRUPT_DISABLED = 0 << POSITION,
-                TRANSFER_ERROR_INTERRUPT_ENABLED = 1 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace teie
-
-          namespace dir {
-            enum {
-              POSITION = 4
-            };
-            enum {
-              MASK = 1 << POSITION
-            };
-            namespace states {
-              enum E {
-                READ_FROM_PERIPHERAL = 0 << POSITION,
-                READ_FROM_MEMORY = 1 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace dir
-
-          namespace circ {
-            enum {
-              POSITION = 5
-            };
-            enum {
-              MASK = 1 << POSITION
-            };
-            namespace states {
-              enum E {
-                CIRCULAR_MODE_DISABLED = 0 << POSITION,
-                CIRCULAR_MODE_ENABLED = 1 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace circ
-
-          namespace pinc {
-            enum {
-              POSITION = 6
-            };
-            enum {
-              MASK = 1 << POSITION
-            };
-            namespace states {
-              enum E {
-                PERIPHERAL_INCREMENT_MODE_DISABLED = 0 << POSITION,
-                PERIPHERAL_INCREMENT_MODE_ENABLED = 1 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace pinc
-
-          namespace minc {
-            enum {
-              POSITION = 7
-            };
-            enum {
-              MASK = 1 << POSITION
-            };
-            namespace states {
-              enum E {
-                MEMORY_INCREMENT_MODE_DISABLED = 0 << POSITION,
-                MEMORY_INCREMENT_MODE_ENABLE = 1 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace minc
-
-          namespace psize {
-            enum {
-              POSITION = 8
-            };
-            enum {
-              MASK = 0b11 << POSITION
-            };
-            namespace states {
-              enum E {
-                PERIPHERAL_SIZE_8BITS = 0 << POSITION,
-                PERIPHERAL_SIZE_16BITS = 1 << POSITION,
-                PERIPHERAL_SIZE_32BITS = 2 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace psize
-
-          namespace msize {
-            enum {
-              POSITION = 10
-            };
-            enum {
-              MASK = 0b11 << POSITION
-            };
-            namespace states {
-              enum E {
-                MEMORY_SIZE_8BITS = 0 << POSITION,
-                MEMORY_SIZE_16BITS = 1 << POSITION,
-                MEMORY_SIZE_32BITS = 2 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace msize
-
-          namespace pl {
-            enum {
-              POSITION = 12
-            };
-            enum {
-              MASK = 0b11 << POSITION
-            };
-            namespace states {
-              enum E {
-                CHANNEL_PRIORITY_LEVEL_LOW = 0 << POSITION,
-                CHANNEL_PRIORITY_LEVEL_MEDIUM = 1 << POSITION,
-                CHANNEL_PRIORITY_LEVEL_HIGH = 2 << POSITION,
-                CHANNEL_PRIORITY_LEVEL_VERY_HIGH = 3 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace pl
-
-          namespace mem2mem {
-            enum {
-              POSITION = 14
-            };
-            enum {
-              MASK = 1 << POSITION
-            };
-            namespace states {
-              enum E {
-                MEMORY_TO_MEMORT_MODE_DISABLED = 0 << POSITION,
-                MEMORY_TO_MEMORY_MODE_ENABLED = 1 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace mem2mem
-        }  // namespace bits
-      }  // namespace cr
-
-      namespace ndtr {
+      namespace tcie {
         enum {
-          OFFSET = 0x04
+          POSITION = 1,
+          MASK = 1 << POSITION
         };
-      }  // namespace ndtr
+        enum States {
+          TRANSFER_COMPLETE_INTERRUPT_DISABLE = 0 << POSITION,
+          TRANSFER_COMPLETE_INTERRUPT_ENABLE = 1 << POSITION,
+        };
+      }  // namespace tcie
 
-      namespace par {
+      namespace htie {
         enum {
-          OFFSET = 0x08
+          POSITION = 2,
+          MASK = 1 << POSITION
         };
-      }  // namespace par
+        enum States {
+          HALF_TRANSFER_INTERRUPT_DISABLED = 0 << POSITION,
+          HALF_TRANSFER_INTERRUPT_ENABLED = 1 << POSITION,
+        };
+      }  // namespace htie
 
-      namespace mar {
+      namespace teie {
         enum {
-          OFFSET = 0x0C
+          POSITION = 3,
+          MASK = 1 << POSITION
         };
-      }  // namespace mar
-    }  // namespace registers
+        enum States {
+          TRANSFER_ERROR_INTERRUPT_DISABLED = 0 << POSITION,
+          TRANSFER_ERROR_INTERRUPT_ENABLED = 1 << POSITION,
+        };
+      }  // namespace teie
+
+      namespace dir {
+        enum {
+          POSITION = 4,
+          MASK = 1 << POSITION
+        };
+        enum States {
+          READ_FROM_PERIPHERAL = 0 << POSITION,
+          READ_FROM_MEMORY = 1 << POSITION,
+        };
+      }  // namespace dir
+
+      namespace circ {
+        enum {
+          POSITION = 5,
+          MASK = 1 << POSITION
+        };
+        enum States {
+          CIRCULAR_MODE_DISABLED = 0 << POSITION,
+          CIRCULAR_MODE_ENABLED = 1 << POSITION,
+        };
+      }  // namespace circ
+
+      namespace pinc {
+        enum {
+          POSITION = 6,
+          MASK = 1 << POSITION
+        };
+        enum States {
+          PERIPHERAL_INCREMENT_MODE_DISABLED = 0 << POSITION,
+          PERIPHERAL_INCREMENT_MODE_ENABLED = 1 << POSITION,
+        };
+      }  // namespace pinc
+
+      namespace minc {
+        enum {
+          POSITION = 7,
+          MASK = 1 << POSITION
+        };
+        enum States {
+          MEMORY_INCREMENT_MODE_DISABLED = 0 << POSITION,
+          MEMORY_INCREMENT_MODE_ENABLE = 1 << POSITION,
+        };
+      }  // namespace minc
+
+      namespace psize {
+        enum {
+          POSITION = 8,
+          MASK = 0b11 << POSITION
+        };
+        enum States {
+          PERIPHERAL_SIZE_8BITS = 0 << POSITION,
+          PERIPHERAL_SIZE_16BITS = 1 << POSITION,
+          PERIPHERAL_SIZE_32BITS = 2 << POSITION,
+        };
+      }  // namespace psize
+
+      namespace msize {
+        enum {
+          POSITION = 10,
+          MASK = 0b11 << POSITION
+        };
+        enum States {
+          MEMORY_SIZE_8BITS = 0 << POSITION,
+          MEMORY_SIZE_16BITS = 1 << POSITION,
+          MEMORY_SIZE_32BITS = 2 << POSITION,
+        };
+      }  // namespace msize
+
+      namespace pl {
+        enum {
+          POSITION = 12,
+          MASK = 0b11 << POSITION
+        };
+        enum States {
+          CHANNEL_PRIORITY_LEVEL_LOW = 0 << POSITION,
+          CHANNEL_PRIORITY_LEVEL_MEDIUM = 1 << POSITION,
+          CHANNEL_PRIORITY_LEVEL_HIGH = 2 << POSITION,
+          CHANNEL_PRIORITY_LEVEL_VERY_HIGH = 3 << POSITION,
+        };
+      }  // namespace pl
+
+      namespace mem2mem {
+        enum {
+          POSITION = 14,
+          MASK = 1 << POSITION
+        };
+        enum States {
+          MEMORY_TO_MEMORT_MODE_DISABLED = 0 << POSITION,
+          MEMORY_TO_MEMORY_MODE_ENABLED = 1 << POSITION,
+        };
+      }  // namespace mem2mem
+    }  // namespace cr
+
+    namespace ndtr {
+      enum {
+        OFFSET = 0x04
+      };
+    }  // namespace ndtr
+
+    namespace par {
+      enum {
+        OFFSET = 0x08
+      };
+    }  // namespace par
+
+    namespace mar {
+      enum {
+        OFFSET = 0x0C
+      };
+    }  // namespace mar
   }  // namespace channel
 
 #else // STM32F1XX
   namespace stream {
+    enum Address {
+      STREAM_0 = 0x10,
+      STREAM_1 = 0x28,
+      STREAM_2 = 0x40,
+      STREAM_3 = 0x58,
+      STREAM_4 = 0x70,
+      STREAM_5 = 0x88,
+      STREAM_6 = 0xA0,
+      STREAM_7 = 0xB8,
+    };
+
     struct Registers {
         __RW
         u32 CR;  // 0x00: Configuration
@@ -352,414 +300,305 @@ namespace dma {
         u32 FCR;  // 0x14: FIFO control
     };
 
-    namespace address {
-      enum E {
-        STREAM_0 = 0x10,
-        STREAM_1 = 0x28,
-        STREAM_2 = 0x40,
-        STREAM_3 = 0x58,
-        STREAM_4 = 0x70,
-        STREAM_5 = 0x88,
-        STREAM_6 = 0xA0,
-        STREAM_7 = 0xB8,
+    namespace cr {
+      enum {
+        OFFSET = 0x00
       };
-    }
-
-    namespace registers {
-      namespace cr {
+      namespace en {
         enum {
-          OFFSET = 0x00
+          POSITION = 0,
+          MASK = 1 << POSITION
         };
-        namespace bits {
-          namespace en {
-            enum {
-              POSITION = 0
-            };
-            enum {
-              MASK = 1 << POSITION
-            };
-            namespace states {
-              enum E {
-                STREAM_DISABLED = 0 << POSITION,
-                STREAM_ENABLED = 1 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace en
+        enum States {
+          STREAM_DISABLED = 0 << POSITION,
+          STREAM_ENABLED = 1 << POSITION,
+        };
+      }  // namespace en
 
-          namespace dmeie {
-            enum {
-              POSITION = 1
-            };
-            enum {
-              MASK = 1 << POSITION
-            };
-            namespace states {
-              enum E {
-                DIRECT_MODE_ERROR_INTERRUPT_DISABLED = 0 << POSITION,
-                DIRECT_MODE_ERROR_INTERRUPT_ENABLED = 1 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace dmeie
-
-          namespace teie {
-            enum {
-              POSITION = 2
-            };
-            enum {
-              MASK = 1 << POSITION
-            };
-            namespace states {
-              enum E {
-                TRANSFER_ERROR_INTERRUPT_DISABLED = 0 << POSITION,
-                TRANSFER_ERROR_INTERRUPT_ENABLED = 1 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace teie
-
-          namespace htie {
-            enum {
-              POSITION = 3
-            };
-            enum {
-              MASK = 1 << POSITION
-            };
-            namespace states {
-              enum E {
-                HALF_TRANSFER_INTERRUPT_DISABLED = 0 << POSITION,
-                HALF_TRANSFER_INTERRUPT_ENABLED = 1 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace htie
-
-          namespace tcie {
-            enum {
-              POSITION = 4
-            };
-            enum {
-              MASK = 1 << POSITION
-            };
-            namespace states {
-              enum E {
-                TRANSFER_COMPLETE_INTERRUPT_DISABLED = 0 << POSITION,
-                TRANSFER_COMPLETE_INTERRUPT_ENABLED = 1 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace tcie
-
-          namespace pfctrl {
-            enum {
-              POSITION = 5
-            };
-            enum {
-              MASK = 1 << POSITION
-            };
-            namespace states {
-              enum E {
-                DMA_FLOW_CONTROLLER = 0 << POSITION,
-                PERIPHERAL_FLOW_CONTROLLER = 1 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace pfctrl
-
-          namespace dir {
-            enum {
-              POSITION = 6
-            };
-            enum {
-              MASK = 0b11 << POSITION
-            };
-            namespace states {
-              enum E {
-                PERIPHERAL_TO_MEMORY = 0 << POSITION,
-                MEMORY_TO_PERIPHERAL = 1 << POSITION,
-                MEMORY_TO_MEMORY = 2 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace dir
-
-          namespace circ {
-            enum {
-              POSITION = 8
-            };
-            enum {
-              MASK = 1 << POSITION
-            };
-            namespace states {
-              enum E {
-                CIRCULAR_MODE_DISABLED = 0 << POSITION,
-                CIRCULAR_MODE_ENABLED = 1 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace circ
-
-          namespace pinc {
-            enum {
-              POSITION = 9
-            };
-            enum {
-              MASK = 1 << POSITION
-            };
-            namespace states {
-              enum E {
-                PERIPHERAL_INCREMENT_MODE_DISABLED = 0 << POSITION,
-                PERIPHERAL_INCREMENT_MODE_ENABLED = 1 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace pinc
-
-          namespace minc {
-            enum {
-              POSITION = 10
-            };
-            enum {
-              MASK = 1 << POSITION
-            };
-            namespace states {
-              enum E {
-                MEMORY_INCREMENT_MODE_DISABLED = 0 << POSITION,
-                MEMORY_INCREMENT_MODE_ENABLED = 1 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace minc
-
-          namespace psize {
-            enum {
-              POSITION = 11
-            };
-            enum {
-              MASK = 0b11 << POSITION
-            };
-            namespace states {
-              enum E {
-                PERIPHERAL_SIZE_8BITS = 0 << POSITION,
-                PERIPHERAL_SIZE_16BITS = 1 << POSITION,
-                PERIPHERAL_SIZE_32BITS = 2 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace psize
-
-          namespace msize {
-            enum {
-              POSITION = 13
-            };
-            enum {
-              MASK = 0b11 << POSITION
-            };
-            namespace states {
-              enum E {
-                MEMORY_SIZE_8BITS = 0 << POSITION,
-                MEMORY_SIZE_16BITS = 1 << POSITION,
-                MEMORY_SIZE_32BITS = 2 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace msize
-
-          namespace pincos {
-            enum {
-              POSITION = 15
-            };
-            enum {
-              MASK = 1 << POSITION
-            };
-            namespace states {
-              enum E {
-                PERIPHERAL_INCREMENT_OFFSET_SIZE_PSIZE = 0 << POSITION,
-                PERIPHERAL_INCREMENT_OFFSET_SIZE_32BITS = 1 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace pincos
-
-          namespace pl {
-            enum {
-              POSITION = 16
-            };
-            enum {
-              MASK = 0b11 << POSITION
-            };
-            namespace states {
-              enum E {
-                PRIORITY_LEVEL_LOW = 0 << POSITION,
-                PRIORITY_LEVEL_MEDIUM = 1 << POSITION,
-                PRIORITY_LEVEL_HIGH = 2 << POSITION,
-                PRIORITY_LEVEL_VERY_HIGH = 3 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace pl
-
-          namespace dbm {
-            enum {
-              POSITION = 18
-            };
-            enum {
-              MASK = 1 << POSITION
-            };
-            namespace states {
-              enum E {
-                DOUBLE_BUFFER_MODE_DISABLED = 0 << POSITION,
-                DOUBLE_BUFFER_MODE_ENABLED = 1 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace dbm
-
-          namespace ct {
-            enum {
-              POSITION = 19
-            };
-            enum {
-              MASK = 1 << POSITION
-            };
-            namespace states {
-              enum E {
-                CURRENT_TARGET_MEMORY_0 = 0 << POSITION,
-                CURRENT_TARGET_MEMORY_1 = 1 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace ct
-
-          namespace pburst {
-            enum {
-              POSITION = 21
-            };
-            enum {
-              MASK = 0b11 << POSITION
-            };
-            namespace states {
-              enum E {
-                PERIPHERAL_BURST_TRANSFER_SINGLE = 0 << POSITION,
-                PERIPHERAL_BURST_TRANSFER_4BEATS = 1 << POSITION,
-                PERIPHERAL_BURST_TRANSFER_8BEATS = 2 << POSITION,
-                PERIPHERAL_BURST_TRANSFER_16BEATS = 3 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace pburst
-
-          namespace mburst {
-            enum {
-              POSITION = 23
-            };
-            enum {
-              MASK = 0b11 << POSITION
-            };
-            namespace states {
-              enum E {
-                MEMORY_BURST_TRANSFER_SINGLE = 0 << POSITION,
-                MEMORY_BURST_TRANSFER_4BEATS = 1 << POSITION,
-                MEMORY_BURST_TRANSFER_8BEATS = 2 << POSITION,
-                MEMORY_BURST_TRANSFER_16BEATS = 3 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace mburst
-
-          namespace chsel {
-            enum {
-              POSITION = 25
-            };
-            enum {
-              MASK = 0b111 << POSITION
-            };
-            namespace states {
-              enum E {
-                CHANNEL_0 = 0 << POSITION,
-                CHANNEL_1 = 1 << POSITION,
-                CHANNEL_2 = 2 << POSITION,
-                CHANNEL_3 = 3 << POSITION,
-                CHANNEL_4 = 4 << POSITION,
-                CHANNEL_5 = 5 << POSITION,
-                CHANNEL_6 = 6 << POSITION,
-                CHANNEL_7 = 7 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace chsel
-        }  // namespace bits
-      }  // namespace cr
-
-      namespace ndtr {
+      namespace dmeie {
         enum {
-          OFFSET = 0x04
+          POSITION = 1,
+          MASK = 1 << POSITION
         };
-      }  // namespace ndtr
+        enum States {
+          DIRECT_MODE_ERROR_INTERRUPT_DISABLED = 0 << POSITION,
+          DIRECT_MODE_ERROR_INTERRUPT_ENABLED = 1 << POSITION,
+        };
+      }  // namespace dmeie
 
-      namespace par {
+      namespace teie {
         enum {
-          OFFSET = 0x08
+          POSITION = 2,
+          MASK = 1 << POSITION
         };
-      }  // namespace par
+        enum States {
+          TRANSFER_ERROR_INTERRUPT_DISABLED = 0 << POSITION,
+          TRANSFER_ERROR_INTERRUPT_ENABLED = 1 << POSITION,
+        };
+      }  // namespace teie
 
-      namespace m0ar {
+      namespace htie {
         enum {
-          OFFSET = 0x0C
+          POSITION = 3,
+          MASK = 1 << POSITION
         };
-      }  // namespace m0ar
+        enum States {
+          HALF_TRANSFER_INTERRUPT_DISABLED = 0 << POSITION,
+          HALF_TRANSFER_INTERRUPT_ENABLED = 1 << POSITION,
+        };
+      }  // namespace htie
 
-      namespace m1ar {
+      namespace tcie {
         enum {
-          OFFSET = 0x10
+          POSITION = 4,
+          MASK = 1 << POSITION
         };
-      }  // namespace m1ar
+        enum States {
+          TRANSFER_COMPLETE_INTERRUPT_DISABLED = 0 << POSITION,
+          TRANSFER_COMPLETE_INTERRUPT_ENABLED = 1 << POSITION,
+        };
+      }  // namespace tcie
 
-      namespace fcr {
+      namespace pfctrl {
         enum {
-          OFFSET = 0x14
+          POSITION = 5,
+          MASK = 1 << POSITION
         };
-        namespace bits {
-          namespace fth {
-            enum {
-              POSITION = 0
-            };
-            enum {
-              MASK = 0b11 << POSITION
-            };
-            namespace states {
-              enum E {
-                FIFO_THRESHOLD_SELECTION_1_OVER_4 = 0 << POSITION,
-                FIFO_THRESHOLD_SELECTION_2_OVER_4 = 1 << POSITION,
-                FIFO_THRESHOLD_SELECTION_3_OVER_4 = 2 << POSITION,
-                FIFO_THRESHOLD_SELECTION_FULL = 3 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace fth
+        enum States {
+          DMA_FLOW_CONTROLLER = 0 << POSITION,
+          PERIPHERAL_FLOW_CONTROLLER = 1 << POSITION,
+        };
+      }  // namespace pfctrl
 
-          namespace dmdis {
-            enum {
-              POSITION = 2
-            };
-            enum {
-              MASK = 1 << POSITION
-            };
-            namespace states {
-              enum E {
-                DIRECT_MODE_ENABLED = 0 << POSITION,
-                DIRECT_MODE_DISABLED = 1 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace dmdis
+      namespace dir {
+        enum {
+          POSITION = 6,
+          MASK = 0b11 << POSITION
+        };
+        enum States {
+          PERIPHERAL_TO_MEMORY = 0 << POSITION,
+          MEMORY_TO_PERIPHERAL = 1 << POSITION,
+          MEMORY_TO_MEMORY = 2 << POSITION,
+        };
+      }  // namespace dir
 
-          namespace fs {
-            enum {
-              POSITION = 3
-            };
-            enum {
-              MASK = 0b111 << POSITION
-            };
-          }  // namespace fs
+      namespace circ {
+        enum {
+          POSITION = 8,
+          MASK = 1 << POSITION
+        };
+        enum States {
+          CIRCULAR_MODE_DISABLED = 0 << POSITION,
+          CIRCULAR_MODE_ENABLED = 1 << POSITION,
+        };
+      }  // namespace circ
 
-          namespace feie {
-            enum {
-              POSITION = 7
-            };
-            enum {
-              MASK = 1 << POSITION
-            };
-            namespace states {
-              enum E {
-                FIFO_ERROR_INTERRUPT_DISABLED = 0 << POSITION,
-                FIFO_ERROR_INTERRUPT_ENABLED = 1 << POSITION,
-              };
-            }  // namespace states
-          }  // namespace feie
-        }  // namespace bits
-      }  // namespace fcr
-    }  // namespace registers
+      namespace pinc {
+        enum {
+          POSITION = 9,
+          MASK = 1 << POSITION
+        };
+        enum States {
+          PERIPHERAL_INCREMENT_MODE_DISABLED = 0 << POSITION,
+          PERIPHERAL_INCREMENT_MODE_ENABLED = 1 << POSITION,
+        };
+      }  // namespace pinc
+
+      namespace minc {
+        enum {
+          POSITION = 10,
+          MASK = 1 << POSITION
+        };
+        enum States {
+          MEMORY_INCREMENT_MODE_DISABLED = 0 << POSITION,
+          MEMORY_INCREMENT_MODE_ENABLED = 1 << POSITION,
+        };
+      }  // namespace minc
+
+      namespace psize {
+        enum {
+          POSITION = 11,
+          MASK = 0b11 << POSITION
+        };
+        enum States {
+          PERIPHERAL_SIZE_8BITS = 0 << POSITION,
+          PERIPHERAL_SIZE_16BITS = 1 << POSITION,
+          PERIPHERAL_SIZE_32BITS = 2 << POSITION,
+        };
+      }  // namespace psize
+
+      namespace msize {
+        enum {
+          POSITION = 13,
+          MASK = 0b11 << POSITION
+        };
+        enum States {
+          MEMORY_SIZE_8BITS = 0 << POSITION,
+          MEMORY_SIZE_16BITS = 1 << POSITION,
+          MEMORY_SIZE_32BITS = 2 << POSITION,
+        };
+      }  // namespace msize
+
+      namespace pincos {
+        enum {
+          POSITION = 15,
+          MASK = 1 << POSITION
+        };
+        enum States {
+          PERIPHERAL_INCREMENT_OFFSET_SIZE_PSIZE = 0 << POSITION,
+          PERIPHERAL_INCREMENT_OFFSET_SIZE_32BITS = 1 << POSITION,
+        };
+      }  // namespace pincos
+
+      namespace pl {
+        enum {
+          POSITION = 16,
+          MASK = 0b11 << POSITION
+        };
+        enum States {
+          PRIORITY_LEVEL_LOW = 0 << POSITION,
+          PRIORITY_LEVEL_MEDIUM = 1 << POSITION,
+          PRIORITY_LEVEL_HIGH = 2 << POSITION,
+          PRIORITY_LEVEL_VERY_HIGH = 3 << POSITION,
+        };
+      }  // namespace pl
+
+      namespace dbm {
+        enum {
+          POSITION = 18,
+          MASK = 1 << POSITION
+        };
+        enum States {
+          DOUBLE_BUFFER_MODE_DISABLED = 0 << POSITION,
+          DOUBLE_BUFFER_MODE_ENABLED = 1 << POSITION,
+        };
+      }  // namespace dbm
+
+      namespace ct {
+        enum {
+          POSITION = 19,
+          MASK = 1 << POSITION
+        };
+        enum States {
+          CURRENT_TARGET_MEMORY_0 = 0 << POSITION,
+          CURRENT_TARGET_MEMORY_1 = 1 << POSITION,
+        };
+      }  // namespace ct
+
+      namespace pburst {
+        enum {
+          POSITION = 21,
+          MASK = 0b11 << POSITION
+        };
+        enum States {
+          PERIPHERAL_BURST_TRANSFER_SINGLE = 0 << POSITION,
+          PERIPHERAL_BURST_TRANSFER_4BEATS = 1 << POSITION,
+          PERIPHERAL_BURST_TRANSFER_8BEATS = 2 << POSITION,
+          PERIPHERAL_BURST_TRANSFER_16BEATS = 3 << POSITION,
+        };
+      }  // namespace pburst
+
+      namespace mburst {
+        enum {
+          POSITION = 23,
+          MASK = 0b11 << POSITION
+        };
+        enum States {
+          MEMORY_BURST_TRANSFER_SINGLE = 0 << POSITION,
+          MEMORY_BURST_TRANSFER_4BEATS = 1 << POSITION,
+          MEMORY_BURST_TRANSFER_8BEATS = 2 << POSITION,
+          MEMORY_BURST_TRANSFER_16BEATS = 3 << POSITION,
+        };
+      }  // namespace mburst
+
+      namespace chsel {
+        enum {
+          POSITION = 25,
+          MASK = 0b111 << POSITION
+        };
+        enum States {
+          CHANNEL_0 = 0 << POSITION,
+          CHANNEL_1 = 1 << POSITION,
+          CHANNEL_2 = 2 << POSITION,
+          CHANNEL_3 = 3 << POSITION,
+          CHANNEL_4 = 4 << POSITION,
+          CHANNEL_5 = 5 << POSITION,
+          CHANNEL_6 = 6 << POSITION,
+          CHANNEL_7 = 7 << POSITION,
+        };
+      }  // namespace chsel
+    }  // namespace cr
+
+    namespace ndtr {
+      enum {
+        OFFSET = 0x04
+      };
+    }  // namespace ndtr
+
+    namespace par {
+      enum {
+        OFFSET = 0x08
+      };
+    }  // namespace par
+
+    namespace m0ar {
+      enum {
+        OFFSET = 0x0C
+      };
+    }  // namespace m0ar
+
+    namespace m1ar {
+      enum {
+        OFFSET = 0x10
+      };
+    }  // namespace m1ar
+
+    namespace fcr {
+      enum {
+        OFFSET = 0x14
+      };
+      namespace fth {
+        enum {
+          POSITION = 0,
+          MASK = 0b11 << POSITION
+        };
+        enum States {
+          FIFO_THRESHOLD_SELECTION_1_OVER_4 = 0 << POSITION,
+          FIFO_THRESHOLD_SELECTION_2_OVER_4 = 1 << POSITION,
+          FIFO_THRESHOLD_SELECTION_3_OVER_4 = 2 << POSITION,
+          FIFO_THRESHOLD_SELECTION_FULL = 3 << POSITION,
+        };
+      }  // namespace fth
+
+      namespace dmdis {
+        enum {
+          POSITION = 2,
+          MASK = 1 << POSITION
+        };
+        enum States {
+          DIRECT_MODE_ENABLED = 0 << POSITION,
+          DIRECT_MODE_DISABLED = 1 << POSITION,
+        };
+      }  // namespace dmdis
+
+      namespace fs {
+        enum {
+          POSITION = 3,
+          MASK = 0b111 << POSITION
+        };
+      }  // namespace fs
+
+      namespace feie {
+        enum {
+          POSITION = 7,
+          MASK = 1 << POSITION
+        };
+        enum States {
+          FIFO_ERROR_INTERRUPT_DISABLED = 0 << POSITION,
+          FIFO_ERROR_INTERRUPT_ENABLED = 1 << POSITION,
+        };
+      }  // namespace feie
+    }  // namespace fcr
   }  // namespace stream
 #endif // STM32F1XX
 }  // namespace dma
