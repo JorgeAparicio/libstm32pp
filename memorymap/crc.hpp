@@ -38,10 +38,26 @@ namespace crc {
     ADDRESS = alias::AHB + 0x3000
   };
 #else
-  enum {ADDRESS = alias::AHB1 + 0x3000};
+  enum {
+    ADDRESS = alias::AHB1 + 0x3000
+  };
 #endif
 
-  namespace registers {
-  // TODO CRC register bits
-  }// namespace registers
+  namespace dr {
+    enum {
+      OFFSET = 0x00
+    };
+  }  // namespace dr
+
+  namespace idr {
+    enum {
+      OFFSET = 0x04
+    };
+  }  // namespace idr
+
+  namespace cr {
+    enum {
+      OFFSET = 0x08
+    };
+  }  // namespace cr
 }  // namespace crc
