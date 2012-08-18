@@ -31,10 +31,10 @@ namespace rcc {
    */
   void Functions::enableHse()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         ADDRESS + registers::cr::OFFSET,
         registers::cr::bits::hseon::POSITION
-    >::address) = 1;
+    >()) = 1;
   }
 
   /**
@@ -42,10 +42,10 @@ namespace rcc {
    */
   void Functions::disableHse()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         ADDRESS + registers::cr::OFFSET,
         registers::cr::bits::hseon::POSITION
-    >::address) = 0;
+    >()) = 0;
   }
 
   /**
@@ -53,10 +53,10 @@ namespace rcc {
    */
   bool Functions::isHseStable()
   {
-    return *(bool*) (bitband::Peripheral<
+    return *(bool*) (bitband::peripheral<
         ADDRESS + registers::cr::OFFSET,
         registers::cr::bits::hserdy::POSITION
-    >::address);
+    >());
   }
 
   /**
@@ -64,10 +64,10 @@ namespace rcc {
    */
   void Functions::enableHseOscillator()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         ADDRESS + registers::cr::OFFSET,
         registers::cr::bits::hsebyp::POSITION
-    >::address) = 0;
+    >()) = 0;
   }
 
   /**
@@ -75,10 +75,10 @@ namespace rcc {
    */
   void Functions::disableHseOscillator()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         ADDRESS + registers::cr::OFFSET,
         registers::cr::bits::hsebyp::POSITION
-    >::address) = 1;
+    >()) = 1;
   }
 
   /**
@@ -86,10 +86,10 @@ namespace rcc {
    */
   void Functions::enableLse()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         ADDRESS + registers::bdcr::OFFSET,
         registers::bdcr::bits::lseon::POSITION
-    >::address) = 1;
+    >()) = 1;
   }
 
   /**
@@ -97,10 +97,10 @@ namespace rcc {
    */
   void Functions::disableLse()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         ADDRESS + registers::bdcr::OFFSET,
         registers::bdcr::bits::lseon::POSITION
-    >::address) = 0;
+    >()) = 0;
   }
 
   /**
@@ -108,10 +108,10 @@ namespace rcc {
    */
   bool Functions::isLseStable()
   {
-    return *(bool*) (bitband::Peripheral<
+    return *(bool*) (bitband::peripheral<
         ADDRESS + registers::bdcr::OFFSET,
         registers::bdcr::bits::lserdy::POSITION
-    >::address);
+    >());
   }
 
   /**
@@ -119,10 +119,10 @@ namespace rcc {
    */
   void Functions::enableLseOscillator()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         ADDRESS + registers::bdcr::OFFSET,
         registers::bdcr::bits::lsebyp::POSITION
-    >::address) = 0;
+    >()) = 0;
   }
 
   /**
@@ -130,10 +130,10 @@ namespace rcc {
    */
   void Functions::disableLseOscillator()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         ADDRESS + registers::bdcr::OFFSET,
         registers::bdcr::bits::lsebyp::POSITION
-    >::address) = 1;
+    >()) = 1;
   }
 
   /**
@@ -141,10 +141,10 @@ namespace rcc {
    */
   void Functions::enableHsi()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         ADDRESS + registers::cr::OFFSET,
         registers::cr::bits::hsion::POSITION
-    >::address) = 1;
+    >()) = 1;
   }
 
   /**
@@ -152,10 +152,10 @@ namespace rcc {
    */
   void Functions::disableHsi()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         ADDRESS + registers::cr::OFFSET,
         registers::cr::bits::hsion::POSITION
-    >::address) = 0;
+    >()) = 0;
   }
 
   /**
@@ -163,10 +163,10 @@ namespace rcc {
    */
   bool Functions::isHsiStable()
   {
-    return *(bool*) (bitband::Peripheral<
+    return *(bool*) (bitband::peripheral<
         ADDRESS + registers::cr::OFFSET,
         registers::cr::bits::hsirdy::POSITION
-    >::address);
+    >());
   }
 
   /**
@@ -174,10 +174,10 @@ namespace rcc {
    */
   void Functions::enableLsi()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         ADDRESS + registers::csr::OFFSET,
         registers::csr::bits::lsion::POSITION
-    >::address) = 1;
+    >()) = 1;
   }
 
   /**
@@ -185,10 +185,10 @@ namespace rcc {
    */
   void Functions::disableLsi()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         ADDRESS + registers::csr::OFFSET,
         registers::csr::bits::lsion::POSITION
-    >::address) = 0;
+    >()) = 0;
   }
 
   /**
@@ -196,10 +196,10 @@ namespace rcc {
    */
   bool Functions::isLsiStable()
   {
-    return *(bool*) (bitband::Peripheral<
+    return *(bool*) (bitband::peripheral<
         ADDRESS + registers::csr::OFFSET,
         registers::csr::bits::lsirdy::POSITION
-    >::address);
+    >());
   }
 
   /**
@@ -207,10 +207,10 @@ namespace rcc {
    */
   void Functions::enableRtc()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         ADDRESS + registers::bdcr::OFFSET,
         registers::bdcr::bits::rtcen::POSITION
-    >::address) = 1;
+    >()) = 1;
   }
 
   /**
@@ -218,10 +218,10 @@ namespace rcc {
    */
   void Functions::disableRtc()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         ADDRESS + registers::bdcr::OFFSET,
         registers::bdcr::bits::rtcen::POSITION
-    >::address) = 0;
+    >()) = 0;
   }
 
   /**
@@ -229,10 +229,10 @@ namespace rcc {
    */
   void Functions::enablePll()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         ADDRESS + registers::cr::OFFSET,
         registers::cr::bits::pllon::POSITION
-    >::address) = 1;
+    >()) = 1;
   }
 
   /**
@@ -240,10 +240,10 @@ namespace rcc {
    */
   void Functions::disablePll()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         ADDRESS + registers::cr::OFFSET,
         registers::cr::bits::pllon::POSITION
-    >::address) = 0;
+    >()) = 0;
   }
 
   /**
@@ -251,10 +251,10 @@ namespace rcc {
    */
   bool Functions::isPllStable()
   {
-    return *(bool*) (bitband::Peripheral<
+    return *(bool*) (bitband::peripheral<
         ADDRESS + registers::cr::OFFSET,
         registers::cr::bits::pllrdy::POSITION
-    >::address);
+    >());
   }
 
 #ifdef CONNECTIVITY_LINE
@@ -263,10 +263,10 @@ namespace rcc {
    */
   void Functions::enablePll2()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         ADDRESS + registers::cr::OFFSET,
         registers::cr::bits::pll2on::POSITION
-        >::address) = 1;
+        >()) = 1;
   }
 
   /**
@@ -274,10 +274,10 @@ namespace rcc {
    */
   void Functions::disablePll2()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         ADDRESS + registers::cr::OFFSET,
         registers::cr::bits::pll2on::POSITION
-        >::address) = 0;
+        >()) = 0;
   }
 
   /**
@@ -285,10 +285,10 @@ namespace rcc {
    */
   bool Functions::isPll2Stable()
   {
-    return *(bool*) (bitband::Peripheral<
+    return *(bool*) (bitband::peripheral<
         ADDRESS + registers::cr::OFFSET,
         registers::cr::bits::pll2rdy::POSITION
-        >::address);
+        >());
   }
 
   /**
@@ -296,10 +296,10 @@ namespace rcc {
    */
   void Functions::enablePll3()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         ADDRESS + registers::cr::OFFSET,
         registers::cr::bits::pllon::POSITION
-        >::address) = 1;
+        >()) = 1;
   }
 
   /**
@@ -307,10 +307,10 @@ namespace rcc {
    */
   void Functions::disablePll3()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         ADDRESS + registers::cr::OFFSET,
         registers::cr::bits::pllon::POSITION
-        >::address) = 0;
+        >()) = 0;
   }
 
   /**
@@ -318,10 +318,10 @@ namespace rcc {
    */
   bool Functions::isPll3Stable()
   {
-    return *(bool*) (bitband::Peripheral<
+    return *(bool*) (bitband::peripheral<
         ADDRESS + registers::cr::OFFSET,
         registers::cr::bits::pll3rdy::POSITION
-        >::address);
+        >());
   }
 #endif
 

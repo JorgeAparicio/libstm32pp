@@ -26,32 +26,30 @@
 
 namespace bitband {
   template<u32 Address, u8 Bit>
-  struct Peripheral {
-      static_assert(
-          ((Address - alias::PERIPH) >= 0) &&
-          ((Address - alias::PERIPH) < 0x100000),
-          "This is not a valid Peripheral address for bit-banding."
-      );
+  constexpr u32 peripheral()
+  {
+    static_assert(
+        ((Address - alias::PERIPH) >= 0) &&
+        ((Address - alias::PERIPH) < 0x100000),
+        "This is not a valid Peripheral address for bit-banding."
+    );
 
-      static_assert(Bit < 32, "Only 32 bits can be bit-banded.");
+    static_assert(Bit < 32, "Only 32 bits can be bit-banded.");
 
-      enum {
-        address = PERIPH + ((Address - alias::PERIPH) << 5) + (Bit << 2),
-      };
-  };
+    return PERIPH + ((Address - alias::PERIPH) << 5) + (Bit << 2);
+  }
 
   template<u32 Address, u8 Bit>
-  struct Ram {
-      static_assert(
-          ((Address - alias::SRAM) >= 0) &&
-          ((Address - alias::SRAM) < 0x100000),
-          "This is not a valid RAM address for bit-banding."
-      );
+  constexpr u32 ram()
+  {
+    static_assert(
+        ((Address - alias::SRAM) >= 0) &&
+        ((Address - alias::SRAM) < 0x100000),
+        "This is not a valid RAM address for bit-banding."
+    );
 
-      static_assert(Bit < 32, "Only 32 bits can be bit-banded.");
+    static_assert(Bit < 32, "Only 32 bits can be bit-banded.");
 
-      enum {
-        address = SRAM + ((Address - alias::SRAM) << 5) + (Bit << 2),
-      };
-  };
+    return SRAM + ((Address - alias::SRAM) << 5) + (Bit << 2);
+  }
 }

@@ -53,11 +53,11 @@ namespace gpio {
   class Pin {
     public:
     enum {
-      OUT_ADDRESS = bitband::Peripheral<
+      OUT_ADDRESS = bitband::peripheral<
       P + registers::odr::OFFSET,
       N
       >::address,
-      IN_ADDRESS = bitband::Peripheral<
+      IN_ADDRESS = bitband::peripheral<
       P + registers::idr::OFFSET,
       N
       >::address,
@@ -125,14 +125,14 @@ namespace gpio {
   class Pin {
     public:
       enum {
-        OUT_ADDRESS = bitband::Peripheral<
+        OUT_ADDRESS = bitband::peripheral<
             P + registers::odr::OFFSET,
             N
-        >::address,
-        IN_ADDRESS = bitband::Peripheral<
+        >(),
+        IN_ADDRESS = bitband::peripheral<
             P + registers::idr::OFFSET,
             N
-        >::address,
+        >(),
       };
 
       static INLINE void enableClock();

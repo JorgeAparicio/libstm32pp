@@ -25,17 +25,17 @@
 namespace pwr {
   void Functions::enableBackupDomainWriteProtection()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         ADDRESS + registers::cr::OFFSET,
         registers::cr::bits::dbp::POSITION
-    >::address) = 1;
+    >()) = 1;
   }
 
   void Functions::disableBackupDomainWriteProtection()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         ADDRESS + registers::cr::OFFSET,
         registers::cr::bits::dbp::POSITION
-    >::address) = 0;
+    >()) = 0;
   }
 }  // namespace pwr

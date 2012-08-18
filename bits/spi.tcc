@@ -86,37 +86,37 @@ namespace spi {
   template<address::E S>
   void Functions<S>::enable()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         S + registers::cr1::OFFSET,
         registers::cr1::bits::spe::POSITION
-    >::address) = 1;
+    >()) = 1;
   }
 
   template<address::E S>
   void Functions<S>::disable()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         S + registers::cr1::OFFSET,
         registers::cr1::bits::spe::POSITION
-    >::address) = 0;
+    >()) = 0;
   }
 
   template<address::E S>
   bool Functions<S>::candSendData()
   {
-    return *(bool*) (bitband::Peripheral<
+    return *(bool*) (bitband::peripheral<
         S + registers::sr::OFFSET,
         registers::sr::bits::txe::POSITION
-    >::address);
+    >());
   }
 
   template<address::E S>
   bool Functions<S>::hasReceivedData()
   {
-    return *(bool*) (bitband::Peripheral<
+    return *(bool*) (bitband::peripheral<
         S + registers::sr::OFFSET,
         registers::sr::bits::rxne::POSITION
-    >::address);
+    >());
   }
 
   /**

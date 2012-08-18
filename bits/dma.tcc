@@ -84,10 +84,10 @@ namespace dma {
     template<dma::common::address::E D, address::E C>
     void Functions<D, C>::enablePeripheral()
     {
-      *(u32*) (bitband::Peripheral<
+      *(u32*) (bitband::peripheral<
           D + C + registers::cr::OFFSET,
           registers::cr::bits::en::POSITION
-          >::address) = 1;
+          >()) = 1;
     }
 
     /**
@@ -96,10 +96,10 @@ namespace dma {
     template<dma::common::address::E D, address::E C>
     void Functions<D, C>::disablePeripheral()
     {
-      *(u32*) (bitband::Peripheral<
+      *(u32*) (bitband::peripheral<
           D + C + registers::cr::OFFSET,
           registers::cr::bits::en::POSITION
-          >::address) = 0;
+          >()) = 0;
     }
 
     /**
@@ -149,9 +149,9 @@ namespace dma {
       };
 
       // TODO DMA, replace the hard-coded numbers
-      *(u32*) (bitband::Peripheral<
+      *(u32*) (bitband::peripheral<
           D + C + dma::common::registers::ifcr::OFFSET,
-          4 * Channel>::address) = 1;
+          4 * Channel>()) = 1;
     }
 
     /**
@@ -161,9 +161,9 @@ namespace dma {
     void Functions<D, C>::clearTransferCompleteFlag()
     {
       // TODO DMA, replace the hard-coded numbers
-      *(u32*) (bitband::Peripheral<
+      *(u32*) (bitband::peripheral<
           D + C + dma::common::registers::ifcr::OFFSET,
-          4 * Channel + 1>::address) = 1;
+          4 * Channel + 1>()) = 1;
     }
 
     /**
@@ -173,9 +173,9 @@ namespace dma {
     void Functions<D, C>::clearHalfTransferFlag()
     {
       // TODO DMA, replace the hard-coded numbers
-      *(u32*) (bitband::Peripheral<
+      *(u32*) (bitband::peripheral<
           D + C + dma::common::registers::ifcr::OFFSET,
-          4 * Channel + 2>::address) = 1;
+          4 * Channel + 2>()) = 1;
     }
 
     /**
@@ -185,9 +185,9 @@ namespace dma {
     void Functions<D, C>::clearTransferErrorFlag()
     {
       // TODO DMA, replace the hard-coded numbers
-      *(u32*) (bitband::Peripheral<
+      *(u32*) (bitband::peripheral<
           D + C + dma::common::registers::ifcr::OFFSET,
-          4 * Channel + 3>::address) = 1;
+          4 * Channel + 3>()) = 1;
     }
 
     /**
@@ -239,10 +239,10 @@ namespace dma {
     template<dma::common::address::E D, address::E S>
     void Functions<D, S>::enablePeripheral()
     {
-      *(u32*) (bitband::Peripheral<
+      *(u32*) (bitband::peripheral<
           D + S + registers::cr::OFFSET,
           registers::cr::bits::en::POSITION
-      >::address) = 1;
+      >()) = 1;
     }
 
     /**
@@ -251,10 +251,10 @@ namespace dma {
     template<dma::common::address::E D, address::E S>
     void Functions<D, S>::disablePeripheral()
     {
-      *(u32*) (bitband::Peripheral<
+      *(u32*) (bitband::peripheral<
           D + S + registers::cr::OFFSET,
           registers::cr::bits::en::POSITION
-      >::address) = 0;
+      >()) = 0;
     }
 
     /**
@@ -264,10 +264,10 @@ namespace dma {
     bool Functions<D, S>::isEnabled()
     {
       // FIXME DMA *(*bool) cast generates Hard Fault exception.
-      return *(u32*) (bitband::Peripheral<
+      return *(u32*) (bitband::peripheral<
           D + S + registers::cr::OFFSET,
           registers::cr::bits::en::POSITION
-      >::address);
+      >());
     }
 
     /**
@@ -325,7 +325,7 @@ namespace dma {
         Stream = (S - 0x10) / 0x18
       };
 
-      *(u32*) (bitband::Peripheral<
+      *(u32*) (bitband::peripheral<
           (Stream > 3 ?
                         D + dma::common::registers::hifcr::OFFSET :
                         D + dma::common::registers::lifcr::OFFSET),
@@ -336,7 +336,7 @@ namespace dma {
                                                 (Stream % 4 == 2 ?
                                                                    16 :
                                                                    22)))
-      >::address) = 1;
+      >()) = 1;
     }
 
     /**
@@ -351,7 +351,7 @@ namespace dma {
         Stream = (S - 0x10) / 0x18
       };
 
-      return *(u32*) (bitband::Peripheral<
+      return *(u32*) (bitband::peripheral<
           (Stream > 3 ?
                         D + dma::common::registers::hisr::OFFSET :
                         D + dma::common::registers::lisr::OFFSET),
@@ -362,7 +362,7 @@ namespace dma {
                                                 (Stream % 4 == 2 ?
                                                                    16 :
                                                                    22)))
-      >::address);
+      >());
     }
 
     /**
@@ -375,7 +375,7 @@ namespace dma {
         Stream = (S - 0x10) / 0x18
       };
 
-      *(u32*) (bitband::Peripheral<
+      *(u32*) (bitband::peripheral<
           (Stream > 3 ?
                         D + dma::common::registers::hifcr::OFFSET :
                         D + dma::common::registers::lifcr::OFFSET),
@@ -386,7 +386,7 @@ namespace dma {
                                                 (Stream % 4 == 2 ?
                                                                    18 :
                                                                    24)))
-      >::address) = 1;
+      >()) = 1;
     }
 
     /**
@@ -401,7 +401,7 @@ namespace dma {
         Stream = (S - 0x10) / 0x18
       };
 
-      return *(u32*) (bitband::Peripheral<
+      return *(u32*) (bitband::peripheral<
           (Stream > 3 ?
                         D + dma::common::registers::hisr::OFFSET :
                         D + dma::common::registers::lisr::OFFSET),
@@ -412,7 +412,7 @@ namespace dma {
                                                 (Stream % 4 == 2 ?
                                                                    18 :
                                                                    24)))
-      >::address);
+      >());
     }
 
     /**
@@ -425,7 +425,7 @@ namespace dma {
         Stream = (S - 0x10) / 0x18
       };
 
-      *(u32*) (bitband::Peripheral<
+      *(u32*) (bitband::peripheral<
           (Stream > 3 ?
                         D + dma::common::registers::hifcr::OFFSET :
                         D + dma::common::registers::lifcr::OFFSET),
@@ -436,7 +436,7 @@ namespace dma {
                                                 (Stream % 4 == 2 ?
                                                                    19 :
                                                                    25)))
-      >::address) = 1;
+      >()) = 1;
     }
 
     /**
@@ -451,7 +451,7 @@ namespace dma {
         Stream = (S - 0x10) / 0x18
       };
 
-      return *(u32*) (bitband::Peripheral<
+      return *(u32*) (bitband::peripheral<
           (Stream > 3 ?
                         D + dma::common::registers::hisr::OFFSET :
                         D + dma::common::registers::lisr::OFFSET),
@@ -462,7 +462,7 @@ namespace dma {
                                                 (Stream % 4 == 2 ?
                                                                    19 :
                                                                    25)))
-      >::address);
+      >());
     }
 
     /**
@@ -475,7 +475,7 @@ namespace dma {
         Stream = (S - 0x10) / 0x18
       };
 
-      *(u32*) (bitband::Peripheral<
+      *(u32*) (bitband::peripheral<
           (Stream > 3 ?
                         D + dma::common::registers::hifcr::OFFSET :
                         D + dma::common::registers::lifcr::OFFSET),
@@ -486,7 +486,7 @@ namespace dma {
                                                 (Stream % 4 == 2 ?
                                                                    20 :
                                                                    26)))
-      >::address) = 1;
+      >()) = 1;
     }
 
     /**
@@ -501,7 +501,7 @@ namespace dma {
         Stream = (S - 0x10) / 0x18
       };
 
-      return *(u32*) (bitband::Peripheral<
+      return *(u32*) (bitband::peripheral<
           (Stream > 3 ?
                         D + dma::common::registers::hisr::OFFSET :
                         D + dma::common::registers::lisr::OFFSET),
@@ -512,7 +512,7 @@ namespace dma {
                                                 (Stream % 4 == 2 ?
                                                                    20 :
                                                                    26)))
-      >::address);
+      >());
     }
 
     /**
@@ -525,7 +525,7 @@ namespace dma {
         Stream = (S - 0x10) / 0x18
       };
 
-      *(u32*) (bitband::Peripheral<
+      *(u32*) (bitband::peripheral<
           (Stream > 3 ?
                         D + dma::common::registers::hifcr::OFFSET :
                         D + dma::common::registers::lifcr::OFFSET),
@@ -536,7 +536,7 @@ namespace dma {
                                                 (Stream % 4 == 2 ?
                                                                    21 :
                                                                    27)))
-      >::address) = 1;
+      >()) = 1;
     }
 
     /**
@@ -551,7 +551,7 @@ namespace dma {
         Stream = (S - 0x10) / 0x18
       };
 
-      return *(u32*) (bitband::Peripheral<
+      return *(u32*) (bitband::peripheral<
           (Stream > 3 ?
                         D + dma::common::registers::hisr::OFFSET :
                         D + dma::common::registers::lisr::OFFSET),
@@ -562,7 +562,7 @@ namespace dma {
                                                 (Stream % 4 == 2 ?
                                                                    21 :
                                                                    27)))
-      >::address);
+      >());
     }
 
     /**
@@ -573,10 +573,10 @@ namespace dma {
     {
       // FIXME DMA *(*bool) cast generates Hard Fault exception.
 
-      return *(u32 *) (bitband::Peripheral<
+      return *(u32 *) (bitband::peripheral<
           D + S + registers::cr::OFFSET,
           registers::cr::bits::ct::POSITION
-      >::address);
+      >());
     }
 
     /**

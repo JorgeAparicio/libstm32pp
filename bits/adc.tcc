@@ -66,10 +66,10 @@ namespace adc {
   template<address::E A>
   void Functions<A>::enablePeripheral()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         A + registers::cr1::OFFSET,
         registers::cr2::bits::adon::POSITION
-    >::address) = 1;
+    >()) = 1;
   }
 
   /**
@@ -78,10 +78,10 @@ namespace adc {
   template<address::E A>
   void Functions<A>::disablePeripheral()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         A + registers::cr1::OFFSET,
         registers::cr2::bits::adon::POSITION
-    >::address) = 0;
+    >()) = 0;
   }
 
   /**
@@ -90,10 +90,10 @@ namespace adc {
   template<address::E A>
   void Functions<A>::startRegularConversions()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         A + registers::cr2::OFFSET,
         registers::cr2::bits::swstart::POSITION
-    >::address) = 1;
+    >()) = 1;
   }
 
   /**
@@ -102,10 +102,10 @@ namespace adc {
   template<address::E A>
   void Functions<A>::startInjectedConversions()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         A + registers::cr2::OFFSET,
         registers::cr2::bits::jswstart::POSITION
-    >::address) = 1;
+    >()) = 1;
   }
 
   /**
@@ -114,10 +114,10 @@ namespace adc {
   template<address::E A>
   void Functions<A>::enableContinuousConversion()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         A + registers::cr2::OFFSET,
         registers::cr2::bits::cont::POSITION
-    >::address) = 1;
+    >()) = 1;
   }
 
   /**
@@ -126,10 +126,10 @@ namespace adc {
   template<address::E A>
   void Functions<A>::disableContinuousConversion()
   {
-    *(u32*) (bitband::Peripheral<
+    *(u32*) (bitband::peripheral<
         A + registers::cr2::OFFSET,
         registers::cr2::bits::cont::POSITION
-    >::address) = 0;
+    >()) = 0;
   }
 
   /**
@@ -199,10 +199,10 @@ namespace adc {
   template<address::E A>
   bool Functions<A>::hasRegularConversionEnded()
   {
-    return *(bool*) (bitband::Peripheral<
+    return *(bool*) (bitband::peripheral<
         A + registers::sr::OFFSET,
         registers::sr::bits::eoc::POSITION
-    >::address);
+    >());
   }
 
   /**
@@ -211,10 +211,10 @@ namespace adc {
   template<address::E A>
   bool Functions<A>::hasInjectedConversionEnded()
   {
-    return *(bool*) (bitband::Peripheral<
+    return *(bool*) (bitband::peripheral<
         A + registers::sr::OFFSET,
         registers::sr::bits::jeoc::POSITION
-    >::address);
+    >());
   }
 
   /**
