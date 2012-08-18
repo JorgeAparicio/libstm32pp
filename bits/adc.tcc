@@ -31,15 +31,17 @@ namespace adc {
   template<Address A>
   void Functions<A>::enableClock()
   {
-    RCC::enableClocks<
-        A == ADC1 ?
-            rcc::apb2enr::ADC1 :
-            (A == ADC2 ?
-                rcc::apb2enr::ADC2 :
-                (A == ADC3 ?
-                                      rcc::apb2enr::ADC3 :
-                                      rcc::apb2enr::Bits(0)))
-    >();
+    switch (A) {
+      case ADC1:
+        RCC::enableClocks<rcc::apb2enr::ADC1>();
+        break;
+      case ADC2:
+        RCC::enableClocks<rcc::apb2enr::ADC2>();
+        break;
+      case ADC3:
+        RCC::enableClocks<rcc::apb2enr::ADC3>();
+        break;
+    }
   }
 
   /**
@@ -49,15 +51,17 @@ namespace adc {
   template<Address A>
   void Functions<A>::disableClock()
   {
-    RCC::disableClocks<
-        A == ADC1 ?
-            rcc::apb2enr::ADC1 :
-            (A == ADC2 ?
-                rcc::apb2enr::ADC2 :
-                (A == ADC3 ?
-                                      rcc::apb2enr::ADC3 :
-                                      rcc::apb2enr::Bits(0)))
-    >();
+    switch (A) {
+      case ADC1:
+        RCC::disableClocks<rcc::apb2enr::ADC1>();
+        break;
+      case ADC2:
+        RCC::disableClocks<rcc::apb2enr::ADC2>();
+        break;
+      case ADC3:
+        RCC::disableClocks<rcc::apb2enr::ADC3>();
+        break;
+    }
   }
 
   /**
@@ -309,7 +313,7 @@ namespace adc {
    * @note Overrides the old configuration.
    */
   template<Address A>
-  template<
+  void Functions<A>::configure(
       cr1::awdch::States AWDCH,
       cr1::eocie::States EOCIE,
       cr1::awdie::States AWDIE,
@@ -335,9 +339,7 @@ namespace adc {
       cr2::jswstart::States JSWSTART,
       cr2::extsel::States EXTSEL,
       cr2::exten::States EXTEN,
-      cr2::swstart::States SWSTART
-  >
-  void Functions<A>::configure()
+      cr2::swstart::States SWSTART)
   {
     reinterpret_cast<Registers*>(A)->CR1 =
         AWDCH + EOCIE + AWDIE + JEOCIE + SCAN + AWDSGL + JAUTO + DISCEN +

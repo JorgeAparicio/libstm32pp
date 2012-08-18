@@ -85,7 +85,7 @@ namespace adc {
       >
       static inline void setInjectedSequenceOrder();
 
-      template<
+      static inline void configure(
           adc::cr1::awdch::States,
           adc::cr1::eocie::States,
           adc::cr1::awdie::States,
@@ -111,9 +111,7 @@ namespace adc {
           adc::cr2::jswstart::States,
           adc::cr2::extsel::States,
           adc::cr2::exten::States,
-          adc::cr2::swstart::States
-      >
-      static inline void configure();
+          adc::cr2::swstart::States);
 
     private:
       Functions();
