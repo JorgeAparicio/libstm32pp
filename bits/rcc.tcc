@@ -31,7 +31,7 @@ namespace rcc {
    */
   void Functions::enableHse()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + cr::OFFSET,
         cr::hseon::POSITION
     >()) = 1;
@@ -42,7 +42,7 @@ namespace rcc {
    */
   void Functions::disableHse()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + cr::OFFSET,
         cr::hseon::POSITION
     >()) = 0;
@@ -53,7 +53,7 @@ namespace rcc {
    */
   bool Functions::isHseStable()
   {
-    return *(bool*) (bitband::peripheral<
+    return *(volatile bool*) (bitband::peripheral<
         ADDRESS + cr::OFFSET,
         cr::hserdy::POSITION
     >());
@@ -64,7 +64,7 @@ namespace rcc {
    */
   void Functions::enableHseOscillator()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + cr::OFFSET,
         cr::hsebyp::POSITION
     >()) = 0;
@@ -75,7 +75,7 @@ namespace rcc {
    */
   void Functions::disableHseOscillator()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + cr::OFFSET,
         cr::hsebyp::POSITION
     >()) = 1;
@@ -86,7 +86,7 @@ namespace rcc {
    */
   void Functions::enableLse()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + bdcr::OFFSET,
         bdcr::lseon::POSITION
     >()) = 1;
@@ -97,7 +97,7 @@ namespace rcc {
    */
   void Functions::disableLse()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + bdcr::OFFSET,
         bdcr::lseon::POSITION
     >()) = 0;
@@ -108,7 +108,7 @@ namespace rcc {
    */
   bool Functions::isLseStable()
   {
-    return *(bool*) (bitband::peripheral<
+    return *(volatile bool*) (bitband::peripheral<
         ADDRESS + bdcr::OFFSET,
         bdcr::lserdy::POSITION
     >());
@@ -119,7 +119,7 @@ namespace rcc {
    */
   void Functions::enableLseOscillator()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + bdcr::OFFSET,
         bdcr::lsebyp::POSITION
     >()) = 0;
@@ -130,7 +130,7 @@ namespace rcc {
    */
   void Functions::disableLseOscillator()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + bdcr::OFFSET,
         bdcr::lsebyp::POSITION
     >()) = 1;
@@ -141,7 +141,7 @@ namespace rcc {
    */
   void Functions::enableHsi()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + cr::OFFSET,
         cr::hsion::POSITION
     >()) = 1;
@@ -152,7 +152,7 @@ namespace rcc {
    */
   void Functions::disableHsi()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + cr::OFFSET,
         cr::hsion::POSITION
     >()) = 0;
@@ -163,7 +163,7 @@ namespace rcc {
    */
   bool Functions::isHsiStable()
   {
-    return *(bool*) (bitband::peripheral<
+    return *(volatile bool*) (bitband::peripheral<
         ADDRESS + cr::OFFSET,
         cr::hsirdy::POSITION
     >());
@@ -174,7 +174,7 @@ namespace rcc {
    */
   void Functions::enableLsi()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + csr::OFFSET,
         csr::lsion::POSITION
     >()) = 1;
@@ -185,7 +185,7 @@ namespace rcc {
    */
   void Functions::disableLsi()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + csr::OFFSET,
         csr::lsion::POSITION
     >()) = 0;
@@ -196,7 +196,7 @@ namespace rcc {
    */
   bool Functions::isLsiStable()
   {
-    return *(bool*) (bitband::peripheral<
+    return *(volatile bool*) (bitband::peripheral<
         ADDRESS + csr::OFFSET,
         csr::lsirdy::POSITION
     >());
@@ -207,7 +207,7 @@ namespace rcc {
    */
   void Functions::enableRtc()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + bdcr::OFFSET,
         bdcr::rtcen::POSITION
     >()) = 1;
@@ -218,7 +218,7 @@ namespace rcc {
    */
   void Functions::disableRtc()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + bdcr::OFFSET,
         bdcr::rtcen::POSITION
     >()) = 0;
@@ -229,7 +229,7 @@ namespace rcc {
    */
   void Functions::enablePll()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + cr::OFFSET,
         cr::pllon::POSITION
     >()) = 1;
@@ -240,7 +240,7 @@ namespace rcc {
    */
   void Functions::disablePll()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + cr::OFFSET,
         cr::pllon::POSITION
     >()) = 0;
@@ -251,7 +251,7 @@ namespace rcc {
    */
   bool Functions::isPllStable()
   {
-    return *(bool*) (bitband::peripheral<
+    return *(volatile bool*) (bitband::peripheral<
         ADDRESS + cr::OFFSET,
         cr::pllrdy::POSITION
     >());
@@ -263,7 +263,7 @@ namespace rcc {
    */
   void Functions::enablePll2()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + cr::OFFSET,
         cr::pll2on::POSITION
         >()) = 1;
@@ -274,7 +274,7 @@ namespace rcc {
    */
   void Functions::disablePll2()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + cr::OFFSET,
         cr::pll2on::POSITION
         >()) = 0;
@@ -285,7 +285,7 @@ namespace rcc {
    */
   bool Functions::isPll2Stable()
   {
-    return *(bool*) (bitband::peripheral<
+    return *(volatile bool*) (bitband::peripheral<
         ADDRESS + cr::OFFSET,
         cr::pll2rdy::POSITION
         >());
@@ -296,7 +296,7 @@ namespace rcc {
    */
   void Functions::enablePll3()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + cr::OFFSET,
         cr::pllon::POSITION
         >()) = 1;
@@ -307,7 +307,7 @@ namespace rcc {
    */
   void Functions::disablePll3()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + cr::OFFSET,
         cr::pllon::POSITION
         >()) = 0;
@@ -318,7 +318,7 @@ namespace rcc {
    */
   bool Functions::isPll3Stable()
   {
-    return *(bool*) (bitband::peripheral<
+    return *(volatile bool*) (bitband::peripheral<
         ADDRESS + cr::OFFSET,
         cr::pll3rdy::POSITION
         >());

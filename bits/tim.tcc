@@ -255,7 +255,7 @@ namespace tim {
   template<address::E T>
   void Functions<T>::startCounter()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         T + registers::cr1::OFFSET,
         registers::cr1::bits::cen::POSITION
     >()) = 1;
@@ -267,7 +267,7 @@ namespace tim {
   template<address::E T>
   void Functions<T>::stopCounter()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         T + registers::cr1::OFFSET,
         registers::cr1::bits::cen::POSITION
     >()) = 0;
@@ -368,7 +368,7 @@ namespace tim {
   template<address::E T>
   void Functions<T>::generateUpdate()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         T + registers::egr::OFFSET,
         registers::egr::bits::ug::POSITION
     >()) = 1;
@@ -380,7 +380,7 @@ namespace tim {
   template<address::E T>
   void Functions<T>::enableUpdateInterrupt()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         T + registers::dier::OFFSET,
         registers::dier::bits::uie::POSITION
     >()) = 1;
@@ -392,7 +392,7 @@ namespace tim {
   template<address::E T>
   void Functions<T>::disableUpdateInterrupt()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         T + registers::dier::OFFSET,
         registers::dier::bits::uie::POSITION
     >()) = 0;
@@ -404,7 +404,7 @@ namespace tim {
   template<address::E T>
   void Functions<T>::clearUpdateFlag()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         T + registers::sr::OFFSET,
         registers::sr::bits::uif::POSITION
     >()) = 0;
@@ -416,7 +416,7 @@ namespace tim {
   template<address::E T>
   void Functions<T>::enableUpdateDma()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         T + registers::dier::OFFSET,
         registers::dier::bits::ude::POSITION
     >()) = 1;
@@ -428,7 +428,7 @@ namespace tim {
   template<address::E T>
   void Functions<T>::disableUpdateDma()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         T + registers::dier::OFFSET,
         registers::dier::bits::ude::POSITION
     >()) = 0;
@@ -440,7 +440,7 @@ namespace tim {
   template<address::E T>
   bool Functions<T>::hasUpdateEventOccurred()
   {
-    return *(bool*) (bitband::peripheral<
+    return *(volatile bool*) (bitband::peripheral<
         T + registers::sr::OFFSET,
         registers::sr::bits::uif::POSITION
     >());

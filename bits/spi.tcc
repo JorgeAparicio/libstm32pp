@@ -86,7 +86,7 @@ namespace spi {
   template<address::E S>
   void Functions<S>::enable()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         S + registers::cr1::OFFSET,
         registers::cr1::bits::spe::POSITION
     >()) = 1;
@@ -95,7 +95,7 @@ namespace spi {
   template<address::E S>
   void Functions<S>::disable()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         S + registers::cr1::OFFSET,
         registers::cr1::bits::spe::POSITION
     >()) = 0;
@@ -104,7 +104,7 @@ namespace spi {
   template<address::E S>
   bool Functions<S>::candSendData()
   {
-    return *(bool*) (bitband::peripheral<
+    return *(volatile bool*) (bitband::peripheral<
         S + registers::sr::OFFSET,
         registers::sr::bits::txe::POSITION
     >());
@@ -113,7 +113,7 @@ namespace spi {
   template<address::E S>
   bool Functions<S>::hasReceivedData()
   {
-    return *(bool*) (bitband::peripheral<
+    return *(volatile bool*) (bitband::peripheral<
         S + registers::sr::OFFSET,
         registers::sr::bits::rxne::POSITION
     >());

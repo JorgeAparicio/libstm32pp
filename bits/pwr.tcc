@@ -25,7 +25,7 @@
 namespace pwr {
   void Functions::enableBackupDomainWriteProtection()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::cr::OFFSET,
         registers::cr::bits::dbp::POSITION
     >()) = 1;
@@ -33,7 +33,7 @@ namespace pwr {
 
   void Functions::disableBackupDomainWriteProtection()
   {
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::cr::OFFSET,
         registers::cr::bits::dbp::POSITION
     >()) = 0;

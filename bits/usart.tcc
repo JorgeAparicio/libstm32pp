@@ -105,7 +105,7 @@ namespace usart {
   template<address::E A>
   bool Asynchronous<A>::canSendDataYet(void)
   {
-    return *(bool*) (bitband::peripheral<
+    return *(volatile bool*) (bitband::peripheral<
         A + registers::sr::OFFSET,
         registers::sr::bits::txe::POSITION>());
   }
@@ -116,7 +116,7 @@ namespace usart {
   template<address::E A>
   bool Asynchronous<A>::isThereDataAvailable(void)
   {
-    return *(bool*) (bitband::peripheral<
+    return *(volatile bool*) (bitband::peripheral<
         A + registers::sr::OFFSET,
         registers::sr::bits::rxne::POSITION>());
   }

@@ -112,7 +112,7 @@ namespace gpio {
   template<address::E P, u8 N>
   bool Pin<P, N>::isHigh()
   {
-    return *(bool*) (bitband::peripheral<
+    return *(volatile bool*) (bitband::peripheral<
         P + registers::idr::OFFSET,
         N
         >());
@@ -319,7 +319,7 @@ namespace gpio {
   template<address::E P, u8 N>
   bool Pin<P, N>::isHigh()
   {
-    return *(bool*) (bitband::peripheral<
+    return *(volatile bool*) (bitband::peripheral<
         P + registers::idr::OFFSET,
         N
     >());
@@ -345,7 +345,7 @@ namespace gpio {
   template<registers::otyper::states::E OTYPER>
   void Pin<P, N>::setOutputMode()
   {
-    *((u32*) (bitband::peripheral<
+    *((volatile u32*) (bitband::peripheral<
         P + registers::otyper::OFFSET,
         N
     >())) = OTYPER;

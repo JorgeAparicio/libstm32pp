@@ -30,7 +30,7 @@ namespace exti {
   {
     static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
 
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::pr::OFFSET,
         N
     >()) = 1;
@@ -44,27 +44,27 @@ namespace exti {
   {
     static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
 
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::emr::OFFSET,
         N
     >()) = 0;
 
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::imr::OFFSET,
         N
     >()) = 0;
 
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::ftsr::OFFSET,
         N
     >()) = 0;
 
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::rtsr::OFFSET,
         N
     >()) = 0;
 
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::swier::OFFSET,
         N
     >()) = 0;
@@ -78,22 +78,22 @@ namespace exti {
   {
     static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
 
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::emr::OFFSET,
         N
     >()) = 0;
 
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::ftsr::OFFSET,
         N
     >()) = 0;
 
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::rtsr::OFFSET,
         N
     >()) = 0;
 
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::swier::OFFSET,
         N
     >()) = 0;
@@ -107,22 +107,22 @@ namespace exti {
   {
     static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
 
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::imr::OFFSET,
         N
     >()) = 0;
 
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::ftsr::OFFSET,
         N
     >()) = 0;
 
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::rtsr::OFFSET,
         N
     >()) = 0;
 
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::swier::OFFSET,
         N
     >()) = 0;
@@ -136,12 +136,12 @@ namespace exti {
   {
     static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
 
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::emr::OFFSET,
         N
     >()) = 1;
 
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::ftsr::OFFSET,
         N
     >()) = 1;
@@ -155,12 +155,12 @@ namespace exti {
   {
     static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
 
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::emr::OFFSET,
         N
     >()) = 1;
 
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::rtsr::OFFSET,
         N
     >()) = 1;
@@ -174,12 +174,12 @@ namespace exti {
   {
     static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
 
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::imr::OFFSET,
         N
     >()) = 1;
 
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::ftsr::OFFSET,
         N
     >()) = 1;
@@ -193,12 +193,12 @@ namespace exti {
   {
     static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
 
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::imr::OFFSET,
         N
     >()) = 1;
 
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::rtsr::OFFSET,
         N
     >()) = 1;
@@ -212,12 +212,12 @@ namespace exti {
   {
     static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
 
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::emr::OFFSET,
         N
     >()) = 1;
 
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::swier::OFFSET,
         N
     >()) = 1;
@@ -231,12 +231,12 @@ namespace exti {
   {
     static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
 
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::emr::OFFSET,
         N
     >()) = 1;
 
-    *(u32*) (bitband::peripheral<
+    *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::swier::OFFSET,
         N
     >()) = 1;
