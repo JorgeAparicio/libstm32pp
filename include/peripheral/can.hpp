@@ -28,10 +28,10 @@
 #pragma once
 
 #include "../device_select.hpp"
-#include "../defs.hpp"
 
 #ifndef VALUE_LINE
 
+#include "../defs.hpp"
 #include "../../memorymap/can.hpp"
 
 #if defined CONNECTIVITY_LINE || not defined STM32F1XX
