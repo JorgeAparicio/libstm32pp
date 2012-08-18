@@ -33,13 +33,24 @@ namespace dma {
     template<address::E D>
     void Functions<D>::enableClock()
     {
+#ifndef STM32F1XX
+
+      RCC::enableClocks<
+      D == address::DMA1 ?
+      rcc::ahb1enr::DMA1 :
+      (D == address::DMA2 ?
+          rcc::ahb1enr::DMA2 :
+          rcc::ahb1enr::Bits(0))
+      >();
+#else // !STM32F1XX
       RCC::enableClocks<
           D == address::DMA1 ?
-                               rcc::ahb1enr::DMA1 :
+                               rcc::ahbenr::DMA1 :
                                (D == address::DMA2 ?
-                                                     rcc::ahb1enr::DMA2 :
-                                                     rcc::ahb1enr::Bits(0))
+                                                     rcc::ahbenr::DMA2 :
+                                                     rcc::ahbenr::Bits(0))
       >();
+#endif // !STM32F1XX
     }
 
     /**
@@ -49,13 +60,23 @@ namespace dma {
     template<address::E D>
     void Functions<D>::disableClock()
     {
+#ifndef STM32F1XX
+      RCC::disableClocks<
+      D == address::DMA1 ?
+      rcc::ahb1enr::DMA1 :
+      (D == address::DMA2 ?
+          rcc::ahb1enr::DMA2 :
+          rcc::ahb1enr::Bits(0))
+      >();
+#else // !STM32F1XX
       RCC::disableClocks<
           D == address::DMA1 ?
-                               rcc::ahb1enr::DMA1 :
+                               rcc::ahbenr::DMA1 :
                                (D == address::DMA2 ?
-                                                     rcc::ahb1enr::DMA2 :
-                                                     rcc::ahb1enr::Bits(0))
+                                                     rcc::ahbenr::DMA2 :
+                                                     rcc::ahbenr::Bits(0))
       >();
+#endif // !STM32F1XX
     }
 
   }  // namespace common
@@ -69,13 +90,23 @@ namespace dma {
     template<dma::common::address::E D, address::E C>
     void Functions<D, C>::enableClock()
     {
+#ifndef STM32F1XX
       RCC::enableClocks<
-      D == common::address::DMA1 ?
-      rcc::ahb1enr::DMA1 :
-      (D == common::address::DMA2 ?
-          rcc::ahb1enr::DMA2 :
-          rcc::ahb1enr::E(0))
+          D == common::address::DMA1 ?
+              rcc::ahb1enr::DMA1 :
+              (D == common::address::DMA2 ?
+                                            rcc::ahb1enr::DMA2 :
+                                            rcc::ahb1enr::States(0))
       >();
+#else // !STM32F1XX
+      RCC::enableClocks<
+          D == common::address::DMA1 ?
+              rcc::ahbenr::DMA1 :
+              (D == common::address::DMA2 ?
+                                            rcc::ahbenr::DMA2 :
+                                            rcc::ahbenr::Bits(0))
+      >();
+#endif // !STM32F1XX
     }
 
     /**
@@ -87,7 +118,7 @@ namespace dma {
       *(volatile u32*) (bitband::peripheral<
           D + C + registers::cr::OFFSET,
           registers::cr::bits::en::POSITION
-          >()) = 1;
+      >()) = 1;
     }
 
     /**
@@ -99,7 +130,7 @@ namespace dma {
       *(volatile u32*) (bitband::peripheral<
           D + C + registers::cr::OFFSET,
           registers::cr::bits::en::POSITION
-          >()) = 0;
+      >()) = 0;
     }
 
     /**
@@ -160,6 +191,10 @@ namespace dma {
     template<dma::common::address::E D, address::E C>
     void Functions<D, C>::clearTransferCompleteFlag()
     {
+      enum {
+        Channel = (C - 8) / 20
+      };
+
       // TODO DMA, replace the hard-coded numbers
       *(volatile u32*) (bitband::peripheral<
           D + C + dma::common::registers::ifcr::OFFSET,
@@ -172,6 +207,10 @@ namespace dma {
     template<dma::common::address::E D, address::E C>
     void Functions<D, C>::clearHalfTransferFlag()
     {
+      enum {
+        Channel = (C - 8) / 20
+      };
+
       // TODO DMA, replace the hard-coded numbers
       *(volatile u32*) (bitband::peripheral<
           D + C + dma::common::registers::ifcr::OFFSET,
@@ -184,6 +223,10 @@ namespace dma {
     template<dma::common::address::E D, address::E C>
     void Functions<D, C>::clearTransferErrorFlag()
     {
+      enum {
+        Channel = (C - 8) / 20
+      };
+
       // TODO DMA, replace the hard-coded numbers
       *(volatile u32*) (bitband::peripheral<
           D + C + dma::common::registers::ifcr::OFFSET,
@@ -197,22 +240,22 @@ namespace dma {
      */
     template<dma::common::address::E D, address::E C>
     template<
-    registers::cr::bits::tcie::states::E TCIE,
-    registers::cr::bits::htie::states::E HTIE,
-    registers::cr::bits::teie::states::E TEIE,
-    registers::cr::bits::dir::states::E DIR,
-    registers::cr::bits::circ::states::E CIRC,
-    registers::cr::bits::pinc::states::E PINC,
-    registers::cr::bits::minc::states::E MINC,
-    registers::cr::bits::psize::states::E PSIZE,
-    registers::cr::bits::msize::states::E MSIZE,
-    registers::cr::bits::pl::states::E PL,
-    registers::cr::bits::mem2mem::states::E MEM2MEM
+        registers::cr::bits::tcie::states::E TCIE,
+        registers::cr::bits::htie::states::E HTIE,
+        registers::cr::bits::teie::states::E TEIE,
+        registers::cr::bits::dir::states::E DIR,
+        registers::cr::bits::circ::states::E CIRC,
+        registers::cr::bits::pinc::states::E PINC,
+        registers::cr::bits::minc::states::E MINC,
+        registers::cr::bits::psize::states::E PSIZE,
+        registers::cr::bits::msize::states::E MSIZE,
+        registers::cr::bits::pl::states::E PL,
+        registers::cr::bits::mem2mem::states::E MEM2MEM
     > void Functions<D, C>::configure()
     {
       reinterpret_cast<Registers*>(D + C)->CCR =
-      TCIE + HTIE + TEIE + DIR + CIRC + PINC + MINC + PSIZE + MSIZE +
-      PL + MEM2MEM;
+          TCIE + HTIE + TEIE + DIR + CIRC + PINC + MINC + PSIZE + MSIZE +
+              PL + MEM2MEM;
     }
   }  //namespace chanel
 #else
@@ -225,11 +268,11 @@ namespace dma {
     void Functions<D, S>::enableClock()
     {
       RCC::enableClocks<
-          D == common::address::DMA1 ?
-              rcc::ahb1enr::DMA1 :
-              (D == common::address::DMA2 ?
-                                            rcc::ahb1enr::DMA2 :
-                                            rcc::ahb1enr::Bits(0))
+      D == common::address::DMA1 ?
+      rcc::ahb1enr::DMA1 :
+      (D == common::address::DMA2 ?
+          rcc::ahb1enr::DMA2 :
+          rcc::ahb1enr::Bits(0))
       >();
     }
 
@@ -242,7 +285,7 @@ namespace dma {
       *(volatile u32*) (bitband::peripheral<
           D + S + registers::cr::OFFSET,
           registers::cr::bits::en::POSITION
-      >()) = 1;
+          >()) = 1;
     }
 
     /**
@@ -254,7 +297,7 @@ namespace dma {
       *(volatile u32*) (bitband::peripheral<
           D + S + registers::cr::OFFSET,
           registers::cr::bits::en::POSITION
-      >()) = 0;
+          >()) = 0;
     }
 
     /**
@@ -267,7 +310,7 @@ namespace dma {
       return *(volatile u32*) (bitband::peripheral<
           D + S + registers::cr::OFFSET,
           registers::cr::bits::en::POSITION
-      >());
+          >());
     }
 
     /**
@@ -327,16 +370,16 @@ namespace dma {
 
       *(volatile u32*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::registers::hifcr::OFFSET :
-                        D + dma::common::registers::lifcr::OFFSET),
+              D + dma::common::registers::hifcr::OFFSET :
+              D + dma::common::registers::lifcr::OFFSET),
           (Stream % 4 == 0 ?
-                             0 :
-                             (Stream % 4 == 1 ?
-                                                6 :
-                                                (Stream % 4 == 2 ?
-                                                                   16 :
-                                                                   22)))
-      >()) = 1;
+              0 :
+              (Stream % 4 == 1 ?
+                  6 :
+                  (Stream % 4 == 2 ?
+                      16 :
+                      22)))
+          >()) = 1;
     }
 
     /**
@@ -353,16 +396,16 @@ namespace dma {
 
       return *(volatile u32*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::registers::hisr::OFFSET :
-                        D + dma::common::registers::lisr::OFFSET),
+              D + dma::common::registers::hisr::OFFSET :
+              D + dma::common::registers::lisr::OFFSET),
           (Stream % 4 == 0 ?
-                             0 :
-                             (Stream % 4 == 1 ?
-                                                6 :
-                                                (Stream % 4 == 2 ?
-                                                                   16 :
-                                                                   22)))
-      >());
+              0 :
+              (Stream % 4 == 1 ?
+                  6 :
+                  (Stream % 4 == 2 ?
+                      16 :
+                      22)))
+          >());
     }
 
     /**
@@ -377,16 +420,16 @@ namespace dma {
 
       *(volatile u32*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::registers::hifcr::OFFSET :
-                        D + dma::common::registers::lifcr::OFFSET),
+              D + dma::common::registers::hifcr::OFFSET :
+              D + dma::common::registers::lifcr::OFFSET),
           (Stream % 4 == 0 ?
-                             2 :
-                             (Stream % 4 == 1 ?
-                                                8 :
-                                                (Stream % 4 == 2 ?
-                                                                   18 :
-                                                                   24)))
-      >()) = 1;
+              2 :
+              (Stream % 4 == 1 ?
+                  8 :
+                  (Stream % 4 == 2 ?
+                      18 :
+                      24)))
+          >()) = 1;
     }
 
     /**
@@ -403,16 +446,16 @@ namespace dma {
 
       return *(volatile u32*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::registers::hisr::OFFSET :
-                        D + dma::common::registers::lisr::OFFSET),
+              D + dma::common::registers::hisr::OFFSET :
+              D + dma::common::registers::lisr::OFFSET),
           (Stream % 4 == 0 ?
-                             2 :
-                             (Stream % 4 == 1 ?
-                                                8 :
-                                                (Stream % 4 == 2 ?
-                                                                   18 :
-                                                                   24)))
-      >());
+              2 :
+              (Stream % 4 == 1 ?
+                  8 :
+                  (Stream % 4 == 2 ?
+                      18 :
+                      24)))
+          >());
     }
 
     /**
@@ -427,16 +470,16 @@ namespace dma {
 
       *(volatile u32*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::registers::hifcr::OFFSET :
-                        D + dma::common::registers::lifcr::OFFSET),
+              D + dma::common::registers::hifcr::OFFSET :
+              D + dma::common::registers::lifcr::OFFSET),
           (Stream % 4 == 0 ?
-                             3 :
-                             (Stream % 4 == 1 ?
-                                                9 :
-                                                (Stream % 4 == 2 ?
-                                                                   19 :
-                                                                   25)))
-      >()) = 1;
+              3 :
+              (Stream % 4 == 1 ?
+                  9 :
+                  (Stream % 4 == 2 ?
+                      19 :
+                      25)))
+          >()) = 1;
     }
 
     /**
@@ -453,16 +496,16 @@ namespace dma {
 
       return *(volatile u32*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::registers::hisr::OFFSET :
-                        D + dma::common::registers::lisr::OFFSET),
+              D + dma::common::registers::hisr::OFFSET :
+              D + dma::common::registers::lisr::OFFSET),
           (Stream % 4 == 0 ?
-                             3 :
-                             (Stream % 4 == 1 ?
-                                                9 :
-                                                (Stream % 4 == 2 ?
-                                                                   19 :
-                                                                   25)))
-      >());
+              3 :
+              (Stream % 4 == 1 ?
+                  9 :
+                  (Stream % 4 == 2 ?
+                      19 :
+                      25)))
+          >());
     }
 
     /**
@@ -477,16 +520,16 @@ namespace dma {
 
       *(volatile u32*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::registers::hifcr::OFFSET :
-                        D + dma::common::registers::lifcr::OFFSET),
+              D + dma::common::registers::hifcr::OFFSET :
+              D + dma::common::registers::lifcr::OFFSET),
           (Stream % 4 == 0 ?
-                             4 :
-                             (Stream % 4 == 1 ?
-                                                10 :
-                                                (Stream % 4 == 2 ?
-                                                                   20 :
-                                                                   26)))
-      >()) = 1;
+              4 :
+              (Stream % 4 == 1 ?
+                  10 :
+                  (Stream % 4 == 2 ?
+                      20 :
+                      26)))
+          >()) = 1;
     }
 
     /**
@@ -503,16 +546,16 @@ namespace dma {
 
       return *(volatile u32*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::registers::hisr::OFFSET :
-                        D + dma::common::registers::lisr::OFFSET),
+              D + dma::common::registers::hisr::OFFSET :
+              D + dma::common::registers::lisr::OFFSET),
           (Stream % 4 == 0 ?
-                             4 :
-                             (Stream % 4 == 1 ?
-                                                10 :
-                                                (Stream % 4 == 2 ?
-                                                                   20 :
-                                                                   26)))
-      >());
+              4 :
+              (Stream % 4 == 1 ?
+                  10 :
+                  (Stream % 4 == 2 ?
+                      20 :
+                      26)))
+          >());
     }
 
     /**
@@ -527,16 +570,16 @@ namespace dma {
 
       *(volatile u32*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::registers::hifcr::OFFSET :
-                        D + dma::common::registers::lifcr::OFFSET),
+              D + dma::common::registers::hifcr::OFFSET :
+              D + dma::common::registers::lifcr::OFFSET),
           (Stream % 4 == 0 ?
-                             5 :
-                             (Stream % 4 == 1 ?
-                                                11 :
-                                                (Stream % 4 == 2 ?
-                                                                   21 :
-                                                                   27)))
-      >()) = 1;
+              5 :
+              (Stream % 4 == 1 ?
+                  11 :
+                  (Stream % 4 == 2 ?
+                      21 :
+                      27)))
+          >()) = 1;
     }
 
     /**
@@ -553,16 +596,16 @@ namespace dma {
 
       return *(volatile u32*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::registers::hisr::OFFSET :
-                        D + dma::common::registers::lisr::OFFSET),
+              D + dma::common::registers::hisr::OFFSET :
+              D + dma::common::registers::lisr::OFFSET),
           (Stream % 4 == 0 ?
-                             5 :
-                             (Stream % 4 == 1 ?
-                                                11 :
-                                                (Stream % 4 == 2 ?
-                                                                   21 :
-                                                                   27)))
-      >());
+              5 :
+              (Stream % 4 == 1 ?
+                  11 :
+                  (Stream % 4 == 2 ?
+                      21 :
+                      27)))
+          >());
     }
 
     /**
@@ -576,7 +619,7 @@ namespace dma {
       return *(volatile u32 *) (bitband::peripheral<
           D + S + registers::cr::OFFSET,
           registers::cr::bits::ct::POSITION
-      >());
+          >());
     }
 
     /**
@@ -586,31 +629,31 @@ namespace dma {
      */
     template<dma::common::address::E D, address::E S>
     template<
-        registers::cr::bits::dmeie::states::E DMEIE,
-        registers::cr::bits::teie::states::E TEIE,
-        registers::cr::bits::htie::states::E HTIE,
-        registers::cr::bits::tcie::states::E TCIE,
-        registers::cr::bits::pfctrl::states::E PFCTRL,
-        registers::cr::bits::dir::states::E DIR,
-        registers::cr::bits::circ::states::E CIRC,
-        registers::cr::bits::pinc::states::E PINC,
-        registers::cr::bits::minc::states::E MINC,
-        registers::cr::bits::psize::states::E PSIZE,
-        registers::cr::bits::msize::states::E MSIZE,
-        registers::cr::bits::pincos::states::E PINCOS,
-        registers::cr::bits::pl::states::E PL,
-        registers::cr::bits::dbm::states::E DBM,
-        registers::cr::bits::ct::states::E CT,
-        registers::cr::bits::pburst::states::E PBURST,
-        registers::cr::bits::mburst::states::E MBURST,
-        registers::cr::bits::chsel::states::E CHSEL
+    registers::cr::bits::dmeie::states::E DMEIE,
+    registers::cr::bits::teie::states::E TEIE,
+    registers::cr::bits::htie::states::E HTIE,
+    registers::cr::bits::tcie::states::E TCIE,
+    registers::cr::bits::pfctrl::states::E PFCTRL,
+    registers::cr::bits::dir::states::E DIR,
+    registers::cr::bits::circ::states::E CIRC,
+    registers::cr::bits::pinc::states::E PINC,
+    registers::cr::bits::minc::states::E MINC,
+    registers::cr::bits::psize::states::E PSIZE,
+    registers::cr::bits::msize::states::E MSIZE,
+    registers::cr::bits::pincos::states::E PINCOS,
+    registers::cr::bits::pl::states::E PL,
+    registers::cr::bits::dbm::states::E DBM,
+    registers::cr::bits::ct::states::E CT,
+    registers::cr::bits::pburst::states::E PBURST,
+    registers::cr::bits::mburst::states::E MBURST,
+    registers::cr::bits::chsel::states::E CHSEL
     >
     void Functions<D, S>::configure()
     {
       reinterpret_cast<stream::Registers*>(D + S)->CR =
-          DMEIE + TEIE + HTIE + TCIE + PFCTRL + DIR + CIRC + PINC +
-              MINC + PSIZE + MSIZE + PINCOS + PL + DBM + CT + PBURST +
-              MBURST + CHSEL;
+      DMEIE + TEIE + HTIE + TCIE + PFCTRL + DIR + CIRC + PINC +
+      MINC + PSIZE + MSIZE + PINCOS + PL + DBM + CT + PBURST +
+      MBURST + CHSEL;
     }
 
     /**
@@ -619,9 +662,9 @@ namespace dma {
      */
     template<dma::common::address::E D, stream::address::E S>
     template<
-        registers::fcr::bits::fth::states::E FTH,
-        registers::fcr::bits::dmdis::states::E DMDIS,
-        registers::fcr::bits::feie::states::E FEIE
+    registers::fcr::bits::fth::states::E FTH,
+    registers::fcr::bits::dmdis::states::E DMDIS,
+    registers::fcr::bits::feie::states::E FEIE
     >
     void Functions<D, S>::configureFIFO()
     {

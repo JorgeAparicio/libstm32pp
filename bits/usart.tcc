@@ -47,9 +47,13 @@ namespace usart {
     RCC::enableClocks<
         A == address::USART1 ?
                                rcc::apb2enr::USART1 :
+#ifndef STM32F1XX
                                (A == address::USART6 ?
-                                                       rcc::apb2enr::USART6 :
-                                                       rcc::apb2enr::Bits(0))
+                                   rcc::apb2enr::USART6 :
+                                   rcc::apb2enr::Bits(0))
+#else // !STM32F1XX
+                               rcc::apb2enr::Bits(0)
+    #endif // !STM32F1XX
     >();
   }
 
@@ -75,9 +79,13 @@ namespace usart {
     RCC::disableClocks<
         A == address::USART1 ?
                                rcc::apb2enr::USART1 :
+#ifndef STM32F1XX
                                (A == address::USART6 ?
-                                                       rcc::apb2enr::USART6 :
-                                                       rcc::apb2enr::Bits(0))
+                                   rcc::apb2enr::USART6 :
+                                   rcc::apb2enr::Bits(0))
+#else // !STM32F1XX
+                               rcc::apb2enr::Bits(0)
+    #endif // !STM32F1XX
     >();
   }
 

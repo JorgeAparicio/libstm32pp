@@ -44,14 +44,14 @@ namespace rcc {
       static inline void enableHse();
       static inline void disableHse();
       static inline bool isHseStable();
-      static inline void enableHseOscillator();
-      static inline void disableHseOscillator();
+      static inline void useHseOscillator();
+      static inline void bypassHseOscillator();
 
       static inline void enableLse();
       static inline void disableLse();
       static inline bool isLseStable();
-      static inline void enableLseOscillator();
-      static inline void disableLseOscillator();
+      static inline void useLseOscillator();
+      static inline void bypassLseOscillator();
 
       static inline void enableHsi();
       static inline void disableHsi();
@@ -78,18 +78,11 @@ namespace rcc {
 #endif // CONNECTIVITY_LINE
       static inline bool isSystemClockSourceStable();
 
-      template<
-          rcc::cfgr::sw::States
-      >
-      static inline void selectSystemClockSource();
+      static inline void setSystemClockSource(rcc::cfgr::sw::States);
+      static inline void setRtcClockSource(rcc::bdcr::rtcsel::States);
 
       template<
-          rcc::bdcr::rtcsel::States
-      >
-      static inline void selectRtcClockSource();
-
-      template<
-      rcc::apb1enr::Bits...
+          rcc::apb1enr::Bits...
       >
       static inline void enableClocks();
 
@@ -99,7 +92,7 @@ namespace rcc {
       static inline void disableClocks();
 
       template<
-          rcc::apb1rstr::Bits...
+      rcc::apb1rstr::Bits...
       >
       static inline void resetPeripherals();
 
@@ -120,23 +113,20 @@ namespace rcc {
 
 #ifdef STM32F1XX
       template<
-      rcc::ahbenr::E ...
+      rcc::ahbenr::Bits ...
       >
       static inline void enableClocks();
 
       template<
-      rcc::ahbenr::E ...
+      rcc::ahbenr::Bits ...
       >
       static inline void disableClocks();
 
-      template<
-      rcc::cfgr::mco::States
-      >
-      static inline void configureClockOutput();
+      static inline void configureClockOutput(rcc::cfgr::mco::States);
 
 #ifdef CONNECTIVITY_LINE
       template<
-      rcc::ahbrstr::E ...
+      rcc::ahbrstr::Bits ...
       >
       static inline void resetPeripherals();
 #endif
@@ -254,10 +244,7 @@ namespace rcc {
       >
       static inline void configureClockOutput();
 
-      template<
-      rcc::cfgr::i2ssrc::States
-      >
-      static inline void selectI2sSource();
+      static inline void selectI2sSource(rcc::cfgr::i2ssrc::States);
 
 #endif // STM32F1XX
       private:

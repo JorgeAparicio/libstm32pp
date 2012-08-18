@@ -60,9 +60,9 @@ namespace rcc {
   }
 
   /**
-   * @brief Enables the HSE oscillator for a external crystal/resonator.
+   * @brief Uses the HSE oscillator circuitry.
    */
-  void Functions::enableHseOscillator()
+  void Functions::useHseOscillator()
   {
     *(volatile u32*) (bitband::peripheral<
         ADDRESS + cr::OFFSET,
@@ -71,9 +71,9 @@ namespace rcc {
   }
 
   /**
-   * @brief Bypasses the HSE oscillator with an external clock.
+   * @brief Bypasses the HSE oscillator circuitry with an external clock.
    */
-  void Functions::disableHseOscillator()
+  void Functions::bypassHseOscillator()
   {
     *(volatile u32*) (bitband::peripheral<
         ADDRESS + cr::OFFSET,
@@ -115,9 +115,9 @@ namespace rcc {
   }
 
   /**
-   * @brief Enables the LSE oscillator for a external crystal/resonator.
+   * @brief Uses the LSE oscillator circuitry.
    */
-  void Functions::enableLseOscillator()
+  void Functions::useLseOscillator()
   {
     *(volatile u32*) (bitband::peripheral<
         ADDRESS + bdcr::OFFSET,
@@ -126,9 +126,9 @@ namespace rcc {
   }
 
   /**
-   * @brief Bypasses the LSE oscillator with an external clock.
+   * @brief Bypasses the LSE oscillator circuitry with an external clock.
    */
-  void Functions::disableLseOscillator()
+  void Functions::bypassLseOscillator()
   {
     *(volatile u32*) (bitband::peripheral<
         ADDRESS + bdcr::OFFSET,
@@ -340,10 +340,7 @@ namespace rcc {
   /**
    * @brief Selects the system clock source.
    */
-  template<
-      cfgr::sw::States SW
-  >
-  void Functions::selectSystemClockSource()
+  void Functions::setSystemClockSource(cfgr::sw::States SW)
   {
     _RCC->CFGR &= ~cfgr::sw::MASK;
     _RCC->CFGR |= SW;
@@ -352,10 +349,7 @@ namespace rcc {
   /**
    * @brief Selects the RTC clock source.
    */
-  template<
-      bdcr::rtcsel::States RTCSEL
-  >
-  void Functions::selectRtcClockSource()
+  void Functions::setRtcClockSource(bdcr::rtcsel::States RTCSEL)
   {
     _RCC->BDCR &= ~bdcr::rtcsel::MASK;
     _RCC->BDCR |= RTCSEL;
@@ -433,7 +427,7 @@ namespace rcc {
    * @brief Enables these peripherals. (AHB)
    */
   template<
-  ahbenr::E ... AHBENR
+  ahbenr::Bits ... AHBENR
   >
   void Functions::enableClocks()
   {
@@ -444,17 +438,14 @@ namespace rcc {
    * @brief Disables these peripherals. (AHB)
    */
   template<
-  ahbenr::E ... AHBENR
+  ahbenr::Bits ... AHBENR
   >
   void Functions::disableClocks()
   {
     _RCC->AHBENR &= ~cSum<AHBENR...>::value;
   }
 
-  template<
-  cfgr::mco::States MCO
-  >
-  void Functions::configureClockOutput()
+  void Functions::configureClockOutput(cfgr::mco::States MCO)
   {
     _RCC->CFGR &= ~(cfgr::mco::MASK);
 
@@ -466,7 +457,7 @@ namespace rcc {
    * @brief Resets these peripherals. (AHB)
    */
   template<
-  ahbrstr::E ... AHBRSTR
+  ahbrstr::Bits ... AHBRSTR
   >
   void Functions::resetPeripherals()
   {
@@ -844,11 +835,7 @@ namespace rcc {
         (MCOPRE2 << cfgr::mco2pre::POSITION);
   }
 
-
-  template<
-      cfgr::i2ssrc::States I2SSRC
-  >
-  void Functions::selectI2sSource()
+  void Functions::selectI2sSource(cfgr::i2ssrc::States I2SSRC)
   {
     _RCC->CFGR &= cfgr::i2ssrc::MASK;
 
