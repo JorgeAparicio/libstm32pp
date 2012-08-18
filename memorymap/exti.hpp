@@ -24,6 +24,14 @@
 #include "common.hpp"
 
 namespace exti {
+  enum {
+#ifdef STM32F1XX
+    ADDRESS = alias::APB2 + 0x0400
+#else
+    ADDRESS = alias::APB2 + 0x3C00
+#endif
+  };
+
   struct Registers {
       __RW
       u32 IMR;  // 0x00: Interrupt mask
@@ -39,52 +47,40 @@ namespace exti {
       u32 PR;  // 0x14: Pending
   };
 
-#ifdef STM32F1XX
-  enum {
-    ADDRESS = alias::APB2 + 0x0400
-  };
-#else
-  enum {
-    ADDRESS = alias::APB2 + 0x3C00
-  };
-#endif
+  namespace imr {
+    enum {
+      OFFSET = 0x00
+    };
+  }  // namespace imr
 
-  namespace registers {
-    namespace imr {
-      enum {
-        OFFSET = 0x00
-      };
-    }  // namespace imr
+  namespace emr {
+    enum {
+      OFFSET = 0x04
+    };
+  }  // namespace imr
 
-    namespace emr {
-      enum {
-        OFFSET = 0x04
-      };
-    }  // namespace imr
+  namespace rtsr {
+    enum {
+      OFFSET = 0x08
+    };
+  }  // namespace rtsr
 
-    namespace rtsr {
-      enum {
-        OFFSET = 0x08
-      };
-    }  // namespace rtsr
+  namespace ftsr {
+    enum {
+      OFFSET = 0x0C
+    };
+  }  // namespace ftsr
 
-    namespace ftsr {
-      enum {
-        OFFSET = 0x0C
-      };
-    }  // namespace ftsr
+  namespace swier {
+    enum {
+      OFFSET = 0x10
+    };
+  }  // namespace swier
 
-    namespace swier {
-      enum {
-        OFFSET = 0x10
-      };
-    }  // namespace swier
-
-    namespace pr {
-      enum {
-        OFFSET = 0x14
-      };
-    }  // namespace pr
-  }  // namespace registers
+  namespace pr {
+    enum {
+      OFFSET = 0x14
+    };
+  }  // namespace pr
 
 }  // namespace exti

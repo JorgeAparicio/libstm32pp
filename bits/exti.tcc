@@ -29,7 +29,7 @@ namespace exti {
   void Functions<N>::clearPendingFlag()
   {
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::pr::OFFSET,
+        ADDRESS + pr::OFFSET,
         N
     >()) = 1;
   }
@@ -41,27 +41,27 @@ namespace exti {
   void Functions<N>::disableAll()
   {
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::emr::OFFSET,
+        ADDRESS + emr::OFFSET,
         N
     >()) = 0;
 
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::imr::OFFSET,
+        ADDRESS + imr::OFFSET,
         N
     >()) = 0;
 
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::ftsr::OFFSET,
+        ADDRESS + ftsr::OFFSET,
         N
     >()) = 0;
 
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::rtsr::OFFSET,
+        ADDRESS + rtsr::OFFSET,
         N
     >()) = 0;
 
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::swier::OFFSET,
+        ADDRESS + swier::OFFSET,
         N
     >()) = 0;
   }
@@ -73,22 +73,22 @@ namespace exti {
   void Functions<N>::disableEvent()
   {
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::emr::OFFSET,
+        ADDRESS + emr::OFFSET,
         N
     >()) = 0;
 
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::ftsr::OFFSET,
+        ADDRESS + ftsr::OFFSET,
         N
     >()) = 0;
 
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::rtsr::OFFSET,
+        ADDRESS + rtsr::OFFSET,
         N
     >()) = 0;
 
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::swier::OFFSET,
+        ADDRESS + swier::OFFSET,
         N
     >()) = 0;
   }
@@ -100,22 +100,22 @@ namespace exti {
   void Functions<N>::disableInterrupt()
   {
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::imr::OFFSET,
+        ADDRESS + imr::OFFSET,
         N
     >()) = 0;
 
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::ftsr::OFFSET,
+        ADDRESS + ftsr::OFFSET,
         N
     >()) = 0;
 
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::rtsr::OFFSET,
+        ADDRESS + rtsr::OFFSET,
         N
     >()) = 0;
 
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::swier::OFFSET,
+        ADDRESS + swier::OFFSET,
         N
     >()) = 0;
   }
@@ -127,12 +127,12 @@ namespace exti {
   void Functions<N>::enableHardwareEventByFallingEdge()
   {
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::emr::OFFSET,
+        ADDRESS + emr::OFFSET,
         N
     >()) = 1;
 
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::ftsr::OFFSET,
+        ADDRESS + ftsr::OFFSET,
         N
     >()) = 1;
   }
@@ -144,12 +144,12 @@ namespace exti {
   void Functions<N>::enableHardwareEventByRisingEdge()
   {
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::emr::OFFSET,
+        ADDRESS + emr::OFFSET,
         N
     >()) = 1;
 
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::rtsr::OFFSET,
+        ADDRESS + rtsr::OFFSET,
         N
     >()) = 1;
   }
@@ -161,12 +161,12 @@ namespace exti {
   void Functions<N>::enableHardwareInterruptByFallingEdge()
   {
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::imr::OFFSET,
+        ADDRESS + imr::OFFSET,
         N
     >()) = 1;
 
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::ftsr::OFFSET,
+        ADDRESS + ftsr::OFFSET,
         N
     >()) = 1;
   }
@@ -178,12 +178,12 @@ namespace exti {
   void Functions<N>::enableHardwareInterruptByRisingEdge()
   {
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::imr::OFFSET,
+        ADDRESS + imr::OFFSET,
         N
     >()) = 1;
 
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::rtsr::OFFSET,
+        ADDRESS + rtsr::OFFSET,
         N
     >()) = 1;
   }
@@ -195,12 +195,12 @@ namespace exti {
   void Functions<N>::enableSoftwareEvent()
   {
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::emr::OFFSET,
+        ADDRESS + emr::OFFSET,
         N
     >()) = 1;
 
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::swier::OFFSET,
+        ADDRESS + swier::OFFSET,
         N
     >()) = 1;
   }
@@ -212,12 +212,12 @@ namespace exti {
   void Functions<N>::enableSoftwareInterrupt()
   {
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::emr::OFFSET,
+        ADDRESS + emr::OFFSET,
         N
     >()) = 1;
 
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::swier::OFFSET,
+        ADDRESS + swier::OFFSET,
         N
     >()) = 1;
   }
