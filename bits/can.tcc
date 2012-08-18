@@ -24,38 +24,38 @@
 #include "../include/peripheral/rcc.hpp"
 
 namespace can {
-  template<address::E C>
+  template<Address C>
   void Functions<C>::enableClocks()
   {
     switch (C) {
 #if defined CONNECTIVITY_LINE || not defined STM32F1XX
-      case address::CAN1:
+      case CAN1:
         RCC::enableClocks<rcc::apb1enr::CAN1>();
         break;
-      case address::CAN2:
+      case CAN2:
         RCC::enableClocks<rcc::apb1enr::CAN2>();
         break;
 #else // !CONNECTIVTY_LINE || STM32F1XX
-        case address::CAN:
+        case CAN:
         RCC::enableClocks<rcc::apb1enr::CAN>();
         break;
 #endif // !CONNECTIVITY_LINE
     }
   }
 
-  template<address::E C>
+  template<Address C>
   void Functions<C>::disableClocks()
   {
     switch (C) {
 #if defined CONNECTIVITY_LINE || not defined STM32F1XX
-      case address::CAN1:
+      case CAN1:
         RCC::disableClocks<rcc::apb1enr::CAN1>();
         break;
-      case address::CAN2:
+      case CAN2:
         RCC::disableClocks<rcc::apb1enr::CAN2>();
         break;
 #else // !CONNECTIVTY_LINE || STM32F1XX
-        case address::CAN:
+        case CAN:
         RCC::disableClocks<rcc::apb1enr::CAN>();
         break;
 #endif // !CONNECTIVITY_LINE

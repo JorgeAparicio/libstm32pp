@@ -32,7 +32,7 @@ namespace can {
       __RW
       u32 TSR;      // 0x008: Transmit status
       __RW
-      u32 RFR[2];     // 0x00C: Receive FIFO
+      u32 RFR[2];      // 0x00C: Receive FIFO
       __RW
       u32 IER;      // 0x014: Interrupt enable
       __RW
@@ -80,27 +80,24 @@ namespace can {
           u32 L;    // 0x240 + 8 * I: Low
           __RW
           u32 H;    // 0x244 + 8 * I: High
-#if defined CONNECTIVITY_LINE || \
-    defined STM32F2XX || \
-    defined STM32F4XX
-      } FR[27];     // 0x240-0x31C: Filter bank
-#else
-    }FR[13];     // 0x240-0x2AC: Filter bank
-#endif
+      } FR[
+      #if not defined STM32F1XX || defined CONNECTIVITY_LINE
+      27 // 0x240-0x31C: Filter bank
+#else // !STM32F1XX || CONNECTIVITY_LINE
+      13// 0x240-0x2AC: Filter bank
+#endif // !STM32F1XX || CONNECTIVITY_LINE
+      ];
   };
 
-  namespace address {
-    enum E {
+  enum Address {
 #if defined CONNECTIVITY_LINE || not defined STM32F1XX
-      CAN1 = alias::APB1 + 0x6400,
-      CAN2 = alias::APB1 + 0x6800
+    CAN1 = alias::APB1 + 0x6400,
+    CAN2 = alias::APB1 + 0x6800,
 #else // !CONNECTIVITY_LINE || STM32F1XX
-    CAN = alias::APB1 + 0x6400,
+  CAN = alias::APB1 + 0x6400,
 #endif // !CONNECTIVITY_LINE || STM32F1XX
-  };
-}  // namespace address
+};
 
-namespace registers {
 // TODO CAN register bits
-}// namespace registers
-}  // namespace can
+
+}// namespace can

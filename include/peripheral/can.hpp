@@ -41,7 +41,7 @@
 #define CAN_REGS reinterpret_cast<can::Registers *>(can::address::E::CAN)
 #endif // !CONNECTIVITY_LINE || STM32F1XX
 namespace can {
-  template<address::E Address>
+  template<Address>
   class Functions {
       static inline void enableClocks();
       static inline void disableClocks();
@@ -50,12 +50,11 @@ namespace can {
 
 // High-level access to the peripheral
 #if defined CONNECTIVITY_LINE || not defined STM32F1XX
-typedef can::Functions<can::address::CAN1> CAN1;
-typedef can::Functions<can::address::CAN2> CAN2;
+typedef can::Functions<can::CAN1> CAN1;
+typedef can::Functions<can::CAN2> CAN2;
 #else // !CONNECTIVITY_LINE || STM32F1XX
-typedef can::Functions<can::address::CAN> CAN;
+typedef can::Functions<can::CAN> CAN;
 #endif // !CONNECTIVITY_LINE || STM32F1XX
-
 #include "../../bits/can.tcc"
 
 #endif
