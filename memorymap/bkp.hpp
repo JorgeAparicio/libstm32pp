@@ -24,11 +24,9 @@
 #include "common.hpp"
 
 namespace bkp {
-  namespace address {
-    enum E {
-      BKP = alias::APB1 + 0x6C00,
-    };
-  }  // namespace address
+  enum {
+    ADDRESS = alias::APB1 + 0x6C00,
+  };
 
   struct Registers
   {
@@ -46,7 +44,21 @@ namespace bkp {
       u32 DR2[32];  // 0x40-0xBC: Data 2
   };
 
-  namespace registers {
-  // TODO BKP register bits
-  }// namespace registers
+  namespace rtccr {
+    enum {
+      OFFSET = 0x2C
+    };
+  }  // namespace rtccr
+
+  namespace cr {
+    enum {
+      OFFSET = 0x30
+    };
+  }  // namespace cr
+
+  namespace csr {
+    enum {
+      OFFSET = 0x34
+    };
+  }  // namespace csr
 }  // namespace bkp

@@ -35,7 +35,7 @@
 #include "../../memorymap/bkp.hpp"
 
 // Low-level access to the registers
-#define BKP_REGS reinterpret_cast<bkp::Registers *>(bkp::address::BKP)
+#define BKP_REGS reinterpret_cast<bkp::Registers *>(bkp::ADDRESS)
 
 // High-level functions
 namespace bkp {
@@ -43,8 +43,9 @@ namespace bkp {
     public:
       static inline void enableClock();
       static inline void disableClock();
+
     private:
-    Functions();
+      Functions();
   };
 }  // namespace bkp
 
