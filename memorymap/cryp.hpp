@@ -24,6 +24,10 @@
 #include "common.hpp"
 
 namespace cryp {
+  enum {
+    ADDRESS = alias::AHB2 + 0x60000
+  };
+
   struct Registers {
       __RW
       u32 CR;     // 0x00: Control
@@ -55,11 +59,51 @@ namespace cryp {
       } IVR[2];   // Initialization vector
   };
 
-  enum {
-    ADDRESS = alias::AHB2 + 0x60000
-  };
+  namespace cr {
+    enum {
+      OFFSET = 0x00
+    };
+  }  // namespace cr
 
-  namespace registers {
-  // TODO CRYP register bits
-  }// namespace registers
+  namespace sr {
+    enum {
+      OFFSET = 0x04
+    };
+  }  // namespace sr
+
+  namespace dr {
+    enum {
+      OFFSET = 0x08
+    };
+  }  // namespace dr
+
+  namespace dout {
+    enum {
+      OFFSET = 0x0C
+    };
+  }  // namespace dout
+
+  namespace dmacr {
+    enum {
+      OFFSET = 0x10
+    };
+  }  // namespace dmacr
+
+  namespace imscr {
+    enum {
+      OFFSET = 0x14
+    };
+  }  // namespace imscr
+
+  namespace risr {
+    enum {
+      OFFSET = 0x18
+    };
+  }  // namespace risr
+
+  namespace misr {
+    enum {
+      OFFSET = 0x1C
+    };
+  }  // namespace misr
 }  // namespace cryp

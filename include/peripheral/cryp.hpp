@@ -28,10 +28,10 @@
 #pragma once
 
 #include "../device_select.hpp"
-#include "../defs.hpp"
 
 #ifndef STM32F1XX
 
+#include "../defs.hpp"
 #include "../../memorymap/cryp.hpp"
 
 // Low-level access to the registers
