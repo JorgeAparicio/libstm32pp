@@ -28,15 +28,15 @@ namespace adc {
    * @brief Enables the ADC's clock.
    * @note  Registers can't be written when the clock is disabled.
    */
-  template<address::E A>
+  template<Address A>
   void Functions<A>::enableClock()
   {
     RCC::enableClocks<
-        A == address::ADC1 ?
+        A == ADC1 ?
             rcc::apb2enr::ADC1 :
-            (A == address::ADC2 ?
+            (A == ADC2 ?
                 rcc::apb2enr::ADC2 :
-                (A == address::ADC3 ?
+                (A == ADC3 ?
                                       rcc::apb2enr::ADC3 :
                                       rcc::apb2enr::Bits(0)))
     >();
@@ -46,15 +46,15 @@ namespace adc {
    * @brief Disables the ADC's clock.
    * @note  Registers can't be written when the clock is disabled.
    */
-  template<address::E A>
+  template<Address A>
   void Functions<A>::disableClock()
   {
     RCC::disableClocks<
-        A == address::ADC1 ?
+        A == ADC1 ?
             rcc::apb2enr::ADC1 :
-            (A == address::ADC2 ?
+            (A == ADC2 ?
                 rcc::apb2enr::ADC2 :
-                (A == address::ADC3 ?
+                (A == ADC3 ?
                                       rcc::apb2enr::ADC3 :
                                       rcc::apb2enr::Bits(0)))
     >();
@@ -63,79 +63,79 @@ namespace adc {
   /**
    * @brief Turns on the ADC peripheral.
    */
-  template<address::E A>
+  template<Address A>
   void Functions<A>::enablePeripheral()
   {
     *(volatile u32*) (bitband::peripheral<
-        A + registers::cr1::OFFSET,
-        registers::cr2::bits::adon::POSITION
+        A + cr1::OFFSET,
+        cr2::adon::POSITION
     >()) = 1;
   }
 
   /**
    * @brief Turns off the ADC peripheral.
    */
-  template<address::E A>
+  template<Address A>
   void Functions<A>::disablePeripheral()
   {
     *(volatile u32*) (bitband::peripheral<
-        A + registers::cr1::OFFSET,
-        registers::cr2::bits::adon::POSITION
+        A + cr1::OFFSET,
+        cr2::adon::POSITION
     >()) = 0;
   }
 
   /**
    * @brief Starts conversion of regular channels
    */
-  template<address::E A>
+  template<Address A>
   void Functions<A>::startRegularConversions()
   {
     *(volatile u32*) (bitband::peripheral<
-        A + registers::cr2::OFFSET,
-        registers::cr2::bits::swstart::POSITION
+        A + cr2::OFFSET,
+        cr2::swstart::POSITION
     >()) = 1;
   }
 
   /**
    * @brief Starts conversion of injected channels
    */
-  template<address::E A>
+  template<Address A>
   void Functions<A>::startInjectedConversions()
   {
     *(volatile u32*) (bitband::peripheral<
-        A + registers::cr2::OFFSET,
-        registers::cr2::bits::jswstart::POSITION
+        A + cr2::OFFSET,
+        cr2::jswstart::POSITION
     >()) = 1;
   }
 
   /**
    * @brief Enables continuous conversion mode.
    */
-  template<address::E A>
+  template<Address A>
   void Functions<A>::enableContinuousConversion()
   {
     *(volatile u32*) (bitband::peripheral<
-        A + registers::cr2::OFFSET,
-        registers::cr2::bits::cont::POSITION
+        A + cr2::OFFSET,
+        cr2::cont::POSITION
     >()) = 1;
   }
 
   /**
    * @brief Disables continuous conversion mode.
    */
-  template<address::E A>
+  template<Address A>
   void Functions<A>::disableContinuousConversion()
   {
     *(volatile u32*) (bitband::peripheral<
-        A + registers::cr2::OFFSET,
-        registers::cr2::bits::cont::POSITION
+        A + cr2::OFFSET,
+        cr2::cont::POSITION
     >()) = 0;
   }
 
   /**
    * @brief Sets the lower threshold of the analog watchdog.
    */
-  template<address::E A>
+  template<Address A>
   void Functions<A>::setWatchdogLowerThreshold(u16 const Threshold)
   {
     reinterpret_cast<Registers*>(A)->LTR = Threshold;
@@ -144,7 +144,7 @@ namespace adc {
   /**
    * @brief Returns the lower threshold of the analog watchdog.
    */
-  template<address::E A>
+  template<Address A>
   u16 Functions<A>::getWatchdogLowerThreshold()
   {
     return reinterpret_cast<Registers*>(A)->LTR;
@@ -153,7 +153,7 @@ namespace adc {
   /**
    * @brief Sets the higher threshold of the analog watchdog.
    */
-  template<address::E A>
+  template<Address A>
   void Functions<A>::setWatchdogHigherThreshold(u16 const Threshold)
   {
     reinterpret_cast<Registers*>(A)->HTR = Threshold;
@@ -162,7 +162,7 @@ namespace adc {
   /**
    * @brief Returns the higher threshold of the analog watchdog.
    */
-  template<address::E A>
+  template<Address A>
   u16 Functions<A>::getWatchdogHigherThreshold()
   {
     return reinterpret_cast<Registers*>(A)->HTR;
@@ -171,23 +171,23 @@ namespace adc {
   /**
    * @brief Configures the conversion time.
    */
-  template<address::E A>
+  template<Address A>
   template<
       u32 C,
-      adc::registers::smp::states::E SMP
+      adc::smp::States SMP
   >
   void Functions<A>::setConversionTime()
   {
     static_assert(C <= 18, "There are only channels from 0 to 18.");
 
     reinterpret_cast<Registers*>(A)->SMPR[(C > 9) ? 0 : 1] &=
-        ~(registers::smp::MASK << registers::smp::POSITION *
+        ~(smp::MASK << smp::POSITION *
             ((C > 9) ?
                        (C - 10) :
                        C));
 
     reinterpret_cast<Registers*>(A)->SMPR[(C > 9) ? 0 : 1] |=
-        (SMP << registers::smp::POSITION *
+        (SMP << smp::POSITION *
             ((C > 9) ?
                        (C - 10) :
                        C));
@@ -196,31 +196,31 @@ namespace adc {
   /**
    * @brief Returns true if the regular conversions have ended.
    */
-  template<address::E A>
+  template<Address A>
   bool Functions<A>::hasRegularConversionEnded()
   {
     return *(volatile bool*) (bitband::peripheral<
-        A + registers::sr::OFFSET,
-        registers::sr::bits::eoc::POSITION
+        A + sr::OFFSET,
+        sr::eoc::POSITION
     >());
   }
 
   /**
    * @brief Returns true if the injected conversions have ended.
    */
-  template<address::E A>
+  template<Address A>
   bool Functions<A>::hasInjectedConversionEnded()
   {
     return *(volatile bool*) (bitband::peripheral<
-        A + registers::sr::OFFSET,
-        registers::sr::bits::jeoc::POSITION
+        A + sr::OFFSET,
+        sr::jeoc::POSITION
     >());
   }
 
   /**
    * @brief Returns the result of the conversion.
    */
-  template<address::E A>
+  template<Address A>
   u16 Functions<A>::getConversionResult()
   {
     return reinterpret_cast<Registers*>(A)->DR;
@@ -229,7 +229,7 @@ namespace adc {
   /**
    * @brief Sets the number of regular conversions.
    */
-  template<address::E A>
+  template<Address A>
   template<u32 N>
   void Functions<A>::setNumberOfRegularChannels()
   {
@@ -237,16 +237,16 @@ namespace adc {
     static_assert(N <= 16, "The maximum number of regular conversions is 16.");
 
     reinterpret_cast<Registers*>(A)->SQR[0] &=
-        ~registers::sqr1::bits::l::MASK;
+        ~sqr1::l::MASK;
 
     reinterpret_cast<Registers*>(A)->SQR[0] |=
-        (N - 1) << registers::sqr1::bits::l::POSITION;
+        (N - 1) << sqr1::l::POSITION;
   }
 
   /**
    * @brief Sets the number of injected conversions.
    */
-  template<address::E A>
+  template<Address A>
   template<u32 N>
   void Functions<A>::setNumberOfInjectedChannels()
   {
@@ -254,16 +254,16 @@ namespace adc {
     static_assert(N <= 4, "The maximum number of injected conversions is 4.");
 
     reinterpret_cast<Registers*>(A)->JSQR &=
-        ~registers::jsqr::bits::jl::MASK;
+        ~jsqr::jl::MASK;
 
     reinterpret_cast<Registers*>(A)->JSQR |=
-        N << registers::jsqr::bits::jl::POSITION;
+        N << jsqr::jl::POSITION;
   }
 
   /**
    * @brief Configures the order of the regular conversions.
    */
-  template<address::E A>
+  template<Address A>
   template<u32 O, u32 C>
   void Functions<A>::setRegularSequenceOrder()
   {
@@ -271,7 +271,7 @@ namespace adc {
     static_assert((C >= 0) && (C <= 18), "Conversion range goes from 0 to 18");
 
     reinterpret_cast<Registers*>(A)->SQR[(O > 12) ? 0 : ((O > 6) ? 1 : 2)] &=
-        ~(registers::sqr::MASK << registers::sqr::POSITION *
+        ~(sqr::MASK << sqr::POSITION *
             ((O > 12) ?
                         (O - 13) :
                         ((O > 6) ?
@@ -279,7 +279,7 @@ namespace adc {
                                    (O - 1))));
 
     reinterpret_cast<Registers*>(A)->SQR[(O > 12) ? 0 : ((O > 6) ? 1 : 2)] |=
-        (C << registers::sqr::POSITION *
+        (C << sqr::POSITION *
             ((O > 12) ?
                         (O - 13) :
                         ((O > 6) ?
@@ -290,7 +290,7 @@ namespace adc {
   /**
    * @brief Configures the order of the injected conversions.
    */
-  template<address::E A>
+  template<Address A>
   template<u32 O, u32 C>
   void Functions<A>::setInjectedSequenceOrder()
   {
@@ -298,44 +298,44 @@ namespace adc {
     static_assert((C >= 0) && (C <= 18), "Conversion range goes from 0 to 18");
 
     reinterpret_cast<Registers*>(A)->JSQR &=
-        ~registers::jsq::MASK << registers::jsq::POSITION * (O - 1);
+        ~jsq::MASK << jsq::POSITION * (O - 1);
 
     reinterpret_cast<Registers*>(A)->JSQR |=
-        C << registers::jsq::POSITION * (O - 1);
+        C << jsq::POSITION * (O - 1);
   }
 
   /**
    * @brief Configures the ADC.
    * @note Overrides the old configuration.
    */
-  template<address::E A>
+  template<Address A>
   template<
-      registers::cr1::bits::awdch::states::E AWDCH,
-      registers::cr1::bits::eocie::states::E EOCIE,
-      registers::cr1::bits::awdie::states::E AWDIE,
-      registers::cr1::bits::jeocie::states::E JEOCIE,
-      registers::cr1::bits::scan::states::E SCAN,
-      registers::cr1::bits::awdsgl::states::E AWDSGL,
-      registers::cr1::bits::jauto::states::E JAUTO,
-      registers::cr1::bits::discen::states::E DISCEN,
-      registers::cr1::bits::jdiscen::states::E JDISCEN,
-      registers::cr1::bits::discnum::states::E DISCNUM,
-      registers::cr1::bits::jawden::states::E JAWDEN,
-      registers::cr1::bits::awden::states::E AWDEN,
-      registers::cr1::bits::res::states::E RES,
-      registers::cr1::bits::ovrie::states::E OVRIE,
-      registers::cr2::bits::adon::states::E ADON,
-      registers::cr2::bits::cont::states::E CONT,
-      registers::cr2::bits::dma::states::E DMA,
-      registers::cr2::bits::dds::states::E DDS,
-      registers::cr2::bits::eocs::states::E EOCS,
-      registers::cr2::bits::align::states::E ALIGN,
-      registers::cr2::bits::jextsel::states::E JEXTSEL,
-      registers::cr2::bits::jexten::states::E JEXTEN,
-      registers::cr2::bits::jswstart::states::E JSWSTART,
-      registers::cr2::bits::extsel::states::E EXTSEL,
-      registers::cr2::bits::exten::states::E EXTEN,
-      registers::cr2::bits::swstart::states::E SWSTART
+      cr1::awdch::States AWDCH,
+      cr1::eocie::States EOCIE,
+      cr1::awdie::States AWDIE,
+      cr1::jeocie::States JEOCIE,
+      cr1::scan::States SCAN,
+      cr1::awdsgl::States AWDSGL,
+      cr1::jauto::States JAUTO,
+      cr1::discen::States DISCEN,
+      cr1::jdiscen::States JDISCEN,
+      cr1::discnum::States DISCNUM,
+      cr1::jawden::States JAWDEN,
+      cr1::awden::States AWDEN,
+      cr1::res::States RES,
+      cr1::ovrie::States OVRIE,
+      cr2::adon::States ADON,
+      cr2::cont::States CONT,
+      cr2::dma::States DMA,
+      cr2::dds::States DDS,
+      cr2::eocs::States EOCS,
+      cr2::align::States ALIGN,
+      cr2::jextsel::States JEXTSEL,
+      cr2::jexten::States JEXTEN,
+      cr2::jswstart::States JSWSTART,
+      cr2::extsel::States EXTSEL,
+      cr2::exten::States EXTEN,
+      cr2::swstart::States SWSTART
   >
   void Functions<A>::configure()
   {
