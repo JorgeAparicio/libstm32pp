@@ -37,15 +37,15 @@
 #include "../../memorymap/afio.hpp"
 
 // Low-level access to the registers
-#define _AFIO reinterpret_cast<afio::Registers *>(afio::address::AFIO)
+#define _AFIO reinterpret_cast<afio::Registers *>(afio::ADDRESS)
 
 // High-level functions
 namespace afio {
   class Functions {
     public:
-    // TODO AFIO function declaration
+      // TODO AFIO function declaration
     private:
-    Functions();
+      Functions();
   };
 }  // namespace afio
 

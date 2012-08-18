@@ -24,11 +24,9 @@
 #include "common.hpp"
 
 namespace afio {
-  namespace address {
-    enum e {
-      AFIO = alias::APB2 + 0x0000
-    };
-  }  // namespace address
+  enum {
+    ADDRESS = alias::APB2 + 0x0000
+  };
 
   struct Registers
   {
@@ -43,7 +41,5 @@ namespace afio {
       u32 MAPR2;      // 0x1C: Remap and debug configuration 2
   };
 
-  namespace registers {
-  // TODO AFIO register bits
-  }// namespace registers
-}  // namespace afio
+// TODO AFIO register bits
+}// namespace afio
