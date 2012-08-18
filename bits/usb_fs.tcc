@@ -21,6 +21,32 @@
 
 #pragma once
 
+#include "../include/peripheral/rcc.hpp"
+
 namespace usb_fs {
-// TODO USB_FS functions implementation
+  void Functions::enableClock()
+  {
+#ifdef CONNECTIVITY_LINE
+    RCC::enableClocks<
+    rcc::ahbenr::USB_OTG_FS
+    >();
+#else
+    RCC::enableClocks<
+        rcc::ahb2enr::USB_OTG_FS
+    >();
+#endif
+  }
+
+  void Functions::disableClock()
+  {
+#ifdef CONNECTIVITY_LINE
+    RCC::disableClocks<
+    rcc::ahbenr::USB_OTG_FS
+    >();
+#else
+    RCC::disableClocks<
+        rcc::ahb2enr::USB_OTG_FS
+    >();
+#endif
+  }
 }  // namespace usb_fs

@@ -21,6 +21,17 @@
 
 #pragma once
 
+#include "../include/peripheral/rcc.hpp"
+
 namespace afio {
-// TODO AFIO function implementation
-}// namespace afio
+  void Functions::enableClock()
+  {
+    RCC::enableClocks<rcc::apb2enr::AFIO>();
+  }
+
+  void Functions::disableClock()
+  {
+    RCC::disableClocks<rcc::apb2enr::AFIO>();
+  }
+
+} // namespace afio

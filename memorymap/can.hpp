@@ -85,18 +85,22 @@ namespace can {
     defined STM32F4XX
       } FR[27];     // 0x240-0x31C: Filter bank
 #else
-      } FR[13];     // 0x240-0x2AC: Filter bank
+    }FR[13];     // 0x240-0x2AC: Filter bank
 #endif
   };
 
   namespace address {
     enum E {
+#if defined CONNECTIVITY_LINE || not defined STM32F1XX
       CAN1 = alias::APB1 + 0x6400,
       CAN2 = alias::APB1 + 0x6800
-    };
-  }  // namespace address
+#else // !CONNECTIVITY_LINE || STM32F1XX
+    CAN = alias::APB1 + 0x6400,
+#endif // !CONNECTIVITY_LINE || STM32F1XX
+  };
+}  // namespace address
 
-  namespace registers {
-  // TODO CAN register bits
-  }// namespace registers
+namespace registers {
+// TODO CAN register bits
+}// namespace registers
 }  // namespace can

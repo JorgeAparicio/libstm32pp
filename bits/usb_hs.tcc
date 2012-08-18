@@ -21,6 +21,18 @@
 
 #pragma once
 
+#include "../include/peripheral/rcc.hpp"
+
 namespace usb_hs {
-// TODO USB_HS functions implementation
+  void Functions::enableClock()
+  {
+    RCC::enableClocks<rcc::ahb1enr::OTG_HS>();
+    RCC::enableClocks<rcc::ahb1enr::OTG_HS_ULPI>();
+  }
+
+  void Functions::disableClock()
+  {
+    RCC::disableClocks<rcc::ahb1enr::OTG_HS>();
+    RCC::disableClocks<rcc::ahb1enr::OTG_HS_ULPI>();
+  }
 }  // namespace usb_hs

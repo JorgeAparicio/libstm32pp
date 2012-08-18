@@ -20,9 +20,21 @@
  ******************************************************************************/
 
 #pragma once
+
 #include "../include/bitband.hpp"
+#include "../include/peripheral/rcc.hpp"
 
 namespace pwr {
+  void Functions::enableClock()
+  {
+    RCC::enableClocks<rcc::apb1enr::PWR>();
+  }
+
+  void Functions::disableClock()
+  {
+    RCC::disableClocks<rcc::apb1enr::PWR>();
+  }
+
   void Functions::enableBackupDomainWriteProtection()
   {
     *(volatile u32*) (bitband::peripheral<

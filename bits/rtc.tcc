@@ -22,5 +22,5 @@
 #pragma once
 
 namespace rtc {
-// TODO RTC functions implementation
+
 }// namespace rtc

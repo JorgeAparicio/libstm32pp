@@ -28,10 +28,10 @@
 #pragma once
 
 #include "../device_select.hpp"
-#include "../defs.hpp"
 
 #ifdef VALUE_LINE
 
+#include "../defs.hpp"
 #include "../../memorymap/cec.hpp"
 
 // Low-level access to the registers
@@ -41,15 +41,16 @@
 namespace cec {
   class Functions {
     public:
-      // TODO CEC function declaration
+      static inline void enableClock();
+      static inline void disableClock();
     private:
       Functions();
   };
 }  // namespace cec
 
-#include "../../bits/cec.tcc"
-
 // High-level access to the peripheral
-// TODO CEC high-level access
+typedef cec::Functions CEC;
+
+#include "../../bits/cec.tcc"
 
 #endif

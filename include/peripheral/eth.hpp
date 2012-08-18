@@ -28,8 +28,10 @@
 #pragma once
 
 #include "../device_select.hpp"
-#include "../defs.hpp"
 
+#if not defined STM32F1XX || defined CONNECTIVITY_LINE
+
+#include "../defs.hpp"
 #include "../../memorymap/eth.hpp"
 
 // Low-level access to the registers
@@ -39,13 +41,17 @@
 namespace eth {
   class Functions {
     public:
-      // TODO ETH functions declaration
+      static inline void enableClocks();
+      static inline void disableClocks();
+
     private:
       Functions();
   };
 }  // namespace eth
 
 // High-level access to the peripherals
-// TODO ETH high-level access
+typedef eth::Functions ETH;
 
 #include "../../bits/eth.tcc"
+
+#endif // !STM32F1XX || CONNECTIVITY_LINE

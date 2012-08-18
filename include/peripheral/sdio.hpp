@@ -40,11 +40,18 @@
 
 // High-level functions
 namespace sdio {
-// TODO SDIO functions declaration
-}// namespace sdio
+  class Functions {
+    public:
+      static inline void enableClock();
+      static inline void disableClock();
+
+    private:
+      Functions();
+  };
+} // namespace sdio
 
 // High-level access to the peripheral
-// TODO SDIO high-level access
+typedef sdio::Functions SDIO;
 
 #include "../../bits/sdio.tcc"
 

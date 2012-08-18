@@ -100,19 +100,19 @@ namespace i2c {
   template<address::E I>
   void Standard<I>::enableClock()
   {
-    RCC::enableClocks<
-        I == address::I2C1 ?
-            rcc::apb1enr::I2C1 :
-            (I == address::I2C2 ?
-                rcc::apb1enr::I2C2 :
-                #ifdef STM32F1XX
-                0)
-#else // STM32F1XX
-                (I == address::I2C3 ?
-                                      rcc::apb1enr::I2C3 :
-                                      rcc::apb1enr::Bits(0)))
-    #endif // STM32F1XX
-    >();
+    switch (I) {
+      case address::I2C1:
+        RCC::enableClocks<rcc::apb1enr::I2C1>();
+        break;
+      case address::I2C2:
+        RCC::enableClocks<rcc::apb1enr::I2C2>();
+        break;
+#ifndef STM32F1XX
+        case address::I2C3:
+        RCC::enableClocks<rcc::apb1enr::I2C3>();
+        break;
+#endif
+    }
   }
 
   /**
@@ -122,19 +122,19 @@ namespace i2c {
   template<address::E I>
   void Standard<I>::disableClock()
   {
-    RCC::disableClocks<
-        I == address::I2C1 ?
-            rcc::apb1enr::I2C1 :
-            (I == address::I2C2 ?
-                rcc::apb1enr::I2C2 :
-                #ifdef STM32F1XX
-                0)
-#else // STM32F1XX
-                (I == address::I2C3 ?
-                                      rcc::apb1enr::I2C3 :
-                                      rcc::apb1enr::Bits(0)))
-    #endif // STM32F1XX
-    >();
+    switch (I) {
+      case address::I2C1:
+        RCC::disableClocks<rcc::apb1enr::I2C1>();
+        break;
+      case address::I2C2:
+        RCC::disableClocks<rcc::apb1enr::I2C2>();
+        break;
+#ifndef STM32F1XX
+        case address::I2C3:
+        RCC::disableClocks<rcc::apb1enr::I2C3>();
+        break;
+#endif
+    }
   }
 
   /**

@@ -21,6 +21,24 @@
 
 #pragma once
 
+#include "../include/peripheral/rcc.hpp"
+
 namespace crc {
-// CRC function implementation
+  void Functions::enableClock()
+  {
+#ifndef STM32F1XX
+    RCC::enableClocks<rcc::ahb1enr::CRC>();
+#else // !STM32F1XX
+    RCC::enableClocks<rcc::ahbenr::CRC>();
+#endif // !STM32F1XX
+  }
+
+  void Functions::disableClock()
+  {
+#ifndef STM32F1XX
+    RCC::disableClocks<rcc::ahb1enr::CRC>();
+#else // !STM32F1XX
+    RCC::disableClocks<rcc::ahbenr::CRC>();
+#endif // !STM32F1XX
+  }
 }  // namespace crc

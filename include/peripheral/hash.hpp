@@ -41,14 +41,16 @@
 namespace hash {
   class Functions {
     public:
-      // TODO HASH functions declaration
+      static inline void enableClock();
+      static inline void disableClock();
+
     private:
       Functions();
   };
 }  // namespace hash
 
 // High-level access to the peripheral
-// TODO HASH high-level access
+typedef hash::Functions HASH;
 
 #include "../../bits/hash.tcc"
 

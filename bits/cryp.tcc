@@ -21,6 +21,16 @@
 
 #pragma once
 
+#include "../include/peripheral/rcc.hpp"
+
 namespace cryp {
-// CRYP function implementation
+  void Functions::enableClock()
+  {
+    RCC::enableClocks<rcc::ahb2enr::CRYP>();
+  }
+
+  void Functions::disableClock()
+  {
+    RCC::disableClocks<rcc::ahb2enr::CRYP>();
+  }
 }  // namespace cryp

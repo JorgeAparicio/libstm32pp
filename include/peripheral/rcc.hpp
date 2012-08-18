@@ -214,6 +214,21 @@ namespace rcc {
       static inline void resetPeripherals();
 
       template<
+      rcc::ahb3enr::Bits ...
+      >
+      static inline void enableClocks();
+
+      template<
+      rcc::ahb3enr::Bits ...
+      >
+      static inline void disableClocks();
+
+      template<
+      rcc::ahb3rstr::Bits ...
+      >
+      static inline void resetPeripherals();
+
+      template<
       rcc::pllcfgr::pllsrc::States,
       u8 PLLM,
       u16 PLLN,

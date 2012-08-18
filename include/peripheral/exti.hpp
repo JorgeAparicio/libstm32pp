@@ -39,6 +39,8 @@
 namespace exti {
   template<u8 LINE>
   class Functions {
+      static_assert(LINE < 23, "There are only 23 (0-22) external interrupt lines");
+
     public:
       static inline void clearPendingFlag();
       static inline void disableAll();

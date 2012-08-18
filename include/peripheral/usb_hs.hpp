@@ -42,14 +42,16 @@
 namespace usb_hs {
   class Functions {
     public:
-      // TODO USB_HS functions declaration
+      static inline void enableClock();
+      static inline void disableClock();
+
     private:
       Functions();
   };
 }  // namespace usb_hs
 
 // High-level access to the peripheral
-// TODO USB_HS high-level access
+typedef usb_hs::Functions USB_HS;
 
 #include "../../bits/usb_hs.tcc"
 

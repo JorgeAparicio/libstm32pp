@@ -45,7 +45,7 @@ namespace dbg {
   };
 }  // namespace dbg
 
-#include "../../bits/dbg.tcc"
-
 // High-level access to the peripheral
-// TODO DBG high-level access
+typedef dbg::Functions DBG;
+
+#include "../../bits/dbg.tcc"

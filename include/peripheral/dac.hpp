@@ -39,13 +39,15 @@
 namespace dac {
   class Functions {
     public:
-      // TODO DAC functions declaration
+      static inline void enableClock();
+      static inline void disableClock();
+
     private:
       Functions();
   };
 }  // namespace dac
 
-#include "../../bits/dac.tcc"
-
 // High-level access to the peripheral
-// TODO DAC high-level access
+typedef dac::Functions DAC;
+
+#include "../../bits/dac.tcc"

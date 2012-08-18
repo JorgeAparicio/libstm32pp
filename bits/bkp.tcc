@@ -21,6 +21,16 @@
 
 #pragma once
 
+#include "../include/peripheral/rcc.hpp"
+
 namespace bkp {
-// BKP function implementation
-}// namespace bkp
+  void Functions::enableClock()
+  {
+    RCC::enableClocks<rcc::apb1enr::BKP>();
+  }
+
+  void Functions::disableClock()
+  {
+    RCC::disableClocks<rcc::apb1enr::BKP>();
+  }
+} // namespace bkp

@@ -21,6 +21,16 @@
 
 #pragma once
 
+#include "../include/peripheral/rcc.hpp"
+
 namespace hash {
-// TODO HASH functions implementation
-}// namespace hash
+  void Functions::enableClock()
+  {
+    RCC::enableClocks<rcc::ahb2enr::HASH>();
+  }
+
+  void Functions::disableClock()
+  {
+    RCC::disableClocks<rcc::ahb2enr::HASH>();
+  }
+} // namespace hash

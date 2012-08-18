@@ -50,9 +50,10 @@ namespace usart {
   class Asynchronous {
     public:
       enum {
-        FREQUENCY = u32(U) > u32(alias::APB2) ?
-                                                         clock::APB2 :
-                                                         clock::APB1
+        FREQUENCY =
+        u32(U) > u32(alias::APB2) ?
+                                    clock::APB2 :
+                                    clock::APB1
       };
 
       static inline void enableClock();

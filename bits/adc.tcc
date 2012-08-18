@@ -20,6 +20,7 @@
  ******************************************************************************/
 
 #pragma once
+
 #include "bitband.hpp"
 #include "../include/peripheral/rcc.hpp"
 

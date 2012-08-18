@@ -41,15 +41,17 @@
 namespace cryp {
   class Functions {
     public:
-      // TODO CRYP functions declaration
+      static inline void enableClock();
+      static inline void disableClock();
+
     private:
       Functions();
   };
 }  // namespace cryp
 
-#include "../../bits/cryp.tcc"
-
 // High-level access to the peripheral
-// TODO CRYP high-level access
+typedef cryp::Functions CRYP;
+
+#include "../../bits/cryp.tcc"
 
 #endif

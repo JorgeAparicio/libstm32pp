@@ -28,8 +28,6 @@ namespace exti {
   template<u8 N>
   void Functions<N>::clearPendingFlag()
   {
-    static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
-
     *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::pr::OFFSET,
         N
@@ -42,8 +40,6 @@ namespace exti {
   template<u8 N>
   void Functions<N>::disableAll()
   {
-    static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
-
     *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::emr::OFFSET,
         N
@@ -76,8 +72,6 @@ namespace exti {
   template<u8 N>
   void Functions<N>::disableEvent()
   {
-    static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
-
     *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::emr::OFFSET,
         N
@@ -105,8 +99,6 @@ namespace exti {
   template<u8 N>
   void Functions<N>::disableInterrupt()
   {
-    static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
-
     *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::imr::OFFSET,
         N
@@ -134,8 +126,6 @@ namespace exti {
   template<u8 N>
   void Functions<N>::enableHardwareEventByFallingEdge()
   {
-    static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
-
     *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::emr::OFFSET,
         N
@@ -153,8 +143,6 @@ namespace exti {
   template<u8 N>
   void Functions<N>::enableHardwareEventByRisingEdge()
   {
-    static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
-
     *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::emr::OFFSET,
         N
@@ -172,8 +160,6 @@ namespace exti {
   template<u8 N>
   void Functions<N>::enableHardwareInterruptByFallingEdge()
   {
-    static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
-
     *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::imr::OFFSET,
         N
@@ -191,8 +177,6 @@ namespace exti {
   template<u8 N>
   void Functions<N>::enableHardwareInterruptByRisingEdge()
   {
-    static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
-
     *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::imr::OFFSET,
         N
@@ -210,8 +194,6 @@ namespace exti {
   template<u8 N>
   void Functions<N>::enableSoftwareEvent()
   {
-    static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
-
     *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::emr::OFFSET,
         N
@@ -229,8 +211,6 @@ namespace exti {
   template<u8 N>
   void Functions<N>::enableSoftwareInterrupt()
   {
-    static_assert(N < 23, "There are only 23 (0-22) external interrupt lines");
-
     *(volatile u32*) (bitband::peripheral<
         ADDRESS + registers::emr::OFFSET,
         N

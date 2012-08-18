@@ -661,8 +661,12 @@ UART5 = 1 << 20,
 I2C1 = 1 << 21,
 I2C2 = 1 << 22,
 USB = 1 << 23,
+#ifdef CONNECTIVITY_LINE
 CAN1 = 1 << 25,
 CAN2 = 1 << 26,
+#else // CONNECTIVITY_LINE
+CAN = 1 << 25,
+#endif // CONNECTIVITY_LINE
 BKP = 1 << 27,
 PWR = 1 << 28,
 DAC = 1 << 29,
@@ -795,8 +799,12 @@ UART5 = 1 << 20,
 I2C1 = 1 << 21,
 I2C2 = 1 << 22,
 USB = 1 << 23,
+#ifdef CONNECTIVITY_LINE
 CAN1 = 1 << 25,
 CAN2 = 1 << 26,
+#else // CONNECTIVITY_LINE
+CAN = 1 << 25,
+#endif // CONNECTIVITY_LINE
 BKP = 1 << 27,
 PWR = 1 << 28,
 DAC = 1 << 29,
@@ -1135,8 +1143,8 @@ GPIOI = 1 << 8,
 CRC = 1 << 12,
 DMA1 = 1 << 21,
 DMA2 = 1 << 22,
-ETHMAC = 1 << 25,
-OTGHS = 1 << 29,
+ETH_MAC = 1 << 25,
+OTG_HS = 1 << 29,
 };
 }  // namespace ahb1rstr
 
@@ -1183,12 +1191,12 @@ CCMDATARAM = 1 << 20,
 #endif // STM32F4XX
 DMA1 = 1 << 21,
 DMA2 = 1 << 22,
-ETHMAC = 1 << 25,
-ETHMACTX = 1 << 26,
-ETHMACRX = 1 << 27,
-ETHMACPTP = 1 << 28,
-OTGHS = 1 << 29,
-OTGHSULPI = 1 << 30,
+ETH_MAC = 1 << 25,
+ETH_MAC_TX = 1 << 26,
+ETH_MAC_RX = 1 << 27,
+ETH_MAC_PTP = 1 << 28,
+OTG_HS = 1 << 29,
+OTG_HS_ULPI = 1 << 30,
 };
 }  // namespace ahb1enr
 
@@ -1201,7 +1209,7 @@ DCMI = 1 << 0,
 CRYP = 1 << 4,
 HASH = 1 << 5,
 RNG = 1 << 6,
-OTGFS = 1 << 7,
+USB_OTG_FS = 1 << 7,
 };
 }  // namespace ahb2enr
 

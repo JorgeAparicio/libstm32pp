@@ -37,10 +37,18 @@
 
 // High-level functions
 namespace wwdg {
-// TODO WWDG functions declaration
-}// namespace wwdg
+  class Functions {
+    public:
+      static inline void enableClock();
+      static inline void disableClock();
+
+    private:
+      Functions();
+  };
+
+} // namespace wwdg
 
 // High-level access to the peripheral
-// TODO WWDG high-level access
+typedef wwdg::Functions WWDG;
 
 #include "../../bits/wwdg.tcc"

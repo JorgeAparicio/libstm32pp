@@ -46,6 +46,6 @@ namespace iwdg {
 }  // namespace iwdg
 
 // High-level access to the peripheral
-// TODO IWDG high-level access
+typedef iwdg::Functions IWDG;
 
 #include "../../bits/iwdg.tcc"

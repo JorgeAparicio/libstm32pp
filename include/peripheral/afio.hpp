@@ -30,10 +30,10 @@
 #pragma once
 
 #include "../device_select.hpp"
-#include "../defs.hpp"
 
 #ifdef STM32F1XX
 
+#include "../defs.hpp"
 #include "../../memorymap/afio.hpp"
 
 // Low-level access to the registers
@@ -43,15 +43,16 @@
 namespace afio {
   class Functions {
     public:
-      // TODO AFIO function declaration
+      static inline void enableClock();
+      static inline void disableClock();
     private:
       Functions();
   };
-}  // namespace afio
-
-#include "../../bits/afio.tcc"
+}  // namespace afio"
 
 // High-level access to the peripheral
-// TODO AFIO high-level access
+typedef afio::Functions AFIO;
+
+#include "../../bits/afio.tcc"
 
 #endif

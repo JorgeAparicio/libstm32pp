@@ -39,13 +39,15 @@
 namespace crc {
   class Functions {
     public:
-      // TODO CRC functions declaration
+      static inline void enableClock();
+      static inline void disableClock();
+
     private:
       Functions();
   };
 }  // namespace crc
 
-#include "../../bits/crc.tcc"
-
 // High-level access to the peripheral
-// TODO CRC high-level access
+typedef crc::Functions CRC;
+
+#include "../../bits/crc.tcc"

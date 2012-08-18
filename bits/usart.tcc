@@ -32,29 +32,28 @@ namespace usart {
   template<address::E A>
   void Asynchronous<A>::enableClock()
   {
-    RCC::enableClocks<
-        A == address::USART2 ?
-            rcc::apb1enr::USART2 :
-            (A == address::USART3 ?
-                rcc::apb1enr::USART3 :
-                (A == address::UART4 ?
-                    rcc::apb1enr::UART4 :
-                    (A == address::UART5 ?
-                                           rcc::apb1enr::UART5 :
-                                           rcc::apb1enr::Bits(0))))
-    >();
-
-    RCC::enableClocks<
-        A == address::USART1 ?
-                               rcc::apb2enr::USART1 :
+    switch (A) {
+      case address::USART1:
+        RCC::enableClocks<rcc::apb2enr::USART1>();
+        break;
+      case address::USART2:
+        RCC::enableClocks<rcc::apb1enr::USART2>();
+        break;
+      case address::USART3:
+        RCC::enableClocks<rcc::apb1enr::USART3>();
+        break;
+      case address::UART4:
+        RCC::enableClocks<rcc::apb1enr::UART4>();
+        break;
+      case address::UART5:
+        RCC::enableClocks<rcc::apb1enr::UART5>();
+        break;
 #ifndef STM32F1XX
-                               (A == address::USART6 ?
-                                   rcc::apb2enr::USART6 :
-                                   rcc::apb2enr::Bits(0))
-#else // !STM32F1XX
-                               rcc::apb2enr::Bits(0)
-    #endif // !STM32F1XX
-    >();
+      case address::USART6:
+        RCC::enableClocks<rcc::apb2enr::USART6>();
+        break;
+#endif // STM32F1XX
+    }
   }
 
   /**
@@ -81,11 +80,11 @@ namespace usart {
                                rcc::apb2enr::USART1 :
 #ifndef STM32F1XX
                                (A == address::USART6 ?
-                                   rcc::apb2enr::USART6 :
-                                   rcc::apb2enr::Bits(0))
-#else // !STM32F1XX
-                               rcc::apb2enr::Bits(0)
-    #endif // !STM32F1XX
+                                                       rcc::apb2enr::USART6 :
+                                                       rcc::apb2enr::Bits(0))
+    #else // !STM32F1XX
+    rcc::apb2enr::Bits(0)
+#endif // !STM32F1XX
     >();
   }
 

@@ -21,7 +21,7 @@
 
 #pragma once
 
-#include "bitband.hpp"
+#include "../include/bitband.hpp"
 #include "../include/peripheral/rcc.hpp"
 
 namespace tim {
@@ -31,110 +31,61 @@ namespace tim {
   template<address::E T>
   void Functions<T>::enableClock()
   {
-    RCC::enableClocks
-    <
-        (T == address::
-            TIM2 ?
-            rcc::
-            apb1enr::
-            TIM2 :
-            (T == address::
-                TIM3 ?
-                rcc::
-                apb1enr::
-                TIM3 :
-                (T == address::
-                    TIM4 ?
-                    rcc::
-                    apb1enr::
-                    TIM4 :
-                    (T == address::
-                        TIM5 ?
-                        rcc::
-                        apb1enr::
-                        TIM5 :
-                        (T == address::
-                            TIM6 ?
-                            rcc::
-                            apb1enr::
-                            TIM6 :
-                            (T == address::
-                                TIM7 ?
-                                rcc::
-                                apb1enr::
-                                TIM7 :
-                                (T == address::
-                                    TIM12 ?
-                                            rcc::
-                                            apb1enr::
-                                            TIM12 :
-                                            (T == address::
-                                                TIM13 ?
-                                                        rcc::
-                                                        apb1enr::
-                                                        TIM13 :
-                                                        (T == address::
-                                                            TIM14 ?
-                                                                    rcc::
-                                                                    apb1enr::
-                                                                    TIM14 :
-                                                                    rcc::
-                                                                    apb1enr::
-                                                                    Bits(0))))))))))
-    >();
-
-    RCC::enableClocks<
-        T == address::
-            TIM1 ?
-            rcc::
-            apb2enr::
-            TIM1 :
-            (T == address::
-                TIM8 ?
-                rcc::
-                apb2enr::
-                TIM8 :
-                (T == address::
-                    TIM9 ?
-                           rcc::
-                           apb2enr::
-                           TIM9 :
-                           (T == address::
-                               TIM10 ?
-                                       rcc::
-                                       apb2enr::
-                                       TIM10 :
-                                       (T == address::
-                                           TIM11 ?
-                                                   rcc::
-                                                   apb2enr::
-                                                   TIM11 :
+    switch (T) {
+      case address::TIM1:
+        RCC::enableClocks<rcc::apb2enr::TIM1>();
+        break;
+      case address::TIM2:
+        RCC::enableClocks<rcc::apb1enr::TIM2>();
+        break;
+      case address::TIM3:
+        RCC::enableClocks<rcc::apb1enr::TIM3>();
+        break;
+      case address::TIM4:
+        RCC::enableClocks<rcc::apb1enr::TIM4>();
+        break;
+      case address::TIM5:
+        RCC::enableClocks<rcc::apb1enr::TIM5>();
+        break;
+      case address::TIM6:
+        RCC::enableClocks<rcc::apb1enr::TIM6>();
+        break;
+      case address::TIM7:
+        RCC::enableClocks<rcc::apb1enr::TIM7>();
+        break;
+      case address::TIM8:
+        RCC::enableClocks<rcc::apb2enr::TIM8>();
+        break;
+      case address::TIM9:
+        RCC::enableClocks<rcc::apb2enr::TIM9>();
+        break;
+      case address::TIM10:
+        RCC::enableClocks<rcc::apb2enr::TIM10>();
+        break;
+      case address::TIM11:
+        RCC::enableClocks<rcc::apb2enr::TIM11>();
+        break;
+      case address::TIM12:
+        RCC::enableClocks<rcc::apb1enr::TIM12>();
+        break;
+      case address::TIM13:
+        RCC::enableClocks<rcc::apb1enr::TIM13>();
+        break;
+      case address::TIM14:
+        RCC::enableClocks<rcc::apb1enr::TIM14>();
+        break;
 #ifdef VALUE_LINE
-                                                   (T == address::
-                                                       TIM15 ?
-                                                       rcc::
-                                                       apb2enr::
-                                                       TIM15 :
-                                                       (T == address::
-                                                           TIM16 ?
-                                                           rcc::
-                                                           apb2enr::
-                                                           TIM16 :
-                                                           (T == address::
-                                                               TIM17 ?
-                                                               rcc::
-                                                               apb2enr::
-                                                               TIM17 :
-                                                               rcc::
-                                                               apb2enr::
-                                                               Bits(0))))))))
-#else // VALUE_LINE
-                                                   rcc::
-                                                   apb2enr::
-                                                   Bits(0)))))
-
+        case address::TIM15:
+        RCC::enableClocks<rcc::apb2enr::TIM15>();
+        break;
+        case address::TIM16:
+        RCC::enableClocks<rcc::apb2enr::TIM16>();
+        break;
+        case address::TIM17:
+        RCC::enableClocks<rcc::apb2enr::TIM17>();
+        break;
 #endif // VALUE_LINE
->();
+    }
   }
 
   /**
@@ -143,110 +94,61 @@ namespace tim {
   template<address::E T>
   void Functions<T>::disableClock()
   {
-    RCC::disableClocks
-    <
-        (T == address::
-            TIM2 ?
-            rcc::
-            apb1enr::
-            TIM2 :
-            (T == address::
-                TIM3 ?
-                rcc::
-                apb1enr::
-                TIM3 :
-                (T == address::
-                    TIM4 ?
-                    rcc::
-                    apb1enr::
-                    TIM4 :
-                    (T == address::
-                        TIM5 ?
-                        rcc::
-                        apb1enr::
-                        TIM5 :
-                        (T == address::
-                            TIM6 ?
-                            rcc::
-                            apb1enr::
-                            TIM6 :
-                            (T == address::
-                                TIM7 ?
-                                rcc::
-                                apb1enr::
-                                TIM7 :
-                                (T == address::
-                                    TIM12 ?
-                                            rcc::
-                                            apb1enr::
-                                            TIM12 :
-                                            (T == address::
-                                                TIM13 ?
-                                                        rcc::
-                                                        apb1enr::
-                                                        TIM13 :
-                                                        (T == address::
-                                                            TIM14 ?
-                                                                    rcc::
-                                                                    apb1enr::
-                                                                    TIM14 :
-                                                                    rcc::
-                                                                    apb1enr::
-                                                                    Bits(0))))))))))
-    >();
-
-    RCC::disableClocks<
-        T == address::
-            TIM1 ?
-            rcc::
-            apb2enr::
-            TIM1 :
-            (T == address::
-                TIM8 ?
-                rcc::
-                apb2enr::
-                TIM8 :
-                (T == address::
-                    TIM9 ?
-                           rcc::
-                           apb2enr::
-                           TIM9 :
-                           (T == address::
-                               TIM10 ?
-                                       rcc::
-                                       apb2enr::
-                                       TIM10 :
-                                       (T == address::
-                                           TIM11 ?
-                                                   rcc::
-                                                   apb2enr::
-                                                   TIM11 :
+    switch (T) {
+      case address::TIM1:
+        RCC::disableClocks<rcc::apb2enr::TIM1>();
+        break;
+      case address::TIM2:
+        RCC::disableClocks<rcc::apb1enr::TIM2>();
+        break;
+      case address::TIM3:
+        RCC::disableClocks<rcc::apb1enr::TIM3>();
+        break;
+      case address::TIM4:
+        RCC::disableClocks<rcc::apb1enr::TIM4>();
+        break;
+      case address::TIM5:
+        RCC::disableClocks<rcc::apb1enr::TIM5>();
+        break;
+      case address::TIM6:
+        RCC::disableClocks<rcc::apb1enr::TIM6>();
+        break;
+      case address::TIM7:
+        RCC::disableClocks<rcc::apb1enr::TIM7>();
+        break;
+      case address::TIM8:
+        RCC::disableClocks<rcc::apb2enr::TIM8>();
+        break;
+      case address::TIM9:
+        RCC::disableClocks<rcc::apb2enr::TIM9>();
+        break;
+      case address::TIM10:
+        RCC::disableClocks<rcc::apb2enr::TIM10>();
+        break;
+      case address::TIM11:
+        RCC::disableClocks<rcc::apb2enr::TIM11>();
+        break;
+      case address::TIM12:
+        RCC::disableClocks<rcc::apb1enr::TIM12>();
+        break;
+      case address::TIM13:
+        RCC::disableClocks<rcc::apb1enr::TIM13>();
+        break;
+      case address::TIM14:
+        RCC::disableClocks<rcc::apb1enr::TIM14>();
+        break;
 #ifdef VALUE_LINE
-                                                   (T == address::
-                                                       TIM15 ?
-                                                       rcc::
-                                                       apb2enr::
-                                                       TIM15 :
-                                                       (T == address::
-                                                           TIM16 ?
-                                                           rcc::
-                                                           apb2enr::
-                                                           TIM16 :
-                                                           (T == address::
-                                                               TIM17 ?
-                                                               rcc::
-                                                               apb2enr::
-                                                               TIM17 :
-                                                               rcc::
-                                                               apb2enr::
-                                                               Bits(0))))))))
-#else // VALUE_LINE
-                                                   rcc::
-                                                   apb2enr::
-                                                   Bits(0)))))
-
+        case address::TIM15:
+        RCC::disableClocks<rcc::apb2enr::TIM15>();
+        break;
+        case address::TIM16:
+        RCC::disableClocks<rcc::apb2enr::TIM16>();
+        break;
+        case address::TIM17:
+        RCC::disableClocks<rcc::apb2enr::TIM17>();
+        break;
 #endif // VALUE_LINE
->();
+    }
   }
 
   /**

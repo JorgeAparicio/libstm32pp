@@ -21,6 +21,28 @@
 
 #pragma once
 
+#include "../include/peripheral/rcc.hpp"
+
 namespace fsmc {
-// TODO FSMC functions implementation
-}// namespace fsmc
+  void Functions::enableClock()
+  {
+#ifndef STM32F1XX
+    RCC::enableClocks<rcc::ahb3enr::FSMC>();
+#else // STM32F1XX
+#ifndef CONNECTIVITY_LINE
+    RCC::enableClocks<rcc::ahbenr::FSMC>();
+#endif // CONNECTIVITY_LINE
+#endif // STM32F1XX
+  }
+
+  void Functions::disableClock()
+  {
+#ifndef STM32F1XX
+    RCC::disableClocks<rcc::ahb3enr::FSMC>();
+#else // STM32F1XX
+#ifndef CONNECTIVITY_LINE
+    RCC::disableClocks<rcc::ahbenr::FSMC>();
+#endif // CONNECTIVITY_LINE
+#endif // STM32F1XX
+  }
+} // namespace fsmc

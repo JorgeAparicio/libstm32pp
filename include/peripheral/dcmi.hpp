@@ -105,9 +105,9 @@ namespace dcmi {
   };
 }  // namespace dcmi
 
-#include "../../bits/dcmi.tcc"
-
 // High-level access to the peripheral
 typedef dcmi::Functions DCMI;
+
+#include "../../bits/dcmi.tcc"
 
 #endif

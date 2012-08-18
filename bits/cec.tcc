@@ -21,6 +21,16 @@
 
 #pragma once
 
+#include "../include/peripheral/rcc.hpp"
+
 namespace cec {
-// CEC function implementation
+  void Functions::enableClock()
+  {
+    RCC::enableClocks<rcc::apb1enr::CEC>();
+  }
+
+  void Functions::disableClock()
+  {
+    RCC::disableClocks<rcc::apb1enr::CEC>();
+  }
 }  // namespace can

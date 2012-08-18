@@ -37,10 +37,16 @@
 
 // High-level functions
 namespace rtc {
-// TODO RTC functions declaration
+  class Functions {
+    public:
+
+
+    private:
+      Functions();
+  };
 }
 
 // High-level access to the peripheral
-// TODO RTC high-level access
+typedef rtc::Functions RTC;
 
 #include "../../bits/rtc.tcc"

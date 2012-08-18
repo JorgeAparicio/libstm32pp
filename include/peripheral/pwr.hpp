@@ -39,6 +39,9 @@
 namespace pwr {
   class Functions {
     public:
+      static inline void enableClock();
+      static inline void disableClock();
+
       static inline void enableBackupDomainWriteProtection();
       static inline void disableBackupDomainWriteProtection();
     private:

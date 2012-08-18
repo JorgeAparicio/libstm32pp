@@ -724,6 +724,39 @@ namespace rcc {
   }
 
   /**
+   * @brief Enables these peripherals. (AHB3)
+   */
+  template<
+      ahb3enr::Bits ... AHB3ENR
+  >
+  void Functions::enableClocks()
+  {
+    RCC_REGS->AHB3ENR |= cSum<AHB3ENR...>::value;
+  }
+
+  /**
+   * @brief Disables these peripherals. (AHB3)
+   */
+  template<
+      ahb3enr::Bits ... AHB3ENR
+  >
+  void Functions::disableClocks()
+  {
+    RCC_REGS->AHB3ENR &= ~cSum<AHB3ENR...>::value;
+  }
+
+  /**
+   * @brief Resets these peripherals. (AHB3)
+   */
+  template<
+      ahb3rstr::Bits ... AHB3RSTR
+  >
+  void Functions::resetPeripherals()
+  {
+    RCC_REGS->AHB3RSTR = cSum<AHB3RSTR...>::value;
+  }
+
+  /**
    * @brief Configures the various PLL prescalers and multipliers.
    * @note  The PLL circuitry must be off during configuration!
    * @note  Overrides the old configuration.

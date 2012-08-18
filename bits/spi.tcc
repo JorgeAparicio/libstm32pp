@@ -20,43 +20,40 @@
  ******************************************************************************/
 
 #pragma once
+
 #include "../include/peripheral/rcc.hpp"
 
 namespace spi {
   template<address::E S>
   void Functions<S>::enableClock()
   {
-    RCC::enableClocks<
-        S == address::SPI1 ?
-                             rcc::apb2enr::SPI1 :
-                             rcc::apb2enr::Bits(0)
-    >();
-
-    RCC::enableClocks<
-        S == address::SPI2 ?
-            rcc::apb1enr::SPI2 :
-            (S == address::SPI3 ?
-                                  rcc::apb1enr::SPI3 :
-                                  rcc::apb1enr::Bits(0))
-    >();
+    switch (S) {
+      case address::SPI1:
+        RCC::enableClocks<rcc::apb2enr::SPI1>();
+        break;
+      case address::SPI2:
+        RCC::enableClocks<rcc::apb1enr::SPI2>();
+        break;
+      case address::SPI3:
+        RCC::enableClocks<rcc::apb1enr::SPI3>();
+        break;
+    }
   }
 
   template<address::E S>
   void Functions<S>::disableClock()
   {
-    RCC::disableClocks<
-        S == address::SPI1 ?
-                             rcc::apb2enr::SPI1 :
-                             rcc::apb2enr::Bits(0)
-    >();
-
-    RCC::disableClocks<
-        S == address::SPI2 ?
-            rcc::apb1enr::SPI2 :
-            (S == address::SPI3 ?
-                                  rcc::apb1enr::SPI3 :
-                                  rcc::apb1enr::Bits(0))
-    >();
+    switch (S) {
+      case address::SPI1:
+        RCC::disableClocks<rcc::apb2enr::SPI1>();
+        break;
+      case address::SPI2:
+        RCC::disableClocks<rcc::apb1enr::SPI2>();
+        break;
+      case address::SPI3:
+        RCC::disableClocks<rcc::apb1enr::SPI3>();
+        break;
+    }
   }
 
   template<address::E S>

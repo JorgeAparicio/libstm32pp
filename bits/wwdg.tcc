@@ -21,8 +21,17 @@
 
 #pragma once
 
-namespace wwdg {
-// TODO WWDG function implementations
-}  // namespace wwdg
+#include "../include/peripheral/rcc.hpp"
 
+namespace wwdg {
+  void Functions::enableClock()
+  {
+    RCC::enableClocks<rcc::apb1enr::WWDG>();
+  }
+
+  void Functions::disableClock()
+  {
+    RCC::disableClocks<rcc::apb1enr::WWDG>();
+  }
+}  // namespace wwdg
 

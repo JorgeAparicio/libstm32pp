@@ -21,6 +21,16 @@
 
 #pragma once
 
+#include "../include/peripheral/rcc.hpp"
+
 namespace dac {
-// DAC function implementation
-}// namespace dac
+  void Functions::enableClock()
+  {
+    RCC::enableClocks<rcc::apb1enr::DAC>();
+  }
+
+  void Functions::disableClock()
+  {
+    RCC::disableClocks<rcc::apb1enr::DAC>();
+  }
+} // namespace dac

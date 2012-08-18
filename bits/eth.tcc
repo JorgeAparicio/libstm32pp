@@ -21,6 +21,42 @@
 
 #pragma once
 
+#include "../include/peripheral/rcc.hpp"
+
 namespace eth {
-  // TODO ETH function implementation
+  void Functions::enableClocks()
+  {
+#ifndef STM32F1XX
+    RCC::enableClocks<
+    rcc::ahb1enr::ETH_MAC,
+    rcc::ahb1enr::ETH_MAC_TX,
+    rcc::ahb1enr::ETH_MAC_RX,
+    rcc::ahb1enr::ETH_MAC_PTP
+    >();
+#else // !STM32F1XX
+    RCC::enableClocks<
+        rcc::ahbenr::ETH_MAC,
+        rcc::ahbenr::ETH_MAC_TX,
+        rcc::ahbenr::ETH_MAC_RX
+    >();
+#endif // STM32F1XX
+  }
+
+  void Functions::disableClocks()
+  {
+#ifndef STM32F1XX
+    RCC::disableClocks<
+    rcc::ahb1enr::ETH_MAC,
+    rcc::ahb1enr::ETH_MAC_TX,
+    rcc::ahb1enr::ETH_MAC_RX,
+    rcc::ahb1enr::ETH_MAC_PTP
+    >();
+#else // !STM32F1XX
+    RCC::disableClocks<
+        rcc::ahbenr::ETH_MAC,
+        rcc::ahbenr::ETH_MAC_TX,
+        rcc::ahbenr::ETH_MAC_RX
+    >();
+#endif // STM32F1XX
+  }
 }  // namespace eth

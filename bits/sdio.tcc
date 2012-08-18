@@ -21,6 +21,16 @@
 
 #pragma once
 
+#include "../include/peripheral/rcc.hpp"
+
 namespace sdio {
-// TODO SDIO functions implementation
-}// namespace sdio
+  void Functions::enableClock()
+  {
+    RCC::enableClocks<rcc::apb2enr::SDIO>();
+  }
+
+  void Functions::disableClock()
+  {
+    RCC::disableClocks<rcc::apb2enr::SDIO>();
+  }
+} // namespace sdio

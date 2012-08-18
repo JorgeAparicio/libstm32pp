@@ -29,7 +29,7 @@
 
 #include "../device_select.hpp"
 
-#ifndef VALUE_LINE
+#if not defined STM32F1XX || defined CONNECTIVITY_LINE
 
 #include "../defs.hpp"
 
@@ -42,14 +42,16 @@
 namespace usb_fs {
   class Functions {
     public:
-      // TODO USB_FS functions declaration
+      static inline void enableClock();
+      static inline void disableClock();
+
     private:
       Functions();
   };
 }  // namespace usb_fs
 
 // High-level access to the peripheral
-// TODO USB_FS high-level access
+typedef usb_fs::Functions USB_FS;
 
 #include "../../bits/usb_fs.tcc"
 

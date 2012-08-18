@@ -39,13 +39,15 @@
 namespace fsmc {
   class Functions {
     public:
-      // TODO FSMC functions declaration
+      static inline void enableClock();
+      static inline void disableClock();
+
     private:
       Functions();
   };
 }  // namespace fsmc
 
 // High-level access to the peripheral
-// TODO FSMC high-level access
+typedef fsmc::Functions FSMC;
 
 #include "../../bits/fsmc.tcc"

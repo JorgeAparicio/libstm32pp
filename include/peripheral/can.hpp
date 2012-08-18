@@ -34,15 +34,27 @@
 
 #include "../../memorymap/can.hpp"
 
+#if defined CONNECTIVITY_LINE || not defined STM32F1XX
 #define CAN1_REGS reinterpret_cast<can::Registers *>(can::address::E::CAN1)
 #define CAN2_REGS reinterpret_cast<can::Registers *>(can::address::E::CAN2)
-
+#else // !CONNECTIVITY_LINE || STM32F1XX
+#define CAN_REGS reinterpret_cast<can::Registers *>(can::address::E::CAN)
+#endif // !CONNECTIVITY_LINE || STM32F1XX
 namespace can {
-  template <address::E Address>
+  template<address::E Address>
   class Functions {
-  // TODO CAN function declarations
+      static inline void enableClocks();
+      static inline void disableClocks();
   };
 }  // namespace can
+
+// High-level access to the peripheral
+#if defined CONNECTIVITY_LINE || not defined STM32F1XX
+typedef can::Functions<can::address::CAN1> CAN1;
+typedef can::Functions<can::address::CAN2> CAN2;
+#else // !CONNECTIVITY_LINE || STM32F1XX
+typedef can::Functions<can::address::CAN> CAN;
+#endif // !CONNECTIVITY_LINE || STM32F1XX
 
 #include "../../bits/can.tcc"
 

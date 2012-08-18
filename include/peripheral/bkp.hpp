@@ -28,10 +28,10 @@
 #pragma once
 
 #include "../device_select.hpp"
-#include "../defs.hpp"
 
 #ifdef STM32F1XX
 
+#include "../defs.hpp"
 #include "../../memorymap/bkp.hpp"
 
 // Low-level access to the registers
@@ -41,15 +41,16 @@
 namespace bkp {
   class Functions {
     public:
-    // TODO BKP function declaration
+      static inline void enableClock();
+      static inline void disableClock();
     private:
     Functions();
   };
 }  // namespace bkp
 
-#include "../../bits/bkp.tcc"
-
 // High-level access to the peripheral
-// TODO BKP high-level access
+typedef bkp::Functions BKP;
+
+#include "../../bits/bkp.tcc"
 
 #endif

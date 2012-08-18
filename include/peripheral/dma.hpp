@@ -383,4 +383,5 @@ typedef dma::stream::Functions<
     dma::stream::address::STREAM_7
 > DMA2_STREAM7;
 #endif // STM32F1XX
+
 #include "../../bits/dma.tcc"

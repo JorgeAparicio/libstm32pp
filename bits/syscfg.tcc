@@ -20,6 +20,7 @@
  ******************************************************************************/
 
 #pragma once
+
 #include "../include/peripheral/syscfg.hpp"
 
 namespace syscfg {
