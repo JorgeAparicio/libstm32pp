@@ -42,36 +42,36 @@ namespace flash {
 #ifndef VALUE_LINE
       template<
           flash::registers::acr::bits::latency::states::E
-      > static INLINE void setLatency();
+      > static inline void setLatency();
       #endif
 #ifdef STM32F1XX
 #ifndef VALUE_LINE
-      static INLINE void enablePrefetch(void);
-      static INLINE void disablePrefetch(void);
+      static inline void enablePrefetch(void);
+      static inline void disablePrefetch(void);
 
 #endif
-      static INLINE void enableHalfCycleFlashAccess(void);
-      static INLINE void disableHalfCycleFlashAccess(void);
+      static inline void enableHalfCycleFlashAccess(void);
+      static inline void disableHalfCycleFlashAccess(void);
 #ifdef VALUE_LINE
       template <
       flash::registers::acr::bits::hlfcya::states::E
       >
-      static INLINE void configure(void);
+      static inline void configure(void);
 #else
       template<
       flash::registers::acr::bits::latency::states::E,
       flash::registers::acr::bits::hlfcya::states::E,
       flash::registers::acr::bits::prftbe::states::E
       >
-      static INLINE void configure(void);
+      static inline void configure(void);
 #endif
 #else // STM32F1XX
-      static INLINE void enablePrefetch(void);
-      static INLINE void disablePrefetch(void);
-      static INLINE void enableDataCache(void);
-      static INLINE void disableDataCache(void);
-      static INLINE void enableInstructionCache(void);
-      static INLINE void disableInstructionCache(void);
+      static inline void enablePrefetch(void);
+      static inline void disablePrefetch(void);
+      static inline void enableDataCache(void);
+      static inline void disableDataCache(void);
+      static inline void enableInstructionCache(void);
+      static inline void disableInstructionCache(void);
 
       template<
           flash::registers::acr::bits::latency::states::E,
@@ -79,7 +79,7 @@ namespace flash {
           flash::registers::acr::bits::dcen::states::E,
           flash::registers::acr::bits::icen::states::E
       >
-      static INLINE void configure(void);
+      static inline void configure(void);
 
 #endif // STM32F1XX
     private:

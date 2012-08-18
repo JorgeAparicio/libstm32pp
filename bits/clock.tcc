@@ -591,7 +591,7 @@ static_assert((SYSTEM < 48000000) ||
  ****************************************************************************/
 #if defined USING_HSE_CLOCK || \
     defined USING_HSE_CRYSTAL
-static INLINE void initializeHse()
+static inline void initializeHse()
 {
 #ifdef USING_HSE_CRYSTAL
   RCC::enableHseOscillator();
@@ -610,7 +610,7 @@ static INLINE void initializeHse()
 #endif // USING_HSE_CLOCK || USING_HSE_CRYSTAL
 #if defined USING_LSE_CLOCK || \
     defined USING_LSE_CRYSTAL
-static INLINE void initializeLse()
+static inline void initializeLse()
 {
 #ifdef USING_HSE_CRYSTAL
   RCC::enableLseOscillator();

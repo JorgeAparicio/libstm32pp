@@ -39,8 +39,8 @@
 namespace pwr {
   class Functions {
     public:
-      static INLINE void enableBackupDomainWriteProtection();
-      static INLINE void disableBackupDomainWriteProtection();
+      static inline void enableBackupDomainWriteProtection();
+      static inline void disableBackupDomainWriteProtection();
     private:
       Functions();
   };

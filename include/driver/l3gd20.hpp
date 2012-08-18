@@ -55,12 +55,12 @@ namespace l3gd20 {
       >
       static void configure();
 
-      static INLINE u8 readXLow();
-      static INLINE u8 readXHigh();
-      static INLINE u8 readYLow();
-      static INLINE u8 readYHigh();
-      static INLINE u8 readZLow();
-      static INLINE u8 readZHigh();
+      static inline u8 readXLow();
+      static inline u8 readXHigh();
+      static inline u8 readYLow();
+      static inline u8 readYHigh();
+      static inline u8 readZLow();
+      static inline u8 readZHigh();
 
     private:
       Gyroscope();

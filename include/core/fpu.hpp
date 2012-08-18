@@ -39,9 +39,9 @@
 namespace fpu {
   class Functions {
     public:
-      static INLINE void enableFullAccess();
-      static INLINE void enablePrivilegedAccess();
-      static INLINE void disable();
+      static inline void enableFullAccess();
+      static inline void enablePrivilegedAccess();
+      static inline void disable();
 
     private:
       Functions();

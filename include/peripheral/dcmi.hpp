@@ -49,32 +49,32 @@ namespace dcmi {
 
   class Functions {
     public:
-      static INLINE void enableClock();
-      static INLINE void disableClock();
-      static INLINE void enablePeripheral();
-      static INLINE void disablePeripheral();
-      static INLINE void startCapture();
-      static INLINE void stopCapture();
-      static INLINE bool isInLineSynchronization();
-      static INLINE bool isInFrameSynchronization();
-      static INLINE bool hasBufferOverrunOccurred();
-      static INLINE bool hasErrorSynchronizationOccurred();
-      static INLINE void enableCaptureCompleInterrupt();
-      static INLINE void disableCaptureCompleteInterrupt();
-      static INLINE void clearCaptureCompleteFlag();
-      static INLINE void enableBufferOverrunInterrupt();
-      static INLINE void disableBufferOverrunInterrupt();
-      static INLINE void clearBufferOverrunFlag();
-      static INLINE void enableSynchronizationErrorInterrupt();
-      static INLINE void disableSynchronizationErrorInterrupt();
-      static INLINE void clearSynchronizationErrorFlag();
-      static INLINE void enableVerticalSynchronizationInterrupt();
-      static INLINE void disableVerticalSynchronizationInterrupt();
-      static INLINE void clearVerticalSynchronizationFlag();
-      static INLINE void enableLineReceivedInterrupt();
-      static INLINE void disableLineReceivedInterrupt();
-      static INLINE void clearLineReceivedFlag();
-      static INLINE void clearAllFlags();
+      static inline void enableClock();
+      static inline void disableClock();
+      static inline void enablePeripheral();
+      static inline void disablePeripheral();
+      static inline void startCapture();
+      static inline void stopCapture();
+      static inline bool isInLineSynchronization();
+      static inline bool isInFrameSynchronization();
+      static inline bool hasBufferOverrunOccurred();
+      static inline bool hasErrorSynchronizationOccurred();
+      static inline void enableCaptureCompleInterrupt();
+      static inline void disableCaptureCompleteInterrupt();
+      static inline void clearCaptureCompleteFlag();
+      static inline void enableBufferOverrunInterrupt();
+      static inline void disableBufferOverrunInterrupt();
+      static inline void clearBufferOverrunFlag();
+      static inline void enableSynchronizationErrorInterrupt();
+      static inline void disableSynchronizationErrorInterrupt();
+      static inline void clearSynchronizationErrorFlag();
+      static inline void enableVerticalSynchronizationInterrupt();
+      static inline void disableVerticalSynchronizationInterrupt();
+      static inline void clearVerticalSynchronizationFlag();
+      static inline void enableLineReceivedInterrupt();
+      static inline void disableLineReceivedInterrupt();
+      static inline void clearLineReceivedFlag();
+      static inline void clearAllFlags();
 
       template<
           dcmi::registers::cr::bits::capture::states::E,
@@ -89,7 +89,7 @@ namespace dcmi {
           dcmi::registers::cr::bits::edm::states::E,
           dcmi::registers::cr::bits::enable::states::E
       >
-      static INLINE void configure();
+      static inline void configure();
 
       template<
           u32, /* Left */
@@ -98,7 +98,7 @@ namespace dcmi {
           u32 /* Height */,
           format::E
       >
-      static INLINE void setCropDimensions();
+      static inline void setCropDimensions();
 
     private:
       Functions();

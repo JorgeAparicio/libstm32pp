@@ -55,14 +55,14 @@ namespace usart {
                                                          clock::APB1
       };
 
-      static INLINE void enableClock();
-      static INLINE void disableClock();
-      static INLINE void sendData(u8 const data);
-      static INLINE u8 getData(void);
-      static INLINE bool canSendDataYet(void);
-      static INLINE bool isThereDataAvailable(void);
+      static inline void enableClock();
+      static inline void disableClock();
+      static inline void sendData(u8 const data);
+      static inline u8 getData(void);
+      static inline bool canSendDataYet(void);
+      static inline bool isThereDataAvailable(void);
       template<u32 BAUD_RATE>
-      static INLINE void setBaudRate();
+      static inline void setBaudRate();
 
       /**
        * @brief Configures the USART for asynchronous operation.
@@ -92,7 +92,7 @@ namespace usart {
           usart::registers::cr3::bits::ctsie::states::E,
           usart::registers::cr3::bits::onebit::states::E
       >
-      static INLINE void configure(void);
+      static inline void configure(void);
 
     private:
       Asynchronous();

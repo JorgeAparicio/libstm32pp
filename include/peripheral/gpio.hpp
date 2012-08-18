@@ -63,19 +63,19 @@ namespace gpio {
       >::address,
     };
 
-    static INLINE void enableClock();
-    static INLINE void setHigh();
-    static INLINE void setLow();
-    static INLINE void setOutput(u32 const value);
-    static INLINE u32 getInput();
-    static INLINE void pullUp();
-    static INLINE void pullDown();
-    static INLINE bool isHigh();
+    static inline void enableClock();
+    static inline void setHigh();
+    static inline void setLow();
+    static inline void setOutput(u32 const value);
+    static inline u32 getInput();
+    static inline void pullUp();
+    static inline void pullDown();
+    static inline bool isHigh();
 
     template<
     gpio::registers::cr::states::E CR
     >
-    static INLINE void setMode();
+    static inline void setMode();
 
     private:
     Pin();
@@ -84,8 +84,8 @@ namespace gpio {
   template<address::E P>
   class Port {
     public:
-    static INLINE void enableClock();
-    static INLINE void disableClock();
+    static inline void enableClock();
+    static inline void disableClock();
 
     template<
     gpio::registers::cr::states::E, /* 0 */
@@ -97,7 +97,7 @@ namespace gpio {
     gpio::registers::cr::states::E, /* 6 */
     gpio::registers::cr::states::E /* 7 */
     >
-    static INLINE void configureLowerPins();
+    static inline void configureLowerPins();
 
     template<
     gpio::registers::cr::states::E, /* 8 */
@@ -109,10 +109,10 @@ namespace gpio {
     gpio::registers::cr::states::E, /* 14 */
     gpio::registers::cr::states::E /* 15 */
     >
-    static INLINE void configureHigherPins();
+    static inline void configureHigherPins();
 
-    static INLINE void setOutput(u32 const value);
-    static INLINE u32 getInput();
+    static inline void setOutput(u32 const value);
+    static inline u32 getInput();
 
     private:
     Port();
@@ -135,37 +135,37 @@ namespace gpio {
         >(),
       };
 
-      static INLINE void enableClock();
-      static INLINE void setHigh();
-      static INLINE void setLow();
-      static INLINE void setOutput(u32 const value);
-      static INLINE u32 getInput();
-      static INLINE bool isHigh();
+      static inline void enableClock();
+      static inline void setHigh();
+      static inline void setLow();
+      static inline void setOutput(u32 const value);
+      static inline u32 getInput();
+      static inline bool isHigh();
 
       template<
           gpio::registers::moder::states::E
       >
-      static INLINE void setMode();
+      static inline void setMode();
 
       template<
           gpio::registers::otyper::states::E
       >
-      static INLINE void setOutputMode();
+      static inline void setOutputMode();
 
       template<
           gpio::registers::ospeedr::states::E
       >
-      static INLINE void setSpeed();
+      static inline void setSpeed();
 
       template<
           gpio::registers::pupdr::states::E
       >
-      static INLINE void setPullMode();
+      static inline void setPullMode();
 
       template<
           gpio::registers::afr::states::E
       >
-      static INLINE void setAlternateFunction();
+      static inline void setAlternateFunction();
 
     private:
       Pin();
@@ -175,10 +175,10 @@ namespace gpio {
   template<address::E P>
   class Port {
     public:
-      static INLINE void enableClock();
-      static INLINE void disableClock();
-      static INLINE void setOutput(u16 const);
-      static INLINE u16 getInput();
+      static inline void enableClock();
+      static inline void disableClock();
+      static inline void setOutput(u16 const);
+      static inline u16 getInput();
 
       template<
           gpio::registers::moder::states::E, /* 0 */
@@ -198,7 +198,7 @@ namespace gpio {
           gpio::registers::moder::states::E, /* 14 */
           gpio::registers::moder::states::E /* 15 */
       >
-      static INLINE void setModes();
+      static inline void setModes();
 
       template<
           gpio::registers::otyper::states::E, /* 0 */
@@ -218,7 +218,7 @@ namespace gpio {
           gpio::registers::otyper::states::E, /* 14 */
           gpio::registers::otyper::states::E /* 15 */
       >
-      static INLINE void setOutputTypes();
+      static inline void setOutputTypes();
 
       template<
           gpio::registers::ospeedr::states::E, /* 0 */
@@ -238,7 +238,7 @@ namespace gpio {
           gpio::registers::ospeedr::states::E, /* 14 */
           gpio::registers::ospeedr::states::E /* 15 */
       >
-      static INLINE void setOutputSpeeds();
+      static inline void setOutputSpeeds();
 
       template<
           gpio::registers::pupdr::states::E, /* 0 */
@@ -258,7 +258,7 @@ namespace gpio {
           gpio::registers::pupdr::states::E, /* 14 */
           gpio::registers::pupdr::states::E /* 15 */
       >
-      static INLINE void setPullModes();
+      static inline void setPullModes();
 
     private:
       Port();

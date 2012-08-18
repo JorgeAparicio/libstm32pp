@@ -44,16 +44,16 @@ namespace spi {
   template<address::E S>
   class Functions {
     public:
-      static INLINE void enableClock();
-      static INLINE void disableClock();
-      static INLINE void sendByte(const u8);
-      static INLINE u8 getByte();
-      static INLINE void sendWord(const u16);
-      static INLINE u16 getWord();
-      static INLINE void enable();
-      static INLINE void disable();
-      static INLINE bool candSendData();
-      static INLINE bool hasReceivedData();
+      static inline void enableClock();
+      static inline void disableClock();
+      static inline void sendByte(const u8);
+      static inline u8 getByte();
+      static inline void sendWord(const u16);
+      static inline u16 getWord();
+      static inline void enable();
+      static inline void disable();
+      static inline bool candSendData();
+      static inline bool hasReceivedData();
 
       template<
           spi::registers::cr1::bits::cpha::states::E,
@@ -76,7 +76,7 @@ namespace spi {
           spi::registers::cr2::bits::txdmaen::states::E,
           spi::registers::cr2::bits::txeie::states::E
       >
-      static INLINE void configure();
+      static inline void configure();
 
     private:
       Functions();

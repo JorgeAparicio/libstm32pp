@@ -50,7 +50,7 @@ namespace sccb {
       typedef tim::Functions<DELAY_TIMER_ADDRESS> TIMER;
 
     public:
-      static INLINE void initialize();
+      static inline void initialize();
       static void sendStart();
       static void sendStop();
       static void sendNACK();

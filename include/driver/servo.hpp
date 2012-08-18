@@ -77,13 +77,13 @@ namespace servo {
       typedef tim::Functions<PeriodTimerAddress> PeriodTimer;
       typedef tim::Functions<DutyCycleTimerAddress> DutyCycleTimer;
 
-      INLINE void initialize();
-      INLINE void setPin(u8 const, u32* const);
-      INLINE void start();
-      INLINE void stop();
-      INLINE void load(s16 const (&)[N]);
-      INLINE void onPeriodTimerInterrupt();
-      INLINE void onDutyCycleTimerInterrupt();
+      inline void initialize();
+      inline void setPin(u8 const, u32* const);
+      inline void start();
+      inline void stop();
+      inline void load(s16 const (&)[N]);
+      inline void onPeriodTimerInterrupt();
+      inline void onDutyCycleTimerInterrupt();
 
     private:
       s16 buffer[N];

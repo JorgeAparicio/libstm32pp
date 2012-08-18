@@ -131,8 +131,8 @@ namespace dma {
     template<dma::common::address::E>
     class Functions {
       public:
-        static INLINE void enableClock();
-        static INLINE void disableClock();
+        static inline void enableClock();
+        static inline void disableClock();
 
       private:
         Functions();
@@ -144,17 +144,17 @@ namespace dma {
     template<dma::common::address::E, dma::channel::address::E>
     class Functions {
       public:
-      static INLINE void enableClock();
-      static INLINE void enablePeripheral();
-      static INLINE void disablePeripheral();
-      static INLINE void setNumberOfTransactions(u16 const);
-      static INLINE void setPeripheralAddress(volatile void const*);
-      static INLINE void setPeripheralAddress(void const*);
-      static INLINE void setMemoryAddress(void const*);
-      static INLINE void clearGlobalFlag();
-      static INLINE void clearTransferCompleteFlag();
-      static INLINE void clearHalfTransferFlag();
-      static INLINE void clearTransferErrorFlag();
+      static inline void enableClock();
+      static inline void enablePeripheral();
+      static inline void disablePeripheral();
+      static inline void setNumberOfTransactions(u16 const);
+      static inline void setPeripheralAddress(volatile void const*);
+      static inline void setPeripheralAddress(void const*);
+      static inline void setMemoryAddress(void const*);
+      static inline void clearGlobalFlag();
+      static inline void clearTransferCompleteFlag();
+      static inline void clearHalfTransferFlag();
+      static inline void clearTransferErrorFlag();
 
       template<
       dma::channel::registers::cr::bits::tcie::states::E,
@@ -168,7 +168,7 @@ namespace dma {
       dma::channel::registers::cr::bits::msize::states::E,
       dma::channel::registers::cr::bits::pl::states::E,
       dma::channel::registers::cr::bits::mem2mem::states::E
-      > static INLINE void configure();
+      > static inline void configure();
       private:
       Functions();
     };
@@ -179,26 +179,26 @@ namespace dma {
     template<common::address::E D, address::E S>
     class Functions {
       public:
-        static INLINE void enableClock();
-        static INLINE void enablePeripheral();
-        static INLINE void disablePeripheral();
-        static INLINE bool isEnabled();
-        static INLINE void setNumberOfTransactions(u16 const);
-        static INLINE void setPeripheralAddress(volatile void*);
-        static INLINE void setPeripheralAddress(void*);
-        static INLINE void setMemory0Address(void*);
-        static INLINE void setMemory1Address(void*);
-        static INLINE void clearFifoErrorFlag();
-        static INLINE bool hasFifoErrorOccurred();
-        static INLINE void clearDirectModeErrorFlag();
-        static INLINE bool hasDirectModeErrorOccurred();
-        static INLINE void clearTransferErrorFlag();
-        static INLINE bool hasTransferErrorOccurred();
-        static INLINE void clearHalfTransferFlag();
-        static INLINE bool hasHalfTransferOccurred();
-        static INLINE void clearTransferCompleteFlag();
-        static INLINE bool hasTransferCompleteOccurred();
-        static INLINE bool isMemory1TheCurrentTarget();
+        static inline void enableClock();
+        static inline void enablePeripheral();
+        static inline void disablePeripheral();
+        static inline bool isEnabled();
+        static inline void setNumberOfTransactions(u16 const);
+        static inline void setPeripheralAddress(volatile void*);
+        static inline void setPeripheralAddress(void*);
+        static inline void setMemory0Address(void*);
+        static inline void setMemory1Address(void*);
+        static inline void clearFifoErrorFlag();
+        static inline bool hasFifoErrorOccurred();
+        static inline void clearDirectModeErrorFlag();
+        static inline bool hasDirectModeErrorOccurred();
+        static inline void clearTransferErrorFlag();
+        static inline bool hasTransferErrorOccurred();
+        static inline void clearHalfTransferFlag();
+        static inline bool hasHalfTransferOccurred();
+        static inline void clearTransferCompleteFlag();
+        static inline bool hasTransferCompleteOccurred();
+        static inline bool isMemory1TheCurrentTarget();
 
         template<
             dma::stream::registers::cr::bits::dmeie::states::E,
@@ -220,14 +220,14 @@ namespace dma {
             dma::stream::registers::cr::bits::mburst::states::E,
             dma::stream::registers::cr::bits::chsel::states::E
         >
-        static INLINE void configure();
+        static inline void configure();
 
         template<
             dma::stream::registers::fcr::bits::fth::states::E,
             dma::stream::registers::fcr::bits::dmdis::states::E,
             dma::stream::registers::fcr::bits::feie::states::E
         >
-        static INLINE void configureFIFO();
+        static inline void configureFIFO();
 
       private:
         Functions();

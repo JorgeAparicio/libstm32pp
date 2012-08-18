@@ -42,21 +42,21 @@
 namespace rng {
   class Functions {
     public:
-      static INLINE void enableClock();
-      static INLINE void disableClock();
-      static INLINE void startGenerator();
-      static INLINE void stopGenerator();
-      static INLINE void enableInterrupts();
-      static INLINE void disableInterrupts();
+      static inline void enableClock();
+      static inline void disableClock();
+      static inline void startGenerator();
+      static inline void stopGenerator();
+      static inline void enableInterrupts();
+      static inline void disableInterrupts();
 
       template<typename T>
-      static INLINE T getValue();
+      static inline T getValue();
 
-      static INLINE bool isDataReady(void);
-      static INLINE bool isSeedValid(void);
-      static INLINE bool isClockValid(void);
-      static INLINE void clearSeedErrorFlag(void);
-      static INLINE void clearClockErrorFlag(void);
+      static inline bool isDataReady(void);
+      static inline bool isSeedValid(void);
+      static inline bool isClockValid(void);
+      static inline void clearSeedErrorFlag(void);
+      static inline void clearClockErrorFlag(void);
 
     private:
       Functions();

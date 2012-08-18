@@ -72,34 +72,34 @@ namespace tim {
                                                          clock::APB1_TIMERS
       };
 
-      static INLINE void enableClock();
-      static INLINE void disableClock();
-      static INLINE void startCounter();
-      static INLINE void stopCounter();
-      static INLINE void setMicroSecondResolution();
-      static INLINE void setMiliSecondResolution();
+      static inline void enableClock();
+      static inline void disableClock();
+      static inline void startCounter();
+      static inline void stopCounter();
+      static inline void setMicroSecondResolution();
+      static inline void setMiliSecondResolution();
       static void delay(u16 const);
-      static INLINE void setPrescaler(u16 const);
-      static INLINE void setAutoReload(u16 const);
-      static INLINE void setCounter(u16 const);
-      static INLINE u16 getCounter();
-      static INLINE void generateUpdate();
-      static INLINE void enableUpdateInterrupt();
-      static INLINE void disableUpdateInterrupt();
-      static INLINE void clearUpdateFlag();
-      static INLINE void enableUpdateDma();
-      static INLINE void disableUpdateDma();
-      static INLINE bool hasUpdateEventOccurred();
+      static inline void setPrescaler(u16 const);
+      static inline void setAutoReload(u16 const);
+      static inline void setCounter(u16 const);
+      static inline u16 getCounter();
+      static inline void generateUpdate();
+      static inline void enableUpdateInterrupt();
+      static inline void disableUpdateInterrupt();
+      static inline void clearUpdateFlag();
+      static inline void enableUpdateDma();
+      static inline void disableUpdateDma();
+      static inline bool hasUpdateEventOccurred();
 
       template<
           u32
       >
-      static INLINE void configurePeriodicInterrupt();
+      static inline void configurePeriodicInterrupt();
 
       template<
           tim::registers::cr2::bits::mms::states::E
       >
-      static INLINE void setMasterMode();
+      static inline void setMasterMode();
 
       template<
           tim::registers::cr1::bits::cen::states::E,
@@ -108,7 +108,7 @@ namespace tim {
           tim::registers::cr1::bits::opm::states::E,
           tim::registers::cr1::bits::arpe::states::E
       >
-      static INLINE void configureBasicCounter();
+      static inline void configureBasicCounter();
 
       // TODO TIM capture functions
       // TODO TIM compare functions

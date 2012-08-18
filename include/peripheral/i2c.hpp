@@ -60,36 +60,36 @@ namespace i2c {
           i2c::registers::cr2::bits::dmaen::states::E,
           i2c::registers::cr2::bits::last::states::E
       >
-      static INLINE void configure();
+      static inline void configure();
 
       template<
           i2c::registers::ccr::bits::f_s::states::E,
           i2c::registers::ccr::bits::duty::states::E,
           u32 FREQUENCY_HZ
       >
-      static INLINE void configureClock();
+      static inline void configureClock();
 
-      static INLINE void enableClock();
-      static INLINE void disableClock();
-      static INLINE void enablePeripheral();
-      static INLINE void disablePeripheral();
-      static INLINE void sendStart();
-      static INLINE void sendStop();
-      static INLINE void sendData(u8 const data);
-      static INLINE u8 getData();
+      static inline void enableClock();
+      static inline void disableClock();
+      static inline void enablePeripheral();
+      static inline void disablePeripheral();
+      static inline void sendStart();
+      static inline void sendStop();
+      static inline void sendData(u8 const data);
+      static inline u8 getData();
 
       template<operation::E op>
-      static INLINE void sendAddress(u8 const add);
+      static inline void sendAddress(u8 const add);
 
-      static INLINE void enableACK();
-      static INLINE void disableACK();
-      static INLINE bool hasSentStart();
-      static INLINE bool hasSentStop();
-      static INLINE bool hasAddressTransmitted();
-      static INLINE bool hasReceivedData();
-      static INLINE bool canSendData();
-      static INLINE bool hasTranferFinished();
-      static INLINE bool isTheBusBusy();
+      static inline void enableACK();
+      static inline void disableACK();
+      static inline bool hasSentStart();
+      static inline bool hasSentStop();
+      static inline bool hasAddressTransmitted();
+      static inline bool hasReceivedData();
+      static inline bool canSendData();
+      static inline bool hasTranferFinished();
+      static inline bool isTheBusBusy();
       static void writeSlaveRegister(
           u8 const slaveAddress,
           u8 const registerAddress,

@@ -535,7 +535,7 @@ namespace clock {
    * @note  Call this function as early as possible in your program.
    * @note  The configuration of the clock is specified in clock.hpp
    */
-  static INLINE void initialize();
+  static inline void initialize();
 }  // namespace clock
 
 #include "../bits/clock.tcc"

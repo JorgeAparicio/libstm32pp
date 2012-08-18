@@ -44,13 +44,13 @@
 namespace syscfg {
   class Functions {
     public:
-      static INLINE void enableClock();
-      static INLINE void disableClock();
+      static inline void enableClock();
+      static inline void disableClock();
       template<
           u8 LINE,
           syscfg::registers::exticr::states::E
       >
-      static INLINE void selectExtiPin();
+      static inline void selectExtiPin();
 
     private:
       Functions();

@@ -40,16 +40,16 @@ namespace exti {
   template<u8 LINE>
   class Functions {
     public:
-      static INLINE void clearPendingFlag();
-      static INLINE void disableAll();
-      static INLINE void disableEvent();
-      static INLINE void disableInterrupt();
-      static INLINE void enableHardwareEventByFallingEdge();
-      static INLINE void enableHardwareEventByRisingEdge();
-      static INLINE void enableHardwareInterruptByFallingEdge();
-      static INLINE void enableHardwareInterruptByRisingEdge();
-      static INLINE void enableSoftwareEvent();
-      static INLINE void enableSoftwareInterrupt();
+      static inline void clearPendingFlag();
+      static inline void disableAll();
+      static inline void disableEvent();
+      static inline void disableInterrupt();
+      static inline void enableHardwareEventByFallingEdge();
+      static inline void enableHardwareEventByRisingEdge();
+      static inline void enableHardwareInterruptByFallingEdge();
+      static inline void enableHardwareInterruptByRisingEdge();
+      static inline void enableSoftwareEvent();
+      static inline void enableSoftwareInterrupt();
 
     private:
       Functions();

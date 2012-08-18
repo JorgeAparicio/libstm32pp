@@ -33,8 +33,6 @@ typedef uint16_t u16;
 typedef uint32_t u32;
 typedef uint64_t u64;
 
-#define INLINE __attribute__((always_inline)) inline
-
 // Read only permission
 #define __R volatile
 

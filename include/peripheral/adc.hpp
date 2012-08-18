@@ -45,45 +45,45 @@ namespace adc {
   template<address::E>
   class Functions {
     public:
-      static INLINE void enableClock();
-      static INLINE void disableClock();
-      static INLINE void enablePeripheral();
-      static INLINE void disablePeripheral();
-      static INLINE void startRegularConversions();
-      static INLINE void startInjectedConversions();
-      static INLINE void enableContinuousConversion();
-      static INLINE void disableContinuousConversion();
-      static INLINE void setWatchdogLowerThreshold(u16 const);
-      static INLINE u16 getWatchdogLowerThreshold();
-      static INLINE void setWatchdogHigherThreshold(u16 const);
-      static INLINE u16 getWatchdogHigherThreshold();
-      static INLINE bool hasRegularConversionEnded();
-      static INLINE bool hasInjectedConversionEnded();
-      static INLINE u16 getConversionResult();
+      static inline void enableClock();
+      static inline void disableClock();
+      static inline void enablePeripheral();
+      static inline void disablePeripheral();
+      static inline void startRegularConversions();
+      static inline void startInjectedConversions();
+      static inline void enableContinuousConversion();
+      static inline void disableContinuousConversion();
+      static inline void setWatchdogLowerThreshold(u16 const);
+      static inline u16 getWatchdogLowerThreshold();
+      static inline void setWatchdogHigherThreshold(u16 const);
+      static inline u16 getWatchdogHigherThreshold();
+      static inline bool hasRegularConversionEnded();
+      static inline bool hasInjectedConversionEnded();
+      static inline u16 getConversionResult();
 
       template<u32>
-      static INLINE void setNumberOfRegularChannels();
+      static inline void setNumberOfRegularChannels();
 
       template<u32>
-      static INLINE void setNumberOfInjectedChannels();
+      static inline void setNumberOfInjectedChannels();
 
       template<
           u32 CHANNEL,
           adc::registers::smp::states::E
       >
-      static INLINE void setConversionTime();
+      static inline void setConversionTime();
 
       template<
           u32 ORDER,
           u32 CONVERSION
       >
-      static INLINE void setRegularSequenceOrder();
+      static inline void setRegularSequenceOrder();
 
       template<
           u32 ORDER,
           u32 CONVERSION
       >
-      static INLINE void setInjectedSequenceOrder();
+      static inline void setInjectedSequenceOrder();
 
       template<
           adc::registers::cr1::bits::awdch::states::E,
@@ -113,7 +113,7 @@ namespace adc {
           adc::registers::cr2::bits::exten::states::E,
           adc::registers::cr2::bits::swstart::states::E
       >
-      static INLINE void configure();
+      static inline void configure();
 
     private:
       Functions();
