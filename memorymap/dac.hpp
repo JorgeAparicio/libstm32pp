@@ -24,6 +24,10 @@
 #include "common.hpp"
 
 namespace dac {
+  enum {
+    ADDRESS = alias::APB1 + 0x7400
+  };
+
   struct Registers {
       __RW
       u32 CR;       // 0x00: Control
@@ -53,11 +57,21 @@ namespace dac {
 #endif
   };
 
-  enum {
-    ADDRESS = alias::APB1 + 0x7400
-  };
+  namespace cr {
+    enum {
+      OFFSET = 0x00
+    };
+  }  // namespace cr
 
-  namespace registers {
-  // TODO DAC register bits
-  }// namespace registers
+  namespace swtrigr {
+    enum {
+      OFFSET = 0x04
+    };
+  }  // namespace swtrigr
+
+  namespace sr {
+    enum {
+      OFFSET = 0x34
+    };
+  }  // namespace sr
 }  // namespace dac
