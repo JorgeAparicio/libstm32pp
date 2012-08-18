@@ -24,6 +24,10 @@
 #include "common.hpp"
 
 namespace dbg {
+  enum {
+    ADDRESS = alias::DBG
+  };
+
   struct Registers {
       __RW
       u32 IDCODE;  // 0x00: MCU device ID code
@@ -37,11 +41,29 @@ namespace dbg {
 #endif
   };
 
-  enum {
-    ADDRESS = alias::DBG
-  };
+  namespace idcode {
+    enum {
+      OFFSET = 0x00
+    };
+  }  // namespace idcode
 
-  namespace registers {
-  // TODO DBG register bits
-  }// namespace registers
+  namespace cr {
+    enum {
+      OFFSET = 0x04
+    };
+  }  // namespace cr
+
+#ifndef STM32F1XX
+  namespace apb1fz {
+    enum {
+      OFFSET = 0x08
+    };
+  }  // namespace apb1fz
+
+  namespace apb2fz {
+    enum {
+      OFFSET = 0x0C
+    };
+  }  // namespace apb2fz
+#endif
 }  // namespace dbg
