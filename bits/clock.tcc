@@ -99,16 +99,16 @@ namespace clock {
 #endif // STM32F1XX
   enum {
     RTC =
-    rcc::registers::bdcr::bits::rtcsel::states::E(_RTCSEL) ==
-    rcc::registers::bdcr::bits::rtcsel::states::
+    rcc::bdcr::bits::rtcsel::States(_RTCSEL) ==
+    rcc::bdcr::bits::rtcsel::states::
     HSE_CLOCK_AS_RTC_SOURCE ?
     HSE / _RTCPRE :
-    (rcc::registers::bdcr::bits::rtcsel::states::E(_RTCSEL) ==
-        rcc::registers::bdcr::bits::rtcsel::states::
+    (rcc::bdcr::bits::rtcsel::States(_RTCSEL) ==
+        rcc::bdcr::bits::rtcsel::states::
         LSE_CLOCK_AS_RTC_SOURCE ?
         LSE :
-        (rcc::registers::bdcr::bits::rtcsel::states::E(_RTCSEL) ==
-            rcc::registers::bdcr::bits::rtcsel::states::
+        (rcc::bdcr::bits::rtcsel::States(_RTCSEL) ==
+            rcc::bdcr::bits::rtcsel::states::
             LSI_CLOCK_AS_RTC_SOURCE ?
             LSI :
             0))
@@ -130,12 +130,12 @@ namespace clock {
   static_assert((_PREDIV1 >= 1) && (_PREDIV1 <= 16),
       "PREDIV1 must be between 1 and 16 (inclusive)");
   enum {
-    _PLLSRC = rcc::registers::cfgr::bits::pllsrc::states::E(__PLLSRC) ==
-    rcc::registers::cfgr::bits::pllsrc::states::
+    _PLLSRC = rcc::cfgr::pllsrc::States(__PLLSRC) ==
+    rcc::cfgr::pllsrc::states::
     USE_HSI_CLOCK_OVER_2_AS_PLL_SOURCE ?
     HSI:
-    ( rcc::registers::cfgr::bits::pllsrc::states::E(__PLLSRC) ==
-        rcc::registers::cfgr::bits::pllsrc::states::
+    ( rcc::cfgr::pllsrc::States(__PLLSRC) ==
+        rcc::cfgr::pllsrc::states::
         USE_PREDIV1_OUTPUT_AS_PLL_SOURCE ?
         HSE / _PREDIV1:
         0)
@@ -144,12 +144,12 @@ namespace clock {
   static_assert((_PLLXTPRE >= 0) && (_PLLXTPRE <= 1),
       "PLLXTPRE can only take two values: 0 or 1");
   enum {
-    _PLLSRC = rcc::registers::cfgr::bits::pllsrc::states::E(__PLLSRC) ==
-    rcc::registers::cfgr::bits::pllsrc::states::
+    _PLLSRC = rcc::cfgr::pllsrc::States(__PLLSRC) ==
+    rcc::cfgr::pllsrc::states::
     USE_HSI_CLOCK_OVER_2_AS_PLL_SOURCE ?
     (HSI / 2):
-    ( rcc::registers::cfgr::bits::pllsrc::states::E(__PLLSRC) ==
-        rcc::registers::cfgr::bits::pllsrc::states::
+    ( rcc::cfgr::pllsrc::States(__PLLSRC) ==
+        rcc::cfgr::pllsrc::states::
         USE_PREDIV1_OUTPUT_AS_PLL_SOURCE ?
         HSE / (1 + _PLLXTPRE):
         0)
@@ -171,20 +171,20 @@ namespace clock {
 
   enum {
     _PLLSRC =
-    rcc::registers::cfgr::bits::pllsrc::states::E(__PLLSRC) ==
-    rcc::registers::cfgr::bits::pllsrc::states::
+    rcc::cfgr::pllsrc::States(__PLLSRC) ==
+    rcc::cfgr::pllsrc::states::
     USE_HSI_CLOCK_OVER_2_AS_PLL_SOURCE?
     HSI / 2:
-    (rcc::registers::cfgr::bits::pllsrc::states::E(__PLLSRC) !=
-        rcc::registers::cfgr::bits::pllsrc::states::
+    (rcc::cfgr::pllsrc::States(__PLLSRC) !=
+        rcc::cfgr::pllsrc::states::
         USE_PREDIV1_OUTPUT_AS_PLL_SOURCE?
         0:
-        (rcc::registers::cfgr2::bits::prediv1src::states::E(_PREDIV1SRC) ==
-            rcc::registers::cfgr2::bits::prediv1src::states::
+        (rcc::cfgr2::bits::prediv1src::States(_PREDIV1SRC) ==
+            rcc::cfgr2::bits::prediv1src::states::
             USE_HSE_OSCILLATOR_AS_PREDIV1_INPUT?
             HSE / _PREDIV1:
-            (rcc::registers::cfgr2::bits::prediv1src::states::E(_PREDIV1SRC) ==
-                rcc::registers::cfgr2::bits::prediv1src::states::
+            (rcc::cfgr2::bits::prediv1src::States(_PREDIV1SRC) ==
+                rcc::cfgr2::bits::prediv1src::states::
                 USE_PLL2_AS_PREDIV1_INPUT?
                 _PLL2 / _PREDIV1:
                 0)))
@@ -206,12 +206,12 @@ namespace clock {
 #else // STM32F1XX
   enum {
     _PLLSRC =
-    rcc::registers::pllcfgr::bits::pllsrc::states::E(__PLLSRC) ==
-    rcc::registers::pllcfgr::bits::pllsrc::states::
+    rcc::pllcfgr::pllsrc::States(__PLLSRC) ==
+    rcc::pllcfgr::pllsrc::states::
     USE_HSE_CLOCK_AS_PLL_CLOCK_SOURCE ?
     HSE :
-    (rcc::registers::pllcfgr::bits::pllsrc::states::E(__PLLSRC) ==
-        rcc::registers::pllcfgr::bits::pllsrc::states::
+    (rcc::pllcfgr::pllsrc::States(__PLLSRC) ==
+        rcc::pllcfgr::pllsrc::states::
         USE_HSI_CLOCK_AS_PLL_CLOCK_SOURCE ?
         HSI :
         0)
@@ -254,610 +254,610 @@ namespace clock {
 #ifdef CONNECTIVITY_LINE
   _PLL2 = 0
 #endif
-  };
+};
 #endif // USING_PLL
-  /****************************************************************************
-   *                                                                          *
-   *                          SYSTEM CLOCK SELECTION                          *
-   *                                                                          *
-   ****************************************************************************/
-  enum {
-    SYSTEM =
-    rcc::registers::cfgr::bits::sw::states::E(_SW) ==
-        rcc::registers::cfgr::bits::sw::states::
-        HSE_OSCILLATOR_SELECTED_AS_SYSTEM_CLOCK ?
-        u32(HSE) :
-        (rcc::registers::cfgr::bits::sw::states::E(_SW) ==
-            rcc::registers::cfgr::bits::sw::states::
-            HSI_OSCILLATOR_SELECTED_AS_SYSTEM_CLOCK ?
-            HSI :
-            (rcc::registers::cfgr::bits::sw::states::E(_SW) ==
-                rcc::registers::cfgr::bits::sw::states::
-                PLL_SELECTED_AS_SYSTEM_CLOCK ?
-                                               PLL :
-                                               0))
-  };
+/****************************************************************************
+ *                                                                          *
+ *                          SYSTEM CLOCK SELECTION                          *
+ *                                                                          *
+ ****************************************************************************/
+enum {
+  SYSTEM =
+  rcc::cfgr::sw::States(_SW) ==
+      rcc::cfgr::sw::
+      HSE_OSCILLATOR_SELECTED_AS_SYSTEM_CLOCK ?
+      u32(HSE) :
+      (rcc::cfgr::sw::States(_SW) ==
+          rcc::cfgr::sw::
+          HSI_OSCILLATOR_SELECTED_AS_SYSTEM_CLOCK ?
+          HSI :
+          (rcc::cfgr::sw::States(_SW) ==
+              rcc::cfgr::sw::
+              PLL_SELECTED_AS_SYSTEM_CLOCK ?
+                                             PLL :
+                                             0))
+};
 
-  /****************************************************************************
-   *                                                                          *
-   *                              BUS PRESCALERS                              *
-   *                                                                          *
-   ****************************************************************************/
+/****************************************************************************
+ *                                                                          *
+ *                              BUS PRESCALERS                              *
+ *                                                                          *
+ ****************************************************************************/
 #ifdef STM32F1XX
-  enum {
-    AHB = SYSTEM / cPow<2, _HPRE>::value,
-    CORE = AHB,
-    APB1 = AHB / cPow<2, _PPRE1>::value,
-    APB2 = AHB / cPow<2, _PPRE2>::value,
-    APB1_TIMERS = APB1 * ((_PPRE1 == 0) ? 1 : 2),
-    APB2_TIMERS = APB2 * ((_PPRE2 == 0) ? 1 : 2),
-    ADC = APB2 / (2 * _ADCPRE + 2),
-    SDIO = AHB
-  };
+enum {
+  AHB = SYSTEM / cPow<2, _HPRE>::value,
+  CORE = AHB,
+  APB1 = AHB / cPow<2, _PPRE1>::value,
+  APB2 = AHB / cPow<2, _PPRE2>::value,
+  APB1_TIMERS = APB1 * ((_PPRE1 == 0) ? 1 : 2),
+  APB2_TIMERS = APB2 * ((_PPRE2 == 0) ? 1 : 2),
+  ADC = APB2 / (2 * _ADCPRE + 2),
+  SDIO = AHB
+};
 #ifndef VALUE_LINE
-  static_assert(APB1 < 36000000,
-      "The APB1 clock can't exceed 36 MHz");
-  static_assert(ADC < 14000000,
-      "The ADC clock can't exceed 14 MHz");
+static_assert(APB1 < 36000000,
+    "The APB1 clock can't exceed 36 MHz");
+static_assert(ADC < 14000000,
+    "The ADC clock can't exceed 14 MHz");
 #endif // !VALUE_LINE
 #else // STM32F1XX
-  enum {
-    AHB = SYSTEM / cPow<2, _HPRE>::value,
-    CORE = AHB,
-    SYSTICK = AHB / 8,
-    APB1 = AHB / cPow<2, _PPRE1>::value,
-    APB2 = AHB / cPow<2, _PPRE2>::value,
-    APB1_TIMERS = APB1 * ((_PPRE1 == 0) ? 1 : 2),
-    APB2_TIMERS = APB2 * ((_PPRE2 == 0) ? 1 : 2),
-  };
+enum {
+  AHB = SYSTEM / cPow<2, _HPRE>::value,
+  CORE = AHB,
+  SYSTICK = AHB / 8,
+  APB1 = AHB / cPow<2, _PPRE1>::value,
+  APB2 = AHB / cPow<2, _PPRE2>::value,
+  APB1_TIMERS = APB1 * ((_PPRE1 == 0) ? 1 : 2),
+  APB2_TIMERS = APB2 * ((_PPRE2 == 0) ? 1 : 2),
+};
 
-  static_assert(APB1 <= 42000000,
-      "The APB1 clock can't exceed 42 MHz");
-  static_assert(APB2 <= 84000000,
-      "The APB2 clock can't exceed 84 MHz");
+static_assert(APB1 <= 42000000,
+    "The APB1 clock can't exceed 42 MHz");
+static_assert(APB2 <= 84000000,
+    "The APB2 clock can't exceed 84 MHz");
 #endif // STM32F1XX
-  /****************************************************************************
-   *                                                                          *
-   *                             PERIPHERAL CLOCKS                            *
-   *                                                                          *
-   ****************************************************************************/
+/****************************************************************************
+ *                                                                          *
+ *                             PERIPHERAL CLOCKS                            *
+ *                                                                          *
+ ****************************************************************************/
 #ifdef USING_USB
 #if not defined STM32F2XX && \
     not defined STM32F4XX
-  enum {
-    USB = PLL * 2 / (2 + _USBPRE)
-  };
+enum {
+  USB = PLL * 2 / (2 + _USBPRE)
+};
 #endif
-  static_assert((USB == 48000000),
-      "The USB clock must be 48MHz, otherwise the module won't work.");
+static_assert((USB == 48000000),
+    "The USB clock must be 48MHz, otherwise the module won't work.");
 #endif // USING_USB
 #ifdef USING_ETHERNET
-  static_assert((AHB >= 25000000),
-      "The AHB clock must be at least 25MHz, "
-      "otherwise the Ethernet module won't work.");
+static_assert((AHB >= 25000000),
+    "The AHB clock must be at least 25MHz, "
+    "otherwise the Ethernet module won't work.");
 #endif // USING_ETHERNET
 #ifdef USING_RTC
-  static_assert((RTC <= 1000000), "The RTC clock can't exceed 1MHz.");
+static_assert((RTC <= 1000000), "The RTC clock can't exceed 1MHz.");
 #endif // USING_RTC
 #ifdef USING_I2S
 #ifdef STM32F1XX
 #ifdef CONNECTIVITY_LINE
 #ifdef USING_I2S_PLL
 #ifndef USING_PLL
-  static_assert((_PREDIV2 >= 1) && (_PREDIV2 <= 16),
-      "PREDIV2 must be between 1 and 16 (inclusive).");
+static_assert((_PREDIV2 >= 1) && (_PREDIV2 <= 16),
+    "PREDIV2 must be between 1 and 16 (inclusive).");
 #endif // !USING_PLL
-  static_assert((_PLL3MUL >= 6) && (_PLL3MUL <= 15) && (_PLL3MUL != 13),
-      "PLL3MUL must be between 6 and 15 (inclusive, without 13).");
+static_assert((_PLL3MUL >= 6) && (_PLL3MUL <= 15) && (_PLL3MUL != 13),
+    "PLL3MUL must be between 6 and 15 (inclusive, without 13).");
 
-  enum {
-    _PLL3 = HSE * (
-        _PLL3MUL == 15?
-        _PLL3MUL + 5:
-        _PLL3MUL + 2
-    ) / _PREDIV2,
-  };
+enum {
+  _PLL3 = HSE * (
+      _PLL3MUL == 15?
+      _PLL3MUL + 5:
+      _PLL3MUL + 2
+  ) / _PREDIV2,
+};
 #else // USING_I2S_PLL
-  enum {
-    _PLL3 = 0
-  };
+enum {
+  _PLL3 = 0
+};
 #endif // USING_I2S_PLL
-  enum {
-    I2S2 = rcc::registers::cfgr2::bits::i2s2src::states::E(_I2S2SRC) ==
-    rcc::registers::cfgr2::bits::i2s2src::states::
-    USE_PLL3_CLOCK_AS_I2S2_CLOCK?
-    2 * _PLL3:
-    (rcc::registers::cfgr2::bits::i2s2src::states::E(_I2S2SRC) ==
-        rcc::registers::cfgr2::bits::i2s2src::states::
-        USE_SYSTEM_CLOCK_AS_I2S2_CLOCK?
-        SYSTEM:
-        0),
-    I2S3 = rcc::registers::cfgr2::bits::i2s3src::states::E(_I2S3SRC) ==
-    rcc::registers::cfgr2::bits::i2s3src::states::
-    USE_PLL3_CLOCK_AS_I2S3_CLOCK?
-    2 * _PLL3:
-    (rcc::registers::cfgr2::bits::i2s3src::states::E(_I2S2SRC) ==
-        rcc::registers::cfgr2::bits::i2s3src::states::
-        USE_SYSTEM_CLOCK_AS_I2S3_CLOCK?
-        SYSTEM:
-        0),
-  };
+enum {
+  I2S2 = rcc::cfgr2::bits::i2s2src::States(_I2S2SRC) ==
+  rcc::cfgr2::bits::i2s2src::states::
+  USE_PLL3_CLOCK_AS_I2S2_CLOCK?
+  2 * _PLL3:
+  (rcc::cfgr2::bits::i2s2src::States(_I2S2SRC) ==
+      rcc::cfgr2::bits::i2s2src::states::
+      USE_SYSTEM_CLOCK_AS_I2S2_CLOCK?
+      SYSTEM:
+      0),
+  I2S3 = rcc::cfgr2::bits::i2s3src::States(_I2S3SRC) ==
+  rcc::cfgr2::bits::i2s3src::states::
+  USE_PLL3_CLOCK_AS_I2S3_CLOCK?
+  2 * _PLL3:
+  (rcc::cfgr2::bits::i2s3src::States(_I2S2SRC) ==
+      rcc::cfgr2::bits::i2s3src::states::
+      USE_SYSTEM_CLOCK_AS_I2S3_CLOCK?
+      SYSTEM:
+      0),
+};
 #else // CONNECTIVITY_LINE
-  enum {
-    I2S2 = SYSTEM,
-    I2S3 = SYSTEM
-  };
+enum {
+  I2S2 = SYSTEM,
+  I2S3 = SYSTEM
+};
 #endif // CONNECTIVITY_LINE
 #else // STM32F1XX
 #ifndef USING_PLL
-  enum {
-    _PLLSRC =
-    rcc::registers::pllcfgr::bits::pllsrc::states::E(__PLLSRC) ==
-    rcc::registers::pllcfgr::bits::pllsrc::states::
-    USE_HSE_CLOCK_AS_PLL_CLOCK_SOURCE ?
-    HSE :
-    (rcc::registers::pllcfgr::bits::pllsrc::states::E(__PLLSRC) ==
-        rcc::registers::pllcfgr::bits::pllsrc::states::
-        USE_HSI_CLOCK_AS_PLL_CLOCK_SOURCE ?
-        HSI :
-        0)
-  };
+enum {
+  _PLLSRC =
+  rcc::pllcfgr::pllsrc::States(__PLLSRC) ==
+  rcc::pllcfgr::pllsrc::states::
+  USE_HSE_CLOCK_AS_PLL_CLOCK_SOURCE ?
+  HSE :
+  (rcc::pllcfgr::pllsrc::States(__PLLSRC) ==
+      rcc::pllcfgr::pllsrc::states::
+      USE_HSI_CLOCK_AS_PLL_CLOCK_SOURCE ?
+      HSI :
+      0)
+};
 
-  static_assert((_PLLM >= 2) && (_PLLM <= 63),
-      "PLLM must be between 2 and 63 (inclusive).");
+static_assert((_PLLM >= 2) && (_PLLM <= 63),
+    "PLLM must be between 2 and 63 (inclusive).");
 #endif // !USING_PLL
 #ifdef USING_I2S_PLL
-  static_assert((_PLLI2SN >= 192) && (_PLLI2SN <= 432),
-      "PLLI2SN must be between 192 and 432 (inclusive).");
+static_assert((_PLLI2SN >= 192) && (_PLLI2SN <= 432),
+    "PLLI2SN must be between 192 and 432 (inclusive).");
 
-  static_assert((_PLLI2SR >= 2) && (_PLLI2SR <= 7),
-      "PLLI2SR must be between 2 and 7 (inclusive).");
+static_assert((_PLLI2SR >= 2) && (_PLLI2SR <= 7),
+    "PLLI2SR must be between 2 and 7 (inclusive).");
 
-  enum {
-    _VCO_I2S_IN = _PLLSRC / _PLLM,
-    _VCO_I2S_OUT = _VCO_I2S_IN * _PLLI2SN,
-    _PLLI2S = _VCO_I2S_OUT / _PLLI2SR,
-    I2S = _PLLI2S
-  };
+enum {
+  _VCO_I2S_IN = _PLLSRC / _PLLM,
+  _VCO_I2S_OUT = _VCO_I2S_IN * _PLLI2SN,
+  _PLLI2S = _VCO_I2S_OUT / _PLLI2SR,
+  I2S = _PLLI2S
+};
 
-  static_assert((_VCO_I2S_IN >= 1000000) && (_VCO_I2S_IN <= 2000000),
-      "VCO_I2S_IN must be between 1MHz and 2MHZ (inclusive).");
+static_assert((_VCO_I2S_IN >= 1000000) && (_VCO_I2S_IN <= 2000000),
+    "VCO_I2S_IN must be between 1MHz and 2MHZ (inclusive).");
 
-  static_assert((_VCO_I2S_OUT >= 192000000) && (_VCO_I2S_OUT <= 432000000),
-      "VCO_I2S_OUT must be between 192MHz and 432MHZ (inclusive).");
+static_assert((_VCO_I2S_OUT >= 192000000) && (_VCO_I2S_OUT <= 432000000),
+    "VCO_I2S_OUT must be between 192MHz and 432MHZ (inclusive).");
 
-  static_assert(_PLLI2S <= 192000000,
-      "PLLI2S can't exceed 192MHz");
+static_assert(_PLLI2S <= 192000000,
+    "PLLI2S can't exceed 192MHz");
 #else // USING_I2S_PLL
-  enum {
-    I2S = 0
-  };
+enum {
+  I2S = 0
+};
 #endif // USING_I2S_PLL
 #endif // STM32F1XX
 #else // USING_I2S
 #ifdef CONNECTIVITY_LINE
-  enum {
-    _PLL3 = 0
-  };
+enum {
+  _PLL3 = 0
+};
 #endif // CONNECTIVITY_LINE
 #endif // USING_I2S
-  /****************************************************************************
-   *                                                                          *
-   *                       MICROCONTROLLER CLOCK OUTPUT                       *
-   *                                                                          *
-   ****************************************************************************/
+/****************************************************************************
+ *                                                                          *
+ *                       MICROCONTROLLER CLOCK OUTPUT                       *
+ *                                                                          *
+ ****************************************************************************/
 #ifdef USING_MCO
 #ifdef STM32F1XX
 #ifndef CONNECTIVITY_LINE
-  enum {
-    MCO =
-    rcc::registers::cfgr::bits::mco::states::E(_MCO) ==
-    rcc::registers::cfgr::bits::mco::states::
-    NO_CLOCK_OUTPUT ?
-    0 :
-    (rcc::registers::cfgr::bits::mco::states::E(_MCO) ==
-        rcc::registers::cfgr::bits::mco::states::
-        OUTPUT_HSE_CLOCK ?
-        HSE :
-        (rcc::registers::cfgr::bits::mco::states::E(_MCO) ==
-            rcc::registers::cfgr::bits::mco::states::
-            OUTPUT_HSI_CLOCK ?
-            HSI :
-            (rcc::registers::cfgr::bits::mco::states::E(_MCO) ==
-                rcc::registers::cfgr::bits::mco::states::
-                OUTPUT_PLL_CLOCK_OVER_2 ?
-                PLL / 2 :
-                (rcc::registers::cfgr::bits::mco::states::E(_MCO) ==
-                    rcc::registers::cfgr::bits::mco::states::
-                    OUTPUT_SYSTEM_CLOCK ?
-                    SYSTEM :
-                    0))))
-  };
+enum {
+  MCO =
+  rcc::cfgr::mco::States(_MCO) ==
+  rcc::cfgr::mco::states::
+  NO_CLOCK_OUTPUT ?
+  0 :
+  (rcc::cfgr::mco::States(_MCO) ==
+      rcc::cfgr::mco::states::
+      OUTPUT_HSE_CLOCK ?
+      HSE :
+      (rcc::cfgr::mco::States(_MCO) ==
+          rcc::cfgr::mco::states::
+          OUTPUT_HSI_CLOCK ?
+          HSI :
+          (rcc::cfgr::mco::States(_MCO) ==
+              rcc::cfgr::mco::states::
+              OUTPUT_PLL_CLOCK_OVER_2 ?
+              PLL / 2 :
+              (rcc::cfgr::mco::States(_MCO) ==
+                  rcc::cfgr::mco::states::
+                  OUTPUT_SYSTEM_CLOCK ?
+                  SYSTEM :
+                  0))))
+};
 #else // !CONNECTIVITY_LINE
-  enum {
-    MCO =
-    rcc::registers::cfgr::bits::mco::states::E(_MCO) ==
-    rcc::registers::cfgr::bits::mco::states::
-    NO_CLOCK_OUTPUT ?
-    0 :
-    (rcc::registers::cfgr::bits::mco::states::E(_MCO) ==
-        rcc::registers::cfgr::bits::mco::states::
-        OUTPUT_HSE_CLOCK ?
-        HSE :
-        (rcc::registers::cfgr::bits::mco::states::E(_MCO) ==
-            rcc::registers::cfgr::bits::mco::states::
-            OUTPUT_HSI_CLOCK ?
-            HSI :
-            (rcc::registers::cfgr::bits::mco::states::E(_MCO) ==
-                rcc::registers::cfgr::bits::mco::states::
-                OUTPUT_PLL2_CLOCK ?
-                _PLL2 :
-                (rcc::registers::cfgr::bits::mco::states::E(_MCO) ==
-                    rcc::registers::cfgr::bits::mco::states::
-                    OUTPUT_PLL3_CLOCK ?
-                    _PLL3 :
-                    (rcc::registers::cfgr::bits::mco::states::E(_MCO) ==
-                        rcc::registers::cfgr::bits::mco::states::
-                        OUTPUT_PLL_CLOCK_OVER_2 ?
-                        PLL / 2 :
-                        (rcc::registers::cfgr::bits::mco::states::E(_MCO) ==
-                            rcc::registers::cfgr::bits::mco::states::
-                            OUTPUT_SYSTEM_CLOCK ?
-                            SYSTEM :
-                            (rcc::registers::cfgr::bits::mco::states::E(
-                                    _MCO) ==
-                                rcc::registers::cfgr::bits::mco::states::
-                                OUTPUT_XT1_CLOCK ?
-                                HSE :
-                                0)))))))
-  };
+enum {
+  MCO =
+  rcc::cfgr::mco::States(_MCO) ==
+  rcc::cfgr::mco::states::
+  NO_CLOCK_OUTPUT ?
+  0 :
+  (rcc::cfgr::mco::States(_MCO) ==
+      rcc::cfgr::mco::states::
+      OUTPUT_HSE_CLOCK ?
+      HSE :
+      (rcc::cfgr::mco::States(_MCO) ==
+          rcc::cfgr::mco::states::
+          OUTPUT_HSI_CLOCK ?
+          HSI :
+          (rcc::cfgr::mco::States(_MCO) ==
+              rcc::cfgr::mco::states::
+              OUTPUT_PLL2_CLOCK ?
+              _PLL2 :
+              (rcc::cfgr::mco::States(_MCO) ==
+                  rcc::cfgr::mco::states::
+                  OUTPUT_PLL3_CLOCK ?
+                  _PLL3 :
+                  (rcc::cfgr::mco::States(_MCO) ==
+                      rcc::cfgr::mco::states::
+                      OUTPUT_PLL_CLOCK_OVER_2 ?
+                      PLL / 2 :
+                      (rcc::cfgr::mco::States(_MCO) ==
+                          rcc::cfgr::mco::states::
+                          OUTPUT_SYSTEM_CLOCK ?
+                          SYSTEM :
+                          (rcc::cfgr::mco::States(
+                                  _MCO) ==
+                              rcc::cfgr::mco::states::
+                              OUTPUT_XT1_CLOCK ?
+                              HSE :
+                              0)))))))
+};
 #endif // !CONNECTIVITY_LINE
-  static_assert(MCO <= 50000000,
-      "MCO can't exceed 50 MHz");
+static_assert(MCO <= 50000000,
+    "MCO can't exceed 50 MHz");
 #else // STM32F1XX
-  static_assert((_MCO1PRE >= 1) && (_MCO1PRE <= 5),
-      "MCOPRE1 must be between 1 and 5 (inclusive).");
+static_assert((_MCO1PRE >= 1) && (_MCO1PRE <= 5),
+    "MCOPRE1 must be between 1 and 5 (inclusive).");
 
-  static_assert((_MCO2PRE >= 1) && (_MCO2PRE <= 5),
-      "MCOPRE2 must be between 1 and 5 (inclusive).");
+static_assert((_MCO2PRE >= 1) && (_MCO2PRE <= 5),
+    "MCOPRE2 must be between 1 and 5 (inclusive).");
 
-  enum {
-    MCO1 = (
-        rcc::registers::cfgr::bits::mco1::states::E(_MCO1) ==
-        rcc::registers::cfgr::bits::mco1::states::
-        OUTPUT_HSE_CLOCK ?
-        HSE :
-        (rcc::registers::cfgr::bits::mco1::states::E(_MCO1) ==
-            rcc::registers::cfgr::bits::mco1::states::
-            OUTPUT_HSI_CLOCK ?
-            HSI :
-            (rcc::registers::cfgr::bits::mco1::states::E(_MCO1) ==
-                rcc::registers::cfgr::bits::mco1::states::
-                OUTPUT_LSE_CLOCK ?
-                LSE :
-                (rcc::registers::cfgr::bits::mco1::states::E(_MCO1) ==
-                    rcc::registers::cfgr::bits::mco1::states::
-                    OUTPUT_PLL_CLOCK ?
-                    PLL :
-                    0)))
-    ) / _MCO1PRE,
+enum {
+  MCO1 = (
+      rcc::cfgr::mco1::States(_MCO1) ==
+      rcc::cfgr::mco1::states::
+      OUTPUT_HSE_CLOCK ?
+      HSE :
+      (rcc::cfgr::mco1::States(_MCO1) ==
+          rcc::cfgr::mco1::states::
+          OUTPUT_HSI_CLOCK ?
+          HSI :
+          (rcc::cfgr::mco1::States(_MCO1) ==
+              rcc::cfgr::mco1::states::
+              OUTPUT_LSE_CLOCK ?
+              LSE :
+              (rcc::cfgr::mco1::States(_MCO1) ==
+                  rcc::cfgr::mco1::states::
+                  OUTPUT_PLL_CLOCK ?
+                  PLL :
+                  0)))
+  ) / _MCO1PRE,
 
-    MCO2 = (
-        rcc::registers::cfgr::bits::mco2::states::E(_MCO2) ==
-        rcc::registers::cfgr::bits::mco2::states::
-        OUTPUT_HSE_CLOCK ?
-        HSE :
-        (rcc::registers::cfgr::bits::mco2::states::E(_MCO2) ==
-            rcc::registers::cfgr::bits::mco2::states::
-            OUTPUT_PLLI2S_CLOCK ?
-            /*PLLI2S*/0 :
-            (rcc::registers::cfgr::bits::mco2::states::E(_MCO2) ==
-                rcc::registers::cfgr::bits::mco2::states::
-                OUTPUT_PLL_CLOCK ?
-                PLL :
-                (rcc::registers::cfgr::bits::mco2::states::E(_MCO2) ==
-                    rcc::registers::cfgr::bits::mco2::states::
-                    OUTPUT_SYSTEM_CLOCK ?
-                    SYSTEM :
-                    0)))
-    ) / _MCO2PRE
-  };
-  static_assert(MCO1 <= 100000000,
-      "MCO can't exceed 100 MHz");
-  static_assert(MCO2 <= 100000000,
-      "MCO can't exceed 100 MHz");
+  MCO2 = (
+      rcc::cfgr::mco2::States(_MCO2) ==
+      rcc::cfgr::mco2::states::
+      OUTPUT_HSE_CLOCK ?
+      HSE :
+      (rcc::cfgr::mco2::States(_MCO2) ==
+          rcc::cfgr::mco2::states::
+          OUTPUT_PLLI2S_CLOCK ?
+          /*PLLI2S*/0 :
+          (rcc::cfgr::mco2::States(_MCO2) ==
+              rcc::cfgr::mco2::states::
+              OUTPUT_PLL_CLOCK ?
+              PLL :
+              (rcc::cfgr::mco2::States(_MCO2) ==
+                  rcc::cfgr::mco2::states::
+                  OUTPUT_SYSTEM_CLOCK ?
+                  SYSTEM :
+                  0)))
+  ) / _MCO2PRE
+};
+static_assert(MCO1 <= 100000000,
+    "MCO can't exceed 100 MHz");
+static_assert(MCO2 <= 100000000,
+    "MCO can't exceed 100 MHz");
 #endif // STM32F1XX
 #endif // USING_MCO
-  /****************************************************************************
-   *                                                                          *
-   *                        FLASH MEMORY ACCESS LATENCY                       *
-   *                                                                          *
-   ****************************************************************************/
+/****************************************************************************
+ *                                                                          *
+ *                        FLASH MEMORY ACCESS LATENCY                       *
+ *                                                                          *
+ ****************************************************************************/
 #if defined STM32F1XX && \
     not defined VALUE_LINE
-  static_assert((SYSTEM < 24000000) ||
-      (u32(_LATENCY) >=
-          u32(flash::registers::acr::bits::latency::states::ONE_WAIT_STATE)),
-      "For this system clock frequency, the latency must be 1 or higher.");
-  static_assert((SYSTEM < 48000000) ||
-      (u32(_LATENCY) >=
-          u32(flash::registers::acr::bits::latency::states::TWO_WAIT_STATES)),
-      "For this system clock frequency, the latency must be 2 or higher.");
+static_assert((SYSTEM < 24000000) ||
+    (u32(_LATENCY) >=
+        u32(flash::registers::acr::bits::latency::states::ONE_WAIT_STATE)),
+    "For this system clock frequency, the latency must be 1 or higher.");
+static_assert((SYSTEM < 48000000) ||
+    (u32(_LATENCY) >=
+        u32(flash::registers::acr::bits::latency::states::TWO_WAIT_STATES)),
+    "For this system clock frequency, the latency must be 2 or higher.");
 #endif // STM32F1XX && !VALUE_LINE
-  /****************************************************************************
-   *                                                                          *
-   *                           CLOCK INITIALIZATION                           *
-   *                                                                          *
-   ****************************************************************************/
+/****************************************************************************
+ *                                                                          *
+ *                           CLOCK INITIALIZATION                           *
+ *                                                                          *
+ ****************************************************************************/
 #if defined USING_HSE_CLOCK || \
     defined USING_HSE_CRYSTAL
-  static INLINE void initializeHse()
-  {
+static INLINE void initializeHse()
+{
 #ifdef USING_HSE_CRYSTAL
-    RCC::enableHseOscillator();
+  RCC::enableHseOscillator();
 #endif // USING_HSE_CRYSTAL
 #ifdef USING_HSE_CLOCK
-    RCC::disableHseOscillator();
+  RCC::disableHseOscillator();
 #endif // USING_HSE_CLOCK
-    RCC::enableHse();
+  RCC::enableHse();
 
-    u16 HseTimeoutCounter = 0;
-    do {
-      HseTimeoutCounter++;
-    }while ((HseTimeoutCounter != clock::_HSE_TIMEOUT) &&
-        (!RCC::isHseStable()));
-  }
+  u16 HseTimeoutCounter = 0;
+  do {
+    HseTimeoutCounter++;
+  }while ((HseTimeoutCounter != clock::_HSE_TIMEOUT) &&
+      (!RCC::isHseStable()));
+}
 #endif // USING_HSE_CLOCK || USING_HSE_CRYSTAL
 #if defined USING_LSE_CLOCK || \
     defined USING_LSE_CRYSTAL
-  static INLINE void initializeLse()
-  {
+static INLINE void initializeLse()
+{
 #ifdef USING_HSE_CRYSTAL
-    RCC::enableLseOscillator();
+  RCC::enableLseOscillator();
 #endif // USING_HSE_CRYSTAL
 #ifdef USING_HSE_CLOCK
-    RCC::disableLseOscillator();
+  RCC::disableLseOscillator();
 #endif // USING_HSE_CLOCK
-    RCC::enableLse();
+  RCC::enableLse();
 
-    u16 LseTimeoutCounter = 0;
-    do {
-      LseTimeoutCounter++;
-    }while ((LseTimeoutCounter != clock::_LSE_TIMEOUT) &&
-        (!RCC::isLseStable()));
-  }
+  u16 LseTimeoutCounter = 0;
+  do {
+    LseTimeoutCounter++;
+  }while ((LseTimeoutCounter != clock::_LSE_TIMEOUT) &&
+      (!RCC::isLseStable()));
+}
 #endif // USING_HSE_CLOCK || USING_HSE_CRYSTAL
-  void initialize()
-  {
+void initialize()
+{
 #if defined USING_LSE_CRYSTAL || \
     defined USING_LSE_CLOCK || \
     defined USING_RTC
-    RCC::enableClocks<
-    rcc::registers::apb1enr::bits::PWR
-    >();
-    PWR::enableBackupDomainWriteProtection();
+  RCC::enableClocks<
+  rcc::apb1enr::PWR
+  >();
+  PWR::enableBackupDomainWriteProtection();
 #endif // USING_LSE_CRYSTAL || USING_LSE_CLOCK || USING_RTC
-    /* Low Speed Internal Clock ***********************************************/
+  /* Low Speed Internal Clock ***********************************************/
 #ifdef USING_LSI
-    RCC::enableLsi();
+  RCC::enableLsi();
 
-    while (!RCC::isLsiStable()) {}
+  while (!RCC::isLsiStable()) {}
 #endif // USING_LSI
-    /* Low Speed External Clock ***********************************************/
+  /* Low Speed External Clock ***********************************************/
 #if defined USING_LSE_CLOCK || \
     defined USING_LSE_CRYSTAL
-    initializeLse();
+  initializeLse();
 
-    if (!RCC::isLseStable()) {
-      lseFailureHandler();
-    }
+  if (!RCC::isLseStable()) {
+    lseFailureHandler();
+  }
 #endif // USING_LSE_CLOCK || USING_LSE_CRYSTAL
-    /* High Speed External Clock **********************************************/
+  /* High Speed External Clock **********************************************/
 #if defined USING_HSE_CLOCK || \
     defined USING_HSE_CRYSTAL
-    initializeHse();
+  initializeHse();
 #endif // USING_HSE_CLOCK || USING_HSE_CRYSTAL
 #if defined USING_HSE_CLOCK || \
     defined USING_HSE_CRYSTAL
-    if (RCC::isHseStable()) {
+  if (RCC::isHseStable()) {
 #endif // USING_HSE_CLOCK || USING_HSE_CRYSTAL
-    /* PLL configuration ******************************************************/
+  /* PLL configuration ******************************************************/
 #ifdef USING_PLL
 #ifdef STM32F1XX
 #ifdef VALUE_LINE
-    RCC::configurePll<
-    (rcc::registers::cfgr::bits::pllsrc::states::E)_PLLSRC,
-    _PLLMUL,
-    _PREDIV1
-    >();
+  RCC::configurePll<
+  (rcc::cfgr::pllsrc::States)_PLLSRC,
+  _PLLMUL,
+  _PREDIV1
+  >();
 #else // VALUE_LINE
 #ifndef CONNECTIVITY_LINE
-    RCC::configurePll<
-    (rcc::registers::cfgr::bits::pllsrc::states::E)_PLLSRC,
-    _PLLXTPRE,
-    _PLLMUL
-    >();
+  RCC::configurePll<
+  (rcc::cfgr::pllsrc::States)_PLLSRC,
+  _PLLXTPRE,
+  _PLLMUL
+  >();
 #else // !CONNECTIVITY_LINE
-    RCC::configurePll<
-    (rcc::registers::cfgr::bits::pllsrc::states::E) _PLLSRC,
-    _PLLMUL,
-    _PREDIV1,
-    _PREDIV2,
-    _PLL2MUL,
+  RCC::configurePll<
+  (rcc::cfgr::pllsrc::States) _PLLSRC,
+  _PLLMUL,
+  _PREDIV1,
+  _PREDIV2,
+  _PLL2MUL,
 #ifdef USING_I2S_PLL
-    _PLL3MUL,
+  _PLL3MUL,
 #else // USING_I2S_PLL
-    6, /* Any value */
+  6, /* Any value */
 #endif
-    (rcc::registers::cfgr2::bits::prediv1src::states::E) _PREDIV1SRC,
+  (rcc::cfgr2::bits::prediv1src::States) _PREDIV1SRC,
 #ifdef USING_I2S
-    (rcc::registers::cfgr2::bits::i2s2src::states::E) _I2S2SRC,
-    (rcc::registers::cfgr2::bits::i2s3src::states::E) _I2S3SRC
+  (rcc::cfgr2::bits::i2s2src::States) _I2S2SRC,
+  (rcc::cfgr2::bits::i2s3src::States) _I2S3SRC
 #else // USING_I2S
-    rcc::registers::cfgr2::bits::i2s2src::states::
-    USE_SYSTEM_CLOCK_AS_I2S2_CLOCK, /* Any value */
-    rcc::registers::cfgr2::bits::i2s3src::states::
-    USE_PLL3_CLOCK_AS_I2S3_CLOCK /* Any value */
+  rcc::cfgr2::bits::i2s2src::states::
+  USE_SYSTEM_CLOCK_AS_I2S2_CLOCK, /* Any value */
+  rcc::cfgr2::bits::i2s3src::states::
+  USE_PLL3_CLOCK_AS_I2S3_CLOCK /* Any value */
 #endif // USING_I2S
-    >();
+  >();
 #endif // !CONNECTIVITY_LINE
 #endif // VALUE_LINE
 #else // STM32F1XX
-    RCC::configurePll<
-    (rcc::registers::pllcfgr::bits::pllsrc::states::E)__PLLSRC,
-    _PLLM,
-    _PLLN,
-    _PLLP,
-    _PLLQ
-    >();
+  RCC::configurePll<
+  (rcc::pllcfgr::pllsrc::States)__PLLSRC,
+  _PLLM,
+  _PLLN,
+  _PLLP,
+  _PLLQ
+  >();
 #ifdef USING_I2S_PLL
-    RCC::configureI2sPll<
-    _PLLI2SN,
-    _PLLI2SR
-    >();
+  RCC::configureI2sPll<
+  _PLLI2SN,
+  _PLLI2SR
+  >();
 #endif // USING_I2S_PLL
 #endif // STM32F1XX
 #else // USING_PLL
 #ifdef USING_I2S_PLL
-    RCC::configurePll<
-    rcc::registers::cfgr::bits::pllsrc::states::
-    USE_HSI_CLOCK_OVER_2_AS_PLL_SOURCE, /* Any value */
-    2, /* Any value */
-    1, /* Any value */
-    _PREDIV2,
-    6, /* Any value */
-    _PLL3MUL,
-    rcc::registers::cfgr2::bits::prediv1src::states::
-    USE_PLL2_AS_PREDIV1_INPUT, /* Any value */
-    (rcc::registers::cfgr2::bits::i2s2src::states::E) _I2S2SRC,
-    (rcc::registers::cfgr2::bits::i2s3src::states::E) _I2S3SRC
-    >();
-    RCC::selectI2sSource<
-    rcc::registers::cfgr::bits::i2ssrc::states::PLLI2S_USED_AS_I2S_CLOCK_SOURCE
-    >();
+  RCC::configurePll<
+  rcc::cfgr::pllsrc::states::
+  USE_HSI_CLOCK_OVER_2_AS_PLL_SOURCE, /* Any value */
+  2, /* Any value */
+  1, /* Any value */
+  _PREDIV2,
+  6, /* Any value */
+  _PLL3MUL,
+  rcc::cfgr2::bits::prediv1src::states::
+  USE_PLL2_AS_PREDIV1_INPUT, /* Any value */
+  (rcc::cfgr2::bits::i2s2src::States) _I2S2SRC,
+  (rcc::cfgr2::bits::i2s3src::States) _I2S3SRC
+  >();
+  RCC::selectI2sSource<
+  rcc::cfgr::i2ssrc::states::PLLI2S_USED_AS_I2S_CLOCK_SOURCE
+  >();
 #else // USING_I2S_PLL
-    RCC::selectI2sSource<
-        rcc::registers::cfgr::bits::i2ssrc::states::
-        I2S_CKIN_USED_AS_I2S_CLOCK_SOURCE
-    >();
+  RCC::selectI2sSource<
+      rcc::cfgr::i2ssrc::
+      I2S_CKIN_USED_AS_I2S_CLOCK_SOURCE
+  >();
 #endif // USING_I2S_PLL
 #endif // USING_PLL
-    /* Microcontroller Clock Output *******************************************/
+  /* Microcontroller Clock Output *******************************************/
 #ifdef USING_MCO
 #ifdef STM32F1XX
-    RCC::configureClockOutput<
-    (rcc::registers::cfgr::bits::mco::states::E)_MCO
-    >();
+  RCC::configureClockOutput<
+  (rcc::cfgr::mco::States)_MCO
+  >();
 #else // STM32F1XX
-    RCC::configureClockOutput<
-    (rcc::registers::cfgr::bits::mco1::states::E)_MCO1,
-    (rcc::registers::cfgr::bits::mco2::states::E)_MCO2,
-    _MCO1PRE + 0b10,
-    _MCO2PRE + 0b10
-    >();
+  RCC::configureClockOutput<
+  (rcc::cfgr::mco1::States)_MCO1,
+  (rcc::cfgr::mco2::States)_MCO2,
+  _MCO1PRE + 0b10,
+  _MCO2PRE + 0b10
+  >();
 #endif // STM32F1XX
 #endif // USING_MCO
-    /* Flash latency **********************************************************/
+  /* Flash latency **********************************************************/
 #ifdef STM32F1XX
 #ifdef VALUE_LINE
-    FLASH::configure<
-    flash::registers::acr::bits::hlfcya::states::
-    FLASH_HALF_CYCLE_ACCESS_ENABLED
-    >();
+  FLASH::configure<
+  flash::registers::acr::bits::hlfcya::states::
+  FLASH_HALF_CYCLE_ACCESS_ENABLED
+  >();
 #else // VALUE_LINE
-    FLASH::configure<
-    (flash::registers::acr::bits::latency::states::E) _LATENCY,
-    flash::registers::acr::bits::hlfcya::states::
-    FLASH_HALF_CYCLE_ACCESS_ENABLED,
-    flash::registers::acr::bits::prftbe::states::
-    PREFETCH_ENABLED
-    >();
+  FLASH::configure<
+  (flash::registers::acr::bits::latency::States) _LATENCY,
+  flash::registers::acr::bits::hlfcya::states::
+  FLASH_HALF_CYCLE_ACCESS_ENABLED,
+  flash::registers::acr::bits::prftbe::states::
+  PREFETCH_ENABLED
+  >();
 #endif // VALUE_LINE
 #else // STM32F1XX
-    FLASH::configure<
-        (flash::registers::acr::bits::latency::states::E) _LATENCY,
-        flash::registers::acr::bits::prften::states::PREFETCH_ENABLED,
-        flash::registers::acr::bits::dcen::states::DATA_CACHE_ENABLED,
-        flash::registers::acr::bits::icen::states::INSTRUCTION_CACHE_ENABLED
-    >();
+  FLASH::configure<
+      (flash::registers::acr::bits::latency::states::E) _LATENCY,
+      flash::registers::acr::bits::prften::states::PREFETCH_ENABLED,
+      flash::registers::acr::bits::dcen::states::DATA_CACHE_ENABLED,
+      flash::registers::acr::bits::icen::states::INSTRUCTION_CACHE_ENABLED
+  >();
 #endif // STM32F1XX
-    /* Bus prescalers *********************************************************/
+  /* Bus prescalers *********************************************************/
 #ifdef STM32F1XX
 #ifdef VALUE_LINE
-    RCC::configureBusPrescalers<
-    _HPRE + 0b111,
-    _PPRE1 + 0b11,
-    _PPRE2 + 0b11,
-    _ADCPRE
-    >();
+  RCC::configureBusPrescalers<
+  _HPRE + 0b111,
+  _PPRE1 + 0b11,
+  _PPRE2 + 0b11,
+  _ADCPRE
+  >();
 #else // VALUE_LINE
 #ifndef CONNECTIVITY_LINE
-    RCC::configureBusPrescalers<
-    _HPRE + 0b111,
-    _PPRE1 + 0b11,
-    _PPRE2 + 0b11,
-    _ADCPRE,
-    _USBPRE
-    >();
+  RCC::configureBusPrescalers<
+  _HPRE + 0b111,
+  _PPRE1 + 0b11,
+  _PPRE2 + 0b11,
+  _ADCPRE,
+  _USBPRE
+  >();
 #else // !CONNECTIVITY_LINE
 #endif // !CONNECTIVITY_LINE
 #endif // VALUE_LINE
 #else // STM32F1XX
-    RCC::configurePrescalers<
-        _HPRE + 0b111,
-        _PPRE1 + 0b11,
-        _PPRE2 + 0b11,
-        #ifdef USING_RTC
-        _RTCPRE
+  RCC::configurePrescalers<
+      _HPRE + 0b111,
+      _PPRE1 + 0b11,
+      _PPRE2 + 0b11,
+      #ifdef USING_RTC
+      _RTCPRE
 #else // USING_RTC
-        0
-    #endif
-    >();
+      0
+  #endif
+  >();
 #endif // STM32F1XX
-    /* RTC configuration ******************************************************/
+  /* RTC configuration ******************************************************/
 #ifdef USING_RTC
-    RCC::selectRtcClockSource<
-    (rcc::registers::bdcr::bits::rtcsel::states::E)_RTCSEL
-    >();
+  RCC::selectRtcClockSource<
+  (rcc::bdcr::bits::rtcsel::States)_RTCSEL
+  >();
 
-    RCC::enableRtc();
+  RCC::enableRtc();
 #endif // USING_RTC
-    /* Enable PLLs ************************************************************/
+  /* Enable PLLs ************************************************************/
 #ifdef USING_PLL
 #ifdef STM32F1XX
-    RCC::enablePll();
+  RCC::enablePll();
 
-    while (!RCC::isPllStable()) {}
+  while (!RCC::isPllStable()) {}
 #ifdef CONNECTIVITY_LINE
-    RCC::enablePll2();
+  RCC::enablePll2();
 
-    while (!RCC::isPll2Stable()) {}
+  while (!RCC::isPll2Stable()) {}
 #endif // !CONNECTIVITY_LINE
 #else // STM32F1XX
-    RCC::enablePll();
+  RCC::enablePll();
 
-    while (!RCC::isPllStable()) {}
+  while (!RCC::isPllStable()) {}
 #endif // STM32F1XX
 #endif // USING_PLL
 #ifdef CONNETIVITY_LINE
 #ifdef USING_I2S_PLL
-    RCC::enablePll3();
+  RCC::enablePll3();
 
-    while (!RCC::isPll3Stable()) {}
+  while (!RCC::isPll3Stable()) {}
 #endif // USING_I2S_PLL
 #endif // CONNECTIVITY_LINE
-    /* Select system clock ****************************************************/
-    RCC::selectSystemClockSource<
-        (rcc::registers::cfgr::bits::sw::states::E) _SW
-    >();
+  /* Select system clock ****************************************************/
+  RCC::selectSystemClockSource<
+      (rcc::cfgr::sw::States) _SW
+  >();
 
-    while (!RCC::isSystemClockSourceStable()) {
-    }
+  while (!RCC::isSystemClockSourceStable()) {
+  }
 #if defined USING_HSE_CLOCK || \
     defined USING_HSE_CRYSTAL
-  } else {
-    hseFailureHandler();
-  }
+} else {
+  hseFailureHandler();
+}
 #endif // USING_HSE_CLOCK || USING_HSE_CRYSTAL
-  }
+}
 }  // namespace clock

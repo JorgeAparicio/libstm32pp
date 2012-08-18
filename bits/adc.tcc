@@ -33,12 +33,12 @@ namespace adc {
   {
     RCC::enableClocks<
         A == address::ADC1 ?
-            rcc::registers::apb2enr::bits::ADC1 :
+            rcc::apb2enr::ADC1 :
             (A == address::ADC2 ?
-                rcc::registers::apb2enr::bits::ADC2 :
+                rcc::apb2enr::ADC2 :
                 (A == address::ADC3 ?
-                                      rcc::registers::apb2enr::bits::ADC3 :
-                                      rcc::registers::apb2enr::bits::E(0)))
+                                      rcc::apb2enr::ADC3 :
+                                      rcc::apb2enr::Bits(0)))
     >();
   }
 
@@ -51,12 +51,12 @@ namespace adc {
   {
     RCC::disableClocks<
         A == address::ADC1 ?
-            rcc::registers::apb2enr::bits::ADC1 :
+            rcc::apb2enr::ADC1 :
             (A == address::ADC2 ?
-                rcc::registers::apb2enr::bits::ADC2 :
+                rcc::apb2enr::ADC2 :
                 (A == address::ADC3 ?
-                                      rcc::registers::apb2enr::bits::ADC3 :
-                                      rcc::registers::apb2enr::bits::E(0)))
+                                      rcc::apb2enr::ADC3 :
+                                      rcc::apb2enr::Bits(0)))
     >();
   }
 

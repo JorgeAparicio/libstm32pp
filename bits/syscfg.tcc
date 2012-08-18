@@ -30,7 +30,7 @@ namespace syscfg {
   void Functions::enableClock()
   {
     RCC::enableClocks<
-        rcc::registers::apb2enr::bits::SYSCFG
+        rcc::apb2enr::SYSCFG
     >();
   }
 
@@ -41,7 +41,7 @@ namespace syscfg {
   void Functions::disableClock()
   {
     RCC::disableClocks<
-        rcc::registers::apb2enr::bits::SYSCFG
+        rcc::apb2enr::SYSCFG
     >();
   }
 

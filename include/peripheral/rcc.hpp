@@ -79,64 +79,64 @@ namespace rcc {
       static INLINE bool isSystemClockSourceStable();
 
       template<
-          rcc::registers::cfgr::bits::sw::states::E
+          rcc::cfgr::sw::States
       >
       static INLINE void selectSystemClockSource();
 
       template<
-          rcc::registers::bdcr::bits::rtcsel::states::E
+          rcc::bdcr::rtcsel::States
       >
       static INLINE void selectRtcClockSource();
 
       template<
-          rcc::registers::apb1enr::bits::E...
+      rcc::apb1enr::Bits...
       >
       static INLINE void enableClocks();
 
       template<
-      rcc::registers::apb1enr::bits::E ...
+      rcc::apb1enr::Bits ...
       >
       static INLINE void disableClocks();
 
       template<
-      rcc::registers::apb1rstr::bits::E ...
+          rcc::apb1rstr::Bits...
       >
       static INLINE void resetPeripherals();
 
       template<
-      rcc::registers::apb2enr::bits::E ...
+      rcc::apb2enr::Bits ...
       >
       static INLINE void enableClocks();
 
       template<
-      rcc::registers::apb2enr::bits::E ...
+      rcc::apb2enr::Bits ...
       >
       static INLINE void disableClocks();
 
       template<
-      rcc::registers::apb2rstr::bits::E ...
+      rcc::apb2rstr::Bits ...
       >
       static INLINE void resetPeripherals();
 
 #ifdef STM32F1XX
       template<
-      rcc::registers::ahbenr::bits::E ...
+      rcc::ahbenr::E ...
       >
       static INLINE void enableClocks();
 
       template<
-      rcc::registers::ahbenr::bits::E ...
+      rcc::ahbenr::E ...
       >
       static INLINE void disableClocks();
 
       template<
-      rcc::registers::cfgr::bits::mco::states::E
+      rcc::cfgr::mco::States
       >
       static INLINE void configureClockOutput();
 
 #ifdef CONNECTIVITY_LINE
       template<
-      rcc::registers::ahbrstr::bits::E ...
+      rcc::ahbrstr::E ...
       >
       static INLINE void resetPeripherals();
 #endif
@@ -162,7 +162,7 @@ namespace rcc {
 #endif // VALUE_LINE
 #ifdef VALUE_LINE
       template<
-      rcc::registers::cfgr::bits::pllsrc::states::E,
+      rcc::cfgr::pllsrc::States,
       u8 PLLMUL,
       u8 PREDIV1
       >
@@ -170,21 +170,21 @@ namespace rcc {
 #else // VALUE_LINE
 #ifdef CONNECTIVITY_LINE
       template<
-      rcc::registers::cfgr::bits::pllsrc::states::E,
+      rcc::cfgr::pllsrc::States,
       u8 PLLMUL,
       u8 PREDIV1,
       u8 PREDIV2,
       u8 PLL2MUL,
       u8 PLL3MUL,
-      rcc::registers::cfgr2::bits::prediv1src::states::E,
-      rcc::registers::cfgr2::bits::i2s2src::states::E,
-      rcc::registers::cfgr2::bits::i2s3src::states::E
+      rcc::cfgr2::prediv1src::States,
+      rcc::cfgr2::i2s2src::States,
+      rcc::cfgr2::i2s3src::States
       >
       static INLINE void configurePll();
 
 #else // CONNECTIVITY_LINE
       template <
-      rcc::registers::cfgr::bits::pllsrc::states::E,
+      rcc::cfgr::pllsrc::States,
       u8 PLLXTPRE,
       u8 PLLMUL
       >
@@ -194,37 +194,37 @@ namespace rcc {
 #endif // VALUE_LINE
 #else // STM32F1XX
       template<
-      rcc::registers::ahb1enr::bits::E ...
+      rcc::ahb1enr::Bits ...
       >
       static INLINE void enableClocks();
 
       template<
-      rcc::registers::ahb1enr::bits::E ...
+      rcc::ahb1enr::Bits ...
       >
       static INLINE void disableClocks();
 
       template<
-      rcc::registers::ahb1rstr::bits::E ...
+      rcc::ahb1rstr::Bits ...
       >
       static INLINE void resetPeripherals();
 
       template<
-      rcc::registers::ahb2enr::bits::E ...
+      rcc::ahb2enr::Bits ...
       >
       static INLINE void enableClocks();
 
       template<
-      rcc::registers::ahb2enr::bits::E ...
+      rcc::ahb2enr::Bits ...
       >
       static INLINE void disableClocks();
 
       template<
-      rcc::registers::ahb2rstr::bits::E ...
+      rcc::ahb2rstr::Bits ...
       >
       static INLINE void resetPeripherals();
 
       template<
-      rcc::registers::pllcfgr::bits::pllsrc::states::E,
+      rcc::pllcfgr::pllsrc::States,
       u8 PLLM,
       u16 PLLN,
       u8 PLLP,
@@ -247,15 +247,15 @@ namespace rcc {
       static INLINE void configurePrescalers();
 
       template<
-      rcc::registers::cfgr::bits::mco1::states::E,
-      rcc::registers::cfgr::bits::mco2::states::E,
+      rcc::cfgr::mco1::States,
+      rcc::cfgr::mco2::States,
       u8 MCOPRE1,
       u8 MCOPRE2
       >
       static INLINE void configureClockOutput();
 
       template<
-      rcc::registers::cfgr::bits::i2ssrc::states::E
+      rcc::cfgr::i2ssrc::States
       >
       static INLINE void selectI2sSource();
 

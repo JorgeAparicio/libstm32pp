@@ -32,8 +32,8 @@ namespace rcc {
   void Functions::enableHse()
   {
     *(u32*) (bitband::peripheral<
-        ADDRESS + registers::cr::OFFSET,
-        registers::cr::bits::hseon::POSITION
+        ADDRESS + cr::OFFSET,
+        cr::hseon::POSITION
     >()) = 1;
   }
 
@@ -43,8 +43,8 @@ namespace rcc {
   void Functions::disableHse()
   {
     *(u32*) (bitband::peripheral<
-        ADDRESS + registers::cr::OFFSET,
-        registers::cr::bits::hseon::POSITION
+        ADDRESS + cr::OFFSET,
+        cr::hseon::POSITION
     >()) = 0;
   }
 
@@ -54,8 +54,8 @@ namespace rcc {
   bool Functions::isHseStable()
   {
     return *(bool*) (bitband::peripheral<
-        ADDRESS + registers::cr::OFFSET,
-        registers::cr::bits::hserdy::POSITION
+        ADDRESS + cr::OFFSET,
+        cr::hserdy::POSITION
     >());
   }
 
@@ -65,8 +65,8 @@ namespace rcc {
   void Functions::enableHseOscillator()
   {
     *(u32*) (bitband::peripheral<
-        ADDRESS + registers::cr::OFFSET,
-        registers::cr::bits::hsebyp::POSITION
+        ADDRESS + cr::OFFSET,
+        cr::hsebyp::POSITION
     >()) = 0;
   }
 
@@ -76,8 +76,8 @@ namespace rcc {
   void Functions::disableHseOscillator()
   {
     *(u32*) (bitband::peripheral<
-        ADDRESS + registers::cr::OFFSET,
-        registers::cr::bits::hsebyp::POSITION
+        ADDRESS + cr::OFFSET,
+        cr::hsebyp::POSITION
     >()) = 1;
   }
 
@@ -87,8 +87,8 @@ namespace rcc {
   void Functions::enableLse()
   {
     *(u32*) (bitband::peripheral<
-        ADDRESS + registers::bdcr::OFFSET,
-        registers::bdcr::bits::lseon::POSITION
+        ADDRESS + bdcr::OFFSET,
+        bdcr::lseon::POSITION
     >()) = 1;
   }
 
@@ -98,8 +98,8 @@ namespace rcc {
   void Functions::disableLse()
   {
     *(u32*) (bitband::peripheral<
-        ADDRESS + registers::bdcr::OFFSET,
-        registers::bdcr::bits::lseon::POSITION
+        ADDRESS + bdcr::OFFSET,
+        bdcr::lseon::POSITION
     >()) = 0;
   }
 
@@ -109,8 +109,8 @@ namespace rcc {
   bool Functions::isLseStable()
   {
     return *(bool*) (bitband::peripheral<
-        ADDRESS + registers::bdcr::OFFSET,
-        registers::bdcr::bits::lserdy::POSITION
+        ADDRESS + bdcr::OFFSET,
+        bdcr::lserdy::POSITION
     >());
   }
 
@@ -120,8 +120,8 @@ namespace rcc {
   void Functions::enableLseOscillator()
   {
     *(u32*) (bitband::peripheral<
-        ADDRESS + registers::bdcr::OFFSET,
-        registers::bdcr::bits::lsebyp::POSITION
+        ADDRESS + bdcr::OFFSET,
+        bdcr::lsebyp::POSITION
     >()) = 0;
   }
 
@@ -131,8 +131,8 @@ namespace rcc {
   void Functions::disableLseOscillator()
   {
     *(u32*) (bitband::peripheral<
-        ADDRESS + registers::bdcr::OFFSET,
-        registers::bdcr::bits::lsebyp::POSITION
+        ADDRESS + bdcr::OFFSET,
+        bdcr::lsebyp::POSITION
     >()) = 1;
   }
 
@@ -142,8 +142,8 @@ namespace rcc {
   void Functions::enableHsi()
   {
     *(u32*) (bitband::peripheral<
-        ADDRESS + registers::cr::OFFSET,
-        registers::cr::bits::hsion::POSITION
+        ADDRESS + cr::OFFSET,
+        cr::hsion::POSITION
     >()) = 1;
   }
 
@@ -153,8 +153,8 @@ namespace rcc {
   void Functions::disableHsi()
   {
     *(u32*) (bitband::peripheral<
-        ADDRESS + registers::cr::OFFSET,
-        registers::cr::bits::hsion::POSITION
+        ADDRESS + cr::OFFSET,
+        cr::hsion::POSITION
     >()) = 0;
   }
 
@@ -164,8 +164,8 @@ namespace rcc {
   bool Functions::isHsiStable()
   {
     return *(bool*) (bitband::peripheral<
-        ADDRESS + registers::cr::OFFSET,
-        registers::cr::bits::hsirdy::POSITION
+        ADDRESS + cr::OFFSET,
+        cr::hsirdy::POSITION
     >());
   }
 
@@ -175,8 +175,8 @@ namespace rcc {
   void Functions::enableLsi()
   {
     *(u32*) (bitband::peripheral<
-        ADDRESS + registers::csr::OFFSET,
-        registers::csr::bits::lsion::POSITION
+        ADDRESS + csr::OFFSET,
+        csr::lsion::POSITION
     >()) = 1;
   }
 
@@ -186,8 +186,8 @@ namespace rcc {
   void Functions::disableLsi()
   {
     *(u32*) (bitband::peripheral<
-        ADDRESS + registers::csr::OFFSET,
-        registers::csr::bits::lsion::POSITION
+        ADDRESS + csr::OFFSET,
+        csr::lsion::POSITION
     >()) = 0;
   }
 
@@ -197,8 +197,8 @@ namespace rcc {
   bool Functions::isLsiStable()
   {
     return *(bool*) (bitband::peripheral<
-        ADDRESS + registers::csr::OFFSET,
-        registers::csr::bits::lsirdy::POSITION
+        ADDRESS + csr::OFFSET,
+        csr::lsirdy::POSITION
     >());
   }
 
@@ -208,8 +208,8 @@ namespace rcc {
   void Functions::enableRtc()
   {
     *(u32*) (bitband::peripheral<
-        ADDRESS + registers::bdcr::OFFSET,
-        registers::bdcr::bits::rtcen::POSITION
+        ADDRESS + bdcr::OFFSET,
+        bdcr::rtcen::POSITION
     >()) = 1;
   }
 
@@ -219,8 +219,8 @@ namespace rcc {
   void Functions::disableRtc()
   {
     *(u32*) (bitband::peripheral<
-        ADDRESS + registers::bdcr::OFFSET,
-        registers::bdcr::bits::rtcen::POSITION
+        ADDRESS + bdcr::OFFSET,
+        bdcr::rtcen::POSITION
     >()) = 0;
   }
 
@@ -230,8 +230,8 @@ namespace rcc {
   void Functions::enablePll()
   {
     *(u32*) (bitband::peripheral<
-        ADDRESS + registers::cr::OFFSET,
-        registers::cr::bits::pllon::POSITION
+        ADDRESS + cr::OFFSET,
+        cr::pllon::POSITION
     >()) = 1;
   }
 
@@ -241,8 +241,8 @@ namespace rcc {
   void Functions::disablePll()
   {
     *(u32*) (bitband::peripheral<
-        ADDRESS + registers::cr::OFFSET,
-        registers::cr::bits::pllon::POSITION
+        ADDRESS + cr::OFFSET,
+        cr::pllon::POSITION
     >()) = 0;
   }
 
@@ -252,8 +252,8 @@ namespace rcc {
   bool Functions::isPllStable()
   {
     return *(bool*) (bitband::peripheral<
-        ADDRESS + registers::cr::OFFSET,
-        registers::cr::bits::pllrdy::POSITION
+        ADDRESS + cr::OFFSET,
+        cr::pllrdy::POSITION
     >());
   }
 
@@ -264,8 +264,8 @@ namespace rcc {
   void Functions::enablePll2()
   {
     *(u32*) (bitband::peripheral<
-        ADDRESS + registers::cr::OFFSET,
-        registers::cr::bits::pll2on::POSITION
+        ADDRESS + cr::OFFSET,
+        cr::pll2on::POSITION
         >()) = 1;
   }
 
@@ -275,8 +275,8 @@ namespace rcc {
   void Functions::disablePll2()
   {
     *(u32*) (bitband::peripheral<
-        ADDRESS + registers::cr::OFFSET,
-        registers::cr::bits::pll2on::POSITION
+        ADDRESS + cr::OFFSET,
+        cr::pll2on::POSITION
         >()) = 0;
   }
 
@@ -286,8 +286,8 @@ namespace rcc {
   bool Functions::isPll2Stable()
   {
     return *(bool*) (bitband::peripheral<
-        ADDRESS + registers::cr::OFFSET,
-        registers::cr::bits::pll2rdy::POSITION
+        ADDRESS + cr::OFFSET,
+        cr::pll2rdy::POSITION
         >());
   }
 
@@ -297,8 +297,8 @@ namespace rcc {
   void Functions::enablePll3()
   {
     *(u32*) (bitband::peripheral<
-        ADDRESS + registers::cr::OFFSET,
-        registers::cr::bits::pllon::POSITION
+        ADDRESS + cr::OFFSET,
+        cr::pllon::POSITION
         >()) = 1;
   }
 
@@ -308,8 +308,8 @@ namespace rcc {
   void Functions::disablePll3()
   {
     *(u32*) (bitband::peripheral<
-        ADDRESS + registers::cr::OFFSET,
-        registers::cr::bits::pllon::POSITION
+        ADDRESS + cr::OFFSET,
+        cr::pllon::POSITION
         >()) = 0;
   }
 
@@ -319,8 +319,8 @@ namespace rcc {
   bool Functions::isPll3Stable()
   {
     return *(bool*) (bitband::peripheral<
-        ADDRESS + registers::cr::OFFSET,
-        registers::cr::bits::pll3rdy::POSITION
+        ADDRESS + cr::OFFSET,
+        cr::pll3rdy::POSITION
         >());
   }
 #endif
@@ -330,22 +330,22 @@ namespace rcc {
    */
   bool Functions::isSystemClockSourceStable()
   {
-    return (((_RCC->CFGR & registers::cfgr::bits::sw::MASK)
-        >> registers::cfgr::bits::sw::POSITION)
+    return (((_RCC->CFGR & cfgr::sw::MASK)
+        >> cfgr::sw::POSITION)
         ==
-        ((_RCC->CFGR & registers::cfgr::bits::sws::MASK)
-            >> registers::cfgr::bits::sws::POSITION));
+        ((_RCC->CFGR & cfgr::sws::MASK)
+            >> cfgr::sws::POSITION));
   }
 
   /**
    * @brief Selects the system clock source.
    */
   template<
-      registers::cfgr::bits::sw::states::E SW
+      cfgr::sw::States SW
   >
   void Functions::selectSystemClockSource()
   {
-    _RCC->CFGR &= ~registers::cfgr::bits::sw::MASK;
+    _RCC->CFGR &= ~cfgr::sw::MASK;
     _RCC->CFGR |= SW;
   }
 
@@ -353,11 +353,11 @@ namespace rcc {
    * @brief Selects the RTC clock source.
    */
   template<
-      registers::bdcr::bits::rtcsel::states::E RTCSEL
+      bdcr::rtcsel::States RTCSEL
   >
   void Functions::selectRtcClockSource()
   {
-    _RCC->BDCR &= ~registers::bdcr::bits::rtcsel::MASK;
+    _RCC->BDCR &= ~bdcr::rtcsel::MASK;
     _RCC->BDCR |= RTCSEL;
   }
 
@@ -365,7 +365,7 @@ namespace rcc {
    * @brief Enables these peripherals. (APB1)
    */
   template<
-      registers::apb1enr::bits::E ... APB1ENR
+      apb1enr::Bits ... APB1ENR
   >
   void Functions::enableClocks()
   {
@@ -376,7 +376,7 @@ namespace rcc {
    * @brief Disables these peripherals. (APB1)
    */
   template<
-      registers::apb1enr::bits::E ... APB1ENR
+      apb1enr::Bits ... APB1ENR
   >
   void Functions::disableClocks()
   {
@@ -387,7 +387,7 @@ namespace rcc {
    * @brief Resets these peripherals. (APB1)
    */
   template<
-      registers::apb1rstr::bits::E ... APB1RSTR
+      apb1rstr::Bits ... APB1RSTR
   >
   void Functions::resetPeripherals()
   {
@@ -398,7 +398,7 @@ namespace rcc {
    * @brief Enables these peripherals. (APB2)
    */
   template<
-      registers::apb2enr::bits::E ... APB2ENR
+      apb2enr::Bits ... APB2ENR
   >
   void Functions::enableClocks()
   {
@@ -409,7 +409,7 @@ namespace rcc {
    * @brief Disables these peripherals. (APB2)
    */
   template<
-      registers::apb2enr::bits::E ... APB2ENR
+      apb2enr::Bits ... APB2ENR
   >
   void Functions::disableClocks()
   {
@@ -420,7 +420,7 @@ namespace rcc {
    * @brief Resets these peripherals. (APB2)
    */
   template<
-      registers::apb2rstr::bits::E ... APB2RSTR
+      apb2rstr::Bits ... APB2RSTR
   >
   void Functions::resetPeripherals()
   {
@@ -433,7 +433,7 @@ namespace rcc {
    * @brief Enables these peripherals. (AHB)
    */
   template<
-  registers::ahbenr::bits::E ... AHBENR
+  ahbenr::E ... AHBENR
   >
   void Functions::enableClocks()
   {
@@ -444,7 +444,7 @@ namespace rcc {
    * @brief Disables these peripherals. (AHB)
    */
   template<
-  registers::ahbenr::bits::E ... AHBENR
+  ahbenr::E ... AHBENR
   >
   void Functions::disableClocks()
   {
@@ -452,11 +452,11 @@ namespace rcc {
   }
 
   template<
-  registers::cfgr::bits::mco::states::E MCO
+  cfgr::mco::States MCO
   >
   void Functions::configureClockOutput()
   {
-    _RCC->CFGR &= ~(registers::cfgr::bits::mco::MASK);
+    _RCC->CFGR &= ~(cfgr::mco::MASK);
 
     _RCC->CFGR |= MCO;
   }
@@ -466,7 +466,7 @@ namespace rcc {
    * @brief Resets these peripherals. (AHB)
    */
   template<
-  registers::ahbrstr::bits::E ... AHBRSTR
+  ahbrstr::E ... AHBRSTR
   >
   void Functions::resetPeripherals()
   {
@@ -501,17 +501,17 @@ namespace rcc {
         "The ADC prescaler (ADCPRE) must be lower than 3. (inclusive)");
 
     _RCC->CFGR &=
-    registers::cfgr::bits::sw::MASK +
-    registers::cfgr::bits::pllsrc::MASK +
-    registers::cfgr::bits::pllxtpre::MASK +
-    registers::cfgr::bits::pllmul::MASK +
-    registers::cfgr::bits::mco::MASK;
+    cfgr::sw::MASK +
+    cfgr::pllsrc::MASK +
+    cfgr::pllxtpre::MASK +
+    cfgr::pllmul::MASK +
+    cfgr::mco::MASK;
 
     _RCC->CFGR |=
-    (HPRE << registers::cfgr::bits::hpre::POSITION) +
-    (PPRE1 << registers::cfgr::bits::ppre1::POSITION) +
-    (PPRE2 << registers::cfgr::bits::ppre2::POSITION) +
-    (ADCPRE << registers::cfgr::bits::adcpre::POSITION);
+    (HPRE << cfgr::hpre::POSITION) +
+    (PPRE1 << cfgr::ppre1::POSITION) +
+    (PPRE2 << cfgr::ppre2::POSITION) +
+    (ADCPRE << cfgr::adcpre::POSITION);
   }
 
 #else // VALUE_LINE
@@ -544,17 +544,17 @@ namespace rcc {
         "The USB prescaler can only be 0 or 1.");
 
     _RCC->CFGR &=
-    registers::cfgr::bits::sw::MASK +
-    registers::cfgr::bits::pllsrc::MASK +
-    registers::cfgr::bits::pllxtpre::MASK +
-    registers::cfgr::bits::pllmul::MASK +
-    registers::cfgr::bits::mco::MASK;
+    cfgr::sw::MASK +
+    cfgr::pllsrc::MASK +
+    cfgr::pllxtpre::MASK +
+    cfgr::pllmul::MASK +
+    cfgr::mco::MASK;
     _RCC->CFGR |=
-    (HPRE << registers::cfgr::bits::hpre::POSITION) +
-    (PPRE1 << registers::cfgr::bits::ppre1::POSITION) +
-    (PPRE2 << registers::cfgr::bits::ppre2::POSITION) +
-    (ADCPRE << registers::cfgr::bits::adcpre::POSITION) +
-    (USBPRE << registers::cfgr::bits::usbpre::POSITION);
+    (HPRE << cfgr::hpre::POSITION) +
+    (PPRE1 << cfgr::ppre1::POSITION) +
+    (PPRE2 << cfgr::ppre2::POSITION) +
+    (ADCPRE << cfgr::adcpre::POSITION) +
+    (USBPRE << cfgr::usbpre::POSITION);
   }
 
 #endif // VALUE_LINE
@@ -566,7 +566,7 @@ namespace rcc {
    * @note  Overrides the old configuration.
    */
   template<
-  registers::cfgr::bits::pllsrc::states::E PLLSRC,
+  cfgr::pllsrc::States PLLSRC,
   u8 PLLMUL,
   u8 PREDIV1
   >
@@ -578,16 +578,16 @@ namespace rcc {
         "PREDIV1 must be between 0 and 15. (inclusive)");
 
     _RCC->CFGR &=
-    ~(registers::cfgr::bits::pllsrc::MASK +
-        registers::cfgr::bits::pllmul::MASK +
-        registers::cfgr::bits::pllxtpre::MASK);
+    ~(cfgr::pllsrc::MASK +
+        cfgr::pllmul::MASK +
+        cfgr::pllxtpre::MASK);
 
     _RCC->CFGR |=
     PLLSRC +
-    (PLLMUL << registers::cfgr::bits::pllmul::POSITION);
+    (PLLMUL << cfgr::pllmul::POSITION);
 
     _RCC->CFGR2 =
-    (PREDIV1 << registers::cfgr2::bits::prediv1::POSITION);
+    (PREDIV1 << cfgr2::prediv1::POSITION);
   }
 #else // VALUE_LINE
 #ifdef CONNECTIVITY_LINE
@@ -598,15 +598,15 @@ namespace rcc {
    * @note  Overrides the old configuration.
    */
   template<
-  registers::cfgr::bits::pllsrc::states::E PLLSRC,
+  cfgr::pllsrc::States PLLSRC,
   u8 PLLMUL,
   u8 PREDIV1,
   u8 PREDIV2,
   u8 PLL2MUL,
   u8 PLL3MUL,
-  registers::cfgr2::bits::prediv1src::states::E PREDIV1SRC,
-  registers::cfgr2::bits::i2s2src::states::E I2S2SRC,
-  registers::cfgr2::bits::i2s3src::states::E I2S3SRC
+  cfgr2::prediv1src::States PREDIV1SRC,
+  cfgr2::i2s2src::States I2S2SRC,
+  cfgr2::i2s3src::States I2S3SRC
   >
   void Functions::configurePll()
   {
@@ -622,17 +622,17 @@ namespace rcc {
         "PLL3MUL must be between 6 and 15 (inclusive) and not 13.");
 
     _RCC->CFGR &=
-    ~(registers::cfgr::bits::pllsrc::MASK +
-        registers::cfgr::bits::pllmul::MASK +
-        registers::cfgr::bits::pllxtpre::MASK);
+    ~(cfgr::pllsrc::MASK +
+        cfgr::pllmul::MASK +
+        cfgr::pllxtpre::MASK);
     _RCC->CFGR |=
     PLLSRC +
-    (PLLMUL << registers::cfgr::bits::pllmul::POSITION);
+    (PLLMUL << cfgr::pllmul::POSITION);
     _RCC->CFGR2 =
-    (PREDIV1 << registers::cfgr2::bits::prediv1::POSITION) +
-    (PREDIV2 << registers::cfgr2::bits::prediv2::POSITION) +
-    (PLL2MUL << registers::cfgr2::bits::pll2mul::POSITION) +
-    (PLL3MUL << registers::cfgr2::bits::pll3mul::POSITION) +
+    (PREDIV1 << cfgr2::prediv1::POSITION) +
+    (PREDIV2 << cfgr2::prediv2::POSITION) +
+    (PLL2MUL << cfgr2::pll2mul::POSITION) +
+    (PLL3MUL << cfgr2::pll3mul::POSITION) +
     PREDIV1SRC + I2S2SRC + I2S3SRC;
   }
 
@@ -643,7 +643,7 @@ namespace rcc {
    * @note  Overrides the old configuration.
    */
   template<
-  registers::cfgr::bits::pllsrc::states::E PLLSRC,
+  cfgr::pllsrc::States PLLSRC,
   u8 PLLXTPRE,
   u8 PLLMUL
   >
@@ -655,13 +655,13 @@ namespace rcc {
         "PLLMUL must be between 0 and 15. (inclusive)");
 
     _RCC->CFGR &=
-    ~(registers::cfgr::bits::pllsrc::MASK +
-        registers::cfgr::bits::pllxtpre::MASK +
-        registers::cfgr::bits::pllmul::MASK);
+    ~(cfgr::pllsrc::MASK +
+        cfgr::pllxtpre::MASK +
+        cfgr::pllmul::MASK);
     _RCC->CFGR |=
     PLLSRC +
-    (PLLXTPRE << registers::cfgr::bits::pllxtpre::POSITION) +
-    (PLLMUL << registers::cfgr::bits::pllmul::POSITION);
+    (PLLXTPRE << cfgr::pllxtpre::POSITION) +
+    (PLLMUL << cfgr::pllmul::POSITION);
   }
 #endif // CONNECTIVITY_LINE
 #endif // VALUE_LINE
@@ -670,7 +670,7 @@ namespace rcc {
    * @brief Enables these peripherals. (AHB1)
    */
   template<
-      registers::ahb1enr::bits::E ... AHB1ENR
+      ahb1enr::Bits ... AHB1ENR
   >
   void Functions::enableClocks()
   {
@@ -681,7 +681,7 @@ namespace rcc {
    * @brief Disables these peripherals. (AHB1)
    */
   template<
-      registers::ahb1enr::bits::E ... AHB1ENR
+      ahb1enr::Bits ... AHB1ENR
   >
   void Functions::disableClocks()
   {
@@ -692,7 +692,7 @@ namespace rcc {
    * @brief Resets these peripherals. (AHB1)
    */
   template<
-      registers::ahb1rstr::bits::E ... AHB1RSTR
+      ahb1rstr::Bits ... AHB1RSTR
   >
   void Functions::resetPeripherals()
   {
@@ -703,7 +703,7 @@ namespace rcc {
    * @brief Enables these peripherals. (AHB2)
    */
   template<
-      registers::ahb2enr::bits::E ... AHB2ENR
+      ahb2enr::Bits ... AHB2ENR
   >
   void Functions::enableClocks()
   {
@@ -714,7 +714,7 @@ namespace rcc {
    * @brief Disables these peripherals. (AHB2)
    */
   template<
-      registers::ahb2enr::bits::E ... AHB2ENR
+      ahb2enr::Bits ... AHB2ENR
   >
   void Functions::disableClocks()
   {
@@ -725,7 +725,7 @@ namespace rcc {
    * @brief Resets these peripherals. (AHB2)
    */
   template<
-      registers::ahb2rstr::bits::E ... AHB2RSTR
+      ahb2rstr::Bits ... AHB2RSTR
   >
   void Functions::resetPeripherals()
   {
@@ -738,7 +738,7 @@ namespace rcc {
    * @note  Overrides the old configuration.
    */
   template<
-      registers::pllcfgr::bits::pllsrc::states::E PLLSRC,
+      pllcfgr::pllsrc::States PLLSRC,
       u8 PLLM,
       u16 PLLN,
       u8 PLLP,
@@ -756,10 +756,10 @@ namespace rcc {
         "PLLQ must be between 2 and 15 (inclusive).");
 
     _RCC->PLLCFGR =
-        (PLLM << registers::pllcfgr::bits::pllm::POSITION) +
-            (PLLN << registers::pllcfgr::bits::plln::POSITION) +
-            (((PLLP / 2) - 1) << registers::pllcfgr::bits::pllp::POSITION) +
-            (PLLQ << registers::pllcfgr::bits::pllq::POSITION) +
+        (PLLM << pllcfgr::pllm::POSITION) +
+            (PLLN << pllcfgr::plln::POSITION) +
+            (((PLLP / 2) - 1) << pllcfgr::pllp::POSITION) +
+            (PLLQ << pllcfgr::pllq::POSITION) +
             PLLSRC
             ;
   }
@@ -775,12 +775,11 @@ namespace rcc {
   >
   void Functions::configureI2sPll()
   {
-    _RCC->PLLCFGR |= registers::cfgr::bits::i2ssrc::states::
-        PLLI2S_USED_AS_I2S_CLOCK_SOURCE;
+    _RCC->PLLCFGR |= cfgr::i2ssrc::PLLI2S_USED_AS_I2S_CLOCK_SOURCE;
 
     _RCC->PLLI2SCFGR =
-        (PLLI2SN << registers::plli2scfgr::bits::plli2sn::POSITION) +
-            (PLLI2SR << registers::plli2scfgr::bits::plli2sr::POSITION);
+        (PLLI2SN << plli2scfgr::plli2sn::POSITION) +
+            (PLLI2SR << plli2scfgr::plli2sr::POSITION);
   }
 
   /**
@@ -808,22 +807,22 @@ namespace rcc {
         "The RTC prescaler (RTCPRE) must be lower than 32. (inclusive)");
 
     _RCC->CFGR &=
-        ~(registers::cfgr::bits::hpre::MASK +
-            registers::cfgr::bits::ppre1::MASK +
-            registers::cfgr::bits::ppre2::MASK +
-            registers::cfgr::bits::rtcpre::MASK)
+        ~(cfgr::hpre::MASK +
+            cfgr::ppre1::MASK +
+            cfgr::ppre2::MASK +
+            cfgr::rtcpre::MASK)
         ;
     _RCC->CFGR |=
-        (HPRE << registers::cfgr::bits::hpre::POSITION) +
-            (PPRE1 << registers::cfgr::bits::ppre1::POSITION) +
-            (PPRE2 << registers::cfgr::bits::ppre2::POSITION) +
-            (RTCPRE << registers::cfgr::bits::rtcpre::POSITION)
+        (HPRE << cfgr::hpre::POSITION) +
+            (PPRE1 << cfgr::ppre1::POSITION) +
+            (PPRE2 << cfgr::ppre2::POSITION) +
+            (RTCPRE << cfgr::rtcpre::POSITION)
             ;
   }
 
   template<
-      registers::cfgr::bits::mco1::states::E MCO1,
-      registers::cfgr::bits::mco2::states::E MCO2,
+      cfgr::mco1::States MCO1,
+      cfgr::mco2::States MCO2,
       u8 MCOPRE1,
       u8 MCOPRE2
   >
@@ -835,23 +834,23 @@ namespace rcc {
     static_assert(MCOPRE2 < 0b1000,
         "MCOPRE2 can't exceed 0b1000");
 
-    _RCC->CFGR &= ~(registers::cfgr::bits::mco1::MASK +
-        registers::cfgr::bits::mco2::MASK +
-        registers::cfgr::bits::mco1pre::MASK +
-        registers::cfgr::bits::mco2pre::MASK);
+    _RCC->CFGR &= ~(cfgr::mco1::MASK +
+        cfgr::mco2::MASK +
+        cfgr::mco1pre::MASK +
+        cfgr::mco2pre::MASK);
 
     _RCC->CFGR |= MCO1 + MCO2 +
-        (MCOPRE1 << registers::cfgr::bits::mco1pre::POSITION) +
-        (MCOPRE2 << registers::cfgr::bits::mco2pre::POSITION);
+        (MCOPRE1 << cfgr::mco1pre::POSITION) +
+        (MCOPRE2 << cfgr::mco2pre::POSITION);
   }
 
 
   template<
-      registers::cfgr::bits::i2ssrc::states::E I2SSRC
+      cfgr::i2ssrc::States I2SSRC
   >
   void Functions::selectI2sSource()
   {
-    _RCC->CFGR &= registers::cfgr::bits::i2ssrc::MASK;
+    _RCC->CFGR &= cfgr::i2ssrc::MASK;
 
     _RCC->CFGR |= I2SSRC;
   }

@@ -69,7 +69,7 @@ void mcuSetup()
 {
 #ifdef STM32F1XX
   RCC::enableClocks<
-  rcc::registers::apb2enr::bits::IOPA
+  rcc::apb2enr::IOPA
   >();
 
   GPIOA::configureLowerPins<
@@ -85,7 +85,7 @@ void mcuSetup()
 
 #else
   RCC::enableClocks<
-      rcc::registers::ahb1enr::bits::GPIOA
+      rcc::ahb1enr::GPIOA
   >();
 
   GPIOA::setModes<
@@ -109,8 +109,8 @@ void mcuSetup()
 #endif
 
   RCC::enableClocks<
-      rcc::registers::apb1enr::bits::TIM6,
-      rcc::registers::apb1enr::bits::TIM7
+      rcc::apb1enr::TIM6,
+      rcc::apb1enr::TIM7
   >();
 
 #if defined VALUE_LINE || \

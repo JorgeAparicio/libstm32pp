@@ -35,20 +35,20 @@ namespace gpio {
   {
     RCC::enableClocks<
     P == gpio::address::GPIOA?
-    rcc::registers::apb2enr::IOPA :
+    rcc::apb2enr::IOPA :
     (P == gpio::address::GPIOB?
-        rcc::registers::apb2enr::IOPB :
+        rcc::apb2enr::IOPB :
         (P == gpio::address::GPIOC?
-            rcc::registers::apb2enr::IOPC :
+            rcc::apb2enr::IOPC :
             (P == gpio::address::GPIOD?
-                rcc::registers::apb2enr::IOPD :
+                rcc::apb2enr::IOPD :
                 (P == gpio::address::GPIOE?
-                    rcc::registers::apb2enr::IOPE :
+                    rcc::apb2enr::IOPE :
                     (P == gpio::address::GPIOF?
-                        rcc::registers::apb2enr::IOPF :
+                        rcc::apb2enr::IOPF :
                         (P == gpio::address::GPIOG?
-                            rcc::registers::apb2enr::IOPG :
-                            rcc::registers::apb2enr::E(0)))))))
+                            rcc::apb2enr::IOPG :
+                            rcc::apb2enr::E(0)))))))
     >();
   }
 
@@ -142,20 +142,20 @@ namespace gpio {
   {
     RCC::enableClocks<
     P == gpio::address::GPIOA?
-    rcc::registers::apb2enr::bits::IOPA :
+    rcc::apb2enr::IOPA :
     (P == gpio::address::GPIOB?
-        rcc::registers::apb2enr::bits::IOPB :
+        rcc::apb2enr::IOPB :
         (P == gpio::address::GPIOC?
-            rcc::registers::apb2enr::bits::IOPC :
+            rcc::apb2enr::IOPC :
             (P == gpio::address::GPIOD?
-                rcc::registers::apb2enr::bits::IOPD :
+                rcc::apb2enr::IOPD :
                 (P == gpio::address::GPIOE?
-                    rcc::registers::apb2enr::bits::IOPE :
+                    rcc::apb2enr::IOPE :
                     (P == gpio::address::GPIOF?
-                        rcc::registers::apb2enr::bits::IOPF :
+                        rcc::apb2enr::IOPF :
                         (P == gpio::address::GPIOG?
-                            rcc::registers::apb2enr::bits::IOPG :
-                            rcc::registers::apb2enr::E(0)))))))
+                            rcc::apb2enr::IOPG :
+                            rcc::apb2enr::E(0)))))))
     >();
   }
 
@@ -168,20 +168,20 @@ namespace gpio {
   {
     RCC::disableClocks<
     P == gpio::address::GPIOA?
-    rcc::registers::apb2enr::IOPA :
+    rcc::apb2enr::IOPA :
     (P == gpio::address::GPIOB?
-        rcc::registers::apb2enr::IOPB :
+        rcc::apb2enr::IOPB :
         (P == gpio::address::GPIOC?
-            rcc::registers::apb2enr::IOPC :
+            rcc::apb2enr::IOPC :
             (P == gpio::address::GPIOD?
-                rcc::registers::apb2enr::IOPD :
+                rcc::apb2enr::IOPD :
                 (P == gpio::address::GPIOE?
-                    rcc::registers::apb2enr::IOPE :
+                    rcc::apb2enr::IOPE :
                     (P == gpio::address::GPIOF?
-                        rcc::registers::apb2enr::IOPF :
+                        rcc::apb2enr::IOPF :
                         (P == gpio::address::GPIOG?
-                            rcc::registers::apb2enr::IOPG :
-                            rcc::registers::apb2enr::E(0)))))))
+                            rcc::apb2enr::IOPG :
+                            rcc::apb2enr::E(0)))))))
     >();
   }
 
@@ -260,20 +260,20 @@ namespace gpio {
   {
     RCC::enableClocks<
         P == gpio::address::GPIOA ?
-            rcc::registers::ahb1enr::bits::GPIOA :
+            rcc::ahb1enr::GPIOA :
             (P == gpio::address::GPIOB ?
-                rcc::registers::ahb1enr::bits::GPIOB :
+                rcc::ahb1enr::GPIOB :
                 (P == gpio::address::GPIOC ?
-                    rcc::registers::ahb1enr::bits::GPIOC :
+                    rcc::ahb1enr::GPIOC :
                     (P == gpio::address::GPIOD ?
-                        rcc::registers::ahb1enr::bits::GPIOD :
+                        rcc::ahb1enr::GPIOD :
                         (P == gpio::address::GPIOE ?
-                            rcc::registers::ahb1enr::bits::GPIOE :
+                            rcc::ahb1enr::GPIOE :
                             (P == gpio::address::GPIOF ?
-                                rcc::registers::ahb1enr::bits::GPIOF :
+                                rcc::ahb1enr::GPIOF :
                                 (P == gpio::address::GPIOG ?
-                                    rcc::registers::ahb1enr::bits::GPIOG :
-                                    rcc::registers::ahb1enr::bits::E(0)))))))
+                                    rcc::ahb1enr::GPIOG :
+                                    rcc::ahb1enr::Bits(0)))))))
     >();
   }
 
@@ -401,20 +401,20 @@ namespace gpio {
   {
     RCC::enableClocks<
         P == gpio::address::GPIOA ?
-            rcc::registers::ahb1enr::bits::GPIOA :
+            rcc::ahb1enr::GPIOA :
             (P == gpio::address::GPIOB ?
-                rcc::registers::ahb1enr::bits::GPIOB :
+                rcc::ahb1enr::GPIOB :
                 (P == gpio::address::GPIOC ?
-                    rcc::registers::ahb1enr::bits::GPIOC :
+                    rcc::ahb1enr::GPIOC :
                     (P == gpio::address::GPIOD ?
-                        rcc::registers::ahb1enr::bits::GPIOD :
+                        rcc::ahb1enr::GPIOD :
                         (P == gpio::address::GPIOE ?
-                            rcc::registers::ahb1enr::bits::GPIOE :
+                            rcc::ahb1enr::GPIOE :
                             (P == gpio::address::GPIOF ?
-                                rcc::registers::ahb1enr::bits::GPIOF :
+                                rcc::ahb1enr::GPIOF :
                                 (P == gpio::address::GPIOG ?
-                                    rcc::registers::ahb1enr::bits::GPIOG :
-                                    rcc::registers::ahb1enr::bits::E(0)))))))
+                                    rcc::ahb1enr::GPIOG :
+                                    rcc::ahb1enr::Bits(0)))))))
     >();
   }
 
@@ -427,20 +427,20 @@ namespace gpio {
   {
     RCC::disableClocks<
         P == gpio::address::GPIOA ?
-            rcc::registers::ahb1enr::bits::GPIOA :
+            rcc::ahb1enr::GPIOA :
             (P == gpio::address::GPIOB ?
-                rcc::registers::ahb1enr::bits::GPIOB :
+                rcc::ahb1enr::GPIOB :
                 (P == gpio::address::GPIOC ?
-                    rcc::registers::ahb1enr::bits::GPIOC :
+                    rcc::ahb1enr::GPIOC :
                     (P == gpio::address::GPIOD ?
-                        rcc::registers::ahb1enr::bits::GPIOD :
+                        rcc::ahb1enr::GPIOD :
                         (P == gpio::address::GPIOE ?
-                            rcc::registers::ahb1enr::bits::GPIOE :
+                            rcc::ahb1enr::GPIOE :
                             (P == gpio::address::GPIOF ?
-                                rcc::registers::ahb1enr::bits::GPIOF :
+                                rcc::ahb1enr::GPIOF :
                                 (P == gpio::address::GPIOG ?
-                                    rcc::registers::ahb1enr::bits::GPIOG :
-                                    rcc::registers::ahb1enr::bits::E(0)))))))
+                                    rcc::ahb1enr::GPIOG :
+                                    rcc::ahb1enr::Bits(0)))))))
     >();
   }
 

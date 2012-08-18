@@ -28,16 +28,16 @@ namespace spi {
   {
     RCC::enableClocks<
         S == address::SPI1 ?
-                             rcc::registers::apb2enr::bits::SPI1 :
-                             rcc::registers::apb2enr::bits::E(0)
+                             rcc::apb2enr::SPI1 :
+                             rcc::apb2enr::Bits(0)
     >();
 
     RCC::enableClocks<
         S == address::SPI2 ?
-            rcc::registers::apb1enr::bits::SPI2 :
+            rcc::apb1enr::SPI2 :
             (S == address::SPI3 ?
-                                  rcc::registers::apb1enr::bits::SPI3 :
-                                  rcc::registers::apb1enr::bits::E(0))
+                                  rcc::apb1enr::SPI3 :
+                                  rcc::apb1enr::Bits(0))
     >();
   }
 
@@ -46,16 +46,16 @@ namespace spi {
   {
     RCC::disableClocks<
         S == address::SPI1 ?
-                             rcc::registers::apb2enr::bits::SPI1 :
-                             rcc::registers::apb2enr::bits::E(0)
+                             rcc::apb2enr::SPI1 :
+                             rcc::apb2enr::Bits(0)
     >();
 
     RCC::disableClocks<
         S == address::SPI2 ?
-            rcc::registers::apb1enr::bits::SPI2 :
+            rcc::apb1enr::SPI2 :
             (S == address::SPI3 ?
-                                  rcc::registers::apb1enr::bits::SPI3 :
-                                  rcc::registers::apb1enr::bits::E(0))
+                                  rcc::apb1enr::SPI3 :
+                                  rcc::apb1enr::Bits(0))
     >();
   }
 

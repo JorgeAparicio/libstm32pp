@@ -39,7 +39,7 @@ const char msg[] = "Hello World!\n\r";
 int main()
 {
   RCC::enableClocks<
-      rcc::registers::ahb1enr::bits::GPIOA
+      rcc::ahb1enr::GPIOA
   >();
 
   PA9::setAlternateFunction<
@@ -59,11 +59,11 @@ int main()
   >();
 
   RCC::enableClocks<
-      rcc::registers::apb2enr::bits::USART1
+      rcc::apb2enr::USART1
   >();
 
   RCC::enableClocks<
-      rcc::registers::apb2enr::bits::USART1
+      rcc::apb2enr::USART1
   >();
 
   USART1::configure<

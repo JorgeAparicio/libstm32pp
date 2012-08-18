@@ -30,7 +30,7 @@ namespace dcmi {
   void Functions::enableClock()
   {
     RCC::enableClocks<
-      rcc::registers::ahb2enr::bits::DCMI
+      rcc::ahb2enr::DCMI
     >();
   }
 
@@ -41,7 +41,7 @@ namespace dcmi {
   void Functions::disableClock()
   {
     RCC::disableClocks<
-      rcc::registers::ahb2enr::bits::DCMI
+      rcc::ahb2enr::DCMI
     >();
   }
 

@@ -36,7 +36,7 @@ int main()
 {
 #ifdef STM32F1XX
   RCC::enableClocks<
-      rcc::registers::apb2enr::bits::IOPA
+      rcc::apb2enr::IOPA
   >();
 
   PA0::setMode<
@@ -45,7 +45,7 @@ int main()
 
 #else
   RCC::enableClocks<
-  rcc::registers::ahb1enr::bits::GPIOA
+  rcc::ahb1enr::GPIOA
   >();
 
   PA0::setMode<
@@ -54,7 +54,7 @@ int main()
 #endif
 
   RCC::enableClocks<
-      rcc::registers::apb1enr::bits::TIM6
+      rcc::apb1enr::TIM6
   >();
 
   TIM6::configureBasicCounter<

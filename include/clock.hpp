@@ -129,7 +129,7 @@ namespace clock {
    *
    * Define the prescaler parameters ******************************************/
   enum {
-    _RTCSEL = rcc::registers::bdcr::bits::rtcsel::states::
+    _RTCSEL = rcc::bdcr::bits::rtcsel::states::
     LSE_CLOCK_AS_RTC_SOURCE
   };
   /****************************************** Define the prescaler parameters */
@@ -147,7 +147,7 @@ namespace clock {
    * Define the prescaler parameters ******************************************/
   enum {
     _RTCPRE = 8,
-    _RTCSEL = rcc::registers::bdcr::bits::rtcsel::states::
+    _RTCSEL = rcc::bdcr::bits::rtcsel::states::
     LSE_CLOCK_AS_RTC_SOURCE
   };
   /****************************************** Define the prescaler parameters */
@@ -176,7 +176,7 @@ namespace clock {
    *
    * Select the PLL source ****************************************************/
   enum {
-    __PLLSRC = rcc::registers::cfgr::bits::pllsrc::states::
+    __PLLSRC = rcc::cfgr::pllsrc::states::
     USE_PREDIV1_OUTPUT_AS_PLL_SOURCE
   };
   /**************************************************** Select the PLL source */
@@ -230,7 +230,7 @@ namespace clock {
    *
    * Select the PREDIV1 source ************************************************/
   enum {
-    _PREDIV1SRC = rcc::registers::cfgr2::bits::prediv1src::states::
+    _PREDIV1SRC = rcc::cfgr2::bits::prediv1src::states::
     USE_PLL2_AS_PREDIV1_INPUT,
     _PREDIV1 = 1
   };
@@ -257,7 +257,7 @@ namespace clock {
    *
    * Select the PLL source  ***************************************************/
   enum {
-    __PLLSRC = rcc::registers::pllcfgr::bits::pllsrc::states::
+    __PLLSRC = rcc::pllcfgr::pllsrc::states::
     USE_HSE_CLOCK_AS_PLL_CLOCK_SOURCE
   };
   /*************************************************** Select the PLL source  */
@@ -290,8 +290,7 @@ namespace clock {
 
   /* Select the system clock source *******************************************/
   enum {
-    _SW = rcc::registers::cfgr::bits::sw::states::
-    HSI_OSCILLATOR_SELECTED_AS_SYSTEM_CLOCK
+    _SW = rcc::cfgr::sw::HSI_OSCILLATOR_SELECTED_AS_SYSTEM_CLOCK
   };
   /******************************************* Select the system clock source */
   /****************************************************************************
@@ -380,9 +379,9 @@ namespace clock {
    *
    * Define the I2S sources below  ********************************************/
   enum {
-    _I2S2SRC = rcc::registers::cfgr2::bits::i2s2src::states::
+    _I2S2SRC = rcc::cfgr2::bits::i2s2src::states::
     USE_SYSTEM_CLOCK_AS_I2S2_CLOCK,
-    _I2S3SRC = rcc::registers::cfgr2::bits::i2s3src::states::
+    _I2S3SRC = rcc::cfgr2::bits::i2s3src::states::
     USE_SYSTEM_CLOCK_AS_I2S3_CLOCK,
   };
   /********************************************* Define the I2S sources below */
@@ -404,7 +403,7 @@ namespace clock {
    *
    * Select the PLL source  ***************************************************/
   enum {
-    __PLLSRC = rcc::registers::pllcfgr::bits::pllsrc::states::
+    __PLLSRC = rcc::pllcfgr::pllsrc::states::
     USE_HSE_CLOCK_AS_PLL_CLOCK_SOURCE
   };
   /*************************************************** Select the PLL source  */
@@ -494,7 +493,7 @@ namespace clock {
    *
    ****************************************************************************/
   enum {
-    _MCO = rcc::registers::cfgr::bits::mco::states::OUTPUT_HSE_CLOCK
+    _MCO = rcc::cfgr::mco::states::OUTPUT_HSE_CLOCK
   };
 #else // STM32F1XX
   /*****************************************************************************
@@ -509,8 +508,8 @@ namespace clock {
    *
    ****************************************************************************/
   enum {
-    _MCO1 = rcc::registers::cfgr::bits::mco1::states::OUTPUT_HSI_CLOCK,
-    _MCO2 = rcc::registers::cfgr::bits::mco2::states::OUTPUT_HSE_CLOCK,
+    _MCO1 = rcc::cfgr::mco1::states::OUTPUT_HSI_CLOCK,
+    _MCO2 = rcc::cfgr::mco2::states::OUTPUT_HSE_CLOCK,
     _MCO1PRE = 1,
     _MCO2PRE = 1,
   };

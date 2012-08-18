@@ -35,10 +35,10 @@ namespace dma {
     {
       RCC::enableClocks<
           D == address::DMA1 ?
-              rcc::registers::ahb1enr::bits::DMA1 :
-              (D == address::DMA2 ?
-                                    rcc::registers::ahb1enr::bits::DMA2 :
-                                    rcc::registers::ahb1enr::bits::E(0))
+                               rcc::ahb1enr::DMA1 :
+                               (D == address::DMA2 ?
+                                                     rcc::ahb1enr::DMA2 :
+                                                     rcc::ahb1enr::Bits(0))
       >();
     }
 
@@ -51,10 +51,10 @@ namespace dma {
     {
       RCC::disableClocks<
           D == address::DMA1 ?
-              rcc::registers::ahb1enr::bits::DMA1 :
-              (D == address::DMA2 ?
-                                    rcc::registers::ahb1enr::bits::DMA2 :
-                                    rcc::registers::ahb1enr::bits::E(0))
+                               rcc::ahb1enr::DMA1 :
+                               (D == address::DMA2 ?
+                                                     rcc::ahb1enr::DMA2 :
+                                                     rcc::ahb1enr::Bits(0))
       >();
     }
 
@@ -71,10 +71,10 @@ namespace dma {
     {
       RCC::enableClocks<
       D == common::address::DMA1 ?
-      rcc::registers::ahb1enr::bits::DMA1 :
+      rcc::ahb1enr::DMA1 :
       (D == common::address::DMA2 ?
-          rcc::registers::ahb1enr::bits::DMA2 :
-          rcc::registers::ahb1enr::bits::E(0))
+          rcc::ahb1enr::DMA2 :
+          rcc::ahb1enr::E(0))
       >();
     }
 
@@ -226,10 +226,10 @@ namespace dma {
     {
       RCC::enableClocks<
           D == common::address::DMA1 ?
-              rcc::registers::ahb1enr::bits::DMA1 :
+              rcc::ahb1enr::DMA1 :
               (D == common::address::DMA2 ?
-                  rcc::registers::ahb1enr::bits::DMA2 :
-                  rcc::registers::ahb1enr::bits::E(0))
+                                            rcc::ahb1enr::DMA2 :
+                                            rcc::ahb1enr::Bits(0))
       >();
     }
 

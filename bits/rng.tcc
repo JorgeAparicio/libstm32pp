@@ -30,7 +30,7 @@ namespace rng {
   void Functions::enableClock()
   {
     RCC::enableClocks<
-      rcc::registers::ahb2enr::bits::RNG
+        rcc::ahb2enr::RNG
     >();
   }
 
@@ -41,7 +41,7 @@ namespace rng {
   void Functions::disableClock()
   {
     RCC::disableClocks<
-      rcc::registers::ahb2enr::bits::RNG
+        rcc::ahb2enr::RNG
     >();
   }
 

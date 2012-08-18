@@ -102,15 +102,15 @@ namespace i2c {
   {
     RCC::enableClocks<
         I == address::I2C1 ?
-            rcc::registers::apb1enr::bits::I2C1 :
+            rcc::apb1enr::I2C1 :
             (I == address::I2C2 ?
-                rcc::registers::apb1enr::bits::I2C2 :
+                rcc::apb1enr::I2C2 :
                 #ifdef STM32F1XX
                 0)
 #else // STM32F1XX
                 (I == address::I2C3 ?
-                                      rcc::registers::apb1enr::bits::I2C3 :
-                                      rcc::registers::apb1enr::bits::E(0)))
+                                      rcc::apb1enr::I2C3 :
+                                      rcc::apb1enr::Bits(0)))
     #endif // STM32F1XX
     >();
   }
@@ -124,15 +124,15 @@ namespace i2c {
   {
     RCC::disableClocks<
         I == address::I2C1 ?
-            rcc::registers::apb1enr::bits::I2C1 :
+            rcc::apb1enr::I2C1 :
             (I == address::I2C2 ?
-                rcc::registers::apb1enr::bits::I2C2 :
+                rcc::apb1enr::I2C2 :
                 #ifdef STM32F1XX
                 0)
 #else // STM32F1XX
                 (I == address::I2C3 ?
-                                      rcc::registers::apb1enr::bits::I2C3 :
-                                      rcc::registers::apb1enr::bits::E(0)))
+                                      rcc::apb1enr::I2C3 :
+                                      rcc::apb1enr::Bits(0)))
     #endif // STM32F1XX
     >();
   }
