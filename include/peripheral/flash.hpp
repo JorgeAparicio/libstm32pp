@@ -28,58 +28,49 @@
 #pragma once
 
 #include "../device_select.hpp"
-#include "../defs.hpp"
 
+#include "../defs.hpp"
 #include "../../memorymap/flash.hpp"
 
 // Low-level access to the registers
-#define FLASH_REGS  reinterpret_cast<flash::Registers*>(flash::ADDRESS)
+#define FLASH_REGS reinterpret_cast<flash::Registers*>(flash::ADDRESS)
 
 // High-level functions
 namespace flash {
   class Functions {
     public:
 #ifndef VALUE_LINE
-      template<
-          flash::registers::acr::bits::latency::states::E
-      > static inline void setLatency();
-      #endif
+      static inline void setLatency(flash::acr::latency::States);
+#endif // VALUE_LINE
 #ifdef STM32F1XX
 #ifndef VALUE_LINE
-      static inline void enablePrefetch(void);
-      static inline void disablePrefetch(void);
+      static inline void enablePrefetch();
+      static inline void disablePrefetch();
 
-#endif
-      static inline void enableHalfCycleFlashAccess(void);
-      static inline void disableHalfCycleFlashAccess(void);
+#endif // !VALUE_LINE
+      static inline void enableHalfCycleFlashAccess();
+      static inline void disableHalfCycleFlashAccess();
 #ifdef VALUE_LINE
-      template <
-      flash::registers::acr::bits::hlfcya::states::E
-      >
-      static inline void configure(void);
-#else
-      template<
-      flash::registers::acr::bits::latency::states::E,
-      flash::registers::acr::bits::hlfcya::states::E,
-      flash::registers::acr::bits::prftbe::states::E
-      >
-      static inline void configure(void);
-#endif
+      static inline void configure(flash::acr::hlfcya::States);
+#else // VALUE_LINE
+      static inline void configure(
+          flash::acr::latency::States,
+          flash::acr::hlfcya::States,
+          flash::acr::prftbe::States);
+#endif // VALUE_LINE
 #else // STM32F1XX
-      static inline void enablePrefetch(void);
-      static inline void disablePrefetch(void);
-      static inline void enableDataCache(void);
-      static inline void disableDataCache(void);
-      static inline void enableInstructionCache(void);
-      static inline void disableInstructionCache(void);
+      static inline void enablePrefetch();
+      static inline void disablePrefetch();
+      static inline void enableDataCache();
+      static inline void disableDataCache();
+      static inline void enableInstructionCache();
+      static inline void disableInstructionCache();
 
-      template<
-          flash::registers::acr::bits::latency::states::E,
-          flash::registers::acr::bits::prften::states::E,
-          flash::registers::acr::bits::dcen::states::E,
-          flash::registers::acr::bits::icen::states::E
-      >
-      static inline void configure(void);
+      static inline void configure(
+          flash::acr::latency::States,
+          flash::acr::prften::States,
+          flash::acr::dcen::States,
+          flash::acr::icen::States);
 
 #endif // STM32F1XX
     private:

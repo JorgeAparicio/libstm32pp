@@ -66,7 +66,7 @@ namespace clock {
 #ifdef STM32F1XX
   enum {
     HSI = 8000000,
-    #ifdef USING_LSI
+#ifdef USING_LSI
     LSI = 40000
 #else // USING_LSI
     LSI = 0
@@ -75,7 +75,7 @@ namespace clock {
 #else // STM32F1XX
   enum {
     HSI = 16000000,
-#ifdef USING_LSI
+    #ifdef USING_LSI
     LSI = 32000
 #else // USING_LSI
     LSI = 0
@@ -397,11 +397,11 @@ enum {
 enum {
   _PLLSRC =
   __PLLSRC ==
-  rcc::pllcfgr::pllsrc::states::
+  rcc::pllcfgr::pllsrc::
   USE_HSE_CLOCK_AS_PLL_CLOCK_SOURCE ?
   HSE :
   (__PLLSRC ==
-      rcc::pllcfgr::pllsrc::states::
+      rcc::pllcfgr::pllsrc::
       USE_HSI_CLOCK_AS_PLL_CLOCK_SOURCE ?
       HSI :
       0)
@@ -456,23 +456,23 @@ enum {
 enum {
   MCO =
   __MCO ==
-  rcc::cfgr::mco::states::
+  rcc::cfgr::mco::
   NO_CLOCK_OUTPUT ?
   0 :
   (__MCO ==
-      rcc::cfgr::mco::states::
+      rcc::cfgr::mco::
       OUTPUT_HSE_CLOCK ?
       HSE :
       (__MCO ==
-          rcc::cfgr::mco::states::
+          rcc::cfgr::mco::
           OUTPUT_HSI_CLOCK ?
           HSI :
           (__MCO ==
-              rcc::cfgr::mco::states::
+              rcc::cfgr::mco::
               OUTPUT_PLL_CLOCK_OVER_2 ?
               PLL / 2 :
               (__MCO ==
-                  rcc::cfgr::mco::states::
+                  rcc::cfgr::mco::
                   OUTPUT_SYSTEM_CLOCK ?
                   SYSTEM :
                   0))))
@@ -481,35 +481,35 @@ enum {
 enum {
   MCO =
   __MCO ==
-  rcc::cfgr::mco::states::
+  rcc::cfgr::mco::
   NO_CLOCK_OUTPUT ?
   0 :
   (__MCO ==
-      rcc::cfgr::mco::states::
+      rcc::cfgr::mco::
       OUTPUT_HSE_CLOCK ?
       HSE :
       (__MCO ==
-          rcc::cfgr::mco::states::
+          rcc::cfgr::mco::
           OUTPUT_HSI_CLOCK ?
           HSI :
           (__MCO ==
-              rcc::cfgr::mco::states::
+              rcc::cfgr::mco::
               OUTPUT_PLL2_CLOCK ?
               __PLL2 :
               (__MCO ==
-                  rcc::cfgr::mco::states::
+                  rcc::cfgr::mco::
                   OUTPUT_PLL3_CLOCK ?
                   __PLL3 :
                   (__MCO ==
-                      rcc::cfgr::mco::states::
+                      rcc::cfgr::mco::
                       OUTPUT_PLL_CLOCK_OVER_2 ?
                       PLL / 2 :
                       (__MCO ==
-                          rcc::cfgr::mco::states::
+                          rcc::cfgr::mco::
                           OUTPUT_SYSTEM_CLOCK ?
                           SYSTEM :
                           (__MCO ==
-                              rcc::cfgr::mco::states::
+                              rcc::cfgr::mco::
                               OUTPUT_XT1_CLOCK ?
                               HSE :
                               0)))))))
@@ -580,11 +580,11 @@ static_assert(MCO2 <= 100000000,
     not defined VALUE_LINE
 static_assert((SYSTEM < 24000000) ||
     (__LATENCY >=
-        flash::registers::acr::bits::latency::states::ONE_WAIT_STATE),
+        flash::acr::latency::ONE_WAIT_STATE),
     "For this system clock frequency, the latency must be 1 or higher.");
 static_assert((SYSTEM < 48000000) ||
     (__LATENCY >=
-        flash::registers::acr::bits::latency::states::TWO_WAIT_STATES),
+        flash::acr::latency::TWO_WAIT_STATES),
     "For this system clock frequency, the latency must be 2 or higher.");
 #endif // STM32F1XX && !VALUE_LINE
 /****************************************************************************
@@ -723,7 +723,7 @@ void initialize()
 #else // USING_PLL
 #ifdef USING_I2S_PLL
   RCC::configurePll<
-  rcc::cfgr::pllsrc::states::
+  rcc::cfgr::pllsrc::
   USE_HSI_CLOCK_OVER_2_AS_PLL_SOURCE, /* Any value */
   2, /* Any value */
   1, /* Any value */
@@ -764,26 +764,22 @@ void initialize()
   /* Flash latency **********************************************************/
 #ifdef STM32F1XX
 #ifdef VALUE_LINE
-  FLASH::configure<
-  flash::registers::acr::bits::hlfcya::states::
-  FLASH_HALF_CYCLE_ACCESS_ENABLED
-  >();
+  FLASH::configure(flash::acr::hlfcya::
+      FLASH_HALF_CYCLE_ACCESS_ENABLED);
 #else // VALUE_LINE
-  FLASH::configure<
+  FLASH::configure(
       __LATENCY,
-      flash::registers::acr::bits::hlfcya::states::
+      flash::acr::hlfcya::
       FLASH_HALF_CYCLE_ACCESS_ENABLED,
-      flash::registers::acr::bits::prftbe::states::
-      PREFETCH_ENABLED
-  >();
+      flash::acr::prftbe::
+      PREFETCH_ENABLED);
 #endif // VALUE_LINE
 #else // STM32F1XX
-  FLASH::configure<
-  __LATENCY,
-  flash::registers::acr::bits::prften::states::PREFETCH_ENABLED,
-  flash::registers::acr::bits::dcen::states::DATA_CACHE_ENABLED,
-  flash::registers::acr::bits::icen::states::INSTRUCTION_CACHE_ENABLED
-  >();
+  FLASH::configure(
+      __LATENCY,
+      flash::acr::prften::PREFETCH_ENABLED,
+      flash::acr::dcen::DATA_CACHE_ENABLED,
+      flash::acr::icen::INSTRUCTION_CACHE_ENABLED);
 #endif // STM32F1XX
   /* Bus prescalers *********************************************************/
 #ifdef STM32F1XX
@@ -797,25 +793,25 @@ void initialize()
 #else // VALUE_LINE
 #ifndef CONNECTIVITY_LINE
   RCC::configureBusPrescalers<
-      __HPRE + 0b111,
-      __PPRE1 + 0b11,
-      __PPRE2 + 0b11,
-      __ADCPRE,
-      __USBPRE
+  __HPRE + 0b111,
+  __PPRE1 + 0b11,
+  __PPRE2 + 0b11,
+  __ADCPRE,
+  __USBPRE
   >();
 #else // !CONNECTIVITY_LINE
 #endif // !CONNECTIVITY_LINE
 #endif // VALUE_LINE
 #else // STM32F1XX
   RCC::configurePrescalers<
-  __HPRE + 0b111,
-  __PPRE1 + 0b11,
-  __PPRE2 + 0b11,
-#ifdef USING_RTC
-  __RTCPRE
+      __HPRE + 0b111,
+      __PPRE1 + 0b11,
+      __PPRE2 + 0b11,
+      #ifdef USING_RTC
+      __RTCPRE
 #else // USING_RTC
-  0
-#endif // USING_RTC
+      0
+  #endif // USING_RTC
   >();
 #endif // STM32F1XX
   /* RTC configuration ******************************************************/

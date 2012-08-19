@@ -254,8 +254,8 @@ namespace clock {
    *
    * Select the PLL source  ***************************************************/
   rcc::pllcfgr::pllsrc::States const __PLLSRC =
-      rcc::pllcfgr::pllsrc::
-      USE_HSE_CLOCK_AS_PLL_CLOCK_SOURCE;
+  rcc::pllcfgr::pllsrc::
+  USE_HSE_CLOCK_AS_PLL_CLOCK_SOURCE;
   /*************************************************** Select the PLL source  */
 
   /*****************************************************************************
@@ -518,8 +518,8 @@ namespace clock {
    ****************************************************************************/
 
   /* Select the flash memory access latency ***********************************/
-  flash::registers::acr::bits::latency::states::E const __LATENCY =
-      flash::registers::acr::bits::latency::states::ZERO_WAIT_STATE;
+  flash::acr::latency::States const __LATENCY =
+      flash::acr::latency::ZERO_WAIT_STATE;
   /*********************************** Select the flash memory access latency */
   /* IMPORTANT: USING A LOW LATENCY AT HIGH CORE'S FREQUENCY MIGHT RESULT IN
    *            FLASH MEMORY ACCESS ERRORS AT RUN TIME. ***********************/

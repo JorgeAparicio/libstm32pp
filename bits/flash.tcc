@@ -24,49 +24,56 @@
 namespace flash {
 
 #ifndef VALUE_LINE
-  template<
-      registers::acr::bits::latency::states::E LATENCY
-  > void Functions::setLatency(void)
+  void Functions::setLatency(acr::latency::States LATENCY)
   {
-    FLASH_REGS->ACR &= ~registers::acr::bits::latency::MASK;
+    FLASH_REGS->ACR &= ~acr::latency::MASK;
     FLASH_REGS->ACR |= LATENCY;
   }
-#endif
+#endif // !VALUE_LINE
 #ifdef STM32F1XX
 #ifndef VALUE_LINE
   /**
    * @brief Enables the prefetch buffer.
    */
-  void Functions::enablePrefetch(void)
+  void Functions::enablePrefetch()
   {
-    FLASH_REGS->ACR |= registers::acr::bits::prftbe::states::PREFETCH_ENABLED;
+    *(u32 volatile*) (bitband::peripheral<
+        ADDRESS + flash::acr::OFFSET,
+        flash::acr::prftbe::POSITION
+        >()) = 1;
   }
 
   /**
    * @brief Disables the prefetch buffer.
    */
-  void Functions::disablePrefetch(void)
+  void Functions::disablePrefetch()
   {
-    FLASH_REGS->ACR &= ~registers::acr::bits::prftbe::states::PREFETCH_ENABLED;
+    *(u32 volatile*) (bitband::peripheral<
+        ADDRESS + flash::acr::OFFSET,
+        flash::acr::prftbe::POSITION
+        >()) = 0;
   }
-#endif
-
+#endif // !VALUE_LINE
   /**
    * @brief Enables the half cycle flash access.
    */
-  void Functions::enableHalfCycleFlashAccess(void)
+  void Functions::enableHalfCycleFlashAccess()
   {
-    FLASH_REGS->ACR |=
-    registers::acr::bits::hlfcya::states::FLASH_HALF_CYCLE_ACCESS_ENABLED;
+    *(u32 volatile*) (bitband::peripheral<
+        ADDRESS + flash::acr::OFFSET,
+        flash::acr::hlfcya::POSITION
+        >()) = 1;
   }
 
   /**
    * @brief Disables the half cycle flash access.
    */
-  void Functions::disableHalfCycleFlashAccess(void)
+  void Functions::disableHalfCycleFlashAccess()
   {
-    FLASH_REGS->ACR &=
-    ~registers::acr::bits::hlfcya::states::FLASH_HALF_CYCLE_ACCESS_ENABLED;
+    *(u32 volatile*) (bitband::peripheral<
+        ADDRESS + flash::acr::OFFSET,
+        flash::acr::hlfcya::POSITION
+        >()) = 0;
   }
 #ifdef VALUE_LINE
 
@@ -74,10 +81,7 @@ namespace flash {
    * @brief Configures the flash memory access.
    * @note  Overrides the old configuration.
    */
-  template <
-  registers::acr::bits::hlfcya::states::E HLFCYA
-  >
-  void Functions::configure(void)
+  void Functions::configure(acr::hlfcya::States HLFCYA)
   {
     FLASH_REGS->ACR = HLFCYA;
   }
@@ -87,85 +91,92 @@ namespace flash {
    * @brief Configures the flash memory access.
    * @note  Overrides the old configuration.
    */
-  template<
-  registers::acr::bits::latency::states::E LATENCY,
-  registers::acr::bits::hlfcya::states::E HLFCYA,
-  registers::acr::bits::prftbe::states::E PRFTBE
-  >
-  void Functions::configure(void)
+  void Functions::configure(
+      acr::latency::States LATENCY,
+      acr::hlfcya::States HLFCYA,
+      acr::prftbe::States PRFTBE)
   {
     FLASH_REGS->ACR = LATENCY + HLFCYA + PRFTBE;
   }
 #endif // VALUE_LINE
-#else
+#else // STM32F1XX
   /**
    * @brief Enables the prefetch buffer.
    */
-  void Functions::enablePrefetch(void)
+  void Functions::enablePrefetch()
   {
-    FLASH_REGS->ACR |=
-        registers::acr::bits::prften::states::PREFETCH_ENABLED;
+    *(u32 volatile*) (bitband::peripheral<
+        ADDRESS + flash::acr::OFFSET,
+        flash::acr::prften::POSITION
+    >()) = 1;
   }
 
   /**
    * @brief Disables the prefetch buffer.
    */
-  void Functions::disablePrefetch(void)
+  void Functions::disablePrefetch()
   {
-    FLASH_REGS->ACR &=
-        ~registers::acr::bits::prften::states::PREFETCH_ENABLED;
+    *(u32 volatile*) (bitband::peripheral<
+        ADDRESS + flash::acr::OFFSET,
+        flash::acr::prften::POSITION
+    >()) = 0;
   }
 
   /**
    * @brief Enables the data cache.
    */
-  void Functions::enableDataCache(void)
+  void Functions::enableDataCache()
   {
-    FLASH_REGS->ACR |=
-        registers::acr::bits::dcen::states::DATA_CACHE_ENABLED;
+    *(u32 volatile*) (bitband::peripheral<
+        ADDRESS + flash::acr::OFFSET,
+        flash::acr::dcen::POSITION
+    >()) = 1;
   }
 
   /**
    * @brief Disables the data cache.
    */
-  void Functions::disableDataCache(void)
+  void Functions::disableDataCache()
   {
-    FLASH_REGS->ACR &=
-        ~registers::acr::bits::dcen::states::DATA_CACHE_ENABLED;
+    *(u32 volatile*) (bitband::peripheral<
+        ADDRESS + flash::acr::OFFSET,
+        flash::acr::dcen::POSITION
+    >()) = 0;
   }
 
   /**
    * @brief Enables the instruction cache.
    */
-  void Functions::enableInstructionCache(void)
+  void Functions::enableInstructionCache()
   {
-    FLASH_REGS->ACR |=
-        registers::acr::bits::icen::states::INSTRUCTION_CACHE_ENABLED;
+    *(u32 volatile*) (bitband::peripheral<
+        ADDRESS + flash::acr::OFFSET,
+        flash::acr::icen::POSITION
+    >()) = 1;
   }
 
   /**
    * @brief Disables the instruction cache.
    */
-  void Functions::disableInstructionCache(void)
+  void Functions::disableInstructionCache()
   {
-    FLASH_REGS->ACR &=
-        ~registers::acr::bits::icen::states::INSTRUCTION_CACHE_ENABLED;
+    *(u32 volatile*) (bitband::peripheral<
+        ADDRESS + flash::acr::OFFSET,
+        flash::acr::icen::POSITION
+    >()) = 0;
   }
 
   /**
    * @brief Configures the flash memory access.
    * @note  Overrides the old configuration.
    */
-  template<
-      registers::acr::bits::latency::states::E LATENCY,
-      registers::acr::bits::prften::states::E PRFTEN,
-      registers::acr::bits::dcen::states::E DCEN,
-      registers::acr::bits::icen::states::E ICEN
-  >
-  void Functions::configure(void)
+  void Functions::configure(
+      acr::latency::States LATENCY,
+      acr::prften::States PRFTEN,
+      acr::dcen::States DCEN,
+      acr::icen::States ICEN)
   {
     FLASH_REGS->ACR = LATENCY + PRFTEN + DCEN + ICEN;
   }
-#endif
-
+#endif // STM32F1XX
 }  // namespace flash
