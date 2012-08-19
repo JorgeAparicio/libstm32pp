@@ -24,15 +24,13 @@
 #include "common.hpp"
 
 namespace fsmc {
-  struct Registers {
-      // TODO FSMC registers
-  };
-
   enum {
     ADDRESS = alias::FSMC
   };
 
-  namespace registers {
-  // TODO FSMC register bits
-  }  // namespace registers
-}  // namespace fsmc
+  struct Registers {
+      // TODO FSMC registers
+  };
+
+// TODO FSMC register bits
+}// namespace fsmc
