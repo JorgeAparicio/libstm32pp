@@ -24,6 +24,10 @@
 #include "common.hpp"
 
 namespace hash {
+  enum {
+    ADDRESS = alias::AHB2 + 0x60400
+  };
+
   struct Registers {
       __RW
       u32 CR;       // 0x00: Control
@@ -42,11 +46,27 @@ namespace hash {
       u32 CSR[51];  // 0xF8: Context swap
   };
 
-  enum {
-    ADDRESS = alias::AHB2 + 0x60400
-  };
+  namespace cr {
+    enum {
+      OFFSET = 0x00
+    };
+  }  // namespace cr
 
-  namespace registers {
-  // TODO HASH register bits
-  }// namespace registers
+  namespace din {
+    enum {
+      OFFSET = 0x04
+    };
+  }  // namespace din
+
+  namespace str {
+    enum {
+      OFFSET = 0x08
+    };
+  }  // namespace str
+
+  namespace imr {
+    enum {
+      OFFSET = 0x20
+    };
+  }  // namespace imr
 }  // namespace hash
