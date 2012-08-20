@@ -24,6 +24,10 @@
 #include "common.hpp"
 
 namespace rng {
+  enum {
+    ADDRESS = alias::AHB2 + 0x60800
+  };
+
   struct Registers {
       __RW
       u32 CR; /* 0x00: Control  */
@@ -33,134 +37,96 @@ namespace rng {
       u32 DR; /* 0x08: Data     */
   };
 
-  enum {
-    ADDRESS = alias::AHB2 + 0x60800
-  };
-
-  namespace registers {
-    namespace cr {
+  namespace cr {
+    enum {
+      OFFSET = 0x00
+    };
+    namespace rngen {
       enum {
-        OFFSET = 0x00
+        POSITION = 2,
+        MASK = 1 << POSITION
       };
-      namespace bits {
-        namespace rngen {
-          enum {
-            POSITION = 2
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              RANDOM_NUMBER_GENERATOR_DISABLED = 0 << POSITION,
-              RANDOM_NUMBER_GENERATOR_ENABLED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace rngen
+      enum States {
+        RANDOM_NUMBER_GENERATOR_DISABLED = 0 << POSITION,
+        RANDOM_NUMBER_GENERATOR_ENABLED = 1 << POSITION,
+      };
+    }  // namespace rngen
 
-        namespace ie {
-          enum {
-            POSITION = 3
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              INTERRUPT_DISABLED = 0 << POSITION,
-              INTERRUPT_ENABLED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace ie
-      }  // namespace bits
-    }  // namespace cr
-
-    namespace sr {
+    namespace ie {
       enum {
-        OFFSET = 0x04
+        POSITION = 3,
+        MASK = 1 << POSITION
       };
-      namespace bits {
-        namespace drdy {
-          enum {
-            POSITION = 0
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              NO_VALID_RANDOM_DATA_READY = 0 << POSITION,
-              VALID_RANDOM_DATA_READY = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace drdy
+      enum States {
+        INTERRUPT_DISABLED = 0 << POSITION,
+        INTERRUPT_ENABLED = 1 << POSITION,
+      };
+    }  // namespace ie
+  }  // namespace cr
 
-        namespace cecs {
-          enum {
-            POSITION = 1
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              CLOCK_OK = 0 << POSITION,
-              CLOCK_ERROR_DETECTED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace cecs
-
-        namespace secs {
-          enum {
-            POSITION = 2
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              SEED_OK = 0 << POSITION,
-              SEED_ERROR_DETECTED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace secs
-
-        namespace ceis {
-          enum {
-            POSITION = 5
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              CLOCK_OK = 0 << POSITION,
-              CLOCK_ERROR_DETECTED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace ceis
-
-        namespace seis {
-          enum {
-            POSITION = 6
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              SEED_OK = 0 << POSITION,
-              SEED_ERROR_DETECTED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace seis
-      }  // namespace bits
-    }  // namespace sr
-
-    namespace dr {
+  namespace sr {
+    enum {
+      OFFSET = 0x04
+    };
+    namespace drdy {
       enum {
-        OFFSET = 0x08
+        POSITION = 0,
+        MASK = 1 << POSITION
       };
-    }  // namespace dr
-  }  // namespace registers
+      enum States {
+        NO_VALID_RANDOM_DATA_READY = 0 << POSITION,
+        VALID_RANDOM_DATA_READY = 1 << POSITION,
+      };
+    }  // namespace drdy
+
+    namespace cecs {
+      enum {
+        POSITION = 1,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        CLOCK_OK = 0 << POSITION,
+        CLOCK_ERROR_DETECTED = 1 << POSITION,
+      };
+    }  // namespace cecs
+
+    namespace secs {
+      enum {
+        POSITION = 2,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        SEED_OK = 0 << POSITION,
+        SEED_ERROR_DETECTED = 1 << POSITION,
+      };
+    }  // namespace secs
+
+    namespace ceis {
+      enum {
+        POSITION = 5,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        CLOCK_OK = 0 << POSITION,
+        CLOCK_ERROR_DETECTED = 1 << POSITION,
+      };
+    }  // namespace ceis
+
+    namespace seis {
+      enum {
+        POSITION = 6,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        SEED_OK = 0 << POSITION,
+        SEED_ERROR_DETECTED = 1 << POSITION,
+      };
+    }  // namespace seis
+  }  // namespace sr
+
+  namespace dr {
+    enum {
+      OFFSET = 0x08
+    };
+  }  // namespace dr
 }  // namespace rng

@@ -51,7 +51,7 @@ namespace rng {
   void Functions::startGenerator()
   {
     RNG_REGS->CR |=
-        registers::cr::bits::rngen::states::RANDOM_NUMBER_GENERATOR_ENABLED;
+        cr::rngen::RANDOM_NUMBER_GENERATOR_ENABLED;
   }
 
   /**
@@ -60,7 +60,7 @@ namespace rng {
   void Functions::stopGenerator()
   {
     RNG_REGS->CR &=
-        ~registers::cr::bits::rngen::states::RANDOM_NUMBER_GENERATOR_ENABLED;
+        ~cr::rngen::RANDOM_NUMBER_GENERATOR_ENABLED;
   }
 
   /**
@@ -69,7 +69,7 @@ namespace rng {
   void Functions::enableInterrupts()
   {
     RNG_REGS->CR |=
-        registers::cr::bits::ie::states::INTERRUPT_ENABLED;
+        cr::ie::INTERRUPT_ENABLED;
   }
 
   /**
@@ -78,7 +78,7 @@ namespace rng {
   void Functions::disableInterrupts()
   {
     RNG_REGS->CR &=
-        ~registers::cr::bits::ie::states::INTERRUPT_ENABLED;
+        ~cr::ie::INTERRUPT_ENABLED;
   }
 
   /**
@@ -88,7 +88,7 @@ namespace rng {
   template<typename T>
   T Functions::getValue()
   {
-    return *(T*) (ADDRESS + registers::dr::OFFSET);
+    return *(T*) (ADDRESS + dr::OFFSET);
   }
 
   /**
@@ -97,7 +97,7 @@ namespace rng {
   bool Functions::isDataReady()
   {
     return (RNG_REGS->SR &
-        registers::sr::bits::drdy::states::VALID_RANDOM_DATA_READY);
+        sr::drdy::VALID_RANDOM_DATA_READY);
   }
 
   /**
@@ -105,7 +105,7 @@ namespace rng {
    */
   bool Functions::isSeedValid()
   {
-    return (RNG_REGS->SR & registers::sr::bits::secs::states::SEED_OK);
+    return (RNG_REGS->SR & sr::secs::SEED_OK);
   }
 
   /**
@@ -113,7 +113,7 @@ namespace rng {
    */
   bool Functions::isClockValid()
   {
-    return (RNG_REGS->SR & registers::sr::bits::cecs::states::CLOCK_OK);
+    return (RNG_REGS->SR & sr::cecs::CLOCK_OK);
   }
 
   /**
@@ -122,7 +122,7 @@ namespace rng {
   void Functions::clearSeedErrorFlag()
   {
     RNG_REGS->SR &=
-        ~registers::sr::bits::seis::states::SEED_ERROR_DETECTED;
+        ~sr::seis::SEED_ERROR_DETECTED;
   }
 
   /**
@@ -131,7 +131,7 @@ namespace rng {
   void Functions::clearClockErrorFlag()
   {
     RNG_REGS->SR &=
-        ~registers::sr::bits::ceis::states::CLOCK_ERROR_DETECTED;
+        ~sr::ceis::CLOCK_ERROR_DETECTED;
   }
 
 }  // namespace rng

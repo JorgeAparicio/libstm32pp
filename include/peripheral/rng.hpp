@@ -32,7 +32,6 @@
 #ifndef STM32F1XX
 
 #include "../defs.hpp"
-
 #include "../../memorymap/rng.hpp"
 
 // Low-level access to registers
