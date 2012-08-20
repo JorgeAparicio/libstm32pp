@@ -22,6 +22,10 @@
 #pragma once
 
 namespace usb_hs {
+  enum {
+    ADDRESS = alias::AHB1 + 0x20000
+  };
+
   struct Registers {
       struct {
           __RW
@@ -171,11 +175,5 @@ namespace usb_hs {
       u32 PCGCCTL;  // 0xE00: Power and clock gating
   };
 
-  enum {
-    ADDRESS = alias::AHB1 + 0x20000
-  };
-
-  namespace registers {
-  // TODO USB_HS register bits
-  }// namespace registers
-}  // namespace usb_hs
+// TODO USB_HS register bits
+}// namespace usb_hs

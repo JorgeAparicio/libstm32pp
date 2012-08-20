@@ -32,7 +32,6 @@
 #if not defined STM32F1XX || defined CONNECTIVITY_LINE
 
 #include "../defs.hpp"
-
 #include "../../memorymap/usb_fs.hpp"
 
 // Low-level access to the registers

@@ -22,6 +22,14 @@
 #pragma once
 
 namespace usb_fs {
+  enum {
+#ifdef STM32F1XX
+    ADDRESS = alias::USB
+#else
+    ADDRESS = alias::AHB2
+#endif
+  };
+
   struct Registers {
       struct {
           __RW
@@ -153,15 +161,5 @@ namespace usb_fs {
       u32 PCGCCTL;  // 0xE00: Power and clock gating
   };
 
-  enum {
-#ifdef STM32F1XX
-    ADDRESS = alias::USB
-#else
-    ADDRESS = alias::AHB2
-#endif
-  };
-
-  namespace registers {
 // TODO USB_FS register bits
-  }// namespace registers
-}  // namespace usb_fs
+}// namespace usb_fs
