@@ -70,7 +70,7 @@ namespace servo {
   {
     PeriodTimer::template configurePeriodicInterrupt<F>();
 
-    DutyCycleTimer::template configureBasicCounter<
+    DutyCycleTimer::configureBasicCounter(
         tim::cr1::cen::
         COUNTER_DISABLED,
         tim::cr1::udis::
@@ -80,8 +80,7 @@ namespace servo {
         tim::cr1::opm::
         DONT_STOP_COUNTER_AT_NEXT_UPDATE_EVENT,
         tim::cr1::arpe::
-        AUTO_RELOAD_UNBUFFERED
-    >();
+        AUTO_RELOAD_UNBUFFERED);
     // Timer resolution: 1us
     DutyCycleTimer::setPrescaler((DutyCycleTimer::FREQUENCY / 1000000) - 1);
     DutyCycleTimer::enableUpdateInterrupt();

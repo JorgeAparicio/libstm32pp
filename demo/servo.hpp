@@ -31,82 +31,57 @@
 
 // TODO Test SERVO demo on STM32F1XX
 
-typedef servo::Functions<
-    tim::address::TIM6,
+servo::Functions<
+    tim::TIM6,
     50,  // Hz
-    tim::address::TIM7,
+    tim::TIM7,
     1500,  // us
     8
 > Servo;
 
-template<> u8 Servo::servoIndex = 0;
-
-template<> u32* Servo::pin[8] = {
-    (u32*) PA0::OUT_ADDRESS,
-    (u32*) PA1::OUT_ADDRESS,
-    (u32*) PA2::OUT_ADDRESS,
-    (u32*) PA3::OUT_ADDRESS,
-    (u32*) PA4::OUT_ADDRESS,
-    (u32*) PA5::OUT_ADDRESS,
-    (u32*) PA6::OUT_ADDRESS,
-    (u32*) PA7::OUT_ADDRESS,
-};
-
-template<> s16 Servo::value[8] = {
-    -400,
-    -300,
-    -200,
-    -100,
-    100,
-    200,
-    300,
-    400
-};
-
-template<> u8 Servo::sortedIndices[8] = { };
-
 void mcuSetup()
 {
+  GPIOA::enableClock();
 #ifdef STM32F1XX
-  RCC::enableClocks<
-  rcc::apb2enr::IOPA
-  >();
-
   GPIOA::configureLowerPins<
-  gpio::registers::cr::states::GP_PUSH_PULL_2MHZ, /* 0 */
-  gpio::registers::cr::states::GP_PUSH_PULL_2MHZ, /* 1 */
-  gpio::registers::cr::states::GP_PUSH_PULL_2MHZ, /* 2 */
-  gpio::registers::cr::states::GP_PUSH_PULL_2MHZ, /* 3 */
-  gpio::registers::cr::states::GP_PUSH_PULL_2MHZ, /* 4 */
-  gpio::registers::cr::states::GP_PUSH_PULL_2MHZ, /* 5 */
-  gpio::registers::cr::states::GP_PUSH_PULL_2MHZ, /* 6 */
-  gpio::registers::cr::states::GP_PUSH_PULL_2MHZ /* 7 */
+  gpio::cr::GP_PUSH_PULL_2MHZ, /* 0 */
+  gpio::cr::GP_PUSH_PULL_2MHZ, /* 1 */
+  gpio::cr::GP_PUSH_PULL_2MHZ, /* 2 */
+  gpio::cr::GP_PUSH_PULL_2MHZ, /* 3 */
+  gpio::cr::GP_PUSH_PULL_2MHZ, /* 4 */
+  gpio::cr::GP_PUSH_PULL_2MHZ, /* 5 */
+  gpio::cr::GP_PUSH_PULL_2MHZ, /* 6 */
+  gpio::cr::GP_PUSH_PULL_2MHZ /* 7 */
   >();
 
 #else
-  RCC::enableClocks<
-      rcc::ahb1enr::GPIOA
-  >();
-
-  GPIOA::setModes<
-      gpio::registers::moder::states::OUTPUT, /* 0 */
-      gpio::registers::moder::states::OUTPUT, /* 1 */
-      gpio::registers::moder::states::OUTPUT, /* 2 */
-      gpio::registers::moder::states::OUTPUT, /* 3 */
-      gpio::registers::moder::states::OUTPUT, /* 4 */
-      gpio::registers::moder::states::OUTPUT, /* 5 */
-      gpio::registers::moder::states::OUTPUT, /* 6 */
-      gpio::registers::moder::states::OUTPUT, /* 7 */
-      gpio::registers::moder::states::INPUT, /* 8 */
-      gpio::registers::moder::states::INPUT, /* 9 */
-      gpio::registers::moder::states::INPUT, /* 10 */
-      gpio::registers::moder::states::INPUT, /* 11 */
-      gpio::registers::moder::states::INPUT, /* 12 */
-      gpio::registers::moder::states::ALTERNATE, /* 13: JTAG PIN! */
-      gpio::registers::moder::states::ALTERNATE, /* 14: JTAG PIN! */
-      gpio::registers::moder::states::ALTERNATE /* 15: JTAG PIN! */
-  >();
+  GPIOA::setModes(
+      gpio::moder::OUTPUT, /* 0 */
+      gpio::moder::OUTPUT, /* 1 */
+      gpio::moder::OUTPUT, /* 2 */
+      gpio::moder::OUTPUT, /* 3 */
+      gpio::moder::OUTPUT, /* 4 */
+      gpio::moder::OUTPUT, /* 5 */
+      gpio::moder::OUTPUT, /* 6 */
+      gpio::moder::OUTPUT, /* 7 */
+      gpio::moder::INPUT, /* 8 */
+      gpio::moder::INPUT, /* 9 */
+      gpio::moder::INPUT, /* 10 */
+      gpio::moder::INPUT, /* 11 */
+      gpio::moder::INPUT, /* 12 */
+      gpio::moder::ALTERNATE, /* 13: JTAG PIN! */
+      gpio::moder::ALTERNATE, /* 14: JTAG PIN! */
+      gpio::moder::ALTERNATE /* 15: JTAG PIN! */);
 #endif
+
+  Servo.setPin(0, (u32*)(PA0::OUT_ADDRESS));
+  Servo.setPin(1, (u32*)(PA1::OUT_ADDRESS));
+  Servo.setPin(2, (u32*)(PA2::OUT_ADDRESS));
+  Servo.setPin(3, (u32*)(PA3::OUT_ADDRESS));
+  Servo.setPin(4, (u32*)(PA4::OUT_ADDRESS));
+  Servo.setPin(5, (u32*)(PA5::OUT_ADDRESS));
+  Servo.setPin(6, (u32*)(PA6::OUT_ADDRESS));
+  Servo.setPin(7, (u32*)(PA7::OUT_ADDRESS));
 
   RCC::enableClocks<
       rcc::apb1enr::TIM6,
@@ -129,8 +104,8 @@ void mcuSetup()
       nvic::irqn::TIM7
   >();
 
-  Servo::initialize();
-  Servo::start();
+  Servo.initialize();
+  Servo.start();
 }
 
 void mcuLoop()
@@ -153,7 +128,7 @@ int main(void)
     defined STM32F4XX
 void interrupt::TIM6_DAC()
 {
-  Servo::onPeriodTimerInterrupt();
+  Servo.onPeriodTimerInterrupt();
 }
 #else
 void interrupt::TIM6()
@@ -164,5 +139,5 @@ void interrupt::TIM6()
 
 void interrupt::TIM7()
 {
-  Servo::onDutyCycleTimerInterrupt();
+  Servo.onDutyCycleTimerInterrupt();
 }
