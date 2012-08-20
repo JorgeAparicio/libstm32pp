@@ -26,14 +26,16 @@ namespace servo {
    * @brief Constructor
    */
   template<
-      tim::address::E P,
+      tim::Address P,
       u32 F,
-      tim::address::E D,
+      tim::Address D,
       u16 M,
       u8 N
   >
   Functions<P, F, D, M, N>::Functions()
   {
+    servoIndex = 0;
+
     for (u8 i = 0; i < N; i++)
       value[i] = 0;
   }
@@ -42,9 +44,9 @@ namespace servo {
    * @brief Constructor
    */
   template<
-      tim::address::E P,
+      tim::Address P,
       u32 F,
-      tim::address::E D,
+      tim::Address D,
       u16 M,
       u8 N
   >
@@ -58,9 +60,9 @@ namespace servo {
    * @note  Only call this function once.
    */
   template<
-      tim::address::E P,
+      tim::Address P,
       u32 F,
-      tim::address::E D,
+      tim::Address D,
       u16 M,
       u8 N
   >
@@ -69,15 +71,15 @@ namespace servo {
     PeriodTimer::template configurePeriodicInterrupt<F>();
 
     DutyCycleTimer::template configureBasicCounter<
-        tim::registers::cr1::bits::cen::states::
+        tim::cr1::cen::
         COUNTER_DISABLED,
-        tim::registers::cr1::bits::udis::states::
+        tim::cr1::udis::
         UPDATE_EVENT_ENABLED,
-        tim::registers::cr1::bits::urs::states::
+        tim::cr1::urs::
         UPDATE_REQUEST_SOURCE_OVERFLOW_UNDERFLOW,
-        tim::registers::cr1::bits::opm::states::
+        tim::cr1::opm::
         DONT_STOP_COUNTER_AT_NEXT_UPDATE_EVENT,
-        tim::registers::cr1::bits::arpe::states::
+        tim::cr1::arpe::
         AUTO_RELOAD_UNBUFFERED
     >();
     // Timer resolution: 1us
@@ -90,9 +92,9 @@ namespace servo {
    * @brief Starts the controller.
    */
   template<
-      tim::address::E P,
+      tim::Address P,
       u32 F,
-      tim::address::E D,
+      tim::Address D,
       u16 M,
       u8 N
   >
@@ -114,9 +116,9 @@ namespace servo {
    * @brief Stops the controller.
    */
   template<
-      tim::address::E P,
+      tim::Address P,
       u32 F,
-      tim::address::E D,
+      tim::Address D,
       u16 M,
       u8 N
   >
@@ -129,9 +131,9 @@ namespace servo {
    * @brief Loads values into the servo controller buffer
    */
   template<
-      tim::address::E P,
+      tim::Address P,
       u32 F,
-      tim::address::E D,
+      tim::Address D,
       u16 M,
       u8 N
   >
@@ -146,9 +148,9 @@ namespace servo {
    * @note  This function clears the interrupt flag.
    */
   template<
-      tim::address::E P,
+      tim::Address P,
       u32 F,
-      tim::address::E D,
+      tim::Address D,
       u16 M,
       u8 N
   >
@@ -187,9 +189,9 @@ namespace servo {
    * @note  This function clears the interrupt flag.
    */
   template<
-      tim::address::E P,
+      tim::Address P,
       u32 F,
-      tim::address::E D,
+      tim::Address D,
       u16 M,
       u8 N
   >

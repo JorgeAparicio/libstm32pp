@@ -64,9 +64,9 @@ namespace servo {
    *
    */
   template<
-      tim::address::E PeriodTimerAddress,
+      tim::Address PeriodTimerAddress,
       u32 Frequency,
-      tim::address::E DutyCycleTimerAddress,
+      tim::Address DutyCycleTimerAddress,
       u16 MidValue,
       u8 N
   >
