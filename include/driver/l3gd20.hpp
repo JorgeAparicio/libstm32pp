@@ -36,22 +36,22 @@
 // High-level functions
 namespace l3gd20 {
   template<
-      i2c::address::E I,
-      address::E A
+      i2c::Address I,
+      Address A
   >
   class Gyroscope {
     public:
 
       template<
-          l3gd20::registers::ctrl_reg1::bits::xen::states::E,
-          l3gd20::registers::ctrl_reg1::bits::yen::states::E,
-          l3gd20::registers::ctrl_reg1::bits::zen::states::E,
-          l3gd20::registers::ctrl_reg1::bits::pd::states::E,
-          l3gd20::registers::ctrl_reg1::bits::bw_odr::states::E,
-          l3gd20::registers::ctrl_reg4::bits::sim::states::E,
-          l3gd20::registers::ctrl_reg4::bits::fs::states::E,
-          l3gd20::registers::ctrl_reg4::bits::ble::states::E,
-          l3gd20::registers::ctrl_reg4::bits::bdu::states::E
+          l3gd20::ctrl_reg1::xen::States,
+          l3gd20::ctrl_reg1::yen::States,
+          l3gd20::ctrl_reg1::zen::States,
+          l3gd20::ctrl_reg1::pd::States,
+          l3gd20::ctrl_reg1::bw_odr::States,
+          l3gd20::ctrl_reg4::sim::States,
+          l3gd20::ctrl_reg4::fs::States,
+          l3gd20::ctrl_reg4::ble::States,
+          l3gd20::ctrl_reg4::bdu::States
       >
       static void configure();
 

@@ -23,96 +23,96 @@
 
 namespace l3gd20 {
   template<
-      i2c::address::E I,
-      address::E A
+      i2c::Address I,
+      Address A
   >
   template<
-      l3gd20::registers::ctrl_reg1::bits::xen::states::E XEN,
-      l3gd20::registers::ctrl_reg1::bits::yen::states::E YEN,
-      l3gd20::registers::ctrl_reg1::bits::zen::states::E ZEN,
-      l3gd20::registers::ctrl_reg1::bits::pd::states::E PD,
-      l3gd20::registers::ctrl_reg1::bits::bw_odr::states::E DR_BW,
-      l3gd20::registers::ctrl_reg4::bits::sim::states::E SIM,
-      l3gd20::registers::ctrl_reg4::bits::fs::states::E FS,
-      l3gd20::registers::ctrl_reg4::bits::ble::states::E BLE,
-      l3gd20::registers::ctrl_reg4::bits::bdu::states::E BDU
+      l3gd20::ctrl_reg1::xen::States XEN,
+      l3gd20::ctrl_reg1::yen::States YEN,
+      l3gd20::ctrl_reg1::zen::States ZEN,
+      l3gd20::ctrl_reg1::pd::States PD,
+      l3gd20::ctrl_reg1::bw_odr::States DR_BW,
+      l3gd20::ctrl_reg4::sim::States SIM,
+      l3gd20::ctrl_reg4::fs::States FS,
+      l3gd20::ctrl_reg4::ble::States BLE,
+      l3gd20::ctrl_reg4::bdu::States BDU
   >
   void Gyroscope<I, A>::configure()
   {
     i2c::Standard<I>::writeSlaveRegister(
         A,
-        registers::ctrl_reg1::ADDRESS,
+        ctrl_reg1::ADDRESS,
         PD + DR_BW + XEN + YEN + ZEN);
     i2c::Standard<I>::writeSlaveRegister(
         A,
-        registers::ctrl_reg4::ADDRESS,
+        ctrl_reg4::ADDRESS,
         SIM + FS + BLE + BDU);
   }
 
   /**
    * @brief Reads the low byte of the X axis magnetic field.
    */
-  template<i2c::address::E I, address::E A>
+  template<i2c::Address I, Address A>
   u8 Gyroscope<I, A>::readXLow()
   {
     return i2c::Standard<I>::readSlaveRegister(
         A,
-        registers::out_x_l::ADDRESS);
+        out_x_l::ADDRESS);
   }
 
   /**
    * @brief Reads the high byte of the X axis magnetic field.
    */
-  template<i2c::address::E I, address::E A>
+  template<i2c::Address I, Address A>
   u8 Gyroscope<I, A>::readXHigh()
   {
     return i2c::Standard<I>::readSlaveRegister(
         A,
-        registers::out_x_h::ADDRESS);
+        out_x_h::ADDRESS);
   }
 
   /**
    * @brief Reads the low byte of the Y axis magnetic field.
    */
-  template<i2c::address::E I, address::E A>
+  template<i2c::Address I, Address A>
   u8 Gyroscope<I, A>::readYLow()
   {
     return i2c::Standard<I>::readSlaveRegister(
         A,
-        registers::out_y_l::ADDRESS);
+        out_y_l::ADDRESS);
   }
 
   /**
    * @brief Reads the high byte of the Y axis magnetic field.
    */
-  template<i2c::address::E I, address::E A>
+  template<i2c::Address I, Address A>
   u8 Gyroscope<I, A>::readYHigh()
   {
     return i2c::Standard<I>::readSlaveRegister(
         A,
-        registers::out_y_h::ADDRESS);
+        out_y_h::ADDRESS);
   }
 
   /**
    * @brief Reads the low byte of the Z axis magnetic field.
    */
-  template<i2c::address::E I, address::E A>
+  template<i2c::Address I, Address A>
   u8 Gyroscope<I, A>::readZLow()
   {
     return i2c::Standard<I>::readSlaveRegister(
         A,
-        registers::out_z_l::ADDRESS);
+        out_z_l::ADDRESS);
   }
 
   /**
    * @brief Reads the high byte of the Z axis magnetic field.
    */
-  template<i2c::address::E I, address::E A>
+  template<i2c::Address I, Address A>
   u8 Gyroscope<I, A>::readZHigh()
   {
     return i2c::Standard<I>::readSlaveRegister(
         A,
-        registers::out_z_h::ADDRESS);
+        out_z_h::ADDRESS);
   }
 
 }  // namespace l3gd20
