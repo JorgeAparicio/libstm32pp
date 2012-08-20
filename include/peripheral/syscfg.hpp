@@ -34,7 +34,6 @@
 #ifndef STM32F1XX
 
 #include "../defs.hpp"
-
 #include "../../memorymap/syscfg.hpp"
 
 // Low-level access to the registers
@@ -48,7 +47,7 @@ namespace syscfg {
       static inline void disableClock();
       template<
           u8 LINE,
-          syscfg::registers::exticr::states::E
+          syscfg::exticr::States
       >
       static inline void selectExtiPin();
 

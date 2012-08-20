@@ -51,7 +51,7 @@ namespace syscfg {
    */
   template<
       u8 LINE,
-      registers::exticr::states::E EXTICR
+      exticr::States EXTICR
   >
   void Functions::selectExtiPin()
   {
@@ -59,7 +59,7 @@ namespace syscfg {
         "Only the first 16 EXTI lines can be mapped to GPIO pins");
 
     SYSCFG_REGS->EXTICR[LINE / 4] &=
-        (registers::exticr::MASK << (4 * (LINE % 4)));
+        (exticr::MASK << (4 * (LINE % 4)));
 
     SYSCFG_REGS->EXTICR[LINE / 4] |= EXTICR << (4 * (LINE % 4));
   }
