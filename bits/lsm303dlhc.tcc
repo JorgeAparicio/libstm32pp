@@ -22,247 +22,251 @@
 #pragma once
 
 namespace lsm303dlhc {
+  namespace accelerometer {
+    /**
+     * @brief Configures the Functions.
+     */
+    template<i2c::Address I>
+    template<
+        ctrl1::lpen::States LPEN,
+        ctrl1::odr::States ODR,
+        ctrl1::xen::States XEN,
+        ctrl1::yen::States YEN,
+        ctrl1::zen::States ZEN,
+        ctrl4::sim::States SIM,
+        ctrl4::hr::States HR,
+        ctrl4::fs::States FS,
+        ctrl4::ble::States BLE,
+        ctrl4::bdu::States BDU
+    >
+    void Functions<I>::configure()
+    {
+      i2c::Standard<I>::writeSlaveRegister(
+          ADDRESS,
+          ctrl1::ADDRESS,
+          LPEN + ODR + XEN + YEN + ZEN);
+      i2c::Standard<I>::writeSlaveRegister(
+          ADDRESS,
+          ctrl4::ADDRESS,
+          SIM + HR + FS + BLE + BDU);
+    }
 
-  /**
-   * @brief Configures the accelerometer.
-   */
-  template<i2c::address::E I>
-  template<
-      lsm303dlhc::registers::ctrl_reg1_a::bits::lpen::states::E LPEN,
-      lsm303dlhc::registers::ctrl_reg1_a::bits::odr::states::E ODR,
-      lsm303dlhc::registers::ctrl_reg1_a::bits::xen::states::E XEN,
-      lsm303dlhc::registers::ctrl_reg1_a::bits::yen::states::E YEN,
-      lsm303dlhc::registers::ctrl_reg1_a::bits::zen::states::E ZEN,
-      lsm303dlhc::registers::ctrl_reg4_a::bits::sim::states::E SIM,
-      lsm303dlhc::registers::ctrl_reg4_a::bits::hr::states::E HR,
-      lsm303dlhc::registers::ctrl_reg4_a::bits::fs::states::E FS,
-      lsm303dlhc::registers::ctrl_reg4_a::bits::ble::states::E BLE,
-      lsm303dlhc::registers::ctrl_reg4_a::bits::bdu::states::E BDU
-  >
-  void Accelerometer<I>::configure()
-  {
-    i2c::Standard<I>::writeSlaveRegister(
-        address::ACCELEROMETER,
-        registers::ctrl_reg1_a::ADDRESS,
-        LPEN + ODR + XEN + YEN + ZEN);
-    i2c::Standard<I>::writeSlaveRegister(
-        address::ACCELEROMETER,
-        registers::ctrl_reg4_a::ADDRESS,
-        SIM + HR + FS + BLE + BDU);
-  }
+    /**
+     * @brief Reads the low byte of the X axis acceleration.
+     */
+    template<i2c::Address I>
+    u8 Functions<I>::readXLow()
+    {
+      return i2c::Standard<I>::readSlaveRegister(
+          ADDRESS,
+          out_x_l::ADDRESS);
+    }
 
-  /**
-   * @brief Reads the low byte of the X axis acceleration.
-   */
-  template<i2c::address::E I>
-  u8 Accelerometer<I>::readXLow()
-  {
-    return i2c::Standard<I>::readSlaveRegister(
-        address::ACCELEROMETER,
-        registers::out_x_l_a::ADDRESS);
-  }
+    /**
+     * @brief Reads the high byte of the X axis acceleration.
+     */
+    template<i2c::Address I>
+    u8 Functions<I>::readXHigh()
+    {
+      return i2c::Standard<I>::readSlaveRegister(
+          ADDRESS,
+          out_x_h::ADDRESS);
+    }
 
-  /**
-   * @brief Reads the high byte of the X axis acceleration.
-   */
-  template<i2c::address::E I>
-  u8 Accelerometer<I>::readXHigh()
-  {
-    return i2c::Standard<I>::readSlaveRegister(
-        address::ACCELEROMETER,
-        registers::out_x_h_a::ADDRESS);
-  }
+    /**
+     * @brief Reads the low byte of the Y axis acceleration.
+     */
+    template<i2c::Address I>
+    u8 Functions<I>::readYLow()
+    {
+      return i2c::Standard<I>::readSlaveRegister(
+          ADDRESS,
+          out_y_l::ADDRESS);
+    }
 
-  /**
-   * @brief Reads the low byte of the Y axis acceleration.
-   */
-  template<i2c::address::E I>
-  u8 Accelerometer<I>::readYLow()
-  {
-    return i2c::Standard<I>::readSlaveRegister(
-        address::ACCELEROMETER,
-        registers::out_y_l_a::ADDRESS);
-  }
+    /**
+     * @brief Reads the high byte of the Y axis acceleration.
+     */
+    template<i2c::Address I>
+    u8 Functions<I>::readYHigh()
+    {
+      return i2c::Standard<I>::readSlaveRegister(
+          ADDRESS,
+          out_y_h::ADDRESS);
+    }
 
-  /**
-   * @brief Reads the high byte of the Y axis acceleration.
-   */
-  template<i2c::address::E I>
-  u8 Accelerometer<I>::readYHigh()
-  {
-    return i2c::Standard<I>::readSlaveRegister(
-        address::ACCELEROMETER,
-        registers::out_y_h_a::ADDRESS);
-  }
+    /**
+     * @brief Reads the low byte of the Z axis acceleration.
+     */
+    template<i2c::Address I>
+    u8 Functions<I>::readZLow()
+    {
+      return i2c::Standard<I>::readSlaveRegister(
+          ADDRESS,
+          out_z_l::ADDRESS);
+    }
 
-  /**
-   * @brief Reads the low byte of the Z axis acceleration.
-   */
-  template<i2c::address::E I>
-  u8 Accelerometer<I>::readZLow()
-  {
-    return i2c::Standard<I>::readSlaveRegister(
-        address::ACCELEROMETER,
-        registers::out_z_l_a::ADDRESS);
-  }
+    /**
+     * @brief Reads the high byte of the Z axis acceleration.
+     */
+    template<i2c::Address I>
+    u8 Functions<I>::readZHigh()
+    {
+      return i2c::Standard<I>::readSlaveRegister(
+          ADDRESS,
+          out_z_h::ADDRESS);
+    }
+  }  // namespace accelerometer
 
-  /**
-   * @brief Reads the high byte of the Z axis acceleration.
-   */
-  template<i2c::address::E I>
-  u8 Accelerometer<I>::readZHigh()
-  {
-    return i2c::Standard<I>::readSlaveRegister(
-        address::ACCELEROMETER,
-        registers::out_z_h_a::ADDRESS);
-  }
+  namespace magnetometer {
+    /**
+     * @brief Sets the magnetometer data rate.
+     */
+    template<i2c::Address I>
+    template<
+        cra::do_::States DO_
+    >
+    void Functions<I>::setDataRate()
+    {
+      u32 tmp = i2c::Standard<I>::readSlaveRegister(
+          ADDRESS,
+          cra::ADDRESS);
+      tmp = (tmp & ~cra::do_::MASK) + DO_;
+      i2c::Standard<I>::writeSlaveRegister(
+          ADDRESS,
+          cra::ADDRESS,
+          tmp);
+    }
 
-  /**
-   * @brief Sets the magnetometer data rate.
-   */
-  template<i2c::address::E I>
-  template<
-      lsm303dlhc::registers::cra_reg_m::bits::do_::states::E DO_
-  >
-  void Magnetometer<I>::setDataRate()
-  {
-    u32 tmp = i2c::Standard<I>::readSlaveRegister(
-        address::MAGNETOMETER,
-        registers::cra_reg_m::ADDRESS);
-    tmp = (tmp & ~registers::cra_reg_m::bits::do_::MASK) + DO_;
-    i2c::Standard<I>::writeSlaveRegister(
-        address::MAGNETOMETER,
-        registers::cra_reg_m::ADDRESS,
-        tmp);
-  }
+    /**
+     * @brief Sets the magnetometer reading range.
+     */
+    template<i2c::Address I>
+    template<
+        crb::gn::States GN
+    >
+    void Functions<I>::setReadingRange()
+    {
+      i2c::Standard<I>::writeSlaveRegister(
+          ADDRESS,
+          crb::ADDRESS,
+          GN);
+    }
 
-  /**
-   * @brief Sets the magnetometer reading range.
-   */
-  template<i2c::address::E I>
-  template<
-      lsm303dlhc::registers::crb_reg_m::bits::gn::states::E GN
-  >
-  void Magnetometer<I>::setReadingRange()
-  {
-    i2c::Standard<I>::writeSlaveRegister(
-        address::MAGNETOMETER,
-        registers::crb_reg_m::ADDRESS,
-        GN);
-  }
+    /**
+     * @brief Sets the magnetometer sampling mode.
+     */
+    template<i2c::Address I>
+    template<
+        mr::md::States MD
+    >
+    void Functions<I>::setMode()
+    {
+      i2c::Standard<I>::writeSlaveRegister(
+          ADDRESS,
+          mr::ADDRESS,
+          MD);
+    }
 
-  /**
-   * @brief Sets the magnetometer sampling mode.
-   */
-  template<i2c::address::E I>
-  template<
-      lsm303dlhc::registers::mr_reg_m::bits::md::states::E MD
-  >
-  void Magnetometer<I>::setMode()
-  {
-    i2c::Standard<I>::writeSlaveRegister(
-        address::MAGNETOMETER,
-        registers::mr_reg_m::ADDRESS,
-        MD);
-  }
+    /**
+     * @brief Reads the low byte of the X axis magnetic field.
+     */
+    template<i2c::Address I>
+    u8 Functions<I>::readXLow()
+    {
+      return i2c::Standard<I>::readSlaveRegister(
+          ADDRESS,
+          out_x_l::ADDRESS);
+    }
 
-  /**
-   * @brief Reads the low byte of the X axis magnetic field.
-   */
-  template<i2c::address::E I>
-  u8 Magnetometer<I>::readXLow()
-  {
-    return i2c::Standard<I>::readSlaveRegister(
-        address::MAGNETOMETER,
-        registers::out_x_l_m::ADDRESS);
-  }
+    /**
+     * @brief Reads the high byte of the X axis magnetic field.
+     */
+    template<i2c::Address I>
+    u8 Functions<I>::readXHigh()
+    {
+      return i2c::Standard<I>::readSlaveRegister(
+          ADDRESS,
+          out_x_h::ADDRESS);
+    }
 
-  /**
-   * @brief Reads the high byte of the X axis magnetic field.
-   */
-  template<i2c::address::E I>
-  u8 Magnetometer<I>::readXHigh()
-  {
-    return i2c::Standard<I>::readSlaveRegister(
-        address::MAGNETOMETER,
-        registers::out_x_h_m::ADDRESS);
-  }
+    /**
+     * @brief Reads the low byte of the Y axis magnetic field.
+     */
+    template<i2c::Address I>
+    u8 Functions<I>::readYLow()
+    {
+      return i2c::Standard<I>::readSlaveRegister(
+          ADDRESS,
+          out_y_l::ADDRESS);
+    }
 
-  /**
-   * @brief Reads the low byte of the Y axis magnetic field.
-   */
-  template<i2c::address::E I>
-  u8 Magnetometer<I>::readYLow()
-  {
-    return i2c::Standard<I>::readSlaveRegister(
-        address::MAGNETOMETER,
-        registers::out_y_l_m::ADDRESS);
-  }
+    /**
+     * @brief Reads the high byte of the Y axis magnetic field.
+     */
+    template<i2c::Address I>
+    u8 Functions<I>::readYHigh()
+    {
+      return i2c::Standard<I>::readSlaveRegister(
+          ADDRESS,
+          out_y_h::ADDRESS);
+    }
 
-  /**
-   * @brief Reads the high byte of the Y axis magnetic field.
-   */
-  template<i2c::address::E I>
-  u8 Magnetometer<I>::readYHigh()
-  {
-    return i2c::Standard<I>::readSlaveRegister(
-        address::MAGNETOMETER,
-        registers::out_y_h_m::ADDRESS);
-  }
+    /**
+     * @brief Reads the low byte of the Z axis magnetic field.
+     */
+    template<i2c::Address I>
+    u8 Functions<I>::readZLow()
+    {
+      return i2c::Standard<I>::readSlaveRegister(
+          ADDRESS,
+          out_z_l::ADDRESS);
+    }
 
-  /**
-   * @brief Reads the low byte of the Z axis magnetic field.
-   */
-  template<i2c::address::E I>
-  u8 Magnetometer<I>::readZLow()
-  {
-    return i2c::Standard<I>::readSlaveRegister(
-        address::MAGNETOMETER,
-        registers::out_z_l_m::ADDRESS);
-  }
+    /**
+     * @brief Reads the high byte of the Z axis magnetic field.
+     */
+    template<i2c::Address I>
+    u8 Functions<I>::readZHigh()
+    {
+      return i2c::Standard<I>::readSlaveRegister(
+          ADDRESS,
+          out_z_h::ADDRESS);
+    }
+  }  // namespace magnetometer
 
-  /**
-   * @brief Reads the high byte of the Z axis magnetic field.
-   */
-  template<i2c::address::E I>
-  u8 Magnetometer<I>::readZHigh()
-  {
-    return i2c::Standard<I>::readSlaveRegister(
-        address::MAGNETOMETER,
-        registers::out_z_h_m::ADDRESS);
-  }
+  namespace thermometer {
+    /**
+     * @brief Disables the thermometer.
+     */
+    template<i2c::Address I>
+    void Functions<I>::disable()
+    {
+      u8 tmp = i2c::Standard<I>::readSlaveRegister(
+          magnetometer::ADDRESS,
+          magnetometer::cra::ADDRESS);
+      tmp &= ~magnetometer::cra::temp_en::TEMPERATURE_SENSOR_ENABLED;
+      i2c::Standard<I>::writeSlaveRegister(
+          magnetometer::ADDRESS,
+          magnetometer::cra::ADDRESS,
+          tmp);
+    }
 
-  /**
-   * @brief Disables the thermometer.
-   */
-  template<i2c::address::E I>
-  void Thermometer<I>::disable()
-  {
-    u8 tmp = i2c::Standard<I>::readSlaveRegister(
-        address::MAGNETOMETER,
-        registers::cra_reg_m::ADDRESS);
-    tmp &=
-        ~registers::cra_reg_m::bits::temp_en::states::TEMPERATURE_SENSOR_ENABLED;
-    i2c::Standard<I>::writeSlaveRegister(
-        address::MAGNETOMETER,
-        registers::cra_reg_m::ADDRESS,
-        tmp);
-  }
-
-  /**
-   * @brief Enables the thermometer.
-   */
-  template<i2c::address::E I>
-  void Thermometer<I>::enable()
-  {
-    u8 tmp = i2c::Standard<I>::readSlaveRegister(
-        address::MAGNETOMETER,
-        registers::cra_reg_m::ADDRESS);
-    tmp |= registers::cra_reg_m::bits::temp_en::states::TEMPERATURE_SENSOR_ENABLED;
-    i2c::Standard<I>::writeSlaveRegister(
-        address::MAGNETOMETER,
-        registers::cra_reg_m::ADDRESS,
-        tmp);
-  }
+    /**
+     * @brief Enables the thermometer.
+     */
+    template<i2c::Address I>
+    void Functions<I>::enable()
+    {
+      u8 tmp = i2c::Standard<I>::readSlaveRegister(
+          magnetometer::ADDRESS,
+          magnetometer::cra::ADDRESS);
+      tmp |= magnetometer::cra::temp_en::TEMPERATURE_SENSOR_ENABLED;
+      i2c::Standard<I>::writeSlaveRegister(
+          magnetometer::ADDRESS,
+          magnetometer::cra::ADDRESS,
+          tmp);
+    }
+  }  // namespace thermometer
 }  // namespace lsm303dlhc
 

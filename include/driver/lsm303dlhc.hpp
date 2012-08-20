@@ -28,87 +28,85 @@
 #pragma once
 
 #include "../device_select.hpp"
-#include "../defs.hpp"
 
+#include "../defs.hpp"
+#include "../include/peripheral/i2c.hpp"
 #include "../../memorymap/lsm303dlhc.hpp"
 
 // High-level functions
 namespace lsm303dlhc {
-  template <
-    i2c::address::E I
-  >
-  class Accelerometer {
-    public:
-      template <
-        lsm303dlhc::registers::ctrl_reg1_a::bits::lpen::states::E,
-        lsm303dlhc::registers::ctrl_reg1_a::bits::odr::states::E,
-        lsm303dlhc::registers::ctrl_reg1_a::bits::xen::states::E,
-        lsm303dlhc::registers::ctrl_reg1_a::bits::yen::states::E,
-        lsm303dlhc::registers::ctrl_reg1_a::bits::zen::states::E,
-        lsm303dlhc::registers::ctrl_reg4_a::bits::sim::states::E,
-        lsm303dlhc::registers::ctrl_reg4_a::bits::hr::states::E,
-        lsm303dlhc::registers::ctrl_reg4_a::bits::fs::states::E,
-        lsm303dlhc::registers::ctrl_reg4_a::bits::ble::states::E,
-        lsm303dlhc::registers::ctrl_reg4_a::bits::bdu::states::E
-      >
-      static void configure();
+  namespace accelerometer {
+    template<i2c::Address I>
+    class Functions {
+      public:
+        template<
+            lsm303dlhc::accelerometer::ctrl1::lpen::States,
+            lsm303dlhc::accelerometer::ctrl1::odr::States,
+            lsm303dlhc::accelerometer::ctrl1::xen::States,
+            lsm303dlhc::accelerometer::ctrl1::yen::States,
+            lsm303dlhc::accelerometer::ctrl1::zen::States,
+            lsm303dlhc::accelerometer::ctrl4::sim::States,
+            lsm303dlhc::accelerometer::ctrl4::hr::States,
+            lsm303dlhc::accelerometer::ctrl4::fs::States,
+            lsm303dlhc::accelerometer::ctrl4::ble::States,
+            lsm303dlhc::accelerometer::ctrl4::bdu::States
+        >
+        static void configure();
 
-      static inline u8 readXLow();
-      static inline u8 readXHigh();
-      static inline u8 readYLow();
-      static inline u8 readYHigh();
-      static inline u8 readZLow();
-      static inline u8 readZHigh();
+        static inline u8 readXLow();
+        static inline u8 readXHigh();
+        static inline u8 readYLow();
+        static inline u8 readYHigh();
+        static inline u8 readZLow();
+        static inline u8 readZHigh();
 
-    private:
-      Accelerometer();
-  };
+      private:
+        Functions();
+    };
+  } // namespace accelerometer
 
-  template <
-    i2c::address::E I
-  >
-  class Magnetometer {
-    public:
-      template <
-        lsm303dlhc::registers::cra_reg_m::bits::do_::states::E
-      >
-      static void setDataRate();
+  namespace magnetometer {
+    template<i2c::Address>
+    class Functions {
+      public:
+        template<
+            lsm303dlhc::magnetometer::cra::do_::States
+        >
+        static void setDataRate();
 
-      template <
-        lsm303dlhc::registers::crb_reg_m::bits::gn::states::E
-      >
-      static void setReadingRange();
+        template<
+            lsm303dlhc::magnetometer::crb::gn::States
+        >
+        static void setReadingRange();
 
-      template <
-        lsm303dlhc::registers::mr_reg_m::bits::md::states::E
-      >
-      static void setMode();
+        template<
+            lsm303dlhc::magnetometer::mr::md::States
+        >
+        static void setMode();
 
-      static inline u8 readXLow();
-      static inline u8 readXHigh();
-      static inline u8 readYLow();
-      static inline u8 readYHigh();
-      static inline u8 readZLow();
-      static inline u8 readZHigh();
+        static inline u8 readXLow();
+        static inline u8 readXHigh();
+        static inline u8 readYLow();
+        static inline u8 readYHigh();
+        static inline u8 readZLow();
+        static inline u8 readZHigh();
 
-    private:
-      Magnetometer();
-  };
+      private:
+        Functions();
+    };
+  }  // namespace magnetometer
 
-  template <
-    i2c::address::E I
-  >
-  class Thermometer {
-    public:
-      static void disable();
-      static void enable();
+  namespace thermometer {
+    template<i2c::Address>
+    class Functions {
+      public:
+        static void disable();
+        static void enable();
 
-    private:
-      Thermometer();
-  };
+      private:
+        Functions();
+    };
+  }  // namespace thermometer
 }  // namespace lsm303dlhc
-
-// High-level access to the device
-// TODO LSM303DLHC high-level access
 
 #include "../../bits/lsm303dlhc.tcc"
