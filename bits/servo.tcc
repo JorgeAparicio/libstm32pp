@@ -50,9 +50,9 @@ namespace servo {
       u16 M,
       u8 N
   >
-  void Functions<P, F, D, M, N>::setPin(u8 const index, u32* const pinAddres)
+  void Functions<P, F, D, M, N>::setPin(u8 const index, u32* const pinAddress)
   {
-    pin[index] = pinAddres;
+    pin[index] = pinAddress;
   }
 
   /**
