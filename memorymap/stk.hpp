@@ -24,6 +24,10 @@
 #include "common.hpp"
 
 namespace stk {
+  enum {
+    ADDRESS = alias::PPB + 0x10
+  };
+
   struct Registers {
       __RW
       u32 CTRL;  // 0x00: Control and status
@@ -35,11 +39,5 @@ namespace stk {
       u32 CALIB;  // 0x0C: Calibration value
   };
 
-  enum {
-    ADDRESS = alias::PPB + 0x10
-  };
-
-  namespace registers {
-  // TODO STK register bits
-  }// namespace registers
-}  // namespace stk
+// TODO STK register bits
+}// namespace stk
