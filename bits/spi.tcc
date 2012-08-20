@@ -24,124 +24,122 @@
 #include "../include/peripheral/rcc.hpp"
 
 namespace spi {
-  template<address::E S>
+  template<Address S>
   void Functions<S>::enableClock()
   {
     switch (S) {
-      case address::SPI1:
+      case SPI1:
         RCC::enableClocks<rcc::apb2enr::SPI1>();
         break;
-      case address::SPI2:
+      case SPI2:
         RCC::enableClocks<rcc::apb1enr::SPI2>();
         break;
-      case address::SPI3:
+      case SPI3:
         RCC::enableClocks<rcc::apb1enr::SPI3>();
         break;
     }
   }
 
-  template<address::E S>
+  template<Address S>
   void Functions<S>::disableClock()
   {
     switch (S) {
-      case address::SPI1:
+      case SPI1:
         RCC::disableClocks<rcc::apb2enr::SPI1>();
         break;
-      case address::SPI2:
+      case SPI2:
         RCC::disableClocks<rcc::apb1enr::SPI2>();
         break;
-      case address::SPI3:
+      case SPI3:
         RCC::disableClocks<rcc::apb1enr::SPI3>();
         break;
     }
   }
 
-  template<address::E S>
+  template<Address S>
   void Functions<S>::sendByte(const u8 byte)
   {
     reinterpret_cast<Registers*>(S)->DR = byte;
   }
 
-  template<address::E S>
+  template<Address S>
   u8 Functions<S>::getByte()
   {
     return reinterpret_cast<Registers*>(S)->DR;
   }
 
-  template<address::E S>
+  template<Address S>
   void Functions<S>::sendWord(const u16 word)
   {
     reinterpret_cast<Registers*>(S)->DR = word;
   }
 
-  template<address::E S>
+  template<Address S>
   u16 Functions<S>::getWord()
   {
     return reinterpret_cast<Registers*>(S)->DR;
   }
 
-  template<address::E S>
+  template<Address S>
   void Functions<S>::enable()
   {
     *(volatile u32*) (bitband::peripheral<
-        S + registers::cr1::OFFSET,
-        registers::cr1::bits::spe::POSITION
+        S + cr1::OFFSET,
+        cr1::spe::POSITION
     >()) = 1;
   }
 
-  template<address::E S>
+  template<Address S>
   void Functions<S>::disable()
   {
     *(volatile u32*) (bitband::peripheral<
-        S + registers::cr1::OFFSET,
-        registers::cr1::bits::spe::POSITION
+        S + cr1::OFFSET,
+        cr1::spe::POSITION
     >()) = 0;
   }
 
-  template<address::E S>
+  template<Address S>
   bool Functions<S>::candSendData()
   {
     return *(volatile bool*) (bitband::peripheral<
-        S + registers::sr::OFFSET,
-        registers::sr::bits::txe::POSITION
+        S + sr::OFFSET,
+        sr::txe::POSITION
     >());
   }
 
-  template<address::E S>
+  template<Address S>
   bool Functions<S>::hasReceivedData()
   {
     return *(volatile bool*) (bitband::peripheral<
-        S + registers::sr::OFFSET,
-        registers::sr::bits::rxne::POSITION
+        S + sr::OFFSET,
+        sr::rxne::POSITION
     >());
   }
 
   /**
    * @note  The peripheral must be turned off during the configuration.
    */
-  template<address::E S>
-  template<
-      registers::cr1::bits::cpha::states::E CPHA,
-      registers::cr1::bits::cpol::states::E CPOL,
-      registers::cr1::bits::msrt::states::E MSRT,
-      registers::cr1::bits::br::states::E BR,
-      registers::cr1::bits::lsbfirst::states::E LSBFIRST,
-      registers::cr1::bits::ssm::states::E SSM,
-      registers::cr1::bits::rxonly::states::E RXONLY,
-      registers::cr1::bits::dff::states::E DFF,
-      registers::cr1::bits::crcnext::states::E CRCNEXT,
-      registers::cr1::bits::crcen::states::E CRCEN,
-      registers::cr1::bits::bidioe::states::E BIDIOE,
-      registers::cr1::bits::bidimode::states::E BIDIMODE,
-      registers::cr2::bits::errie::states::E ERRIE,
-      registers::cr2::bits::frf::states::E FRF,
-      registers::cr2::bits::rxdmaen::states::E RXDMAEN,
-      registers::cr2::bits::rxneie::states::E RXNEIE,
-      registers::cr2::bits::ssoe::states::E SSOE,
-      registers::cr2::bits::txdmaen::states::E TXDMAEN,
-      registers::cr2::bits::txeie::states::E TXEIE
-  >
-  void Functions<S>::configure()
+  template<Address S>
+  void Functions<S>::configure(
+      cr1::cpha::States CPHA,
+      cr1::cpol::States CPOL,
+      cr1::msrt::States MSRT,
+      cr1::br::States BR,
+      cr1::lsbfirst::States LSBFIRST,
+      cr1::ssm::States SSM,
+      cr1::rxonly::States RXONLY,
+      cr1::dff::States DFF,
+      cr1::crcnext::States CRCNEXT,
+      cr1::crcen::States CRCEN,
+      cr1::bidioe::States BIDIOE,
+      cr1::bidimode::States BIDIMODE,
+      cr2::errie::States ERRIE,
+      cr2::frf::States FRF,
+      cr2::rxdmaen::States RXDMAEN,
+      cr2::rxneie::States RXNEIE,
+      cr2::ssoe::States SSOE,
+      cr2::txdmaen::States TXDMAEN,
+      cr2::txeie::States TXEIE)
   {
     reinterpret_cast<Registers*>(S)->CR1 = CPHA + CPOL + MSRT + BR +
         LSBFIRST + SSM + RXONLY + DFF + CRCNEXT + CRCEN + BIDIOE + BIDIMODE;

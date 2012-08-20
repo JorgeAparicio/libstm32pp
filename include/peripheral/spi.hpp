@@ -30,18 +30,18 @@
 #pragma once
 
 #include "../device_select.hpp"
-#include "../defs.hpp"
 
+#include "../defs.hpp"
 #include "../../memorymap/spi.hpp"
 
 // Low-level access to the registers
-#define SPI1_REGS reinterpret_cast<spi::Registers*>(spi::address::SPI1)
-#define SPI2_REGS reinterpret_cast<spi::Registers*>(spi::address::SPI2)
-#define SPI3_REGS reinterpret_cast<spi::Registers*>(spi::address::SPI3)
+#define SPI1_REGS reinterpret_cast<spi::Registers*>(spi::SPI1)
+#define SPI2_REGS reinterpret_cast<spi::Registers*>(spi::SPI2)
+#define SPI3_REGS reinterpret_cast<spi::Registers*>(spi::SPI3)
 
 // High-level functions
 namespace spi {
-  template<address::E S>
+  template<Address S>
   class Functions {
     public:
       static inline void enableClock();
@@ -54,29 +54,26 @@ namespace spi {
       static inline void disable();
       static inline bool candSendData();
       static inline bool hasReceivedData();
-
-      template<
-          spi::registers::cr1::bits::cpha::states::E,
-          spi::registers::cr1::bits::cpol::states::E,
-          spi::registers::cr1::bits::msrt::states::E,
-          spi::registers::cr1::bits::br::states::E,
-          spi::registers::cr1::bits::lsbfirst::states::E,
-          spi::registers::cr1::bits::ssm::states::E,
-          spi::registers::cr1::bits::rxonly::states::E,
-          spi::registers::cr1::bits::dff::states::E,
-          spi::registers::cr1::bits::crcnext::states::E,
-          spi::registers::cr1::bits::crcen::states::E,
-          spi::registers::cr1::bits::bidioe::states::E,
-          spi::registers::cr1::bits::bidimode::states::E,
-          spi::registers::cr2::bits::errie::states::E,
-          spi::registers::cr2::bits::frf::states::E,
-          spi::registers::cr2::bits::rxdmaen::states::E,
-          spi::registers::cr2::bits::rxneie::states::E,
-          spi::registers::cr2::bits::ssoe::states::E,
-          spi::registers::cr2::bits::txdmaen::states::E,
-          spi::registers::cr2::bits::txeie::states::E
-      >
-      static inline void configure();
+      static inline void configure(
+          spi::cr1::cpha::States,
+          spi::cr1::cpol::States,
+          spi::cr1::msrt::States,
+          spi::cr1::br::States,
+          spi::cr1::lsbfirst::States,
+          spi::cr1::ssm::States,
+          spi::cr1::rxonly::States,
+          spi::cr1::dff::States,
+          spi::cr1::crcnext::States,
+          spi::cr1::crcen::States,
+          spi::cr1::bidioe::States,
+          spi::cr1::bidimode::States,
+          spi::cr2::errie::States,
+          spi::cr2::frf::States,
+          spi::cr2::rxdmaen::States,
+          spi::cr2::rxneie::States,
+          spi::cr2::ssoe::States,
+          spi::cr2::txdmaen::States,
+          spi::cr2::txeie::States);
 
     private:
       Functions();
@@ -84,8 +81,8 @@ namespace spi {
 }  // namespace spi
 
 // High-level access to the peripheral
-typedef spi::Functions<spi::address::SPI1> SPI1;
-typedef spi::Functions<spi::address::SPI2> SPI2;
-typedef spi::Functions<spi::address::SPI3> SPI3;
+typedef spi::Functions<spi::SPI1> SPI1;
+typedef spi::Functions<spi::SPI2> SPI2;
+typedef spi::Functions<spi::SPI3> SPI3;
 
 #include "../../bits/spi.tcc"
