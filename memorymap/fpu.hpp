@@ -24,6 +24,9 @@
 #include "common.hpp"
 
 namespace fpu {
+  enum {
+    ADDRESS = alias::PPB + 0xD88
+  };
 
   struct Registers {
       __RW
@@ -37,49 +40,32 @@ namespace fpu {
       u32 FPDSCR;  // 0x1B4: Floating point default status control
   };
 
-  enum {
-    ADDRESS = alias::PPB + 0xD88
-  };
-
-  namespace registers {
-    namespace cpacr {
+  namespace cpacr {
+    enum {
+      OFFSET = 0x00
+    };
+    namespace cp10 {
       enum {
-        OFFSET = 0x00
+        POSITION = 20,
+        MASK = 0b11 << POSITION
       };
-      namespace bits {
-        namespace cp10 {
-          enum {
-            POSITION = 20
-          };
-          enum {
-            MASK = 0b11 << POSITION
-          };
-          namespace states {
-            enum E {
-              ACCESS_DENIED = 0 << POSITION,
-              PRIVILEGED_ACCESS = 1 << POSITION,
-              FULL_ACCESS = 3 << POSITION
-            };
-          }
-        }
-        namespace cp11 {
-          enum {
-            POSITION = 22
-          };
-          enum {
-            MASK = 0b11 << POSITION
-          };
-          namespace states {
-            enum E {
-              ACCESS_DENIED = 0 << POSITION,
-              PRIVILEGED_ACCESS = 1 << POSITION,
-              FULL_ACCESS = 3 << POSITION
-            };
-          }
-        }
-      }
-    }
-  }  // namespace registers
+      enum States {
+        ACCESS_DENIED = 0 << POSITION,
+        PRIVILEGED_ACCESS = 1 << POSITION,
+        FULL_ACCESS = 3 << POSITION
+      };
+    } // namespace cp10
 
+    namespace cp11 {
+      enum {
+        POSITION = 22,
+        MASK = 0b11 << POSITION
+      };
+      enum States {
+        ACCESS_DENIED = 0 << POSITION,
+        PRIVILEGED_ACCESS = 1 << POSITION,
+        FULL_ACCESS = 3 << POSITION
+      };
+    } // namespace cp11
+  } // namespace cpacr
 }  // namespace fpu
-

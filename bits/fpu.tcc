@@ -25,14 +25,14 @@ namespace fpu {
 
   void Functions::enableFullAccess()
   {
-    _FPU->CPACR = registers::cpacr::bits::cp10::states::FULL_ACCESS +
-        registers::cpacr::bits::cp11::states::FULL_ACCESS;
+    _FPU->CPACR = cpacr::cp10::FULL_ACCESS +
+        cpacr::cp11::FULL_ACCESS;
   }
 
   void Functions::enablePrivilegedAccess()
   {
-    _FPU->CPACR = registers::cpacr::bits::cp10::states::PRIVILEGED_ACCESS +
-        registers::cpacr::bits::cp11::states::PRIVILEGED_ACCESS;
+    _FPU->CPACR = cpacr::cp10::PRIVILEGED_ACCESS +
+        cpacr::cp11::PRIVILEGED_ACCESS;
   }
 
   void Functions::disable()
