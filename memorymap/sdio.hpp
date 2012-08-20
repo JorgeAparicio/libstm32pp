@@ -24,6 +24,14 @@
 #include "common.hpp"
 
 namespace sdio {
+  enum {
+#ifdef STM32F1XX
+    ADDRESS = alias::PERIPH + 0x18000
+#else
+    ADDRESS = alias::APB2 + 0x2C00
+#endif
+  };
+
   struct Registers {
       __RW
       u32 POWER;         // 0x00: Power control
@@ -59,15 +67,81 @@ namespace sdio {
       u32 FIFO;          // 0x80: Data FIFO
   };
 
-#ifdef STM32F1XX
-  enum {ADDRESS = alias::PERIPH + 0x18000};
-#else
-  enum {
-    ADDRESS = alias::APB2 + 0x2C00
-  };
-#endif
+  namespace power {
+    enum {
+      OFFSET = 0x00
+    };
+  }  // namespace power
 
-  namespace registers {
-  // TODO SDIO register bits
-  }// namespace registers
+  namespace clkcr {
+    enum {
+      OFFSET = 0x04
+    };
+  }  // namespace clkcr
+
+  namespace arg {
+    enum {
+      OFFSET = 0x08
+    };
+  }  // namespace arg
+
+  namespace cmd {
+    enum {
+      OFFSET = 0x0C
+    };
+  }  // namespace cmd
+
+  namespace respcmd {
+    enum {
+      OFFSET = 0x10
+    };
+  }  // namespace respcmd
+
+  namespace dtimer {
+    enum {
+      OFFSET = 0x24
+    };
+  }  // namespace dtimer
+
+  namespace dlen {
+    enum {
+      OFFSET = 0x28
+    };
+  }  // namespace dlen
+
+  namespace dctrl {
+    enum {
+      OFFSET = 0x2C
+    };
+  }  // namespace dctrl
+
+  namespace dcount {
+    enum {
+      OFFSET = 0x30
+    };
+  }  // namespace dcount
+
+  namespace sta {
+    enum {
+      OFFSET = 0x34
+    };
+  }  // namespace sta
+
+  namespace icr {
+    enum {
+      OFFSET = 0x38
+    };
+  }  // namespace icr
+
+  namespace fifocnt {
+    enum {
+      OFFSET = 0x48
+    };
+  }  // namespace fifocnt
+
+  namespace fifo {
+    enum {
+      OFFSET = 0x80
+    };
+  }  // namespace fifo
 }  // namespace sdio

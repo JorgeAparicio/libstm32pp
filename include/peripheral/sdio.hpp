@@ -32,7 +32,6 @@
 #ifndef STM32F1XX
 
 #include "../defs.hpp"
-
 #include "../../memorymap/sdio.hpp"
 
 // Low-level access to the registers
