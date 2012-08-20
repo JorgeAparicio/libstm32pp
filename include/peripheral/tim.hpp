@@ -30,40 +30,35 @@
 #pragma once
 
 #include "../device_select.hpp"
-#include "../defs.hpp"
 
+#include "../defs.hpp"
 #include "../clock.hpp"
 #include "../../memorymap/tim.hpp"
 
 // Low-level access to the registers
-#define TIM6_REGS   ((tim::_reserved::RegistersB*) tim::address::TIM6)
-#define TIM7_REGS   ((tim::_reserved::RegistersB*) tim::address::TIM7)
-
-#define TIM2_REGS   ((tim::_reserved::RegistersGP0*)tim::address::TIM2)
-#define TIM3_REGS   ((tim::_reserved::RegistersGP1*)tim::address::TIM3)
-#define TIM4_REGS   ((tim::_reserved::RegistersGP1*)tim::address::TIM4)
-#define TIM5_REGS   ((tim::_reserved::RegistersGP2*)tim::address::TIM5)
-
-#define TIM9_REGS   ((tim::_reserved::RegistersGP3*)tim::address::TIM9)
-#define TIM12_REGS  ((tim::_reserved::RegistersGP3*)tim::address::TIM12)
-
-#define TIM10_REGS  ((tim::_reserved::RegistersGP4*)tim::address::TIM10)
-#define TIM11_REGS  ((tim::_reserved::RegistersGP5*)tim::address::TIM11)
-#define TIM13_REGS  ((tim::_reserved::RegistersGP4*)tim::address::TIM13)
-#define TIM14_REGS  ((tim::_reserved::RegistersGP4*)tim::address::TIM14)
-
+#define TIM1_REGS   ((tim::Registers*) tim::TIM1)
+#define TIM2_REGS   ((tim::Registers*) tim::TIM2)
+#define TIM3_REGS   ((tim::Registers*) tim::TIM3)
+#define TIM4_REGS   ((tim::Registers*) tim::TIM4)
+#define TIM5_REGS   ((tim::Registers*) tim::TIM5)
+#define TIM6_REGS   ((tim::Registers*) tim::TIM6)
+#define TIM7_REGS   ((tim::Registers*) tim::TIM7)
+#define TIM8_REGS   ((tim::Registers*) tim::TIM8)
+#define TIM9_REGS   ((tim::Registers*) tim::TIM9)
+#define TIM10_REGS   ((tim::Registers*) tim::TIM10)
+#define TIM11_REGS   ((tim::Registers*) tim::TIM11)
+#define TIM12_REGS   ((tim::Registers*) tim::TIM12)
+#define TIM13_REGS   ((tim::Registers*) tim::TIM13)
+#define TIM14_REGS   ((tim::Registers*) tim::TIM14)
 #ifdef VALUE_LINE
-#define TIM15_REGS  ((tim::_reserved::RegistersGP6*)tim::address::E::TIM15)
-#define TIM16_REGS  ((tim::_reserved::Registers*)tim::address::E::TIM16)
-#define TIM17_REGS  ((tim::_reserved::Registers*)tim::address::E::TIM17)
+#define TIM15_REGS  ((tim::_reserved::RegistersGP6*)tim::E::TIM15)
+#define TIM16_REGS  ((tim::_reserved::Registers*)tim::E::TIM16)
+#define TIM17_REGS  ((tim::_reserved::Registers*)tim::E::TIM17)
 #endif
-
-#define TIM1_REGS   ((tim::_reserved::RegistersAC*)tim::address::E::TIM1)
-#define TIM8_REGS   ((tim::_reserved::RegistersAC*)tim::address::E::TIM8)
 
 // High-level functions
 namespace tim {
-  template<address::E A>
+  template<Address A>
   class Functions {
     public:
       enum {
@@ -97,19 +92,13 @@ namespace tim {
       >
       static inline void configurePeriodicInterrupt();
 
-      template<
-          tim::registers::cr2::bits::mms::states::E
-      >
-      static inline void setMasterMode();
-
-      template<
-          tim::registers::cr1::bits::cen::states::E,
-          tim::registers::cr1::bits::udis::states::E,
-          tim::registers::cr1::bits::urs::states::E,
-          tim::registers::cr1::bits::opm::states::E,
-          tim::registers::cr1::bits::arpe::states::E
-      >
-      static inline void configureBasicCounter();
+      static inline void setMasterMode(tim::cr2::mms::States);
+      static inline void configureBasicCounter(
+          tim::cr1::cen::States,
+          tim::cr1::udis::States,
+          tim::cr1::urs::States,
+          tim::cr1::opm::States,
+          tim::cr1::arpe::States);
 
       // TODO TIM capture functions
       // TODO TIM compare functions
@@ -121,24 +110,24 @@ namespace tim {
 }  // namespace tim
 
 // High-level access to the peripheral
-typedef tim::Functions<tim::address::TIM1> TIM1;
-typedef tim::Functions<tim::address::TIM2> TIM2;
-typedef tim::Functions<tim::address::TIM3> TIM3;
-typedef tim::Functions<tim::address::TIM4> TIM4;
-typedef tim::Functions<tim::address::TIM5> TIM5;
-typedef tim::Functions<tim::address::TIM6> TIM6;
-typedef tim::Functions<tim::address::TIM7> TIM7;
-typedef tim::Functions<tim::address::TIM8> TIM8;
-typedef tim::Functions<tim::address::TIM9> TIM9;
-typedef tim::Functions<tim::address::TIM10> TIM10;
-typedef tim::Functions<tim::address::TIM11> TIM11;
-typedef tim::Functions<tim::address::TIM12> TIM12;
-typedef tim::Functions<tim::address::TIM13> TIM13;
-typedef tim::Functions<tim::address::TIM14> TIM14;
+typedef tim::Functions<tim::TIM1> TIM1;
+typedef tim::Functions<tim::TIM2> TIM2;
+typedef tim::Functions<tim::TIM3> TIM3;
+typedef tim::Functions<tim::TIM4> TIM4;
+typedef tim::Functions<tim::TIM5> TIM5;
+typedef tim::Functions<tim::TIM6> TIM6;
+typedef tim::Functions<tim::TIM7> TIM7;
+typedef tim::Functions<tim::TIM8> TIM8;
+typedef tim::Functions<tim::TIM9> TIM9;
+typedef tim::Functions<tim::TIM10> TIM10;
+typedef tim::Functions<tim::TIM11> TIM11;
+typedef tim::Functions<tim::TIM12> TIM12;
+typedef tim::Functions<tim::TIM13> TIM13;
+typedef tim::Functions<tim::TIM14> TIM14;
 #ifdef VALUE_LINE
-typedef tim::Functions<tim::address::TIM15> TIM15;
-typedef tim::Functions<tim::address::TIM16> TIM16;
-typedef tim::Functions<tim::address::TIM17> TIM17;
+typedef tim::Functions<tim::TIM15> TIM15;
+typedef tim::Functions<tim::TIM16> TIM16;
+typedef tim::Functions<tim::TIM17> TIM17;
 #endif
 
 #include "../../bits/tim.tcc"
