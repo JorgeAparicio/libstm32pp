@@ -34,54 +34,29 @@
 
 int main()
 {
+  PA0::enableClock();
+
 #ifdef STM32F1XX
-  RCC::enableClocks<
-      rcc::apb2enr::IOPA
-  >();
-
-  PA0::setMode<
-      gpio::registers::cr::states::GP_PUSH_PULL_2MHZ
-  >();
-
+  PA0::setMode(gpio::cr::GP_PUSH_PULL_2MHZ);
 #else
-  RCC::enableClocks<
-  rcc::ahb1enr::GPIOA
-  >();
-
-  PA0::setMode<
-  gpio::registers::moder::states::OUTPUT
-  >();
+  PA0::setMode(gpio::moder::OUTPUT);
 #endif
 
-  RCC::enableClocks<
-      rcc::apb1enr::TIM6
+  TIM6::enableClock();
+
+  TIM6::configurePeriodicInterrupt<
+      1 /* Hz */
   >();
-
-  TIM6::configureBasicCounter<
-      tim::registers::cr1::bits::cen::states::COUNTER_DISABLED,
-      tim::registers::cr1::bits::udis::states::UPDATE_EVENT_ENABLED,
-      tim::registers::cr1::bits::urs::states::UPDATE_REQUEST_SOURCE_OVERFLOW_UNDERFLOW,
-      tim::registers::cr1::bits::opm::states::DONT_STOP_COUNTER_AT_NEXT_UPDATE_EVENT,
-      tim::registers::cr1::bits::arpe::states::AUTO_RELOAD_UNBUFFERED
-  >();
-
-  TIM6::enableUpdateInterrupt();
-
-  TIM6::setPrescaler(3999);
-
-  TIM6::setAutoReload(1999);
-
-  TIM6::generateUpdate();
 
 #if defined VALUE_LINE || \
     defined STM32F2XX || \
     defined STM32F4XX
   NVIC::enableInterrupt<
-  nvic::irqn::TIM6_DAC
+      nvic::irqn::TIM6_DAC
   >();
 #else
   NVIC::enableInterrupt<
-      nvic::irqn::TIM6
+  nvic::irqn::TIM6
   >();
 #endif
 
@@ -89,7 +64,6 @@ int main()
 
   while (true) {
   }
-
 }
 
 #if defined VALUE_LINE || \
