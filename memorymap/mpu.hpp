@@ -24,6 +24,10 @@
 #include "common.hpp"
 
 namespace mpu {
+  enum {
+    ADDRESS = alias::PPB + 0xD90
+  };
+
   struct Registers {
       __RW
       u32 TYPER;  // 0x00: Type
@@ -37,11 +41,33 @@ namespace mpu {
       u32 RASR;  // 0x10: Region attribute and size
   };
 
-  enum {
-    ADDRESS = alias::PPB + 0xD90
-  };
+  namespace typer {
+    enum {
+      OFFSET = 0x00
+    };
+  }  // namespace typer
 
-  namespace registers {
-  // TODO MPU register bits
-  }// namespace registers
+  namespace control {
+      enum {
+        OFFSET = 0x04
+      };
+    }  // namespace control
+
+  namespace rnr {
+      enum {
+        OFFSET = 0x08
+      };
+    }  // namespace rnr
+
+  namespace rbar {
+      enum {
+        OFFSET = 0x0C
+      };
+    }  // namespace rbar
+
+  namespace rasr {
+      enum {
+        OFFSET = 0x10
+      };
+    }  // namespace rasr
 }  // namespace mpu
