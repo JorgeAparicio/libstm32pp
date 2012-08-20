@@ -140,7 +140,7 @@ namespace i2c {
   template<Address I>
   void Standard<I>::enablePeripheral()
   {
-    *(volatile u32*) (bitband::peripheral<
+    *(u32 volatile*) (bitband::peripheral<
         I + cr1::OFFSET,
         cr1::pe::POSITION
     >()) = 1;
@@ -152,7 +152,7 @@ namespace i2c {
   template<Address I>
   void Standard<I>::disablePeripheral()
   {
-    *(volatile u32*) (bitband::peripheral<
+    *(u32 volatile*) (bitband::peripheral<
         I + cr1::OFFSET,
         cr1::pe::POSITION
     >()) = 0;
@@ -164,7 +164,7 @@ namespace i2c {
   template<Address I>
   void Standard<I>::sendStart()
   {
-    *(volatile u32*) (bitband::peripheral<
+    *(u32 volatile*) (bitband::peripheral<
         I + cr1::OFFSET,
         cr1::start::POSITION
     >()) = 1;
@@ -176,7 +176,7 @@ namespace i2c {
   template<Address I>
   void Standard<I>::sendStop()
   {
-    *(volatile u32*) (bitband::peripheral<
+    *(u32 volatile*) (bitband::peripheral<
         I + cr1::OFFSET,
         cr1::stop::POSITION
     >()) = 1;
@@ -217,7 +217,7 @@ namespace i2c {
   template<Address I>
   void Standard<I>::enableACK()
   {
-    *(volatile u32*) (bitband::peripheral<
+    *(u32 volatile*) (bitband::peripheral<
         I + cr1::OFFSET,
         cr1::ack::POSITION
     >()) = 1;
@@ -229,7 +229,7 @@ namespace i2c {
   template<Address I>
   void Standard<I>::disableACK()
   {
-    *(volatile u32*) (bitband::peripheral<
+    *(u32 volatile*) (bitband::peripheral<
         I + cr1::OFFSET,
         cr1::ack::POSITION
     >()) = 0;
@@ -241,7 +241,7 @@ namespace i2c {
   template<Address I>
   bool Standard<I>::hasSentStart()
   {
-    return *(volatile bool*) bitband::peripheral<
+    return *(bool volatile*) bitband::peripheral<
         I + sr1::OFFSET,
         sr1::sb::POSITION
     >();
@@ -253,7 +253,7 @@ namespace i2c {
   template<Address I>
   bool Standard<I>::hasSentStop()
   {
-    return *(volatile bool*) bitband::peripheral<
+    return *(bool volatile*) bitband::peripheral<
         I + sr1::OFFSET,
         sr1::stopf::POSITION
     >();
@@ -265,7 +265,7 @@ namespace i2c {
   template<Address I>
   bool Standard<I>::hasAddressTransmitted()
   {
-    return *(volatile bool*) bitband::peripheral<
+    return *(bool volatile*) bitband::peripheral<
         I + sr1::OFFSET,
         sr1::addr::POSITION
     >();
@@ -277,7 +277,7 @@ namespace i2c {
   template<Address I>
   bool Standard<I>::hasReceivedData()
   {
-    return *(volatile bool*) bitband::peripheral<
+    return *(bool volatile*) bitband::peripheral<
         I + sr1::OFFSET,
         sr1::rxne::POSITION
     >();
@@ -289,7 +289,7 @@ namespace i2c {
   template<Address I>
   bool Standard<I>::canSendData()
   {
-    return *(volatile bool*) bitband::peripheral<
+    return *(bool volatile*) bitband::peripheral<
         I + sr1::OFFSET,
         sr1::txe::POSITION
     >();
@@ -301,7 +301,7 @@ namespace i2c {
   template<Address I>
   bool Standard<I>::hasTranferFinished()
   {
-    return *(volatile bool*) bitband::peripheral<
+    return *(bool volatile*) bitband::peripheral<
         I + sr1::OFFSET,
         sr1::btf::POSITION
     >();
@@ -314,7 +314,7 @@ namespace i2c {
   template<Address I>
   bool Standard<I>::isTheBusBusy()
   {
-    return *(volatile bool*) (bitband::peripheral<
+    return *(bool volatile*) (bitband::peripheral<
         I + sr2::OFFSET,
         sr2::busy::POSITION
     >());

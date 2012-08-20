@@ -82,7 +82,7 @@ namespace gpio {
   template<Address P, u8 N>
   void Pin<P, N>::setOutput(u32 const value)
   {
-    *(volatile u32*) (OUT_ADDRESS) = value;
+    *(u32 volatile*) (OUT_ADDRESS) = value;
   }
 
   /**
@@ -91,7 +91,7 @@ namespace gpio {
   template<Address P, u8 N>
   u32 Pin<P, N>::getInput()
   {
-    return *(volatile u32*) (IN_ADDRESS);
+    return *(u32 volatile*) (IN_ADDRESS);
   }
 
   /**
@@ -118,7 +118,7 @@ namespace gpio {
   template<Address P, u8 N>
   bool Pin<P, N>::isHigh()
   {
-    return *(volatile bool*) (bitband::peripheral<
+    return *(bool volatile*) (bitband::peripheral<
         P + idr::OFFSET,
         N
         >());
@@ -320,7 +320,7 @@ namespace gpio {
   template<Address P, u8 N>
   void Pin<P, N>::setOutput(u32 const value)
   {
-    *(volatile u32*) (OUT_ADDRESS) = value;
+    *(u32 volatile*) (OUT_ADDRESS) = value;
   }
 
   /**
@@ -329,7 +329,7 @@ namespace gpio {
   template<Address P, u8 N>
   u32 Pin<P, N>::getInput()
   {
-    return *(volatile u32*) (IN_ADDRESS);
+    return *(u32 volatile*) (IN_ADDRESS);
   }
 
   /**
@@ -338,7 +338,7 @@ namespace gpio {
   template<Address P, u8 N>
   bool Pin<P, N>::isHigh()
   {
-    return *(volatile bool*) (bitband::peripheral<
+    return *(bool volatile*) (bitband::peripheral<
         P + idr::OFFSET,
         N
     >());
@@ -362,7 +362,7 @@ namespace gpio {
   template<Address P, u8 N>
   void Pin<P, N>::setOutputMode(otyper::States OutputMode)
   {
-    *((volatile u32*) (bitband::peripheral<
+    *((u32 volatile*) (bitband::peripheral<
         P + otyper::OFFSET,
         N
     >())) = OutputMode;

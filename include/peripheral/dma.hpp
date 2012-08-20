@@ -148,9 +148,9 @@ namespace dma {
       static inline void enablePeripheral();
       static inline void disablePeripheral();
       static inline void setNumberOfTransactions(u16 const);
-      static inline void setPeripheralAddress(volatile void const*);
-      static inline void setPeripheralAddress(void const*);
-      static inline void setMemoryAddress(void const*);
+      static inline void setPeripheralAddress(void volatile* const);
+      static inline void setPeripheralAddress(void* const);
+      static inline void setMemoryAddress(void* const);
       static inline void clearGlobalFlag();
       static inline void clearTransferCompleteFlag();
       static inline void clearHalfTransferFlag();
@@ -183,10 +183,10 @@ namespace dma {
         static inline void disablePeripheral();
         static inline bool isEnabled();
         static inline void setNumberOfTransactions(u16 const);
-        static inline void setPeripheralAddress(volatile void*);
-        static inline void setPeripheralAddress(void*);
-        static inline void setMemory0Address(void*);
-        static inline void setMemory1Address(void*);
+        static inline void setPeripheralAddress(void volatile* const);
+        static inline void setPeripheralAddress(void* const);
+        static inline void setMemory0Address(void* const);
+        static inline void setMemory1Address(void* const);
         static inline void clearFifoErrorFlag();
         static inline bool hasFifoErrorOccurred();
         static inline void clearDirectModeErrorFlag();

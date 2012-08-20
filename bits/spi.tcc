@@ -83,7 +83,7 @@ namespace spi {
   template<Address S>
   void Functions<S>::enable()
   {
-    *(volatile u32*) (bitband::peripheral<
+    *(u32 volatile*) (bitband::peripheral<
         S + cr1::OFFSET,
         cr1::spe::POSITION
     >()) = 1;
@@ -92,7 +92,7 @@ namespace spi {
   template<Address S>
   void Functions<S>::disable()
   {
-    *(volatile u32*) (bitband::peripheral<
+    *(u32 volatile*) (bitband::peripheral<
         S + cr1::OFFSET,
         cr1::spe::POSITION
     >()) = 0;
@@ -101,7 +101,7 @@ namespace spi {
   template<Address S>
   bool Functions<S>::candSendData()
   {
-    return *(volatile bool*) (bitband::peripheral<
+    return *(bool volatile*) (bitband::peripheral<
         S + sr::OFFSET,
         sr::txe::POSITION
     >());
@@ -110,7 +110,7 @@ namespace spi {
   template<Address S>
   bool Functions<S>::hasReceivedData()
   {
-    return *(volatile bool*) (bitband::peripheral<
+    return *(bool volatile*) (bitband::peripheral<
         S + sr::OFFSET,
         sr::rxne::POSITION
     >());

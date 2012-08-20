@@ -103,7 +103,7 @@ namespace dma {
     template<dma::common::Address D, Address C>
     void Functions<D, C>::enablePeripheral()
     {
-      *(volatile u32*) (bitband::peripheral<
+      *(u32 volatile*) (bitband::peripheral<
           D + C + cr::OFFSET,
           cr::en::POSITION
           >()) = 1;
@@ -115,7 +115,7 @@ namespace dma {
     template<dma::common::Address D, Address C>
     void Functions<D, C>::disablePeripheral()
     {
-      *(volatile u32*) (bitband::peripheral<
+      *(u32 volatile*) (bitband::peripheral<
           D + C + cr::OFFSET,
           cr::en::POSITION
           >()) = 0;
@@ -134,7 +134,7 @@ namespace dma {
      * @brief Specifies the target peripheral memory address.
      */
     template<dma::common::Address D, Address C>
-    void Functions<D, C>::setPeripheralAddress(volatile void const* address)
+    void Functions<D, C>::setPeripheralAddress(void volatile* const address)
     {
       reinterpret_cast<Registers*>(D + C)->CPAR = u32(address);
     }
@@ -143,7 +143,7 @@ namespace dma {
      * @brief Specifies the target peripheral memory address.
      */
     template<dma::common::Address D, Address C>
-    void Functions<D, C>::setPeripheralAddress(void const* address)
+    void Functions<D, C>::setPeripheralAddress(void* const address)
     {
       reinterpret_cast<Registers*>(D + C)->CPAR = u32(address);
     }
@@ -152,7 +152,7 @@ namespace dma {
      * @brief Specifies the target memory address.
      */
     template<dma::common::Address D, Address C>
-    void Functions<D, C>::setMemoryAddress(void const* address)
+    void Functions<D, C>::setMemoryAddress(void* const address)
     {
       reinterpret_cast<Registers*>(D + C)->CMAR = u32(address);
     }
@@ -168,7 +168,7 @@ namespace dma {
       };
 
       // TODO DMA, replace the hard-coded numbers
-      *(volatile u32*) (bitband::peripheral<
+      *(u32 volatile*) (bitband::peripheral<
           D + C + dma::common::ifcr::OFFSET,
           4 * Channel>()) = 1;
     }
@@ -184,7 +184,7 @@ namespace dma {
       };
 
       // TODO DMA, replace the hard-coded numbers
-      *(volatile u32*) (bitband::peripheral<
+      *(u32 volatile*) (bitband::peripheral<
           D + C + dma::common::ifcr::OFFSET,
           4 * Channel + 1>()) = 1;
     }
@@ -200,7 +200,7 @@ namespace dma {
       };
 
       // TODO DMA, replace the hard-coded numbers
-      *(volatile u32*) (bitband::peripheral<
+      *(u32 volatile*) (bitband::peripheral<
           D + C + dma::common::ifcr::OFFSET,
           4 * Channel + 2>()) = 1;
     }
@@ -216,7 +216,7 @@ namespace dma {
       };
 
       // TODO DMA, replace the hard-coded numbers
-      *(volatile u32*) (bitband::peripheral<
+      *(u32 volatile*) (bitband::peripheral<
           D + C + dma::common::ifcr::OFFSET,
           4 * Channel + 3>()) = 1;
     }
@@ -270,7 +270,7 @@ namespace dma {
     template<dma::common::Address D, Address S>
     void Functions<D, S>::enablePeripheral()
     {
-      *(volatile u32*) (bitband::peripheral<
+      *(u32 volatile*) (bitband::peripheral<
           D + S + cr::OFFSET,
           cr::en::POSITION
       >()) = 1;
@@ -282,7 +282,7 @@ namespace dma {
     template<dma::common::Address D, Address S>
     void Functions<D, S>::disablePeripheral()
     {
-      *(volatile u32*) (bitband::peripheral<
+      *(u32 volatile*) (bitband::peripheral<
           D + S + cr::OFFSET,
           cr::en::POSITION
       >()) = 0;
@@ -295,7 +295,7 @@ namespace dma {
     bool Functions<D, S>::isEnabled()
     {
       // FIXME DMA *(*bool) cast generates Hard Fault exception.
-      return *(volatile u32*) (bitband::peripheral<
+      return *(u32 volatile*) (bitband::peripheral<
           D + S + cr::OFFSET,
           cr::en::POSITION
       >());
@@ -314,7 +314,7 @@ namespace dma {
      * @brief Specifies the target peripheral memory address.
      */
     template<dma::common::Address D, Address S>
-    void Functions<D, S>::setPeripheralAddress(volatile void* address)
+    void Functions<D, S>::setPeripheralAddress(void volatile* const address)
     {
       reinterpret_cast<Registers*>(D + S)->PAR = u32(address);
     }
@@ -323,7 +323,7 @@ namespace dma {
      * @brief Specifies the target peripheral memory address.
      */
     template<dma::common::Address D, Address S>
-    void Functions<D, S>::setPeripheralAddress(void* address)
+    void Functions<D, S>::setPeripheralAddress(void* const address)
     {
       reinterpret_cast<Registers*>(D + S)->PAR = u32(address);
     }
@@ -332,7 +332,7 @@ namespace dma {
      * @brief Specifies the target memory address.
      */
     template<dma::common::Address D, Address S>
-    void Functions<D, S>::setMemory0Address(void* address)
+    void Functions<D, S>::setMemory0Address(void* const address)
     {
       reinterpret_cast<Registers*>(D + S)->M0AR = u32(address);
     }
@@ -341,7 +341,7 @@ namespace dma {
      * @brief Specifies the alternate target memory address.
      */
     template<dma::common::Address D, Address S>
-    void Functions<D, S>::setMemory1Address(void* address)
+    void Functions<D, S>::setMemory1Address(void* const address)
     {
       reinterpret_cast<Registers*>(D + S)->M1AR = u32(address);
     }
@@ -356,7 +356,7 @@ namespace dma {
         Stream = (S - 0x10) / 0x18
       };
 
-      *(volatile u32*) (bitband::peripheral<
+      *(u32 volatile*) (bitband::peripheral<
           (Stream > 3 ?
                         D + dma::common::hifcr::OFFSET :
                         D + dma::common::lifcr::OFFSET),
@@ -382,7 +382,7 @@ namespace dma {
         Stream = (S - 0x10) / 0x18
       };
 
-      return *(volatile u32*) (bitband::peripheral<
+      return *(u32 volatile*) (bitband::peripheral<
           (Stream > 3 ?
                         D + dma::common::hisr::OFFSET :
                         D + dma::common::lisr::OFFSET),
@@ -406,7 +406,7 @@ namespace dma {
         Stream = (S - 0x10) / 0x18
       };
 
-      *(volatile u32*) (bitband::peripheral<
+      *(u32 volatile*) (bitband::peripheral<
           (Stream > 3 ?
                         D + dma::common::hifcr::OFFSET :
                         D + dma::common::lifcr::OFFSET),
@@ -432,7 +432,7 @@ namespace dma {
         Stream = (S - 0x10) / 0x18
       };
 
-      return *(volatile u32*) (bitband::peripheral<
+      return *(u32 volatile*) (bitband::peripheral<
           (Stream > 3 ?
                         D + dma::common::hisr::OFFSET :
                         D + dma::common::lisr::OFFSET),
@@ -456,7 +456,7 @@ namespace dma {
         Stream = (S - 0x10) / 0x18
       };
 
-      *(volatile u32*) (bitband::peripheral<
+      *(u32 volatile*) (bitband::peripheral<
           (Stream > 3 ?
                         D + dma::common::hifcr::OFFSET :
                         D + dma::common::lifcr::OFFSET),
@@ -482,7 +482,7 @@ namespace dma {
         Stream = (S - 0x10) / 0x18
       };
 
-      return *(volatile u32*) (bitband::peripheral<
+      return *(u32 volatile*) (bitband::peripheral<
           (Stream > 3 ?
                         D + dma::common::hisr::OFFSET :
                         D + dma::common::lisr::OFFSET),
@@ -506,7 +506,7 @@ namespace dma {
         Stream = (S - 0x10) / 0x18
       };
 
-      *(volatile u32*) (bitband::peripheral<
+      *(u32 volatile*) (bitband::peripheral<
           (Stream > 3 ?
                         D + dma::common::hifcr::OFFSET :
                         D + dma::common::lifcr::OFFSET),
@@ -532,7 +532,7 @@ namespace dma {
         Stream = (S - 0x10) / 0x18
       };
 
-      return *(volatile u32*) (bitband::peripheral<
+      return *(u32 volatile*) (bitband::peripheral<
           (Stream > 3 ?
                         D + dma::common::hisr::OFFSET :
                         D + dma::common::lisr::OFFSET),
@@ -556,7 +556,7 @@ namespace dma {
         Stream = (S - 0x10) / 0x18
       };
 
-      *(volatile u32*) (bitband::peripheral<
+      *(u32 volatile*) (bitband::peripheral<
           (Stream > 3 ?
                         D + dma::common::hifcr::OFFSET :
                         D + dma::common::lifcr::OFFSET),
@@ -582,7 +582,7 @@ namespace dma {
         Stream = (S - 0x10) / 0x18
       };
 
-      return *(volatile u32*) (bitband::peripheral<
+      return *(u32 volatile*) (bitband::peripheral<
           (Stream > 3 ?
                         D + dma::common::hisr::OFFSET :
                         D + dma::common::lisr::OFFSET),
@@ -604,7 +604,7 @@ namespace dma {
     {
       // FIXME DMA *(*bool) cast generates Hard Fault exception.
 
-      return *(volatile u32 *) (bitband::peripheral<
+      return *(u32 volatile*) (bitband::peripheral<
           D + S + cr::OFFSET,
           cr::ct::POSITION
       >());

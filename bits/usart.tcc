@@ -111,7 +111,7 @@ namespace usart {
   template<Address A>
   bool Asynchronous<A>::canSendDataYet()
   {
-    return *(volatile bool*) (bitband::peripheral<
+    return *(bool volatile*) (bitband::peripheral<
         A + sr::OFFSET,
         sr::txe::POSITION>());
   }
@@ -122,7 +122,7 @@ namespace usart {
   template<Address A>
   bool Asynchronous<A>::isThereDataAvailable()
   {
-    return *(volatile bool*) (bitband::peripheral<
+    return *(bool volatile*) (bitband::peripheral<
         A + sr::OFFSET,
         sr::rxne::POSITION>());
   }

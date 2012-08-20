@@ -71,7 +71,7 @@ namespace adc {
   template<Address A>
   void Functions<A>::enablePeripheral()
   {
-    *(volatile u32*) (bitband::peripheral<
+    *(u32 volatile*) (bitband::peripheral<
         A + cr1::OFFSET,
         cr2::adon::POSITION
     >()) = 1;
@@ -83,7 +83,7 @@ namespace adc {
   template<Address A>
   void Functions<A>::disablePeripheral()
   {
-    *(volatile u32*) (bitband::peripheral<
+    *(u32 volatile*) (bitband::peripheral<
         A + cr1::OFFSET,
         cr2::adon::POSITION
     >()) = 0;
@@ -95,7 +95,7 @@ namespace adc {
   template<Address A>
   void Functions<A>::startRegularConversions()
   {
-    *(volatile u32*) (bitband::peripheral<
+    *(u32 volatile*) (bitband::peripheral<
         A + cr2::OFFSET,
         cr2::swstart::POSITION
     >()) = 1;
@@ -107,7 +107,7 @@ namespace adc {
   template<Address A>
   void Functions<A>::startInjectedConversions()
   {
-    *(volatile u32*) (bitband::peripheral<
+    *(u32 volatile*) (bitband::peripheral<
         A + cr2::OFFSET,
         cr2::jswstart::POSITION
     >()) = 1;
@@ -119,7 +119,7 @@ namespace adc {
   template<Address A>
   void Functions<A>::enableContinuousConversion()
   {
-    *(volatile u32*) (bitband::peripheral<
+    *(u32 volatile*) (bitband::peripheral<
         A + cr2::OFFSET,
         cr2::cont::POSITION
     >()) = 1;
@@ -131,7 +131,7 @@ namespace adc {
   template<Address A>
   void Functions<A>::disableContinuousConversion()
   {
-    *(volatile u32*) (bitband::peripheral<
+    *(u32 volatile*) (bitband::peripheral<
         A + cr2::OFFSET,
         cr2::cont::POSITION
     >()) = 0;
@@ -204,7 +204,7 @@ namespace adc {
   template<Address A>
   bool Functions<A>::hasRegularConversionEnded()
   {
-    return *(volatile bool*) (bitband::peripheral<
+    return *(bool volatile*) (bitband::peripheral<
         A + sr::OFFSET,
         sr::eoc::POSITION
     >());
@@ -216,7 +216,7 @@ namespace adc {
   template<Address A>
   bool Functions<A>::hasInjectedConversionEnded()
   {
-    return *(volatile bool*) (bitband::peripheral<
+    return *(bool volatile*) (bitband::peripheral<
         A + sr::OFFSET,
         sr::jeoc::POSITION
     >());

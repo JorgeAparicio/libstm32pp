@@ -157,7 +157,7 @@ namespace tim {
   template<Address T>
   void Functions<T>::startCounter()
   {
-    *(volatile u32*) (bitband::peripheral<
+    *(u32 volatile*) (bitband::peripheral<
         T + cr1::OFFSET,
         cr1::cen::POSITION
     >()) = 1;
@@ -169,7 +169,7 @@ namespace tim {
   template<Address T>
   void Functions<T>::stopCounter()
   {
-    *(volatile u32*) (bitband::peripheral<
+    *(u32 volatile*) (bitband::peripheral<
         T + cr1::OFFSET,
         cr1::cen::POSITION
     >()) = 0;
@@ -270,7 +270,7 @@ namespace tim {
   template<Address T>
   void Functions<T>::generateUpdate()
   {
-    *(volatile u32*) (bitband::peripheral<
+    *(u32 volatile*) (bitband::peripheral<
         T + egr::OFFSET,
         egr::ug::POSITION
     >()) = 1;
@@ -282,7 +282,7 @@ namespace tim {
   template<Address T>
   void Functions<T>::enableUpdateInterrupt()
   {
-    *(volatile u32*) (bitband::peripheral<
+    *(u32 volatile*) (bitband::peripheral<
         T + dier::OFFSET,
         dier::uie::POSITION
     >()) = 1;
@@ -294,7 +294,7 @@ namespace tim {
   template<Address T>
   void Functions<T>::disableUpdateInterrupt()
   {
-    *(volatile u32*) (bitband::peripheral<
+    *(u32 volatile*) (bitband::peripheral<
         T + dier::OFFSET,
         dier::uie::POSITION
     >()) = 0;
@@ -306,7 +306,7 @@ namespace tim {
   template<Address T>
   void Functions<T>::clearUpdateFlag()
   {
-    *(volatile u32*) (bitband::peripheral<
+    *(u32 volatile*) (bitband::peripheral<
         T + sr::OFFSET,
         sr::uif::POSITION
     >()) = 0;
@@ -318,7 +318,7 @@ namespace tim {
   template<Address T>
   void Functions<T>::enableUpdateDma()
   {
-    *(volatile u32*) (bitband::peripheral<
+    *(u32 volatile*) (bitband::peripheral<
         T + dier::OFFSET,
         dier::ude::POSITION
     >()) = 1;
@@ -330,7 +330,7 @@ namespace tim {
   template<Address T>
   void Functions<T>::disableUpdateDma()
   {
-    *(volatile u32*) (bitband::peripheral<
+    *(u32 volatile*) (bitband::peripheral<
         T + dier::OFFSET,
         dier::ude::POSITION
     >()) = 0;
@@ -342,7 +342,7 @@ namespace tim {
   template<Address T>
   bool Functions<T>::hasUpdateEventOccurred()
   {
-    return *(volatile bool*) (bitband::peripheral<
+    return *(bool volatile*) (bitband::peripheral<
         T + sr::OFFSET,
         sr::uif::POSITION
     >());
