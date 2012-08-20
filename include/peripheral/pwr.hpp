@@ -28,8 +28,8 @@
 #pragma once
 
 #include "../device_select.hpp"
-#include "../defs.hpp"
 
+#include "../defs.hpp"
 #include "../../memorymap/pwr.hpp"
 
 // Low-level access to the registers

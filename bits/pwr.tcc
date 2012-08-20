@@ -38,16 +38,16 @@ namespace pwr {
   void Functions::enableBackupDomainWriteProtection()
   {
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::cr::OFFSET,
-        registers::cr::bits::dbp::POSITION
+        ADDRESS + cr::OFFSET,
+        cr::dbp::POSITION
     >()) = 1;
   }
 
   void Functions::disableBackupDomainWriteProtection()
   {
     *(volatile u32*) (bitband::peripheral<
-        ADDRESS + registers::cr::OFFSET,
-        registers::cr::bits::dbp::POSITION
+        ADDRESS + cr::OFFSET,
+        cr::dbp::POSITION
     >()) = 0;
   }
 }  // namespace pwr
