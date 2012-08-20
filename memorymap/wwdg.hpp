@@ -24,6 +24,10 @@
 #include "common.hpp"
 
 namespace wwdg {
+  enum {
+    ADDRESS = alias::APB1 + 0x2C00
+  };
+
   struct Registers {
       __RW
       u32 CR;  // 0x00: Control
@@ -33,11 +37,5 @@ namespace wwdg {
       u32 SR;  // 0x08: Status
   };
 
-  enum {
-    ADDRESS = alias::APB1 + 0x2C00
-  };
-
-  namespace registers {
-  // TODO WWDG register bits
-  }// namespace registers
-}  // namespace wwdg
+// TODO WWDG register bits
+}// namespace wwdg
