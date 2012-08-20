@@ -29,63 +29,50 @@
 #include "peripheral/rcc.hpp"
 #include "peripheral/adc.hpp"
 
-// TODO Test ADC demo on STM32F1XX
+// TODO Test ADC demo
 
 int main()
 {
-  u32 debug = 0;
+  volatile u32 debug = 0;
 
+  GPIOA::enableClock();
 #ifdef STM32F1XX
-  RCC::enableClocks<
-      rcc::apb2enr::IOPA
-  >();
-
-  PA0::setMode<
-      gpio::registers::cr::states::ANALOG_INPUT
-  >();
-
+  PA0::setMode(gpio::cr::ANALOG_INPUT);
 #else
-  RCC::enableClocks<
-  rcc::ahb1enr::GPIOA
-  >();
-
-  PA0::setMode<
-  gpio::registers::moder::states::ANALOG
-  >();
+  PA0::setMode(gpio::moder::ANALOG);
 #endif
 
-  RCC::enableClocks<
-      rcc::apb2enr::ADC1
-  >();
+  PA0::setPullMode(gpio::pupdr::PULL_UP);
 
-  ADC1::configure<
-      adc::registers::cr1::bits::awdch::states::SET_ANALOG_WATCHDOG_ON_CHANNEL18,
-      adc::registers::cr1::bits::eocie::states::END_OF_CONVERSION_INTERRUPT_DISABLED,
-      adc::registers::cr1::bits::awdie::states::ANALOG_WATCHDOG_INTERRUPT_DISABLED,
-      adc::registers::cr1::bits::jeocie::states::END_OF_ALL_INJECTED_CONVERSIONS_INTERRUPT_DISABLED,
-      adc::registers::cr1::bits::scan::states::SCAN_MODE_DISABLED,
-      adc::registers::cr1::bits::awdsgl::states::ANALOG_WATCHDOG_ENABLED_ON_A_SINGLE_CHANNEL,
-      adc::registers::cr1::bits::jauto::states::AUTOMATIC_INJECTED_CONVERSION_DISABLED,
-      adc::registers::cr1::bits::discen::states::DISCONTINUOUS_MODE_ON_REGULAR_CHANNELS_DISABLED,
-      adc::registers::cr1::bits::jdiscen::states::DISCONTINUOUS_MODE_ON_INJECTED_CHANNELS_DISABLED,
-      adc::registers::cr1::bits::discnum::states::_1_CHANNEL_FOR_DISCONTINUOUS_MODE,
-      adc::registers::cr1::bits::jawden::states::ANALOG_WATCHDOG_DISABLED_ON_INJECTED_CHANNELS,
-      adc::registers::cr1::bits::awden::states::ANALOG_WATCHDOG_DISABLED_ON_REGULAR_CHANNELS,
-      adc::registers::cr1::bits::res::states::_12_BITS_RESOLUTION,
-      adc::registers::cr1::bits::ovrie::states::OVERRUN_INTERRUPT_DISABLED,
-      adc::registers::cr2::bits::adon::states::ADC_ENABLED,
-      adc::registers::cr2::bits::cont::states::SINGLE_CONVERSION_MODE,
-      adc::registers::cr2::bits::dma::states::DMA_MODE_DISABLED,
-      adc::registers::cr2::bits::dds::states::NO_NEW_DMA_REQUEST_IS_ISSUED_AFTER_THE_LAST_TRANSFER,
-      adc::registers::cr2::bits::eocs::states::EOC_BIT_IS_SET_AFTER_EACH_REGULAR_CONVERSION,
-      adc::registers::cr2::bits::align::states::LEFT_ALIGNED_DATA,
-      adc::registers::cr2::bits::jextsel::states::INJECTED_GROUP_TRIGGERED_BY_EXTI15,
-      adc::registers::cr2::bits::jexten::states::INJECTED_TRIGGER_DISABLED,
-      adc::registers::cr2::bits::jswstart::states::INJECTED_CHANNELS_ON_RESET_STATE,
-      adc::registers::cr2::bits::extsel::states::REGULAR_GROUP_TRIGGERED_BY_EXTI11,
-      adc::registers::cr2::bits::exten::states::REGULAR_TRIGGER_DISABLED,
-      adc::registers::cr2::bits::swstart::states::REGULAR_CHANNELS_ON_RESET_STATE
-  >();
+  ADC1::enableClock();
+
+  ADC1::configure(
+      adc::cr1::awdch::SET_ANALOG_WATCHDOG_ON_CHANNEL18,
+      adc::cr1::eocie::END_OF_CONVERSION_INTERRUPT_DISABLED,
+      adc::cr1::awdie::ANALOG_WATCHDOG_INTERRUPT_DISABLED,
+      adc::cr1::jeocie::END_OF_ALL_INJECTED_CONVERSIONS_INTERRUPT_DISABLED,
+      adc::cr1::scan::SCAN_MODE_DISABLED,
+      adc::cr1::awdsgl::ANALOG_WATCHDOG_ENABLED_ON_A_SINGLE_CHANNEL,
+      adc::cr1::jauto::AUTOMATIC_INJECTED_CONVERSION_DISABLED,
+      adc::cr1::discen::DISCONTINUOUS_MODE_ON_REGULAR_CHANNELS_DISABLED,
+      adc::cr1::jdiscen::DISCONTINUOUS_MODE_ON_INJECTED_CHANNELS_DISABLED,
+      adc::cr1::discnum::_1_CHANNEL_FOR_DISCONTINUOUS_MODE,
+      adc::cr1::jawden::ANALOG_WATCHDOG_DISABLED_ON_INJECTED_CHANNELS,
+      adc::cr1::awden::ANALOG_WATCHDOG_DISABLED_ON_REGULAR_CHANNELS,
+      adc::cr1::res::_12_BITS_RESOLUTION,
+      adc::cr1::ovrie::OVERRUN_INTERRUPT_DISABLED,
+      adc::cr2::adon::ADC_ENABLED,
+      adc::cr2::cont::SINGLE_CONVERSION_MODE,
+      adc::cr2::dma::DMA_MODE_DISABLED,
+      adc::cr2::dds::NO_NEW_DMA_REQUEST_IS_ISSUED_AFTER_THE_LAST_TRANSFER,
+      adc::cr2::eocs::EOC_BIT_IS_SET_AFTER_EACH_REGULAR_CONVERSION,
+      adc::cr2::align::LEFT_ALIGNED_DATA,
+      adc::cr2::jextsel::INJECTED_GROUP_TRIGGERED_BY_EXTI15,
+      adc::cr2::jexten::INJECTED_TRIGGER_DISABLED,
+      adc::cr2::jswstart::INJECTED_CHANNELS_ON_RESET_STATE,
+      adc::cr2::extsel::REGULAR_GROUP_TRIGGERED_BY_EXTI11,
+      adc::cr2::exten::REGULAR_TRIGGER_DISABLED,
+      adc::cr2::swstart::REGULAR_CHANNELS_ON_RESET_STATE);
 
   ADC1::setRegularSequenceOrder<1, 0>();
 
@@ -93,7 +80,7 @@ int main()
 
   ADC1::setConversionTime<
       0,
-      adc::registers::smp::states::SAMPLING_TIME_480_CYCLES
+      adc::smp::SAMPLING_TIME_480_CYCLES
   >();
 
   while (true) {
@@ -105,3 +92,4 @@ int main()
     debug = ADC1::getConversionResult();
   }
 }
+
