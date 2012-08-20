@@ -39,7 +39,7 @@ namespace l3gd20 {
       i2c::Address I,
       Address A
   >
-  class Gyroscope {
+  class Functions {
     public:
 
       template<
@@ -63,7 +63,7 @@ namespace l3gd20 {
       static inline u8 readZHigh();
 
     private:
-      Gyroscope();
+      Functions();
   };
 }  // namespace l3gd20
 

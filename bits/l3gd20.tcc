@@ -37,7 +37,7 @@ namespace l3gd20 {
       l3gd20::ctrl_reg4::ble::States BLE,
       l3gd20::ctrl_reg4::bdu::States BDU
   >
-  void Gyroscope<I, A>::configure()
+  void Functions<I, A>::configure()
   {
     i2c::Standard<I>::writeSlaveRegister(
         A,
@@ -53,7 +53,7 @@ namespace l3gd20 {
    * @brief Reads the low byte of the X axis magnetic field.
    */
   template<i2c::Address I, Address A>
-  u8 Gyroscope<I, A>::readXLow()
+  u8 Functions<I, A>::readXLow()
   {
     return i2c::Standard<I>::readSlaveRegister(
         A,
@@ -64,7 +64,7 @@ namespace l3gd20 {
    * @brief Reads the high byte of the X axis magnetic field.
    */
   template<i2c::Address I, Address A>
-  u8 Gyroscope<I, A>::readXHigh()
+  u8 Functions<I, A>::readXHigh()
   {
     return i2c::Standard<I>::readSlaveRegister(
         A,
@@ -75,7 +75,7 @@ namespace l3gd20 {
    * @brief Reads the low byte of the Y axis magnetic field.
    */
   template<i2c::Address I, Address A>
-  u8 Gyroscope<I, A>::readYLow()
+  u8 Functions<I, A>::readYLow()
   {
     return i2c::Standard<I>::readSlaveRegister(
         A,
@@ -86,7 +86,7 @@ namespace l3gd20 {
    * @brief Reads the high byte of the Y axis magnetic field.
    */
   template<i2c::Address I, Address A>
-  u8 Gyroscope<I, A>::readYHigh()
+  u8 Functions<I, A>::readYHigh()
   {
     return i2c::Standard<I>::readSlaveRegister(
         A,
@@ -97,7 +97,7 @@ namespace l3gd20 {
    * @brief Reads the low byte of the Z axis magnetic field.
    */
   template<i2c::Address I, Address A>
-  u8 Gyroscope<I, A>::readZLow()
+  u8 Functions<I, A>::readZLow()
   {
     return i2c::Standard<I>::readSlaveRegister(
         A,
@@ -108,7 +108,7 @@ namespace l3gd20 {
    * @brief Reads the high byte of the Z axis magnetic field.
    */
   template<i2c::Address I, Address A>
-  u8 Gyroscope<I, A>::readZHigh()
+  u8 Functions<I, A>::readZHigh()
   {
     return i2c::Standard<I>::readSlaveRegister(
         A,
