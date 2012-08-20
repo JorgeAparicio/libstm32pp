@@ -24,6 +24,7 @@
 // DO NOT INCLUDE THIS FILE ANYWHERE. THIS DEMO IS JUST A REFERENCE TO BE USED
 // IN YOUR MAIN SOURCE FILE.
 
+
 #include "interrupt.hpp"
 #include "peripheral/gpio.hpp"
 #include "peripheral/rcc.hpp"
@@ -38,61 +39,46 @@ const char msg[] = "Hello World!\n\r";
 
 int main()
 {
-  RCC::enableClocks<
-      rcc::ahb1enr::GPIOA
-  >();
+  GPIOA::enableClock();
 
-  PA9::setAlternateFunction<
-      gpio::registers::afr::states::USART1_3
-  >();
+  PA9::setAlternateFunction(gpio::afr::USART1_3);
 
-  PA9::setMode<
-      gpio::registers::moder::states::ALTERNATE
-  >();
+  PA9::setMode(gpio::moder::ALTERNATE);
 
-  PA10::setAlternateFunction<
-      gpio::registers::afr::states::USART1_3
-  >();
+  PA10::setAlternateFunction(gpio::afr::USART1_3);
 
-  PA10::setMode<
-      gpio::registers::moder::states::ALTERNATE
-  >();
+  PA10::setMode(gpio::moder::ALTERNATE);
 
-  RCC::enableClocks<
-      rcc::apb2enr::USART1
-  >();
+  USART1::enableClock();
 
-  RCC::enableClocks<
-      rcc::apb2enr::USART1
-  >();
+  USART1::configure(
+      usart::cr1::rwu::RECEIVER_IN_ACTIVE_MODE,
+      usart::cr1::re::RECEIVER_ENABLED,
+      usart::cr1::te::TRANSMITTER_ENABLED,
+      usart::cr1::idleie::IDLE_INTERRUPT_DISABLED,
+      usart::cr1::rxneie::RXNE_ORE_INTERRUPT_DISABLED,
+      usart::cr1::tcie::TC_INTERRUPT_DISABLED,
+      usart::cr1::txeie::TXEIE_INTERRUPT_DISABLED,
+      usart::cr1::peie::PEIE_INTERRUPT_DISABLED,
+      usart::cr1::ps::EVEN_PARITY,
+      usart::cr1::pce::PARITY_CONTROL_DISABLED,
+      usart::cr1::wake::WAKE_ON_IDLE_LINE,
+      usart::cr1::m::START_8_DATA_N_STOP,
+      usart::cr1::ue::USART_ENABLED,
+      usart::cr1::over8::OVERSAMPLING_BY_16,
+      usart::cr2::stop::_1_STOP_BIT,
+      usart::cr3::eie::ERROR_INTERRUPT_DISABLED,
+      usart::cr3::hdsel::FULL_DUPLEX,
+      usart::cr3::dmar::RECEIVER_DMA_DISABLED,
+      usart::cr3::dmat::TRANSMITTER_DMA_DISABLED,
+      usart::cr3::rtse::RTS_HARDWARE_FLOW_DISABLED,
+      usart::cr3::ctse::CTS_HARDWARE_FLOW_DISABLED,
+      usart::cr3::ctsie::CTS_INTERRUPT_DISABLED,
+      usart::cr3::onebit::ONE_SAMPLE_BIT_METHOD);
 
-  USART1::configure<
-      usart::registers::cr1::bits::rwu::states::RECEIVER_IN_ACTIVE_MODE,
-      usart::registers::cr1::bits::re::states::RECEIVER_ENABLED,
-      usart::registers::cr1::bits::te::states::TRANSMITTER_ENABLED,
-      usart::registers::cr1::bits::idleie::states::IDLE_INTERRUPT_DISABLED,
-      usart::registers::cr1::bits::rxneie::states::RXNE_ORE_INTERRUPT_DISABLED,
-      usart::registers::cr1::bits::tcie::states::TC_INTERRUPT_DISABLED,
-      usart::registers::cr1::bits::txeie::states::TXEIE_INTERRUPT_DISABLED,
-      usart::registers::cr1::bits::peie::states::PEIE_INTERRUPT_DISABLED,
-      usart::registers::cr1::bits::ps::states::EVEN_PARITY,
-      usart::registers::cr1::bits::pce::states::PARITY_CONTROL_DISABLED,
-      usart::registers::cr1::bits::wake::states::WAKE_ON_ADDRESS_MARK,
-      usart::registers::cr1::bits::m::states::START_8_DATA_N_STOP,
-      usart::registers::cr1::bits::ue::states::USART_ENABLED,
-      usart::registers::cr1::bits::over8::states::OVERSAMPLING_BY_16,
-      usart::registers::cr2::bits::stop::states::_1_STOP_BIT,
-      usart::registers::cr3::bits::eie::states::ERROR_INTERRUPT_DISABLED,
-      usart::registers::cr3::bits::hdsel::states::FULL_DUPLEX,
-      usart::registers::cr3::bits::dmar::states::RECEIVER_DMA_DISABLED,
-      usart::registers::cr3::bits::dmat::states::TRANSMITTER_DMA_DISABLED,
-      usart::registers::cr3::bits::rtse::states::RTS_HARDWARE_FLOW_DISABLED,
-      usart::registers::cr3::bits::ctse::states::CTS_HARDWARE_FLOW_DISABLED,
-      usart::registers::cr3::bits::ctsie::states::CTS_INTERRUPT_DISABLED,
-      usart::registers::cr3::bits::onebit::states::ONE_SAMPLE_BIT_METHOD
+  USART1::setBaudRate<
+      9600 /* bps */
   >();
-
-  USART1::setBaudRate(1667);  // 9600 bps @ 16MHZ APB2
 
   for (u8 i = 0; i < sizeof(msg); i++) {
     while (!USART1::canSendDataYet()) {
