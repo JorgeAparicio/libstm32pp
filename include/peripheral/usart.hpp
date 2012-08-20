@@ -35,18 +35,18 @@
 #include "../../memorymap/usart.hpp"
 
 // Low-level access to the registers
-#define USART1_REGS reinterpret_cast<usart::Registers*>(usart::address::USART1)
-#define USART2_REGS reinterpret_cast<usart::Registers*>(usart::address::USART2)
-#define USART3_REGS reinterpret_cast<usart::Registers*>(usart::address::USART3)
-#define UART4_REGS  reinterpret_cast<usart::Registers*>(usart::address::UART4)
-#define UART5_REGS  reinterpret_cast<usart::Registers*>(usart::address::UART5)
+#define USART1_REGS reinterpret_cast<usart::Registers*>(usart::USART1)
+#define USART2_REGS reinterpret_cast<usart::Registers*>(usart::USART2)
+#define USART3_REGS reinterpret_cast<usart::Registers*>(usart::USART3)
+#define UART4_REGS  reinterpret_cast<usart::Registers*>(usart::UART4)
+#define UART5_REGS  reinterpret_cast<usart::Registers*>(usart::UART5)
 #ifndef STM32F1XX
-#define USART6_REGS reinterpret_cast<usart::Registers*>(usart::address::USART6)
+#define USART6_REGS reinterpret_cast<usart::Registers*>(usart::USART6)
 #endif
 
 // High-level functions
 namespace usart {
-  template<address::E U>
+  template<Address U>
   class Asynchronous {
     public:
       enum {
@@ -59,47 +59,45 @@ namespace usart {
       static inline void enableClock();
       static inline void disableClock();
       static inline void sendData(u8 const data);
-      static inline u8 getData(void);
-      static inline bool canSendDataYet(void);
-      static inline bool isThereDataAvailable(void);
+      static inline u8 getData();
+      static inline bool canSendDataYet();
+      static inline bool isThereDataAvailable();
       template<u32 BAUD_RATE>
       static inline void setBaudRate();
 
       /**
        * @brief Configures the USART for asynchronous operation.
        */
-      template<
-          usart::registers::cr1::bits::rwu::states::E,
-          usart::registers::cr1::bits::re::states::E,
-          usart::registers::cr1::bits::te::states::E,
-          usart::registers::cr1::bits::idleie::states::E,
-          usart::registers::cr1::bits::rxneie::states::E,
-          usart::registers::cr1::bits::tcie::states::E,
-          usart::registers::cr1::bits::txeie::states::E,
-          usart::registers::cr1::bits::peie::states::E,
-          usart::registers::cr1::bits::ps::states::E,
-          usart::registers::cr1::bits::pce::states::E,
-          usart::registers::cr1::bits::wake::states::E,
-          usart::registers::cr1::bits::m::states::E,
-          usart::registers::cr1::bits::ue::states::E,
-          usart::registers::cr1::bits::over8::states::E,
-          usart::registers::cr2::bits::stop::states::E,
-          usart::registers::cr3::bits::eie::states::E,
-          usart::registers::cr3::bits::hdsel::states::E,
-          usart::registers::cr3::bits::dmar::states::E,
-          usart::registers::cr3::bits::dmat::states::E,
-          usart::registers::cr3::bits::rtse::states::E,
-          usart::registers::cr3::bits::ctse::states::E,
-          usart::registers::cr3::bits::ctsie::states::E,
-          usart::registers::cr3::bits::onebit::states::E
-      >
-      static inline void configure(void);
+      static inline void configure(
+          usart::cr1::rwu::States,
+          usart::cr1::re::States,
+          usart::cr1::te::States,
+          usart::cr1::idleie::States,
+          usart::cr1::rxneie::States,
+          usart::cr1::tcie::States,
+          usart::cr1::txeie::States,
+          usart::cr1::peie::States,
+          usart::cr1::ps::States,
+          usart::cr1::pce::States,
+          usart::cr1::wake::States,
+          usart::cr1::m::States,
+          usart::cr1::ue::States,
+          usart::cr1::over8::States,
+          usart::cr2::stop::States,
+          usart::cr3::eie::States,
+          usart::cr3::hdsel::States,
+          usart::cr3::dmar::States,
+          usart::cr3::dmat::States,
+          usart::cr3::rtse::States,
+          usart::cr3::ctse::States,
+          usart::cr3::ctsie::States,
+          usart::cr3::onebit::States);
 
     private:
       Asynchronous();
   };
 
-  template<address::E I>
+  template<Address I>
   class Synchronous {
     public:
       // TODO USART (synchronous) function implementation
@@ -107,7 +105,7 @@ namespace usart {
       Synchronous();
   };
 
-  template<address::E I>
+  template<Address I>
   class IRDA {
     public:
       // TODO USART (IRDA) function implementation
@@ -115,7 +113,7 @@ namespace usart {
       IRDA();
   };
 
-  template<address::E L>
+  template<Address L>
   class LIN {
     public:
       // TODO USART (LIN) function implementation
@@ -125,13 +123,13 @@ namespace usart {
 }  // namespace usart
 
 // High-level access to the peripherals
-typedef usart::Asynchronous<usart::address::USART1> USART1;
-typedef usart::Asynchronous<usart::address::USART2> USART2;
-typedef usart::Asynchronous<usart::address::USART3> USART3;
-typedef usart::Asynchronous<usart::address::UART4> UART4;
-typedef usart::Asynchronous<usart::address::UART5> UART5;
+typedef usart::Asynchronous<usart::USART1> USART1;
+typedef usart::Asynchronous<usart::USART2> USART2;
+typedef usart::Asynchronous<usart::USART3> USART3;
+typedef usart::Asynchronous<usart::UART4> UART4;
+typedef usart::Asynchronous<usart::UART5> UART5;
 #ifndef STM32F1XX
-typedef usart::Asynchronous<usart::address::USART6> USART6;
+typedef usart::Asynchronous<usart::USART6> USART6;
 #endif
 
 #include "../../bits/usart.tcc"

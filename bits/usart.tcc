@@ -29,27 +29,27 @@ namespace usart {
    * @brief Enables the USART's clock.
    * @note  Registers can't be written when the clock is disabled.
    */
-  template<address::E A>
+  template<Address A>
   void Asynchronous<A>::enableClock()
   {
     switch (A) {
-      case address::USART1:
+      case USART1:
         RCC::enableClocks<rcc::apb2enr::USART1>();
         break;
-      case address::USART2:
+      case USART2:
         RCC::enableClocks<rcc::apb1enr::USART2>();
         break;
-      case address::USART3:
+      case USART3:
         RCC::enableClocks<rcc::apb1enr::USART3>();
         break;
-      case address::UART4:
+      case UART4:
         RCC::enableClocks<rcc::apb1enr::UART4>();
         break;
-      case address::UART5:
+      case UART5:
         RCC::enableClocks<rcc::apb1enr::UART5>();
         break;
 #ifndef STM32F1XX
-      case address::USART6:
+      case USART6:
         RCC::enableClocks<rcc::apb2enr::USART6>();
         break;
 #endif // STM32F1XX
@@ -60,38 +60,37 @@ namespace usart {
    * @brief Disables the USART's clock.
    * @note  Registers can't be written when the clock is disabled.
    */
-  template<address::E A>
+  template<Address A>
   void Asynchronous<A>::disableClock()
   {
-    RCC::disableClocks<
-        A == address::USART2 ?
-            rcc::apb1enr::USART2 :
-            (A == address::USART3 ?
-                rcc::apb1enr::USART3 :
-                (A == address::UART4 ?
-                    rcc::apb1enr::UART4 :
-                    (A == address::UART5 ?
-                                           rcc::apb1enr::UART5 :
-                                           rcc::apb1enr::Bits(0))))
-    >();
-
-    RCC::disableClocks<
-        A == address::USART1 ?
-                               rcc::apb2enr::USART1 :
+    switch (A) {
+      case USART1:
+        RCC::disableClocks<rcc::apb2enr::USART1>();
+        break;
+      case USART2:
+        RCC::disableClocks<rcc::apb1enr::USART2>();
+        break;
+      case USART3:
+        RCC::disableClocks<rcc::apb1enr::USART3>();
+        break;
+      case UART4:
+        RCC::disableClocks<rcc::apb1enr::UART4>();
+        break;
+      case UART5:
+        RCC::disableClocks<rcc::apb1enr::UART5>();
+        break;
 #ifndef STM32F1XX
-                               (A == address::USART6 ?
-                                                       rcc::apb2enr::USART6 :
-                                                       rcc::apb2enr::Bits(0))
-    #else // !STM32F1XX
-    rcc::apb2enr::Bits(0)
-#endif // !STM32F1XX
-    >();
+      case USART6:
+        RCC::disableClocks<rcc::apb2enr::USART6>();
+        break;
+#endif // STM32F1XX
+    }
   }
 
   /**
    * @brief Sends data through the UART.
    */
-  template<address::E A>
+  template<Address A>
   void Asynchronous<A>::sendData(u8 const data)
   {
     reinterpret_cast<Registers*>(A)->DR = data;
@@ -100,8 +99,8 @@ namespace usart {
   /**
    * @brief Gets data from the receiver buffer.
    */
-  template<address::E A>
-  u8 Asynchronous<A>::getData(void)
+  template<Address A>
+  u8 Asynchronous<A>::getData()
   {
     return reinterpret_cast<Registers*>(A)->DR;
   }
@@ -109,30 +108,30 @@ namespace usart {
   /**
    * @brief Returns true if new data can be send.
    */
-  template<address::E A>
-  bool Asynchronous<A>::canSendDataYet(void)
+  template<Address A>
+  bool Asynchronous<A>::canSendDataYet()
   {
     return *(volatile bool*) (bitband::peripheral<
-        A + registers::sr::OFFSET,
-        registers::sr::bits::txe::POSITION>());
+        A + sr::OFFSET,
+        sr::txe::POSITION>());
   }
 
   /**
    * @brief Returns true if there is new data available.
    */
-  template<address::E A>
-  bool Asynchronous<A>::isThereDataAvailable(void)
+  template<Address A>
+  bool Asynchronous<A>::isThereDataAvailable()
   {
     return *(volatile bool*) (bitband::peripheral<
-        A + registers::sr::OFFSET,
-        registers::sr::bits::rxne::POSITION>());
+        A + sr::OFFSET,
+        sr::rxne::POSITION>());
   }
 
   /**
    * @brief Sets the baud rate.
    * @note  Only valid for OVERSAMPLING_BY_16 configuration
    */
-  template<address::E A>
+  template<Address A>
   template<u32 BAUD_RATE>
   void Asynchronous<A>::setBaudRate()
   {
@@ -150,33 +149,31 @@ namespace usart {
    * @brief Configures the USART for asynchronous operation.
    * @note  Overrides the old configuration.
    */
-  template<address::E A>
-  template<
-      usart::registers::cr1::bits::rwu::states::E RWU,
-      usart::registers::cr1::bits::re::states::E RE,
-      usart::registers::cr1::bits::te::states::E TE,
-      usart::registers::cr1::bits::idleie::states::E IDLEIE,
-      usart::registers::cr1::bits::rxneie::states::E RXNEIE,
-      usart::registers::cr1::bits::tcie::states::E TCIE,
-      usart::registers::cr1::bits::txeie::states::E TXEIE,
-      usart::registers::cr1::bits::peie::states::E PEIE,
-      usart::registers::cr1::bits::ps::states::E PS,
-      usart::registers::cr1::bits::pce::states::E PCE,
-      usart::registers::cr1::bits::wake::states::E WAKE,
-      usart::registers::cr1::bits::m::states::E M,
-      usart::registers::cr1::bits::ue::states::E UE,
-      usart::registers::cr1::bits::over8::states::E OVER8,
-      usart::registers::cr2::bits::stop::states::E STOP,
-      usart::registers::cr3::bits::eie::states::E EIE,
-      usart::registers::cr3::bits::hdsel::states::E HDSEL,
-      usart::registers::cr3::bits::dmar::states::E DMAR,
-      usart::registers::cr3::bits::dmat::states::E DMAT,
-      usart::registers::cr3::bits::rtse::states::E RSTE,
-      usart::registers::cr3::bits::ctse::states::E CTSE,
-      usart::registers::cr3::bits::ctsie::states::E CTSIE,
-      usart::registers::cr3::bits::onebit::states::E ONEBIT
-  >
-  void Asynchronous<A>::configure(void)
+  template<Address A>
+  void Asynchronous<A>::configure(
+      cr1::rwu::States RWU,
+      cr1::re::States RE,
+      cr1::te::States TE,
+      cr1::idleie::States IDLEIE,
+      cr1::rxneie::States RXNEIE,
+      cr1::tcie::States TCIE,
+      cr1::txeie::States TXEIE,
+      cr1::peie::States PEIE,
+      cr1::ps::States PS,
+      cr1::pce::States PCE,
+      cr1::wake::States WAKE,
+      cr1::m::States M,
+      cr1::ue::States UE,
+      cr1::over8::States OVER8,
+      cr2::stop::States STOP,
+      cr3::eie::States EIE,
+      cr3::hdsel::States HDSEL,
+      cr3::dmar::States DMAR,
+      cr3::dmat::States DMAT,
+      cr3::rtse::States RSTE,
+      cr3::ctse::States CTSE,
+      cr3::ctsie::States CTSIE,
+      cr3::onebit::States ONEBIT)
   {
     reinterpret_cast<Registers*>(A)->CR1 =
         RWU + RE + TE + IDLEIE + RXNEIE + TCIE + TXEIE + PEIE + PS +

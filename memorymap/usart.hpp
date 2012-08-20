@@ -24,28 +24,22 @@
 #include "common.hpp"
 
 namespace usart {
+  enum Address {
 #ifdef STM32F1XX
-  namespace address {
-    enum E {
-      USART1 = alias::APB2 + 0x3800,
-      USART2 = alias::APB1 + 0x4400,
-      USART3 = alias::APB1 + 0x4800,
-      UART4 = alias::APB1 + 0x4C00,
-      UART5 = alias::APB1 + 0x5000,
-    };
-  }  // namespace address
+    USART1 = alias::APB2 + 0x3800,
+    USART2 = alias::APB1 + 0x4400,
+    USART3 = alias::APB1 + 0x4800,
+    UART4 = alias::APB1 + 0x4C00,
+    UART5 = alias::APB1 + 0x5000,
 #else
-  namespace address {
-    enum E {
-      USART1 = alias::APB2 + 0x1000,
-      USART2 = alias::APB1 + 0x4400,
-      USART3 = alias::APB1 + 0x4800,
-      UART4 = alias::APB1 + 0x4C00,
-      UART5 = alias::APB1 + 0x5000,
-      USART6 = alias::APB2 + 0x1400,
-    };
-  }  // namespace address
+    USART1 = alias::APB2 + 0x1000,
+    USART2 = alias::APB1 + 0x4400,
+    USART3 = alias::APB1 + 0x4800,
+    UART4 = alias::APB1 + 0x4C00,
+    UART5 = alias::APB1 + 0x5000,
+    USART6 = alias::APB2 + 0x1400,
 #endif
+  };
 
   struct Registers {
       __RW
@@ -64,741 +58,549 @@ namespace usart {
       u32 GTPR;       // 0x18: Guard time and prescaler
   };
 
-  namespace registers {
-    namespace sr {
+  namespace sr {
+    enum {
+      OFFSET = 0x00
+    };
+
+    namespace pe {
       enum {
-        OFFSET = 0x00
+        POSITION = 0,
+        MASK = 1 << POSITION
       };
+      enum States {
+        NO_PARITY_ERROR_DETECTED = 0 << POSITION,
+        PARITY_ERROR_DETECTED = 1 << POSITION,
+      };
+    }  // namespace pe
 
-      namespace bits {
-        namespace pe {
-          enum {
-            POSITION = 0
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              NO_PARITY_ERROR_DETECTED = 0 << POSITION,
-              PARITY_ERROR_DETECTED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace pe
-
-        namespace fe {
-          enum {
-            POSITION = 1
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              NO_FRAMING_ERROR_DETECTED = 0 << POSITION,
-              FRAMING_ERROR_DETECTED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace fe
-
-        namespace nf {
-          enum {
-            POSITION = 2
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              NO_NOISE_DETECTED = 0 << POSITION,
-              NOISE_DETECTED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace nf
-
-        namespace ore {
-          enum {
-            POSITION = 3
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              NO_OVERRUN_ERROR_DETECTED = 0 << POSITION,
-              OVERRUN_ERROR_DETECTED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace ore
-
-        namespace idle {
-          enum {
-            POSITION = 4
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              NO_IDLE_LINE_DETECTED = 0 << POSITION,
-              IDLE_LINE_DETECTED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace idle
-
-        namespace rxne {
-          enum {
-            POSITION = 5
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              NO_DATA_RECEIVED = 0 << POSITION,
-              DATA_RECEIVED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace rxne
-
-        namespace tc {
-          enum {
-            POSITION = 6
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              TRANSMISSION_NOT_COMPLETED = 0 << POSITION,
-              TRANSMISSION_COMPLETED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace tc
-
-        namespace txe {
-          enum {
-            POSITION = 7
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              DATA_NOT_TRANSFERED_TO_THE_SHIFT_REGISTER = 0 << POSITION,
-              DATA_TRANSFERED_TO_THE_SHIFT_REGISTER = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace txe
-
-        namespace lbd {
-          enum {
-            POSITION = 8
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              LIN_BREAK_NOT_DETECTED = 0 << POSITION,
-              LIN_BREAK_DETECTED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace lbd
-
-        namespace cts {
-          enum {
-            POSITION = 9
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              NO_CHANGE_IN_NCTS_LINE = 0 << POSITION,
-              NCTS_LINE_TOGGLED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace cts
-      }  // namespace bits
-    }  // namespace sr
-
-    namespace dr {
+    namespace fe {
       enum {
-        OFFSET = 0x04
+        POSITION = 1,
+        MASK = 1 << POSITION
       };
-    }  // namespace dr
+      enum States {
+        NO_FRAMING_ERROR_DETECTED = 0 << POSITION,
+        FRAMING_ERROR_DETECTED = 1 << POSITION,
+      };
+    }  // namespace fe
 
-    namespace brr {
+    namespace nf {
       enum {
-        OFFSET = 0x08
+        POSITION = 2,
+        MASK = 1 << POSITION
       };
-    }  // namespace brr
+      enum States {
+        NO_NOISE_DETECTED = 0 << POSITION,
+        NOISE_DETECTED = 1 << POSITION,
+      };
+    }  // namespace nf
 
-    namespace cr1 {
+    namespace ore {
       enum {
-        OFFSET = 0x0C
+        POSITION = 3,
+        MASK = 1 << POSITION
       };
+      enum States {
+        NO_OVERRUN_ERROR_DETECTED = 0 << POSITION,
+        OVERRUN_ERROR_DETECTED = 1 << POSITION,
+      };
+    }  // namespace ore
 
-      namespace bits {
-        namespace sbk {
-          enum {
-            POSITION = 0
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              DONT_SEND_BREAK_CHARACTER = 0 << POSITION,
-              SEND_BREAK_CHARACTER = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace
-
-        namespace rwu {
-          enum {
-            POSITION = 1
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              RECEIVER_IN_ACTIVE_MODE = 0 << POSITION,
-              RECEIVER_IN_MUTE_MODE = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace rwu
-
-        namespace re {
-          enum {
-            POSITION = 2
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              RECEIVER_DISABLED = 0 << POSITION,
-              RECEIVER_ENABLED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace re
-
-        namespace te {
-          enum {
-            POSITION = 3
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              TRANSMITTER_DISABLED = 0 << POSITION,
-              TRANSMITTER_ENABLED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace te
-
-        namespace idleie {
-          enum {
-            POSITION = 4
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              IDLE_INTERRUPT_DISABLED = 0 << POSITION,
-              IDLE_INTERRUPT_ENABLED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace idleie
-
-        namespace rxneie {
-          enum {
-            POSITION = 5
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              RXNE_ORE_INTERRUPT_DISABLED = 0 << POSITION,
-              RXNE_ORE_INTERRUPT_ENABLED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace rxneie
-
-        namespace tcie {
-          enum {
-            POSITION = 6
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              TC_INTERRUPT_DISABLED = 0 << POSITION,
-              TC_INTERRUPT_ENABLED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace tcie
-
-        namespace txeie {
-          enum {
-            POSITION = 7
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              TXEIE_INTERRUPT_DISABLED = 0 << POSITION,
-              TXEIE_INTERRUPT_ENABLED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace txeie
-
-        namespace peie {
-          enum {
-            POSITION = 8
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              PEIE_INTERRUPT_DISABLED = 0 << POSITION,
-              PEIE_INTERRUPT_ENABLED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace peie
-
-        namespace ps {
-          enum {
-            POSITION = 9
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              EVEN_PARITY = 0 << POSITION,
-              ODD_PARITY = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace ps
-
-        namespace pce {
-          enum {
-            POSITION = 10
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              PARITY_CONTROL_DISABLED = 0 << POSITION,
-              PARITY_CONTROL_ENABLED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace pce
-
-        namespace wake {
-          enum {
-            POSITION = 11
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              WAKE_ON_IDLE_LINE = 0 << POSITION,
-              WAKE_ON_ADDRESS_MARK = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace wake
-
-        namespace m {
-          enum {
-            POSITION = 12
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              START_8_DATA_N_STOP = 0 << POSITION,
-              START_9_DATA_N_STOP = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace m
-
-        namespace ue {
-          enum {
-            POSITION = 13
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              USART_DISABLED = 0 << POSITION,
-              USART_ENABLED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace ue
-
-        namespace over8 {
-          enum {
-            POSITION = 15
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              OVERSAMPLING_BY_16 = 0 << POSITION,
-              OVERSAMPLING_BY_8 = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace over8
-      }  // namespace bits
-    }  // namespace cr1
-
-    namespace cr2 {
+    namespace idle {
       enum {
-        OFFSET = 0x10
+        POSITION = 4,
+        MASK = 1 << POSITION
       };
+      enum States {
+        NO_IDLE_LINE_DETECTED = 0 << POSITION,
+        IDLE_LINE_DETECTED = 1 << POSITION,
+      };
+    }  // namespace idle
 
-      namespace bits {
-        namespace add {
-          enum {
-            POSITION = 0
-          };
-          enum {
-            MASK = 0b111 << POSITION
-          };
-        }  // namespace bits
-
-        namespace lbdl {
-          enum {
-            POSITION = 5
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              _10_BIT_BREAK_DETECTION = 0 << POSITION,
-              _11_BIT_BREAK_DETECTION = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace lbdl
-
-        namespace lbdie {
-          enum {
-            POSITION = 6
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              LBD_INTERRUPT_DISABLED = 0 << POSITION,
-              LBD_INTERRUPT_ENABLED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace lbdie
-
-        namespace lbcl {
-          enum {
-            POSITION = 8
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              LAST_DATA_BIT_CLOCK_PULSE_NOT_OUTPUT = 0 << POSITION,
-              LAST_DATA_BIT_CLOCK_PULSE_OUTPUT = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace lbcl
-
-        namespace cpha {
-          enum {
-            POSITION = 9
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              FIRST_CLOCK_TRANSITION_IS_THE_FIRST_CAPTURE_EDGE = 0 << POSITION,
-              SECOND_CLOCK_TRANSITION_IS_THE_FIRST_CAPTURE_EDGE = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace cpha
-
-        namespace cpol {
-          enum {
-            POSITION = 10
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              IDLE_CLOCK_LOW = 0 << POSITION,
-              IDLE_CLOCK_HIGH = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace cpol
-
-        namespace clken {
-          enum {
-            POSITION = 11
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              SCLK_DISABLED = 0 << POSITION,
-              SCLK_ENABLED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace clken
-
-        namespace stop {
-          enum {
-            POSITION = 12
-          };
-          enum {
-            MASK = 0b11 << POSITION
-          };
-          namespace states {
-            enum E {
-              _1_STOP_BIT = 0 << POSITION,
-              _0_5_STOP_BIT = 1 << POSITION,
-              _2_STOP_BIT = 2 << POSITION,
-              _1_5_STOP_BIT = 3 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace stop
-
-        namespace linen {
-          enum {
-            POSITION = 14
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              LIN_MODE_DISABLED = 0 << POSITION,
-              LIN_MODE_ENABLED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace linen
-      }  // namespace bits
-    }  // namespace cr2
-
-    namespace cr3 {
+    namespace rxne {
       enum {
-        OFFSET = 0x14
+        POSITION = 5,
+        MASK = 1 << POSITION
       };
+      enum States {
+        NO_DATA_RECEIVED = 0 << POSITION,
+        DATA_RECEIVED = 1 << POSITION,
+      };
+    }  // namespace rxne
 
-      namespace bits {
-        namespace eie {
-          enum {
-            POSITION = 0
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              ERROR_INTERRUPT_DISABLED = 0 << POSITION,
-              ERROR_INTERRUPT_ENABLED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace eie
-
-        namespace iren {
-          enum {
-            POSITION = 1
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              IRDA_DISABLED = 0 << POSITION,
-              IRDA_ENABLED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace iren
-
-        namespace irlp {
-          enum {
-            POSITION = 2
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              IRDA_NORMAL_POWER = 0 << POSITION,
-              IRDA_LOW_POWER = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace irlp
-
-        namespace hdsel {
-          enum {
-            POSITION = 3
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              FULL_DUPLEX = 0 << POSITION,
-              HALF_DUPLEX = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace hdsel
-
-        namespace nack {
-          enum {
-            POSITION = 4
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              NACK_FOR_PARITY_ERROR_DISABLED = 0 << POSITION,
-              NACK_FOR_PARITY_ERROR_ENABLED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace nack
-
-        namespace scen {
-          enum {
-            POSITION = 5
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              SMART_CARD_MODE_DISABLED = 0 << POSITION,
-              SMART_CARD_MODE_ENABLED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace scen
-
-        namespace dmar {
-          enum {
-            POSITION = 6
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              RECEIVER_DMA_DISABLED = 0 << POSITION,
-              RECEIVER_DMA_ENABLED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace dmar
-
-        namespace dmat {
-          enum {
-            POSITION = 7
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              TRANSMITTER_DMA_DISABLED = 0 << POSITION,
-              TRANSMITTER_DMA_ENABLED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace dmat
-
-        namespace rtse {
-          enum {
-            POSITION = 8
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              RTS_HARDWARE_FLOW_DISABLED = 0 << POSITION,
-              RTS_HARDWARE_FLOW_ENABLED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace rtse
-
-        namespace ctse {
-          enum {
-            POSITION = 9
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              CTS_HARDWARE_FLOW_DISABLED = 0 << POSITION,
-              CTS_HARDWARE_FLOW_ENABLED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace ctse
-
-        namespace ctsie {
-          enum {
-            POSITION = 10
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              CTS_INTERRUPT_DISABLED = 0 << POSITION,
-              CTS_INTERRUPT_ENABLED = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace ctsie
-
-        namespace onebit {
-          enum {
-            POSITION = 11
-          };
-          enum {
-            MASK = 1 << POSITION
-          };
-          namespace states {
-            enum E {
-              THREE_SAMPLE_BIT_METHOD = 0 << POSITION,
-              ONE_SAMPLE_BIT_METHOD = 1 << POSITION,
-            };
-          }  // namespace states
-        }  // namespace onebit
-      }  // namespace bits
-    }  // namespace cr3
-
-    namespace gtpr {
+    namespace tc {
       enum {
-        OFFSET = 0x18
+        POSITION = 6,
+        MASK = 1 << POSITION
       };
-    }  // namespace gtpr
-  }  // namespace registers
+      enum States {
+        TRANSMISSION_NOT_COMPLETED = 0 << POSITION,
+        TRANSMISSION_COMPLETED = 1 << POSITION,
+      };
+    }  // namespace tc
+
+    namespace txe {
+      enum {
+        POSITION = 7,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        DATA_NOT_TRANSFERED_TO_THE_SHIFT_REGISTER = 0 << POSITION,
+        DATA_TRANSFERED_TO_THE_SHIFT_REGISTER = 1 << POSITION,
+      };
+    }  // namespace txe
+
+    namespace lbd {
+      enum {
+        POSITION = 8,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        LIN_BREAK_NOT_DETECTED = 0 << POSITION,
+        LIN_BREAK_DETECTED = 1 << POSITION,
+      };
+    }  // namespace lbd
+
+    namespace cts {
+      enum {
+        POSITION = 9,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        NO_CHANGE_IN_NCTS_LINE = 0 << POSITION,
+        NCTS_LINE_TOGGLED = 1 << POSITION,
+      };
+    }  // namespace cts
+  }  // namespace sr
+
+  namespace dr {
+    enum {
+      OFFSET = 0x04
+    };
+  }  // namespace dr
+
+  namespace brr {
+    enum {
+      OFFSET = 0x08
+    };
+  }  // namespace brr
+
+  namespace cr1 {
+    enum {
+      OFFSET = 0x0C
+    };
+
+    namespace sbk {
+      enum {
+        POSITION = 0,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        DONT_SEND_BREAK_CHARACTER = 0 << POSITION,
+        SEND_BREAK_CHARACTER = 1 << POSITION,
+      };
+    }  // namespace
+
+    namespace rwu {
+      enum {
+        POSITION = 1,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        RECEIVER_IN_ACTIVE_MODE = 0 << POSITION,
+        RECEIVER_IN_MUTE_MODE = 1 << POSITION,
+      };
+    }  // namespace rwu
+
+    namespace re {
+      enum {
+        POSITION = 2,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        RECEIVER_DISABLED = 0 << POSITION,
+        RECEIVER_ENABLED = 1 << POSITION,
+      };
+    }  // namespace re
+
+    namespace te {
+      enum {
+        POSITION = 3,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        TRANSMITTER_DISABLED = 0 << POSITION,
+        TRANSMITTER_ENABLED = 1 << POSITION,
+      };
+    }  // namespace te
+
+    namespace idleie {
+      enum {
+        POSITION = 4,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        IDLE_INTERRUPT_DISABLED = 0 << POSITION,
+        IDLE_INTERRUPT_ENABLED = 1 << POSITION,
+      };
+    }  // namespace idleie
+
+    namespace rxneie {
+      enum {
+        POSITION = 5,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        RXNE_ORE_INTERRUPT_DISABLED = 0 << POSITION,
+        RXNE_ORE_INTERRUPT_ENABLED = 1 << POSITION,
+      };
+    }  // namespace rxneie
+
+    namespace tcie {
+      enum {
+        POSITION = 6,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        TC_INTERRUPT_DISABLED = 0 << POSITION,
+        TC_INTERRUPT_ENABLED = 1 << POSITION,
+      };
+    }  // namespace tcie
+
+    namespace txeie {
+      enum {
+        POSITION = 7,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        TXEIE_INTERRUPT_DISABLED = 0 << POSITION,
+        TXEIE_INTERRUPT_ENABLED = 1 << POSITION,
+      };
+    }  // namespace txeie
+
+    namespace peie {
+      enum {
+        POSITION = 8,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        PEIE_INTERRUPT_DISABLED = 0 << POSITION,
+        PEIE_INTERRUPT_ENABLED = 1 << POSITION,
+      };
+    }  // namespace peie
+
+    namespace ps {
+      enum {
+        POSITION = 9,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        EVEN_PARITY = 0 << POSITION,
+        ODD_PARITY = 1 << POSITION,
+      };
+    }  // namespace ps
+
+    namespace pce {
+      enum {
+        POSITION = 10,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        PARITY_CONTROL_DISABLED = 0 << POSITION,
+        PARITY_CONTROL_ENABLED = 1 << POSITION,
+      };
+    }  // namespace pce
+
+    namespace wake {
+      enum {
+        POSITION = 11,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        WAKE_ON_IDLE_LINE = 0 << POSITION,
+        WAKE_ON_ADDRESS_MARK = 1 << POSITION,
+      };
+    }  // namespace wake
+
+    namespace m {
+      enum {
+        POSITION = 12,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        START_8_DATA_N_STOP = 0 << POSITION,
+        START_9_DATA_N_STOP = 1 << POSITION,
+      };
+    }  // namespace m
+
+    namespace ue {
+      enum {
+        POSITION = 13,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        USART_DISABLED = 0 << POSITION,
+        USART_ENABLED = 1 << POSITION,
+      };
+    }  // namespace ue
+
+    namespace over8 {
+      enum {
+        POSITION = 15,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        OVERSAMPLING_BY_16 = 0 << POSITION,
+        OVERSAMPLING_BY_8 = 1 << POSITION,
+      };
+    }  // namespace over8
+  }  // namespace cr1
+
+  namespace cr2 {
+    enum {
+      OFFSET = 0x10
+    };
+
+    namespace add {
+      enum {
+        POSITION = 0,
+        MASK = 0b111 << POSITION
+      };
+    }  // namespace add
+
+    namespace lbdl {
+      enum {
+        POSITION = 5,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        _10_BIT_BREAK_DETECTION = 0 << POSITION,
+        _11_BIT_BREAK_DETECTION = 1 << POSITION,
+      };
+    }  // namespace lbdl
+
+    namespace lbdie {
+      enum {
+        POSITION = 6,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        LBD_INTERRUPT_DISABLED = 0 << POSITION,
+        LBD_INTERRUPT_ENABLED = 1 << POSITION,
+      };
+    }  // namespace lbdie
+
+    namespace lbcl {
+      enum {
+        POSITION = 8,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        LAST_DATA_BIT_CLOCK_PULSE_NOT_OUTPUT = 0 << POSITION,
+        LAST_DATA_BIT_CLOCK_PULSE_OUTPUT = 1 << POSITION,
+      };
+    }  // namespace lbcl
+
+    namespace cpha {
+      enum {
+        POSITION = 9,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        FIRST_CLOCK_TRANSITION_IS_THE_FIRST_CAPTURE_EDGE = 0 << POSITION,
+        SECOND_CLOCK_TRANSITION_IS_THE_FIRST_CAPTURE_EDGE = 1 << POSITION,
+      };
+    }  // namespace cpha
+
+    namespace cpol {
+      enum {
+        POSITION = 10,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        IDLE_CLOCK_LOW = 0 << POSITION,
+        IDLE_CLOCK_HIGH = 1 << POSITION,
+      };
+    }  // namespace cpol
+
+    namespace clken {
+      enum {
+        POSITION = 11,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        SCLK_DISABLED = 0 << POSITION,
+        SCLK_ENABLED = 1 << POSITION,
+      };
+    }  // namespace clken
+
+    namespace stop {
+      enum {
+        POSITION = 12,
+        MASK = 0b11 << POSITION
+      };
+      enum States {
+        _1_STOP_BIT = 0 << POSITION,
+        _0_5_STOP_BIT = 1 << POSITION,
+        _2_STOP_BIT = 2 << POSITION,
+        _1_5_STOP_BIT = 3 << POSITION,
+      };
+    }  // namespace stop
+
+    namespace linen {
+      enum {
+        POSITION = 14,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        LIN_MODE_DISABLED = 0 << POSITION,
+        LIN_MODE_ENABLED = 1 << POSITION,
+      };
+    }  // namespace linen
+  }  // namespace cr2
+
+  namespace cr3 {
+    enum {
+      OFFSET = 0x14
+    };
+
+    namespace eie {
+      enum {
+        POSITION = 0,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        ERROR_INTERRUPT_DISABLED = 0 << POSITION,
+        ERROR_INTERRUPT_ENABLED = 1 << POSITION,
+      };
+    }  // namespace eie
+
+    namespace iren {
+      enum {
+        POSITION = 1,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        IRDA_DISABLED = 0 << POSITION,
+        IRDA_ENABLED = 1 << POSITION,
+      };
+    }  // namespace iren
+
+    namespace irlp {
+      enum {
+        POSITION = 2,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        IRDA_NORMAL_POWER = 0 << POSITION,
+        IRDA_LOW_POWER = 1 << POSITION,
+      };
+    }  // namespace irlp
+
+    namespace hdsel {
+      enum {
+        POSITION = 3,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        FULL_DUPLEX = 0 << POSITION,
+        HALF_DUPLEX = 1 << POSITION,
+      };
+    }  // namespace hdsel
+
+    namespace nack {
+      enum {
+        POSITION = 4,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        NACK_FOR_PARITY_ERROR_DISABLED = 0 << POSITION,
+        NACK_FOR_PARITY_ERROR_ENABLED = 1 << POSITION,
+      };
+    }  // namespace nack
+
+    namespace scen {
+      enum {
+        POSITION = 5,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        SMART_CARD_MODE_DISABLED = 0 << POSITION,
+        SMART_CARD_MODE_ENABLED = 1 << POSITION,
+      };
+    }  // namespace scen
+
+    namespace dmar {
+      enum {
+        POSITION = 6,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        RECEIVER_DMA_DISABLED = 0 << POSITION,
+        RECEIVER_DMA_ENABLED = 1 << POSITION,
+      };
+    }  // namespace dmar
+
+    namespace dmat {
+      enum {
+        POSITION = 7,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        TRANSMITTER_DMA_DISABLED = 0 << POSITION,
+        TRANSMITTER_DMA_ENABLED = 1 << POSITION,
+      };
+    }  // namespace dmat
+
+    namespace rtse {
+      enum {
+        POSITION = 8,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        RTS_HARDWARE_FLOW_DISABLED = 0 << POSITION,
+        RTS_HARDWARE_FLOW_ENABLED = 1 << POSITION,
+      };
+    }  // namespace rtse
+
+    namespace ctse {
+      enum {
+        POSITION = 9,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        CTS_HARDWARE_FLOW_DISABLED = 0 << POSITION,
+        CTS_HARDWARE_FLOW_ENABLED = 1 << POSITION,
+      };
+    }  // namespace ctse
+
+    namespace ctsie {
+      enum {
+        POSITION = 10,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        CTS_INTERRUPT_DISABLED = 0 << POSITION,
+        CTS_INTERRUPT_ENABLED = 1 << POSITION,
+      };
+    }  // namespace ctsie
+
+    namespace onebit {
+      enum {
+        POSITION = 11,
+        MASK = 1 << POSITION
+      };
+      enum States {
+        THREE_SAMPLE_BIT_METHOD = 0 << POSITION,
+        ONE_SAMPLE_BIT_METHOD = 1 << POSITION,
+      };
+    }  // namespace onebit
+  }  // namespace cr3
+
+  namespace gtpr {
+    enum {
+      OFFSET = 0x18
+    };
+  }  // namespace gtpr
 }  // namespace usart
