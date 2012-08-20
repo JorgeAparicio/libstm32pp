@@ -22,26 +22,23 @@
 #pragma once
 
 #include "bitband.hpp"
-#include "../include/peripheral/i2c.hpp"
 
 namespace i2c {
   /**
    * @brief Configures the I2C in standard mode.
    * @brief Overrides the old configuration.
    */
-  template<address::E I>
-  template<
-      i2c::registers::cr1::bits::pe::states::E PE,
-      i2c::registers::cr1::bits::enpec::states::E ENPEC,
-      i2c::registers::cr1::bits::engc::states::E ENGC,
-      i2c::registers::cr1::bits::nostretch::states::E NOSTRETCH,
-      i2c::registers::cr2::bits::iterren::states::E ITERREN,
-      i2c::registers::cr2::bits::itevten::states::E ITVEN,
-      i2c::registers::cr2::bits::itbufen::states::E ITBUFEN,
-      i2c::registers::cr2::bits::dmaen::states::E DMAEN,
-      i2c::registers::cr2::bits::last::states::E LAST
-  >
-  void Standard<I>::configure()
+  template<Address I>
+  void Standard<I>::configure(
+      cr1::pe::States PE,
+      cr1::enpec::States ENPEC,
+      cr1::engc::States ENGC,
+      cr1::nostretch::States NOSTRETCH,
+      cr2::iterren::States ITERREN,
+      cr2::itevten::States ITVEN,
+      cr2::itbufen::States ITBUFEN,
+      cr2::dmaen::States DMAEN,
+      cr2::last::States LAST)
   {
     static_assert((FREQUENCY >= 2000000) || (FREQUENCY <= 42000000),
         "I2C Frequency must be between 2 MHz and 42 MHz (inclusive)");
@@ -51,7 +48,7 @@ namespace i2c {
 
     reinterpret_cast<Registers*>(I)->CR2 =
         ITERREN + ITVEN + ITBUFEN + DMAEN + LAST +
-            ((FREQUENCY / 1000000) << registers::cr2::bits::freq::POSITION);
+            ((FREQUENCY / 1000000) << cr2::freq::POSITION);
   }
 
   /**
@@ -61,10 +58,10 @@ namespace i2c {
    * FREQ = -----------------------------------------
    *        CCR *(NORMAL:2, FAST:2 + 1, FAST: 16 + 9)
    */
-  template<address::E I>
+  template<Address I>
   template<
-      registers::ccr::bits::f_s::states::E F_S,
-      registers::ccr::bits::duty::states::E DUTY,
+      ccr::f_s::States F_S,
+      ccr::duty::States DUTY,
       u32 FREQUENCY_HZ
   >
   void Standard<I>::configureClock()
@@ -73,21 +70,21 @@ namespace i2c {
       CCR = FREQUENCY
           / (FREQUENCY_HZ
               *
-              (F_S == registers::ccr::bits::f_s::states::STANDARD_MODE ?
+              (F_S == ccr::f_s::STANDARD_MODE ?
                   2 :
                   (DUTY
-                      == registers::ccr::bits::duty::states::T_LOW_16_T_HIGH_9 ?
-                      25 :
-                      3)))
+                      == ccr::duty::T_LOW_16_T_HIGH_9 ?
+                                                        25 :
+                                                        3)))
     };
 
     static_assert(CCR < 2048,
         "This frequency can't be archived with this configuration.");
     static_assert((CCR >= 1) ||
-        (F_S == registers::ccr::bits::f_s::states::STANDARD_MODE),
+        (F_S == ccr::f_s::STANDARD_MODE),
         "This frequency can't be archived with this configuration.");
     static_assert((CCR >= 4) ||
-        (F_S == registers::ccr::bits::f_s::states::FAST_MODE),
+        (F_S == ccr::f_s::FAST_MODE),
         "This frequency can't be archived with this configuration.");
 
     reinterpret_cast<Registers*>(I)->CCR = F_S + DUTY + CCR;
@@ -97,21 +94,21 @@ namespace i2c {
    * @brief Enables the I2C's clock.
    * @note  Registers can't be written when the clock is disabled.
    */
-  template<address::E I>
+  template<Address I>
   void Standard<I>::enableClock()
   {
     switch (I) {
-      case address::I2C1:
+      case I2C1:
         RCC::enableClocks<rcc::apb1enr::I2C1>();
         break;
-      case address::I2C2:
+      case I2C2:
         RCC::enableClocks<rcc::apb1enr::I2C2>();
         break;
 #ifndef STM32F1XX
-        case address::I2C3:
+      case I2C3:
         RCC::enableClocks<rcc::apb1enr::I2C3>();
         break;
-#endif
+#endif // !STM32F1XX
     }
   }
 
@@ -119,76 +116,76 @@ namespace i2c {
    * @brief Disables the I2C's clock.
    * @note  Registers can't be written when the clock is disabled.
    */
-  template<address::E I>
+  template<Address I>
   void Standard<I>::disableClock()
   {
     switch (I) {
-      case address::I2C1:
+      case I2C1:
         RCC::disableClocks<rcc::apb1enr::I2C1>();
         break;
-      case address::I2C2:
+      case I2C2:
         RCC::disableClocks<rcc::apb1enr::I2C2>();
         break;
 #ifndef STM32F1XX
-        case address::I2C3:
+      case I2C3:
         RCC::disableClocks<rcc::apb1enr::I2C3>();
         break;
-#endif
+#endif // !STM32F1XX
     }
   }
 
   /**
    * @brief Turns on the I2C peripheral.
    */
-  template<address::E I>
+  template<Address I>
   void Standard<I>::enablePeripheral()
   {
     *(volatile u32*) (bitband::peripheral<
-        I + registers::cr1::OFFSET,
-        registers::cr1::bits::pe::POSITION
+        I + cr1::OFFSET,
+        cr1::pe::POSITION
     >()) = 1;
   }
 
   /**
    * @brief Turns off the I2C peripheral.
    */
-  template<address::E I>
+  template<Address I>
   void Standard<I>::disablePeripheral()
   {
     *(volatile u32*) (bitband::peripheral<
-        I + registers::cr1::OFFSET,
-        registers::cr1::bits::pe::POSITION
+        I + cr1::OFFSET,
+        cr1::pe::POSITION
     >()) = 0;
   }
 
   /**
    * @brief Sends Start condition.
    */
-  template<address::E I>
+  template<Address I>
   void Standard<I>::sendStart()
   {
     *(volatile u32*) (bitband::peripheral<
-        I + registers::cr1::OFFSET,
-        registers::cr1::bits::start::POSITION
+        I + cr1::OFFSET,
+        cr1::start::POSITION
     >()) = 1;
   }
 
   /**
    * @brief Sends Stop condition.
    */
-  template<address::E I>
+  template<Address I>
   void Standard<I>::sendStop()
   {
     *(volatile u32*) (bitband::peripheral<
-        I + registers::cr1::OFFSET,
-        registers::cr1::bits::stop::POSITION
+        I + cr1::OFFSET,
+        cr1::stop::POSITION
     >()) = 1;
   }
 
   /**
    * @brief Sends data.
    */
-  template<address::E I>
+  template<Address I>
   void Standard<I>::sendData(u8 const data)
   {
     reinterpret_cast<Registers*>(I)->DR = data;
@@ -197,7 +194,7 @@ namespace i2c {
   /**
    * @brief Sends data.
    */
-  template<address::E I>
+  template<Address I>
   u8 Standard<I>::getData()
   {
     return reinterpret_cast<Registers*>(I)->DR;
@@ -206,9 +203,10 @@ namespace i2c {
   /**
    * @brief Sends the slave's address.
    */
-  template<address::E I>
-  template<operation::E op>
-  void Standard<I>::sendAddress(u8 const add)
+  template<Address I>
+  void Standard<I>::sendAddress(
+      u8 const add,
+      operation::E op)
   {
     reinterpret_cast<Registers*>(I)->DR = (add << 1) + op;
   }
@@ -216,96 +214,96 @@ namespace i2c {
   /**
    * @brief Send acknowledge after byte reception.
    */
-  template<address::E I>
+  template<Address I>
   void Standard<I>::enableACK()
   {
     *(volatile u32*) (bitband::peripheral<
-        I + registers::cr1::OFFSET,
-        registers::cr1::bits::ack::POSITION
+        I + cr1::OFFSET,
+        cr1::ack::POSITION
     >()) = 1;
   }
 
   /**
    * @brief Don't send acknowledge after byte reception.
    */
-  template<address::E I>
+  template<Address I>
   void Standard<I>::disableACK()
   {
     *(volatile u32*) (bitband::peripheral<
-        I + registers::cr1::OFFSET,
-        registers::cr1::bits::ack::POSITION
+        I + cr1::OFFSET,
+        cr1::ack::POSITION
     >()) = 0;
   }
 
   /**
    * @brief returns true if a start condition has been sent.
    */
-  template<address::E I>
+  template<Address I>
   bool Standard<I>::hasSentStart()
   {
     return *(volatile bool*) bitband::peripheral<
-        I + registers::sr1::OFFSET,
-        registers::sr1::bits::sb::POSITION
+        I + sr1::OFFSET,
+        sr1::sb::POSITION
     >();
   }
 
   /**
    * @brief returns true when a stop condition has been sent.
    */
-  template<address::E I>
+  template<Address I>
   bool Standard<I>::hasSentStop()
   {
     return *(volatile bool*) bitband::peripheral<
-        I + registers::sr1::OFFSET,
-        registers::sr1::bits::stopf::POSITION
+        I + sr1::OFFSET,
+        sr1::stopf::POSITION
     >();
   }
 
   /**
    * @brief returns true when the slave address has been transmitted.
    */
-  template<address::E I>
+  template<Address I>
   bool Standard<I>::hasAddressTransmitted()
   {
     return *(volatile bool*) bitband::peripheral<
-        I + registers::sr1::OFFSET,
-        registers::sr1::bits::addr::POSITION
+        I + sr1::OFFSET,
+        sr1::addr::POSITION
     >();
   }
 
   /**
    * @brief returns true if data has been received.
    */
-  template<address::E I>
+  template<Address I>
   bool Standard<I>::hasReceivedData()
   {
     return *(volatile bool*) bitband::peripheral<
-        I + registers::sr1::OFFSET,
-        registers::sr1::bits::rxne::POSITION
+        I + sr1::OFFSET,
+        sr1::rxne::POSITION
     >();
   }
 
   /**
    * @brief 0 - Can't send data, 1 - Can send data.
    */
-  template<address::E I>
+  template<Address I>
   bool Standard<I>::canSendData()
   {
     return *(volatile bool*) bitband::peripheral<
-        I + registers::sr1::OFFSET,
-        registers::sr1::bits::txe::POSITION
+        I + sr1::OFFSET,
+        sr1::txe::POSITION
     >();
   }
 
   /**
    * @brief 0 - Transfer hasn't finished, 1 - Transfer has finished.
    */
-  template<address::E I>
+  template<Address I>
   bool Standard<I>::hasTranferFinished()
   {
     return *(volatile bool*) bitband::peripheral<
-        I + registers::sr1::OFFSET,
-        registers::sr1::bits::btf::POSITION
+        I + sr1::OFFSET,
+        sr1::btf::POSITION
     >();
   }
 
@@ -313,19 +311,19 @@ namespace i2c {
    * @brief  0 - No communication on the bus,
    *          1 - Communication ongoing on the bus.
    */
-  template<address::E I>
+  template<Address I>
   bool Standard<I>::isTheBusBusy()
   {
     return *(volatile bool*) (bitband::peripheral<
-        I + registers::sr2::OFFSET,
-        registers::sr2::bits::busy::POSITION
+        I + sr2::OFFSET,
+        sr2::busy::POSITION
     >());
   }
 
   /**
    * @brief Writes a value to a slave device register.
    */
-  template<address::E I>
+  template<Address I>
   void Standard<I>::writeSlaveRegister(
       u8 const slaveAddress,
       u8 const registerAddress,
@@ -336,7 +334,7 @@ namespace i2c {
     while (!hasSentStart()) {
     };
 
-    Standard<I>::sendAddress<i2c::operation::WRITE>(slaveAddress);
+    Standard<I>::sendAddress(slaveAddress, operation::WRITE);
 
     while (!hasAddressTransmitted()) {
     };
@@ -362,7 +360,7 @@ namespace i2c {
   /**
    * @brief Reads a value from a slave device register.
    */
-  template<address::E I>
+  template<Address I>
   u8 Standard<I>::readSlaveRegister(
       u8 const slaveAddress,
       u8 const registerAddress)
@@ -372,7 +370,7 @@ namespace i2c {
     while (!hasSentStart()) {
     };
 
-    sendAddress<i2c::operation::WRITE>(slaveAddress);
+    sendAddress(slaveAddress, operation::WRITE);
 
     while (!hasAddressTransmitted()) {
     };
@@ -389,7 +387,7 @@ namespace i2c {
     while (!hasSentStart()) {
     };
 
-    sendAddress<i2c::operation::READ>(slaveAddress);
+    sendAddress(slaveAddress, operation::READ);
 
     disableACK();
 

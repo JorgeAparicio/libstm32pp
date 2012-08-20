@@ -28,44 +28,42 @@
 #pragma once
 
 #include "../device_select.hpp"
-#include "../defs.hpp"
 
+#include "../defs.hpp"
 #include "../clock.hpp"
 #include "../../memorymap/i2c.hpp"
 
 // Low-level access to the registers
-#define I2C1_REGS reinterpret_cast<i2c::Registers*>(i2c::address::I2C1)
-#define I2C2_REGS reinterpret_cast<i2c::Registers*>(i2c::address::I2C2)
+#define I2C1_REGS reinterpret_cast<i2c::Registers*>(i2c::I2C1)
+#define I2C2_REGS reinterpret_cast<i2c::Registers*>(i2c::I2C2)
 #ifndef STM32F1XX
-#define I2C3_REGS reinterpret_cast<i2c::Registers*>(i2c::address::I2C3)
+#define I2C3_REGS reinterpret_cast<i2c::Registers*>(i2c::I2C3)
 #endif
 
 // High-level functions
 namespace i2c {
-  template<address::E I>
+  template<Address I>
   class Standard {
     public:
       enum {
         FREQUENCY = clock::APB1
       };
 
-      template<
-          i2c::registers::cr1::bits::pe::states::E,
-          i2c::registers::cr1::bits::enpec::states::E,
-          i2c::registers::cr1::bits::engc::states::E,
-          i2c::registers::cr1::bits::nostretch::states::E,
-          i2c::registers::cr2::bits::iterren::states::E,
-          i2c::registers::cr2::bits::itevten::states::E,
-          i2c::registers::cr2::bits::itbufen::states::E,
-          i2c::registers::cr2::bits::dmaen::states::E,
-          i2c::registers::cr2::bits::last::states::E
-      >
-      static inline void configure();
+      static inline void configure(
+          i2c::cr1::pe::States,
+          i2c::cr1::enpec::States,
+          i2c::cr1::engc::States,
+          i2c::cr1::nostretch::States,
+          i2c::cr2::iterren::States,
+          i2c::cr2::itevten::States,
+          i2c::cr2::itbufen::States,
+          i2c::cr2::dmaen::States,
+          i2c::cr2::last::States);
 
       template<
-          i2c::registers::ccr::bits::f_s::states::E,
-          i2c::registers::ccr::bits::duty::states::E,
-          u32 FREQUENCY_HZ
+          i2c::ccr::f_s::States,
+          i2c::ccr::duty::States,
+          u32
       >
       static inline void configureClock();
 
@@ -78,8 +76,9 @@ namespace i2c {
       static inline void sendData(u8 const data);
       static inline u8 getData();
 
-      template<operation::E op>
-      static inline void sendAddress(u8 const add);
+      static inline void sendAddress(
+          u8 const add,
+          operation::E op);
 
       static inline void enableACK();
       static inline void disableACK();
@@ -106,7 +105,7 @@ namespace i2c {
 }
 
 // High-level access to the peripheral
-typedef i2c::Standard<i2c::address::I2C1> I2C1;
-typedef i2c::Standard<i2c::address::I2C2> I2C2;
+typedef i2c::Standard<i2c::I2C1> I2C1;
+typedef i2c::Standard<i2c::I2C2> I2C2;
 
 #include "../../bits/i2c.tcc"
