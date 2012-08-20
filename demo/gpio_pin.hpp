@@ -24,7 +24,6 @@
 // DO NOT INCLUDE THIS FILE ANYWHERE. THIS DEMO IS JUST A REFERENCE TO BE USED
 // IN YOUR MAIN SOURCE FILE.
 
-#include "device_select.hpp"
 #include "peripheral/gpio.hpp"
 #include "peripheral/rcc.hpp"
 
@@ -32,24 +31,12 @@
 
 int main()
 {
+  PA0::enableClock();
 #ifdef STM32F1XX
-  RCC::enableClocks<
-      rcc::apb2enr::IOPA
-  >();
-
-  PA0::setMode<
-      gpio::registers::cr::states::GP_PUSH_PULL_10MHZ
-  >();
-
-#else
-  RCC::enableClocks<
-  rcc::ahb1enr::GPIOA
-  >();
-
-  PA0::setMode<
-  gpio::registers::moder::states::OUTPUT
-  >();
-#endif
+  PA0::setMode(gpio::cr::GP_PUSH_PULL_10MHZ);
+#else // STM32F1XX
+  PA0::setMode(gpio::moder::OUTPUT);
+#endif // STM32F1XX
 
   while (true) {
     PA0::setLow();
