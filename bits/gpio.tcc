@@ -30,29 +30,29 @@ namespace gpio {
    * @brief Enables the port's clock.
    * @note  Registers can't be written when the clock is disabled.
    */
-  template<address::E P, u8 N>
+  template<Address P, u8 N>
   void Pin<P, N>::enableClock()
   {
     switch (P) {
-      case address::GPIOA:
+      case GPIOA:
       RCC::enableClocks<rcc::apb2enr::IOPA>();
       break;
-      case address::GPIOB:
+      case GPIOB:
       RCC::enableClocks<rcc::apb2enr::IOPB>();
       break;
-      case address::GPIOC:
+      case GPIOC:
       RCC::enableClocks<rcc::apb2enr::IOPC>();
       break;
-      case address::GPIOD:
+      case GPIOD:
       RCC::enableClocks<rcc::apb2enr::IOPD>();
       break;
-      case address::GPIOE:
+      case GPIOE:
       RCC::enableClocks<rcc::apb2enr::IOPE>();
       break;
-      case address::GPIOF:
+      case GPIOF:
       RCC::enableClocks<rcc::apb2enr::IOPF>();
       break;
-      case address::GPIOG:
+      case GPIOG:
       RCC::enableClocks<rcc::apb2enr::IOPG>();
       break;
     }
@@ -61,7 +61,7 @@ namespace gpio {
   /**
    * @brief Sets the pin to 1, if it is in any of the output modes.
    */
-  template<address::E P, u8 N>
+  template<Address P, u8 N>
   void Pin<P, N>::setHigh()
   {
     reinterpret_cast<Registers *>(P)->BSRR = 1 << N;
@@ -70,7 +70,7 @@ namespace gpio {
   /**
    * @brief Sets the pin to 0, if it is in any of the output modes.
    */
-  template<address::E P, u8 N>
+  template<Address P, u8 N>
   void Pin<P, N>::setLow()
   {
     reinterpret_cast<Registers *>(P)->BRR = 1 << N;
@@ -79,25 +79,25 @@ namespace gpio {
   /**
    * @brief Outputs the desired logic state through the pin.
    */
-  template<address::E P, u8 N>
+  template<Address P, u8 N>
   void Pin<P, N>::setOutput(u32 const value)
   {
-    *(u32*) (OUT_ADDRESS) = value;
+    *(volatile u32*) (OUT_ADDRESS) = value;
   }
 
   /**
    * @brief Gets the logic state of the pin.
    */
-  template<address::E P, u8 N>
+  template<Address P, u8 N>
   u32 Pin<P, N>::getInput()
   {
-    return *(u32*) (IN_ADDRESS);
+    return *(volatile u32*) (IN_ADDRESS);
   }
 
   /**
    * @brief Enables the pull-up circuit on this pin. (MODE_INPUT_PULL_X only).
    */
-  template<address::E P, u8 N>
+  template<Address P, u8 N>
   void Pin<P, N>::pullUp()
   {
     setHigh();
@@ -106,7 +106,7 @@ namespace gpio {
   /**
    * @brief Enables the pull-down circuit on this pin. (MODE_INPUT_PULL_X only).
    */
-  template<address::E P, u8 N>
+  template<Address P, u8 N>
   void Pin<P, N>::pullDown()
   {
     setLow();
@@ -115,11 +115,11 @@ namespace gpio {
   /**
    * @brief Returns true if the pin is high.
    */
-  template<address::E P, u8 N>
+  template<Address P, u8 N>
   bool Pin<P, N>::isHigh()
   {
     return *(volatile bool*) (bitband::peripheral<
-        P + registers::idr::OFFSET,
+        P + idr::OFFSET,
         N
         >());
   }
@@ -127,45 +127,44 @@ namespace gpio {
   /**
    * @brief Changes the I/O mode.
    */
-  template<address::E P, u8 N>
-  template<registers::cr::states::E CR>
-  void Pin<P, N>::setMode()
+  template<Address P, u8 N>
+  void Pin<P, N>::setMode(cr::States Mode)
   {
     reinterpret_cast<Registers*>(P)->CR[N > 7 ? 1 : 0] &=
-    ~(registers::cr::MASK <<
-        registers::cr::POSITION * (N > 7 ? (N - 8) : N));
+    ~(cr::MASK <<
+        cr::POSITION * (N > 7 ? (N - 8) : N));
 
     reinterpret_cast<Registers*>(P)->CR[N > 7 ? 1 : 0] |=
-    CR << registers::cr::POSITION * (N > 7 ? (N - 8) : N);
+    Mode << cr::POSITION * (N > 7 ? (N - 8) : N);
   }
 
   /**
    * @brief Enables the port's clock.
    * @note  Registers can't be written when the clock is disabled.
    */
-  template<address::E P>
+  template<Address P>
   void Port<P>::enableClock()
   {
     switch (P) {
-      case address::GPIOA:
+      case GPIOA:
       RCC::enableClocks<rcc::apb2enr::IOPA>();
       break;
-      case address::GPIOB:
+      case GPIOB:
       RCC::enableClocks<rcc::apb2enr::IOPB>();
       break;
-      case address::GPIOC:
+      case GPIOC:
       RCC::enableClocks<rcc::apb2enr::IOPC>();
       break;
-      case address::GPIOD:
+      case GPIOD:
       RCC::enableClocks<rcc::apb2enr::IOPD>();
       break;
-      case address::GPIOE:
+      case GPIOE:
       RCC::enableClocks<rcc::apb2enr::IOPE>();
       break;
-      case address::GPIOF:
+      case GPIOF:
       RCC::enableClocks<rcc::apb2enr::IOPF>();
       break;
-      case address::GPIOG:
+      case GPIOG:
       RCC::enableClocks<rcc::apb2enr::IOPG>();
       break;
     }
@@ -175,29 +174,29 @@ namespace gpio {
    * @brief Disables the port's clock.
    * @note  Registers can't be written when the clock is disabled.
    */
-  template<address::E P>
+  template<Address P>
   void Port<P>::disableClock()
   {
     switch (P) {
-      case address::GPIOA:
+      case GPIOA:
       RCC::disableClocks<rcc::apb2enr::IOPA>();
       break;
-      case address::GPIOB:
+      case GPIOB:
       RCC::disableClocks<rcc::apb2enr::IOPB>();
       break;
-      case address::GPIOC:
+      case GPIOC:
       RCC::disableClocks<rcc::apb2enr::IOPC>();
       break;
-      case address::GPIOD:
+      case GPIOD:
       RCC::disableClocks<rcc::apb2enr::IOPD>();
       break;
-      case address::GPIOE:
+      case GPIOE:
       RCC::disableClocks<rcc::apb2enr::IOPE>();
       break;
-      case address::GPIOF:
+      case GPIOF:
       RCC::disableClocks<rcc::apb2enr::IOPF>();
       break;
-      case address::GPIOG:
+      case GPIOG:
       RCC::disableClocks<rcc::apb2enr::IOPG>();
       break;
     }
@@ -208,18 +207,16 @@ namespace gpio {
    * @note  PB3 and PB4 are JTAG pins, they should be configured as ALTERNATE
    *        if using the JTAG.
    */
-  template<address::E P>
-  template<
-  registers::cr::states::E P0,
-  registers::cr::states::E P1,
-  registers::cr::states::E P2,
-  registers::cr::states::E P3,
-  registers::cr::states::E P4,
-  registers::cr::states::E P5,
-  registers::cr::states::E P6,
-  registers::cr::states::E P7
-  >
-  void Port<P>::configureLowerPins()
+  template<Address P>
+  void Port<P>::configureLowerPins(
+      cr::States P0,
+      cr::States P1,
+      cr::States P2,
+      cr::States P3,
+      cr::States P4,
+      cr::States P5,
+      cr::States P6,
+      cr::States P7)
   {
     reinterpret_cast<Registers *>(P)->CR[0] =
     (P0 << 0) + (P1 << 4) + (P2 << 8) + (P3 << 12) + (P4 << 16) +
@@ -231,18 +228,16 @@ namespace gpio {
    * @note  PA13, PA14 and PA15 are JTAG pins, they should be configured as
    *        ALTERNATE if using the JTAG.
    */
-  template<address::E P>
-  template<
-  registers::cr::states::E P8,
-  registers::cr::states::E P9,
-  registers::cr::states::E P10,
-  registers::cr::states::E P11,
-  registers::cr::states::E P12,
-  registers::cr::states::E P13,
-  registers::cr::states::E P14,
-  registers::cr::states::E P15
-  >
-  void Port<P>::configureHigherPins()
+  template<Address P>
+  void Port<P>::configureHigherPins(
+      cr::States P8,
+      cr::States P9,
+      cr::States P10,
+      cr::States P11,
+      cr::States P12,
+      cr::States P13,
+      cr::States P14,
+      cr::States P15)
   {
     reinterpret_cast<Registers *>(P)->CR[1] =
     (P8 << 0) + (P9 << 4) + (P10 << 8) + (P11 << 12) +
@@ -252,7 +247,7 @@ namespace gpio {
   /**
    * @brief Outputs the desired logic state on the port.
    */
-  template<address::E P>
+  template<Address P>
   void Port<P>::setValue(u32 const value)
   {
     reinterpret_cast<Registers *>(P)->ODR =
@@ -262,7 +257,7 @@ namespace gpio {
   /**
    * @brief Gets the logic state of the port.
    */
-  template<address::E P>
+  template<Address P>
   u32 Port<P>::getValue()
   {
     return reinterpret_cast<Registers *>(P)->IDR;
@@ -273,29 +268,29 @@ namespace gpio {
    * @brief Enables the port's clock.
    * @note  Registers can't be written when the clock is disabled.
    */
-  template<address::E P, u8 N>
+  template<Address P, u8 N>
   void Pin<P, N>::enableClock()
   {
     switch (P) {
-      case address::GPIOA:
+      case GPIOA:
         RCC::enableClocks<rcc::ahb1enr::GPIOA>();
         break;
-      case address::GPIOB:
+      case GPIOB:
         RCC::enableClocks<rcc::ahb1enr::GPIOB>();
         break;
-      case address::GPIOC:
+      case GPIOC:
         RCC::enableClocks<rcc::ahb1enr::GPIOC>();
         break;
-      case address::GPIOD:
+      case GPIOD:
         RCC::enableClocks<rcc::ahb1enr::GPIOD>();
         break;
-      case address::GPIOE:
+      case GPIOE:
         RCC::enableClocks<rcc::ahb1enr::GPIOE>();
         break;
-      case address::GPIOF:
+      case GPIOF:
         RCC::enableClocks<rcc::ahb1enr::GPIOF>();
         break;
-      case address::GPIOG:
+      case GPIOG:
         RCC::enableClocks<rcc::ahb1enr::GPIOG>();
         break;
     }
@@ -304,7 +299,7 @@ namespace gpio {
   /**
    * @brief Sets the pin to 1, if it is in output mode.
    */
-  template<address::E P, u8 N>
+  template<Address P, u8 N>
   void Pin<P, N>::setHigh()
   {
     reinterpret_cast<Registers *>(P)->BSRR = (1 << N);
@@ -313,7 +308,7 @@ namespace gpio {
   /**
    * @brief Sets the pin to 0, if it is in output mode.
    */
-  template<address::E P, u8 N>
+  template<Address P, u8 N>
   void Pin<P, N>::setLow()
   {
     reinterpret_cast<Registers *>(P)->BSRR = (1 << N) << 16;
@@ -322,29 +317,29 @@ namespace gpio {
   /**
    * @brief Outputs the logic state on the pin.
    */
-  template<address::E P, u8 N>
+  template<Address P, u8 N>
   void Pin<P, N>::setOutput(u32 const value)
   {
-    *(u32*) (OUT_ADDRESS) = value;
+    *(volatile u32*) (OUT_ADDRESS) = value;
   }
 
   /**
    * @brief Gets the logic state of the pin.
    */
-  template<address::E P, u8 N>
+  template<Address P, u8 N>
   u32 Pin<P, N>::getInput()
   {
-    return *(u32*) (IN_ADDRESS);
+    return *(volatile u32*) (IN_ADDRESS);
   }
 
   /**
    * @brief Returns true if the pin is high.
    */
-  template<address::E P, u8 N>
+  template<Address P, u8 N>
   bool Pin<P, N>::isHigh()
   {
     return *(volatile bool*) (bitband::peripheral<
-        P + registers::idr::OFFSET,
+        P + idr::OFFSET,
         N
     >());
   }
@@ -352,97 +347,92 @@ namespace gpio {
   /**
    * @brief Selects the I/O mode.
    */
-  template<address::E P, u8 N>
-  template<registers::moder::states::E MODER>
-  void Pin<P, N>::setMode()
+  template<Address P, u8 N>
+  void Pin<P, N>::setMode(moder::States Mode)
   {
     reinterpret_cast<Registers *>(P)->MODER &=
-        ~(registers::moder::MASK << (2 * N));
+        ~(moder::MASK << (2 * N));
     reinterpret_cast<Registers *>(P)->MODER |=
-        (MODER << (2 * N));
+        (Mode << (2 * N));
   }
 
   /**
    * @brief Selects the output mode.
    */
-  template<address::E P, u8 N>
-  template<registers::otyper::states::E OTYPER>
-  void Pin<P, N>::setOutputMode()
+  template<Address P, u8 N>
+  void Pin<P, N>::setOutputMode(otyper::States OutputMode)
   {
     *((volatile u32*) (bitband::peripheral<
-        P + registers::otyper::OFFSET,
+        P + otyper::OFFSET,
         N
-    >())) = OTYPER;
+    >())) = OutputMode;
   }
 
   /**
    * @brief Selects the output speed.
    */
-  template<address::E P, u8 N>
-  template<registers::ospeedr::states::E OSPEEDR>
-  void Pin<P, N>::setSpeed()
+  template<Address P, u8 N>
+  void Pin<P, N>::setSpeed(ospeedr::States Speed)
   {
     reinterpret_cast<Registers *>(P)->OSPEEDR &=
-        ~(registers::ospeedr::MASK << (2 * N));
+        ~(ospeedr::MASK << (2 * N));
     reinterpret_cast<Registers *>(P)->OSPEEDR |=
-        (OSPEEDR << (2 * N));
+        (Speed << (2 * N));
   }
 
   /**
    * @brief Selects between pull-up, pull-down or no pull-up/pull-down.
    */
-  template<address::E P, u8 N>
-  template<registers::pupdr::states::E PUPDR>
-  void Pin<P, N>::setPullMode()
+  template<Address P, u8 N>
+  void Pin<P, N>::setPullMode(pupdr::States PullMode)
   {
     reinterpret_cast<Registers *>(P)->PUPDR &=
-        ~(registers::pupdr::MASK << (2 * N));
+        ~(pupdr::MASK << (2 * N));
     reinterpret_cast<Registers *>(P)->PUPDR |=
-        (PUPDR << (2 * N));
+        (PullMode << (2 * N));
   }
 
   /**
    * @brief Selects the alternate function.
    */
-  template<address::E P, u8 N>
-  template<registers::afr::states::E AFR>
-  void Pin<P, N>::setAlternateFunction()
+  template<Address P, u8 N>
+  void Pin<P, N>::setAlternateFunction(afr::States Alternate)
   {
     reinterpret_cast<Registers*>(P)->AFR[N > 7 ? 1 : 0] &=
-        ~(registers::afr::MASK <<
-            registers::afr::POSITION * (N > 7 ? (N - 8) : N));
+        ~(afr::MASK <<
+            afr::POSITION * (N > 7 ? (N - 8) : N));
 
     reinterpret_cast<Registers*>(P)->AFR[N > 7 ? 1 : 0] |=
-        AFR << (registers::afr::POSITION * (N > 7 ? (N - 8) : N));
+        Alternate << (afr::POSITION * (N > 7 ? (N - 8) : N));
   }
 
   /**
    * @brief Enables the port's clock.
    * @note  Registers can't be written when the clock is disabled.
    */
-  template<address::E P>
+  template<Address P>
   void Port<P>::enableClock()
   {
     switch (P) {
-      case address::GPIOA:
+      case GPIOA:
         RCC::enableClocks<rcc::ahb1enr::GPIOA>();
         break;
-      case address::GPIOB:
+      case GPIOB:
         RCC::enableClocks<rcc::ahb1enr::GPIOB>();
         break;
-      case address::GPIOC:
+      case GPIOC:
         RCC::enableClocks<rcc::ahb1enr::GPIOC>();
         break;
-      case address::GPIOD:
+      case GPIOD:
         RCC::enableClocks<rcc::ahb1enr::GPIOD>();
         break;
-      case address::GPIOE:
+      case GPIOE:
         RCC::enableClocks<rcc::ahb1enr::GPIOE>();
         break;
-      case address::GPIOF:
+      case GPIOF:
         RCC::enableClocks<rcc::ahb1enr::GPIOF>();
         break;
-      case address::GPIOG:
+      case GPIOG:
         RCC::enableClocks<rcc::ahb1enr::GPIOG>();
         break;
     }
@@ -452,29 +442,29 @@ namespace gpio {
    * @brief Disables the port's clock.
    * @note  Registers can't be written when the clock is disabled.
    */
-  template<address::E P>
+  template<Address P>
   void Port<P>::disableClock()
   {
     switch (P) {
-      case address::GPIOA:
+      case GPIOA:
         RCC::disableClocks<rcc::ahb1enr::GPIOA>();
         break;
-      case address::GPIOB:
+      case GPIOB:
         RCC::disableClocks<rcc::ahb1enr::GPIOB>();
         break;
-      case address::GPIOC:
+      case GPIOC:
         RCC::disableClocks<rcc::ahb1enr::GPIOC>();
         break;
-      case address::GPIOD:
+      case GPIOD:
         RCC::disableClocks<rcc::ahb1enr::GPIOD>();
         break;
-      case address::GPIOE:
+      case GPIOE:
         RCC::disableClocks<rcc::ahb1enr::GPIOE>();
         break;
-      case address::GPIOF:
+      case GPIOF:
         RCC::disableClocks<rcc::ahb1enr::GPIOF>();
         break;
-      case address::GPIOG:
+      case GPIOG:
         RCC::disableClocks<rcc::ahb1enr::GPIOG>();
         break;
     }
@@ -483,7 +473,7 @@ namespace gpio {
   /**
    * @brief Outputs the logic states on the port.
    */
-  template<address::E P>
+  template<Address P>
   void Port<P>::setOutput(u16 const value)
   {
     reinterpret_cast<Registers*>(P)->ODR = value;
@@ -492,7 +482,7 @@ namespace gpio {
   /**
    * @brief Gets the logic state of the port.
    */
-  template<address::E P>
+  template<Address P>
   u16 Port<P>::getInput()
   {
     return reinterpret_cast<Registers*>(P)->IDR;
@@ -503,26 +493,24 @@ namespace gpio {
    * @note  PB3, PB4, PA13, PA14 and PA15 are JTAG pins, they should be
    *        configured as ALTERNATE if using the JTAG.
    */
-  template<address::E P>
-  template<
-      registers::moder::states::E M0,
-      registers::moder::states::E M1,
-      registers::moder::states::E M2,
-      registers::moder::states::E M3,
-      registers::moder::states::E M4,
-      registers::moder::states::E M5,
-      registers::moder::states::E M6,
-      registers::moder::states::E M7,
-      registers::moder::states::E M8,
-      registers::moder::states::E M9,
-      registers::moder::states::E M10,
-      registers::moder::states::E M11,
-      registers::moder::states::E M12,
-      registers::moder::states::E M13,
-      registers::moder::states::E M14,
-      registers::moder::states::E M15
-  >
-  void Port<P>::setModes()
+  template<Address P>
+  void Port<P>::setModes(
+      moder::States M0,
+      moder::States M1,
+      moder::States M2,
+      moder::States M3,
+      moder::States M4,
+      moder::States M5,
+      moder::States M6,
+      moder::States M7,
+      moder::States M8,
+      moder::States M9,
+      moder::States M10,
+      moder::States M11,
+      moder::States M12,
+      moder::States M13,
+      moder::States M14,
+      moder::States M15)
   {
     reinterpret_cast<Registers *>(P)->MODER =
         (M0 << 0) + (M1 << 2) + (M2 << 4) + (M3 << 6) + (M4 << 8) +
@@ -534,26 +522,24 @@ namespace gpio {
   /**
    * @brief Configures the output mode of the port.
    */
-  template<address::E P>
-  template<
-      registers::otyper::states::E M0,
-      registers::otyper::states::E M1,
-      registers::otyper::states::E M2,
-      registers::otyper::states::E M3,
-      registers::otyper::states::E M4,
-      registers::otyper::states::E M5,
-      registers::otyper::states::E M6,
-      registers::otyper::states::E M7,
-      registers::otyper::states::E M8,
-      registers::otyper::states::E M9,
-      registers::otyper::states::E M10,
-      registers::otyper::states::E M11,
-      registers::otyper::states::E M12,
-      registers::otyper::states::E M13,
-      registers::otyper::states::E M14,
-      registers::otyper::states::E M15
-  >
-  void Port<P>::setOutputTypes()
+  template<Address P>
+  void Port<P>::setOutputTypes(
+      otyper::States M0,
+      otyper::States M1,
+      otyper::States M2,
+      otyper::States M3,
+      otyper::States M4,
+      otyper::States M5,
+      otyper::States M6,
+      otyper::States M7,
+      otyper::States M8,
+      otyper::States M9,
+      otyper::States M10,
+      otyper::States M11,
+      otyper::States M12,
+      otyper::States M13,
+      otyper::States M14,
+      otyper::States M15)
   {
     reinterpret_cast<Registers *>(P)->OTYPER =
         (M0 << 0) + (M1 << 1) + (M2 << 2) + (M3 << 3) + (M4 << 4) +
@@ -565,26 +551,24 @@ namespace gpio {
   /**
    * @brief Configures the output speed of the port.
    */
-  template<address::E P>
-  template<
-      registers::ospeedr::states::E M0,
-      registers::ospeedr::states::E M1,
-      registers::ospeedr::states::E M2,
-      registers::ospeedr::states::E M3,
-      registers::ospeedr::states::E M4,
-      registers::ospeedr::states::E M5,
-      registers::ospeedr::states::E M6,
-      registers::ospeedr::states::E M7,
-      registers::ospeedr::states::E M8,
-      registers::ospeedr::states::E M9,
-      registers::ospeedr::states::E M10,
-      registers::ospeedr::states::E M11,
-      registers::ospeedr::states::E M12,
-      registers::ospeedr::states::E M13,
-      registers::ospeedr::states::E M14,
-      registers::ospeedr::states::E M15
-  >
-  void Port<P>::setOutputSpeeds()
+  template<Address P>
+  void Port<P>::setOutputSpeeds(
+      ospeedr::States M0,
+      ospeedr::States M1,
+      ospeedr::States M2,
+      ospeedr::States M3,
+      ospeedr::States M4,
+      ospeedr::States M5,
+      ospeedr::States M6,
+      ospeedr::States M7,
+      ospeedr::States M8,
+      ospeedr::States M9,
+      ospeedr::States M10,
+      ospeedr::States M11,
+      ospeedr::States M12,
+      ospeedr::States M13,
+      ospeedr::States M14,
+      ospeedr::States M15)
   {
     reinterpret_cast<Registers *>(P)->OSPEEDR =
         (M0 << 0) + (M1 << 2) + (M2 << 4) + (M3 << 6) + (M4 << 8) +
@@ -596,26 +580,24 @@ namespace gpio {
   /**
    * @brief Configures the input mode of the port.
    */
-  template<address::E P>
-  template<
-      registers::pupdr::states::E M0,
-      registers::pupdr::states::E M1,
-      registers::pupdr::states::E M2,
-      registers::pupdr::states::E M3,
-      registers::pupdr::states::E M4,
-      registers::pupdr::states::E M5,
-      registers::pupdr::states::E M6,
-      registers::pupdr::states::E M7,
-      registers::pupdr::states::E M8,
-      registers::pupdr::states::E M9,
-      registers::pupdr::states::E M10,
-      registers::pupdr::states::E M11,
-      registers::pupdr::states::E M12,
-      registers::pupdr::states::E M13,
-      registers::pupdr::states::E M14,
-      registers::pupdr::states::E M15
-  >
-  void Port<P>::setPullModes()
+  template<Address P>
+  void Port<P>::setPullModes(
+      pupdr::States M0,
+      pupdr::States M1,
+      pupdr::States M2,
+      pupdr::States M3,
+      pupdr::States M4,
+      pupdr::States M5,
+      pupdr::States M6,
+      pupdr::States M7,
+      pupdr::States M8,
+      pupdr::States M9,
+      pupdr::States M10,
+      pupdr::States M11,
+      pupdr::States M12,
+      pupdr::States M13,
+      pupdr::States M14,
+      pupdr::States M15)
   {
     reinterpret_cast<Registers *>(P)->PUPDR =
         (M0 << 0) + (M1 << 2) + (M2 << 4) + (M3 << 6) + (M4 << 8) +
