@@ -111,7 +111,5 @@ namespace rtc {
 #endif
   };
 
-  namespace registers {
-  // TODO RTC register bits
-  }// namespace registers
-}  // namespace rtc
+// TODO RTC register bits
+}// namespace rtc
