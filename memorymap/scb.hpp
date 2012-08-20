@@ -22,6 +22,9 @@
 #pragma once
 
 namespace scb {
+  enum {
+    ADDRESS = alias::PPB + 0xD00
+  };
 
   struct Registers {
       __RW
@@ -56,13 +59,6 @@ namespace scb {
       u32 AFSR;  // 0x38: Auxiliary fault status
   };
 
-  enum {
-    ADDRESS = alias::PPB + 0xD00
-  };
-
-  namespace registers {
-  // TODO SCB register bits
-  }// namespace registers
-
-}  // namespace scb
+// TODO SCB register bits
+}// namespace scb
 
