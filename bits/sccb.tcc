@@ -26,11 +26,11 @@ namespace sccb {
    * @brief Initializes the peripherals needed for the SCCB emulation.
    */
   template<
-      gpio::address::E SDIO_C_PORT,
+      gpio::Address SDIO_C_PORT,
       u8 SDIO_C_PIN,
-      gpio::address::E SDIO_D_PORT,
+      gpio::Address SDIO_D_PORT,
       u8 SDIO_D_PIN,
-      tim::address::E DELAY_TIMER_ADDRESS,
+      tim::Address DELAY_TIMER_ADDRESS,
       u32 FREQUENCY
   >
   void Functions<
@@ -45,15 +45,15 @@ namespace sccb {
     TIMER::enableClock();
 
     TIMER::template configureBasicCounter<
-        tim::registers::cr1::bits::cen::states::
+        tim::cr1::cen::
         COUNTER_DISABLED,
-        tim::registers::cr1::bits::udis::states::
+        tim::cr1::udis::
         UPDATE_EVENT_ENABLED,
-        tim::registers::cr1::bits::urs::states::
+        tim::cr1::urs::
         UPDATE_REQUEST_SOURCE_OVERFLOW_UNDERFLOW,
-        tim::registers::cr1::bits::opm::states::
+        tim::cr1::opm::
         DONT_STOP_COUNTER_AT_NEXT_UPDATE_EVENT,
-        tim::registers::cr1::bits::arpe::states::
+        tim::cr1::arpe::
         AUTO_RELOAD_UNBUFFERED
     >();
 
@@ -66,18 +66,18 @@ namespace sccb {
     SDIO_D::setHigh();
 
     SDIO_C::template setPullMode<
-        gpio::registers::pupdr::states::PULL_UP
+        gpio::pupdr::PULL_UP
     >();
     SDIO_D::template setPullMode<
-        gpio::registers::pupdr::states::PULL_UP
+        gpio::pupdr::PULL_UP
     >();
 
     SDIO_C::template setMode<
-        gpio::registers::moder::states::OUTPUT
+        gpio::moder::OUTPUT
     >();
 
     SDIO_D::template setMode<
-        gpio::registers::moder::states::OUTPUT
+        gpio::moder::OUTPUT
     >();
   }
 
@@ -85,11 +85,11 @@ namespace sccb {
    * @brief Sends start condition.
    */
   template<
-      gpio::address::E SDIO_C_PORT,
+      gpio::Address SDIO_C_PORT,
       u8 SDIO_C_PIN,
-      gpio::address::E SDIO_D_PORT,
+      gpio::Address SDIO_D_PORT,
       u8 SDIO_D_PIN,
-      tim::address::E DELAY_TIMER_ADDRESS,
+      tim::Address DELAY_TIMER_ADDRESS,
       u32 FREQUENCY
   >
   void Functions<
@@ -118,11 +118,11 @@ namespace sccb {
    * @brief Sends stop condition.
    */
   template<
-      gpio::address::E SDIO_C_PORT,
+      gpio::Address SDIO_C_PORT,
       u8 SDIO_C_PIN,
-      gpio::address::E SDIO_D_PORT,
+      gpio::Address SDIO_D_PORT,
       u8 SDIO_D_PIN,
-      tim::address::E DELAY_TIMER_ADDRESS,
+      tim::Address DELAY_TIMER_ADDRESS,
       u32 FREQUENCY
   >
   void Functions<
@@ -148,11 +148,11 @@ namespace sccb {
    * @brief Sends NACK condition.
    */
   template<
-      gpio::address::E SDIO_C_PORT,
+      gpio::Address SDIO_C_PORT,
       u8 SDIO_C_PIN,
-      gpio::address::E SDIO_D_PORT,
+      gpio::Address SDIO_D_PORT,
       u8 SDIO_D_PIN,
-      tim::address::E DELAY_TIMER_ADDRESS,
+      tim::Address DELAY_TIMER_ADDRESS,
       u32 FREQUENCY
   >
   void Functions<
@@ -181,11 +181,11 @@ namespace sccb {
    * @brief Sends byte via SCCB.
    */
   template<
-      gpio::address::E SDIO_C_PORT,
+      gpio::Address SDIO_C_PORT,
       u8 SDIO_C_PIN,
-      gpio::address::E SDIO_D_PORT,
+      gpio::Address SDIO_D_PORT,
       u8 SDIO_D_PIN,
-      tim::address::E DELAY_TIMER_ADDRESS,
+      tim::Address DELAY_TIMER_ADDRESS,
       u32 FREQUENCY
   >
   bool Functions<
@@ -214,7 +214,7 @@ namespace sccb {
     }
 
     SDIO_D::template setMode<
-        gpio::registers::moder::states::INPUT
+        gpio::moder::INPUT
     >();
     TIMER::delay(DELAY);
 
@@ -230,7 +230,7 @@ namespace sccb {
     TIMER::delay(DELAY);
 
     SDIO_D::template setMode<
-        gpio::registers::moder::states::OUTPUT
+        gpio::moder::OUTPUT
     >();
 
     return sucess;
@@ -240,11 +240,11 @@ namespace sccb {
    * @brief Gets byte via SCCB.
    */
   template<
-      gpio::address::E SDIO_C_PORT,
+      gpio::Address SDIO_C_PORT,
       u8 SDIO_C_PIN,
-      gpio::address::E SDIO_D_PORT,
+      gpio::Address SDIO_D_PORT,
       u8 SDIO_D_PIN,
-      tim::address::E DELAY_TIMER_ADDRESS,
+      tim::Address DELAY_TIMER_ADDRESS,
       u32 FREQUENCY
   >
   u8 Functions<
@@ -259,7 +259,7 @@ namespace sccb {
     u8 data = 0;
 
     SDIO_D::template setMode<
-        gpio::registers::moder::states::INPUT
+        gpio::moder::INPUT
     >();
     TIMER::delay(DELAY);
 
@@ -276,7 +276,7 @@ namespace sccb {
     }
 
     SDIO_D::template setMode<
-        gpio::registers::moder::states::OUTPUT
+        gpio::moder::OUTPUT
     >();
 
     return data;
@@ -287,11 +287,11 @@ namespace sccb {
    * @note  Returns true if the operation was successful.
    */
   template<
-      gpio::address::E SDIO_C_PORT,
+      gpio::Address SDIO_C_PORT,
       u8 SDIO_C_PIN,
-      gpio::address::E SDIO_D_PORT,
+      gpio::Address SDIO_D_PORT,
       u8 SDIO_D_PIN,
-      tim::address::E DELAY_TIMER_ADDRESS,
+      tim::Address DELAY_TIMER_ADDRESS,
       u32 FREQUENCY
   >
   bool Functions<
@@ -332,11 +332,11 @@ namespace sccb {
    * @note  Returns true if the operation was successful.
    */
   template<
-      gpio::address::E SDIO_C_PORT,
+      gpio::Address SDIO_C_PORT,
       u8 SDIO_C_PIN,
-      gpio::address::E SDIO_D_PORT,
+      gpio::Address SDIO_D_PORT,
       u8 SDIO_D_PIN,
-      tim::address::E DELAY_TIMER_ADDRESS,
+      tim::Address DELAY_TIMER_ADDRESS,
       u32 FREQUENCY
   >
   bool Functions<

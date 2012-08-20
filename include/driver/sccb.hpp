@@ -29,11 +29,11 @@
 
 namespace sccb {
   template<
-      gpio::address::E SDIO_C_PORT,
+      gpio::Address SDIO_C_PORT,
       u8 SDIO_C_PIN,
-      gpio::address::E SDIO_D_PORT,
+      gpio::Address SDIO_D_PORT,
       u8 SDIO_D_PIN,
-      tim::address::E DELAY_TIMER_ADDRESS,
+      tim::Address DELAY_TIMER_ADDRESS,
       u32 FREQUENCY
   >
   class Functions {
