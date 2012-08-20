@@ -38,8 +38,8 @@ namespace lsm303dlhc {
           MASK = 1 << POSITION
         };
         enum States {
-          XXIS_DISABLED = 0 << POSITION,
-          XXIS_ENABLED = 1 << POSITION,
+          X_AXIS_DISABLED = 0 << POSITION,
+          X_AXIS_ENABLED = 1 << POSITION,
         };
       }  // namespace xen
 
@@ -49,8 +49,8 @@ namespace lsm303dlhc {
           MASK = 1 << POSITION
         };
         enum States {
-          YXIS_DISABLED = 0 << POSITION,
-          YXIS_ENABLED = 1 << POSITION,
+          Y_AXIS_DISABLED = 0 << POSITION,
+          Y_AXIS_ENABLED = 1 << POSITION,
         };
 
       }  // namespace yen
@@ -61,8 +61,8 @@ namespace lsm303dlhc {
           MASK = 1 << POSITION
         };
         enum States {
-          ZXIS_DISABLED = 0 << POSITION,
-          ZXIS_ENABLED = 1 << POSITION,
+          Z_AXIS_DISABLED = 0 << POSITION,
+          Z_AXIS_ENABLED = 1 << POSITION,
         };
       }  // namespace zen
 

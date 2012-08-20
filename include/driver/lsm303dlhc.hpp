@@ -39,7 +39,7 @@ namespace lsm303dlhc {
     template<i2c::Address I>
     class Functions {
       public:
-        template<
+        static void configure(
             lsm303dlhc::accelerometer::ctrl1::lpen::States,
             lsm303dlhc::accelerometer::ctrl1::odr::States,
             lsm303dlhc::accelerometer::ctrl1::xen::States,
@@ -49,9 +49,7 @@ namespace lsm303dlhc {
             lsm303dlhc::accelerometer::ctrl4::hr::States,
             lsm303dlhc::accelerometer::ctrl4::fs::States,
             lsm303dlhc::accelerometer::ctrl4::ble::States,
-            lsm303dlhc::accelerometer::ctrl4::bdu::States
-        >
-        static void configure();
+            lsm303dlhc::accelerometer::ctrl4::bdu::States);
 
         static inline u8 readXLow();
         static inline u8 readXHigh();
@@ -69,21 +67,9 @@ namespace lsm303dlhc {
     template<i2c::Address>
     class Functions {
       public:
-        template<
-            lsm303dlhc::magnetometer::cra::do_::States
-        >
-        static void setDataRate();
-
-        template<
-            lsm303dlhc::magnetometer::crb::gn::States
-        >
-        static void setReadingRange();
-
-        template<
-            lsm303dlhc::magnetometer::mr::md::States
-        >
-        static void setMode();
-
+        static void setDataRate(lsm303dlhc::magnetometer::cra::do_::States);
+        static void setReadingRange(lsm303dlhc::magnetometer::crb::gn::States);
+        static void setMode(lsm303dlhc::magnetometer::mr::md::States);
         static inline u8 readXLow();
         static inline u8 readXHigh();
         static inline u8 readYLow();

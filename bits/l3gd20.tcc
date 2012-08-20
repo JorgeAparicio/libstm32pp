@@ -26,7 +26,7 @@ namespace l3gd20 {
       i2c::Address I,
       Address A
   >
-  template<
+  void Functions<I, A>::configure(
       l3gd20::ctrl_reg1::xen::States XEN,
       l3gd20::ctrl_reg1::yen::States YEN,
       l3gd20::ctrl_reg1::zen::States ZEN,
@@ -35,9 +35,7 @@ namespace l3gd20 {
       l3gd20::ctrl_reg4::sim::States SIM,
       l3gd20::ctrl_reg4::fs::States FS,
       l3gd20::ctrl_reg4::ble::States BLE,
-      l3gd20::ctrl_reg4::bdu::States BDU
-  >
-  void Functions<I, A>::configure()
+      l3gd20::ctrl_reg4::bdu::States BDU)
   {
     i2c::Standard<I>::writeSlaveRegister(
         A,

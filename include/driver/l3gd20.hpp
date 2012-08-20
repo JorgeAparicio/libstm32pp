@@ -41,8 +41,7 @@ namespace l3gd20 {
   >
   class Functions {
     public:
-
-      template<
+      static void configure(
           l3gd20::ctrl_reg1::xen::States,
           l3gd20::ctrl_reg1::yen::States,
           l3gd20::ctrl_reg1::zen::States,
@@ -51,9 +50,7 @@ namespace l3gd20 {
           l3gd20::ctrl_reg4::sim::States,
           l3gd20::ctrl_reg4::fs::States,
           l3gd20::ctrl_reg4::ble::States,
-          l3gd20::ctrl_reg4::bdu::States
-      >
-      static void configure();
+          l3gd20::ctrl_reg4::bdu::States);
 
       static inline u8 readXLow();
       static inline u8 readXHigh();

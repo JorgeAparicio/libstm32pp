@@ -27,7 +27,7 @@ namespace lsm303dlhc {
      * @brief Configures the Functions.
      */
     template<i2c::Address I>
-    template<
+    void Functions<I>::configure(
         ctrl1::lpen::States LPEN,
         ctrl1::odr::States ODR,
         ctrl1::xen::States XEN,
@@ -37,9 +37,7 @@ namespace lsm303dlhc {
         ctrl4::hr::States HR,
         ctrl4::fs::States FS,
         ctrl4::ble::States BLE,
-        ctrl4::bdu::States BDU
-    >
-    void Functions<I>::configure()
+        ctrl4::bdu::States BDU)
     {
       i2c::Standard<I>::writeSlaveRegister(
           ADDRESS,
@@ -123,10 +121,7 @@ namespace lsm303dlhc {
      * @brief Sets the magnetometer data rate.
      */
     template<i2c::Address I>
-    template<
-        cra::do_::States DO_
-    >
-    void Functions<I>::setDataRate()
+    void Functions<I>::setDataRate(cra::do_::States DO_)
     {
       u32 tmp = i2c::Standard<I>::readSlaveRegister(
           ADDRESS,
@@ -142,10 +137,7 @@ namespace lsm303dlhc {
      * @brief Sets the magnetometer reading range.
      */
     template<i2c::Address I>
-    template<
-        crb::gn::States GN
-    >
-    void Functions<I>::setReadingRange()
+    void Functions<I>::setReadingRange(crb::gn::States GN)
     {
       i2c::Standard<I>::writeSlaveRegister(
           ADDRESS,
@@ -157,10 +149,7 @@ namespace lsm303dlhc {
      * @brief Sets the magnetometer sampling mode.
      */
     template<i2c::Address I>
-    template<
-        mr::md::States MD
-    >
-    void Functions<I>::setMode()
+    void Functions<I>::setMode(mr::md::States MD)
     {
       i2c::Standard<I>::writeSlaveRegister(
           ADDRESS,
