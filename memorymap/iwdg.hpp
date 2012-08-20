@@ -24,6 +24,10 @@
 #include "common.hpp"
 
 namespace iwdg {
+  enum {
+    ADDRESS = alias::APB1 + 0x3000
+  };
+
   struct Registers {
       __RW
       u32 KR;  // 0x00: Key
@@ -35,11 +39,27 @@ namespace iwdg {
       u32 SR;  // 0x0C: Status
   };
 
-  enum {
-    ADDRESS = alias::APB1 + 0x3000
-  };
+  namespace kr {
+    enum {
+      OFFSET = 0x00
+    };
+  }  // namespace kr
 
-  namespace registers {
-  // TODO IWDG register bits
-  }// namespace registers
+  namespace pr {
+    enum {
+      OFFSET = 0x04
+    };
+  }  // namespace pr
+
+  namespace rlr {
+    enum {
+      OFFSET = 0x08
+    };
+  }  // namespace rlr
+
+  namespace sr {
+    enum {
+      OFFSET = 0x0C
+    };
+  }  // namespace sr
 }  // namespace iwdg
