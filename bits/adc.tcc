@@ -72,7 +72,7 @@ namespace adc {
   void Functions<A>::enablePeripheral()
   {
     *(u32 volatile*) (bitband::peripheral<
-        A + cr1::OFFSET,
+        A + cr2::OFFSET,
         cr2::adon::POSITION
     >()) = 1;
   }
@@ -84,7 +84,7 @@ namespace adc {
   void Functions<A>::disablePeripheral()
   {
     *(u32 volatile*) (bitband::peripheral<
-        A + cr1::OFFSET,
+        A + cr2::OFFSET,
         cr2::adon::POSITION
     >()) = 0;
   }
