@@ -36,7 +36,7 @@ namespace clk {
    ****************************************************************************/
 
   /* Are you using an external high speed crystal, resonator or oscillator? ***/
-#define USING_HSE_CRYSTAL
+//#define USING_HSE_CRYSTAL
   /******* Comment the macro above to answer no, otherwise your answer is yes */
 
 #ifndef USING_HSE_CRYSTAL
@@ -158,7 +158,7 @@ namespace clk {
    ****************************************************************************/
 
   /* Do you want to use the PLL? **********************************************/
-#define USING_PLL
+//#define USING_PLL
   /******* Comment the macro above to answer no, otherwise your answer is yes */
 
 #ifdef USING_PLL
@@ -286,7 +286,7 @@ namespace clk {
 
   /* Select the system clock source *******************************************/
   rcc::cfgr::sw::States const __SW =
-      rcc::cfgr::sw::HSE_OSCILLATOR_SELECTED_AS_SYSTEM_CLOCK;
+      rcc::cfgr::sw::HSI_OSCILLATOR_SELECTED_AS_SYSTEM_CLOCK;
   /******************************************* Select the system clock source */
   /****************************************************************************
    *                                                                          *
@@ -446,8 +446,8 @@ namespace clk {
    * Define the prescaler parameters below ************************************/
   enum {
     __HPRE = 0,
-    __PPRE1 = 2,
-    __PPRE2 = 1,
+    __PPRE1 = 0,
+    __PPRE2 = 0,
   };
   /************************************ Define the prescaler parameters above */
 
