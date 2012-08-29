@@ -27,116 +27,117 @@
 #undef errno
 extern int errno;
 
-int _write(int, char *, int);
+extern "C" {
 
-/**
- * @brief Close a file
- * @note  Minimal implementation
- */
-int _close(int file)
-{
-  return -1;
-}
+  int _write(int, char *, int);
 
-/**
- * @brief End program execution with no cleanup processing
- */
-void _exit(int status)
-{
-  _write(1, "exit", 4);
-  while(1) {}
-}
+  /**
+   * @brief Close a file
+   * @note  Minimal implementation
+   */
+  int _close(int file)
+  {
+    return -1;
+  }
 
-/**
- * @brief Status of an open file
- * @note  Minimal implementation
- * @note  All files are regarded as character special devices
- */
-int _fstat(int file, struct stat *st)
-{
-  st->st_mode = S_IFCHR;
-  return 0;
-}
+  /**
+   * @brief End program execution with no cleanup processing
+   */
+  void _exit(int status)
+  {
+    _write(1, "exit", 4);
+    while (1) {
+    }
+  }
 
-/**
- * @brief Return process ID
- * @note  Minimal implementation
- */
-int _getpid(void)
-{
-  return 1;
-}
+  /**
+   * @brief Status of an open file
+   * @note  Minimal implementation
+   * @note  All files are regarded as character special devices
+   */
+  int _fstat(int file, struct stat *st)
+  {
+    st->st_mode = S_IFCHR;
+    return 0;
+  }
 
-/**
- * @brief Query whether output stream is a terminal.
- * @note Minimal implementation
- * @note Only support output to stdout
- */
-int _isatty(int file)
-{
-  return 1;
-}
+  /**
+   * @brief Return process ID
+   * @note  Minimal implementation
+   */
+  int _getpid(void)
+  {
+    return 1;
+  }
 
-/**
- * @brief Send a signal
- * @note  Minimal implementation
- */
-int _kill(int pid, int sig)
-{
-  errno = EINVAL;
-  return -1;
-}
+  /**
+   * @brief Query whether output stream is a terminal.
+   * @note Minimal implementation
+   * @note Only support output to stdout
+   */
+  int _isatty(int file)
+  {
+    return 1;
+  }
 
-/**
- * @brief Set position in a file
- * @note  Minimal implementation
- */
-int _lseek(int file, int ptr, int dir)
-{
-  return 0;
-}
+  /**
+   * @brief Send a signal
+   * @note  Minimal implementation
+   */
+  int _kill(int pid, int sig)
+  {
+    errno = EINVAL;
+    return -1;
+  }
 
-/**
- * @brief Read from a file
- * @note  Minimal implementation
- */
-int _read(int file, char *ptr, int len)
-{
-  return 0;
-}
+  /**
+   * @brief Set position in a file
+   * @note  Minimal implementation
+   */
+  int _lseek(int file, int ptr, int dir)
+  {
+    return 0;
+  }
 
-/**
- * @brief Increase program space
- * @note  For an stand-alone system
- */
-caddr_t _sbrk(int incr)
-{
-  extern char __bss_end__;
-  static char *heap_end;
-  char *prev_heap_end;
+  /**
+   * @brief Read from a file
+   * @note  Minimal implementation
+   */
+  int _read(int file, char *ptr, int len)
+  {
+    return 0;
+  }
 
-  if (heap_end == 0)
-  heap_end = &__bss_end__;
+  /**
+   * @brief Increase program space
+   * @note  For an stand-alone system
+   */
+  caddr_t _sbrk(int incr)
+  {
+    extern char __bss_end__;
+    static char *heapEnd = &__bss_end__;
 
-  prev_heap_end = heap_end;
+    char *previousHeapEnd = heapEnd;
 
-  // TODO Get stack pointer
-//  if (heap_end + incr > stack_ptr) {
-//    write(1, "Heap and stack collision\n", 25);
-//    abort();
-//  }
+    register caddr_t stackPointer asm ("sp");
 
-  heap_end += incr;
+    if (heapEnd + incr > stackPointer) {
+      _write(1, "Heap and stack collision\n", 25);
+      _exit(0);
+    }
 
-  return (caddr_t)prev_heap_end;
+    heapEnd += incr;
 
-}
+    return (caddr_t) previousHeapEnd;
+  }
 
-/**
- * @brief Write to a file
- */
-int _write(int file, char *ptr, int len)
-{
-  // TODO write should stream information via a serial port
-  return len;
-}
+  /**
+   * @brief Write to a file
+   */
+  int _write(int file, char *ptr, int len)
+  {
+    // TODO write should stream information via a serial port
+    return len;
+  }
+
+} // extern "C"
