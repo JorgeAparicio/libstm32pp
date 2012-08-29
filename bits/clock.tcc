@@ -24,7 +24,7 @@
 #include "peripheral/pwr.hpp"
 #include "cfunctions.hpp"
 
-namespace clock {
+namespace clk {
   /****************************************************************************
    *                                                                          *
    *                               CLOCK SOURCES                              *
@@ -607,7 +607,7 @@ static inline void initializeHse()
   u16 HseTimeoutCounter = 0;
   do {
     HseTimeoutCounter++;
-  }while ((HseTimeoutCounter != clock::__HSE_TIMEOUT) &&
+  }while ((HseTimeoutCounter != clk::__HSE_TIMEOUT) &&
       (!RCC::isHseStable()));
 }
 #endif // USING_HSE_CLOCK || USING_HSE_CRYSTAL
@@ -626,7 +626,7 @@ static inline void initializeLse()
   u16 LseTimeoutCounter = 0;
   do {
     LseTimeoutCounter++;
-  }while ((LseTimeoutCounter != clock::__LSE_TIMEOUT) &&
+  }while ((LseTimeoutCounter != clk::__LSE_TIMEOUT) &&
       (!RCC::isLseStable()));
 }
 #endif // USING_HSE_CLOCK || USING_HSE_CRYSTAL
@@ -856,4 +856,4 @@ void initialize()
 }
 #endif // USING_HSE_CLOCK || USING_HSE_CRYSTAL
 }
-}  // namespace clock
+}  // namespace clk
