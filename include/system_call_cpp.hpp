@@ -32,6 +32,15 @@ extern "C" {
   int _write(int, char *, int);
 
   /**
+   * @brief Opens a file
+   * @note  Minimal implementation
+   */
+  int _open(const char *name, int flags, int mode)
+  {
+    return -1;
+  }
+
+  /**
    * @brief Close a file
    * @note  Minimal implementation
    */
@@ -46,7 +55,7 @@ extern "C" {
   void _exit(int status)
   {
     _write(1, "exit", 4);
-    while (1) {
+    while (true) {
     }
   }
 
@@ -136,7 +145,40 @@ extern "C" {
    */
   int _write(int file, char *ptr, int len)
   {
-    // TODO write should stream information via a serial port
+    for (int i = 0; i < len; i++) {
+#if STDOUT_USART == 1
+      while (!USART1::canSendDataYet()) {
+
+      }
+      USART1::sendData(*ptr++);
+#elif STDOUT_USART == 2
+      while (!USART2::canSendDataYet()) {
+
+      }
+      USART2::sendData(*ptr++);
+#elif STDOUT_USART == 3
+      while (!USART3::canSendDataYet()) {
+
+      }
+      USART3::sendData(*ptr++);
+#elif STDOUT_USART == 4
+      while (!USART4::canSendDataYet()) {
+
+      }
+      USART4::sendData(*ptr++);
+#elif STDOUT_USART == 5
+      while (!USART5::canSendDataYet()) {
+
+      }
+      USART5::sendData(*ptr++);
+#elif STDOUT_USART == 6
+      while (!USART6::canSendDataYet()) {
+
+      }
+      USART6::sendData(*ptr++);
+#endif
+    }
+
     return len;
   }
 

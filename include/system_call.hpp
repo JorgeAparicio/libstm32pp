@@ -21,4 +21,9 @@
 
 #pragma once
 
+#include "peripheral/usart.hpp"
+
+/* Choose a USART port (1-6) for standard output */
+#define STDOUT_USART 6
+
 // TODO Implement serial port selector for read/write functions
