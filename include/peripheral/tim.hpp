@@ -64,8 +64,8 @@ namespace tim {
       enum {
         FREQUENCY =
         u32(A) > u32(alias::APB2) ?
-                                    clock::APB2_TIMERS :
-                                    clock::APB1_TIMERS
+                                    clk::APB2_TIMERS :
+                                    clk::APB1_TIMERS
       };
 
       static inline void enableClock();

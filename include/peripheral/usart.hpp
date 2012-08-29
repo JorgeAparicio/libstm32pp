@@ -52,8 +52,8 @@ namespace usart {
       enum {
         FREQUENCY =
         u32(U) > u32(alias::APB2) ?
-                                    clock::APB2 :
-                                    clock::APB1
+                                    clk::APB2 :
+                                    clk::APB1
       };
 
       static inline void enableClock();

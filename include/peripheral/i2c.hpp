@@ -46,7 +46,7 @@ namespace i2c {
   class Standard {
     public:
       enum {
-        FREQUENCY = clock::APB1
+        FREQUENCY = clk::APB1
       };
 
       static inline void configure(
