@@ -42,15 +42,15 @@ namespace l3gd20 {
   class Functions {
     public:
       static void configure(
-          l3gd20::ctrl_reg1::xen::States,
-          l3gd20::ctrl_reg1::yen::States,
-          l3gd20::ctrl_reg1::zen::States,
-          l3gd20::ctrl_reg1::pd::States,
-          l3gd20::ctrl_reg1::bw_odr::States,
-          l3gd20::ctrl_reg4::sim::States,
-          l3gd20::ctrl_reg4::fs::States,
-          l3gd20::ctrl_reg4::ble::States,
-          l3gd20::ctrl_reg4::bdu::States);
+          l3gd20::ctrl1::xen::States,
+          l3gd20::ctrl1::yen::States,
+          l3gd20::ctrl1::zen::States,
+          l3gd20::ctrl1::pd::States,
+          l3gd20::ctrl1::bw_odr::States,
+          l3gd20::ctrl4::sim::States,
+          l3gd20::ctrl4::fs::States,
+          l3gd20::ctrl4::ble::States,
+          l3gd20::ctrl4::bdu::States);
 
       static inline u8 readXLow();
       static inline u8 readXHigh();

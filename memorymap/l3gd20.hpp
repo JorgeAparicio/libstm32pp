@@ -33,7 +33,7 @@ namespace l3gd20 {
     };
   }  // namespace who_am_i
 
-  namespace ctrl_reg1 {
+  namespace ctrl1 {
     enum {
       ADDRESS = 0x20
     };
@@ -124,21 +124,21 @@ namespace l3gd20 {
         DATA_RATE_760HZ_CUTOFF_100 = 0b1111 << POSITION,
       };
     }  // namespace bw_odr
-  }  // namespace ctrl_reg1
+  }  // namespace ctrl1
 
-  namespace ctrl_reg2 {
+  namespace ctrl2 {
     enum {
       ADDRESS = 0x21
     };
-  }  // namespace ctrl_reg2
+  }  // namespace ctrl2
 
-  namespace ctrl_reg3 {
+  namespace ctrl3 {
     enum {
       ADDRESS = 0x22
     };
-  }  // namespace ctrl_reg3
+  }  // namespace ctrl3
 
-  namespace ctrl_reg4 {
+  namespace ctrl4 {
     enum {
       ADDRESS = 0x23
     };
@@ -187,13 +187,13 @@ namespace l3gd20 {
         DATA_BLOCKED_UNTIL_READ = 1 << POSITION
       };
     }  // namespace bdu
-  }  // namespace ctrl_reg4
+  }  // namespace ctrl4
 
-  namespace ctrl_reg5 {
+  namespace ctrl5 {
     enum {
       ADDRESS = 0x24
     };
-  }  // namespace ctrl_reg5
+  }  // namespace ctrl5
 
   namespace out_temp {
     enum {
@@ -201,11 +201,11 @@ namespace l3gd20 {
     };
   }  // namespace out_temp
 
-  namespace status_reg {
+  namespace status {
     enum {
       ADDRESS = 0x27
     };
-  }  // namespace status_reg
+  }  // namespace status
 
   namespace out_x_l {
     enum {
@@ -243,17 +243,17 @@ namespace l3gd20 {
     };
   }  // namespace out_z_h
 
-  namespace fifo_ctrl_reg {
+  namespace fifo_ctrl {
     enum {
       ADDRESS = 0x2E
     };
-  }  // namespace fifo_ctrl_reg
+  }  // namespace fifo_ctrl
 
-  namespace fifo_src_reg {
+  namespace fifo_src {
     enum {
       ADDRESS = 0x2F
     };
-  }  // namespace fifo_src_reg
+  }  // namespace fifo_src
 
   namespace int1_cfg {
     enum {

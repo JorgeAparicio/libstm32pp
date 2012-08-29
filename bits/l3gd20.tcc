@@ -27,23 +27,23 @@ namespace l3gd20 {
       Address A
   >
   void Functions<I, A>::configure(
-      l3gd20::ctrl_reg1::xen::States XEN,
-      l3gd20::ctrl_reg1::yen::States YEN,
-      l3gd20::ctrl_reg1::zen::States ZEN,
-      l3gd20::ctrl_reg1::pd::States PD,
-      l3gd20::ctrl_reg1::bw_odr::States DR_BW,
-      l3gd20::ctrl_reg4::sim::States SIM,
-      l3gd20::ctrl_reg4::fs::States FS,
-      l3gd20::ctrl_reg4::ble::States BLE,
-      l3gd20::ctrl_reg4::bdu::States BDU)
+      l3gd20::ctrl1::xen::States XEN,
+      l3gd20::ctrl1::yen::States YEN,
+      l3gd20::ctrl1::zen::States ZEN,
+      l3gd20::ctrl1::pd::States PD,
+      l3gd20::ctrl1::bw_odr::States DR_BW,
+      l3gd20::ctrl4::sim::States SIM,
+      l3gd20::ctrl4::fs::States FS,
+      l3gd20::ctrl4::ble::States BLE,
+      l3gd20::ctrl4::bdu::States BDU)
   {
     i2c::Standard<I>::writeSlaveRegister(
         A,
-        ctrl_reg1::ADDRESS,
+        ctrl1::ADDRESS,
         PD + DR_BW + XEN + YEN + ZEN);
     i2c::Standard<I>::writeSlaveRegister(
         A,
-        ctrl_reg4::ADDRESS,
+        ctrl4::ADDRESS,
         SIM + FS + BLE + BDU);
   }
 
