@@ -57,7 +57,7 @@ namespace clk {
 
   /* Insert the allowed HSE clock stabilization's time (in cycles) ************/
   enum {
-    __HSE_TIMEOUT = 0x800
+    __HSE_TIMEOUT = 0x8000
   };
   /************ Insert the allowed HSE clock stabilization's time (in cycles) */
 
@@ -90,7 +90,7 @@ namespace clk {
 
   /* Insert the allowed LSE clock stabilization's time (in cycles) ************/
   enum {
-    __LSE_TIMEOUT = 0x800
+    __LSE_TIMEOUT = 0x8000
   };
   /************ Insert the allowed LSE clock stabilization's time (in cycles) */
 
