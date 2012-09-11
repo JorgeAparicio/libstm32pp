@@ -147,6 +147,8 @@ namespace dma {
       static inline void enableClock();
       static inline void enablePeripheral();
       static inline void disablePeripheral();
+      static inline void enableGlobalInterrupts();
+      static inline void disableGlobalInterrupts();
       static inline void setNumberOfTransactions(u16 const);
       static inline void setPeripheralAddress(void volatile* const);
       static inline void setPeripheralAddress(void* const);
@@ -181,6 +183,8 @@ namespace dma {
         static inline void enableClock();
         static inline void enablePeripheral();
         static inline void disablePeripheral();
+        static inline void enableGlobalInterrupts();
+        static inline void disableGlobalInterrupts();
         static inline bool isEnabled();
         static inline void setNumberOfTransactions(u16 const);
         static inline void setPeripheralAddress(void volatile* const);

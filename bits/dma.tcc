@@ -23,6 +23,7 @@
 
 #include "bitband.hpp"
 #include "../include/peripheral/rcc.hpp"
+#include "../include/core/nvic.hpp"
 
 namespace dma {
   namespace common {
@@ -89,11 +90,11 @@ namespace dma {
     {
       switch (D) {
         case dma::common::DMA1:
-        RCC::enableClocks<rcc::ahbenr::DMA1>();
-        break;
+          RCC::enableClocks<rcc::ahbenr::DMA1>();
+          break;
         case dma::common::DMA2:
-        RCC::enableClocks<rcc::ahbenr::DMA2>();
-        break;
+          RCC::enableClocks<rcc::ahbenr::DMA2>();
+          break;
       }
     }
 
@@ -106,7 +107,7 @@ namespace dma {
       *(u32 volatile*) (bitband::peripheral<
           D + C + cr::OFFSET,
           cr::en::POSITION
-          >()) = 1;
+      >()) = 1;
     }
 
     /**
@@ -118,7 +119,190 @@ namespace dma {
       *(u32 volatile*) (bitband::peripheral<
           D + C + cr::OFFSET,
           cr::en::POSITION
-          >()) = 0;
+      >()) = 0;
+    }
+
+    /**
+     * @brief Enables all the DMA stream interrupts.
+     */
+    template<dma::common::Address D, Address S>
+    void Functions<D, S>::enableGlobalInterrupts()
+    {
+      switch (D) {
+        case common::DMA1:
+          switch (S) {
+            case CHANNEL_1:
+              NVIC::enableInterrupt<
+                  nvic::irqn::DMA1_Channel1
+              >();
+              break;
+            case CHANNEL_2:
+              NVIC::enableInterrupt<
+                  nvic::irqn::DMA1_Channel2
+              >();
+              break;
+            case CHANNEL_3:
+              NVIC::enableInterrupt<
+                  nvic::irqn::DMA1_Channel3
+              >();
+              break;
+            case CHANNEL_4:
+              NVIC::enableInterrupt<
+                  nvic::irqn::DMA1_Channel4
+              >();
+              break;
+            case CHANNEL_5:
+              NVIC::enableInterrupt<
+                  nvic::irqn::DMA1_Channel5
+              >();
+              break;
+            case CHANNEL_6:
+              NVIC::enableInterrupt<
+                  nvic::irqn::DMA1_Channel6
+              >();
+              break;
+            case CHANNEL_7:
+              NVIC::enableInterrupt<
+                  nvic::irqn::DMA1_Channel7
+              >();
+              break;
+          }
+          break;
+        case common::DMA2:
+          switch (S) {
+            case CHANNEL_1:
+              NVIC::enableInterrupt<
+                  nvic::irqn::DMA2_Channel1
+              >();
+              break;
+            case CHANNEL_2:
+              NVIC::enableInterrupt<
+                  nvic::irqn::DMA2_Channel2
+              >();
+              break;
+            case CHANNEL_3:
+              NVIC::enableInterrupt<
+                  nvic::irqn::DMA2_Channel3
+              >();
+              break;
+#ifdef CONNECTIVITY_LINE
+            case CHANNEL_4:
+              NVIC::enableInterrupt<
+                  nvic::irqn::DMA2_Channel4
+              >();
+              break;
+            case CHANNEL_5:
+              NVIC::enableInterrupt<
+                  nvic::irqn::DMA2_Channel5
+              >();
+              break;
+#else // CONNECTIVITY_LINE
+              case CHANNEL_4:
+              NVIC::enableInterrupt<
+              nvic::irqn::DMA2_Channel4_5
+              >();
+              break;
+              case CHANNEL_5:
+              NVIC::enableInterrupt<
+              nvic::irqn::DMA2_Channel4_5
+              >();
+              break;
+#endif // CONNECTIVITY_LINE
+          }
+          break;
+      }
+    }
+
+    /**
+     * @brief Disables all the DMA stream interrupts.
+     */
+    template<dma::common::Address D, Address S>
+    void Functions<D, S>::disableGlobalInterrupts()
+    {
+
+      switch (D) {
+        case common::DMA1:
+          switch (S) {
+            case CHANNEL_1:
+              NVIC::disableInterrupt<
+                  nvic::irqn::DMA1_Channel1
+              >();
+              break;
+            case CHANNEL_2:
+              NVIC::disableInterrupt<
+                  nvic::irqn::DMA1_Channel2
+              >();
+              break;
+            case CHANNEL_3:
+              NVIC::disableInterrupt<
+                  nvic::irqn::DMA1_Channel3
+              >();
+              break;
+            case CHANNEL_4:
+              NVIC::disableInterrupt<
+                  nvic::irqn::DMA1_Channel4
+              >();
+              break;
+            case CHANNEL_5:
+              NVIC::disableInterrupt<
+                  nvic::irqn::DMA1_Channel5
+              >();
+              break;
+            case CHANNEL_6:
+              NVIC::disableInterrupt<
+                  nvic::irqn::DMA1_Channel6
+              >();
+              break;
+            case CHANNEL_7:
+              NVIC::disableInterrupt<
+                  nvic::irqn::DMA1_Channel7
+              >();
+              break;
+          }
+          break;
+        case common::DMA2:
+          switch (S) {
+            case CHANNEL_1:
+              NVIC::disableInterrupt<
+                  nvic::irqn::DMA2_Channel1
+              >();
+              break;
+            case CHANNEL_2:
+              NVIC::disableInterrupt<
+                  nvic::irqn::DMA2_Channel2
+              >();
+              break;
+            case CHANNEL_3:
+              NVIC::disableInterrupt<
+                  nvic::irqn::DMA2_Channel3
+              >();
+              break;
+#ifdef CONNECTIVITY_LINE
+            case CHANNEL_4:
+              NVIC::disableInterrupt<
+                  nvic::irqn::DMA2_Channel4
+              >();
+              break;
+            case CHANNEL_5:
+              NVIC::disableInterrupt<
+                  nvic::irqn::DMA2_Channel5
+              >();
+              break;
+#else // CONNECTIVITY_LINE
+              case CHANNEL_4:
+              static_assert(S != CHANNEL_4,
+                  "Don't use this function, "
+                  "use NVIC::disableInterrupts() instead.");
+              break;
+              case CHANNEL_5:
+              static_assert(S != CHANNEL_5,
+                  "Don't use this function, "
+                  "use NVIC::disableInterrupts() instead.");
+              break;
+#endif // CONNECTIVITY_LINE
+          }
+          break;
+      }
     }
 
     /**
@@ -241,8 +425,8 @@ namespace dma {
         cr::mem2mem::States MEM2MEM)
     {
       reinterpret_cast<Registers*>(D + C)->CCR =
-      TCIE + HTIE + TEIE + DIR + CIRC + PINC + MINC + PSIZE + MSIZE +
-      PL + MEM2MEM;
+          TCIE + HTIE + TEIE + DIR + CIRC + PINC + MINC + PSIZE + MSIZE +
+              PL + MEM2MEM;
     }
   }  //namespace chanel
 #else
@@ -256,11 +440,11 @@ namespace dma {
     {
       switch (D) {
         case dma::common::DMA1:
-          RCC::enableClocks<rcc::ahb1enr::DMA1>();
-          break;
+        RCC::enableClocks<rcc::ahb1enr::DMA1>();
+        break;
         case dma::common::DMA2:
-          RCC::enableClocks<rcc::ahb1enr::DMA2>();
-          break;
+        RCC::enableClocks<rcc::ahb1enr::DMA2>();
+        break;
       }
     }
 
@@ -273,7 +457,7 @@ namespace dma {
       *(u32 volatile*) (bitband::peripheral<
           D + S + cr::OFFSET,
           cr::en::POSITION
-      >()) = 1;
+          >()) = 1;
     }
 
     /**
@@ -285,7 +469,204 @@ namespace dma {
       *(u32 volatile*) (bitband::peripheral<
           D + S + cr::OFFSET,
           cr::en::POSITION
-      >()) = 0;
+          >()) = 0;
+    }
+
+    /**
+     * @brief Enables all the DMA stream interrupts.
+     */
+    template<dma::common::Address D, Address S>
+    void Functions<D, S>::enableGlobalInterrupts()
+    {
+      switch (D) {
+        case common::DMA1:
+        switch (S) {
+          case STREAM_0:
+          NVIC::enableInterrupt<
+          nvic::irqn::DMA1_Stream0
+          >();
+          break;
+          case STREAM_1:
+          NVIC::enableInterrupt<
+          nvic::irqn::DMA1_Stream1
+          >();
+          break;
+          case STREAM_2:
+          NVIC::enableInterrupt<
+          nvic::irqn::DMA1_Stream2
+          >();
+          break;
+          case STREAM_3:
+          NVIC::enableInterrupt<
+          nvic::irqn::DMA1_Stream3
+          >();
+          break;
+          case STREAM_4:
+          NVIC::enableInterrupt<
+          nvic::irqn::DMA1_Stream4
+          >();
+          break;
+          case STREAM_5:
+          NVIC::enableInterrupt<
+          nvic::irqn::DMA1_Stream5
+          >();
+          break;
+          case STREAM_6:
+          NVIC::enableInterrupt<
+          nvic::irqn::DMA1_Stream6
+          >();
+          break;
+          case STREAM_7:
+          NVIC::enableInterrupt<
+          nvic::irqn::DMA1_Stream7
+          >();
+          break;
+        }
+        break;
+        case common::DMA2:
+        switch (S) {
+          case STREAM_0:
+          NVIC::enableInterrupt<
+          nvic::irqn::DMA2_Stream0
+          >();
+          break;
+          case STREAM_1:
+          NVIC::enableInterrupt<
+          nvic::irqn::DMA2_Stream1
+          >();
+          break;
+          case STREAM_2:
+          NVIC::enableInterrupt<
+          nvic::irqn::DMA2_Stream2
+          >();
+          break;
+          case STREAM_3:
+          NVIC::enableInterrupt<
+          nvic::irqn::DMA2_Stream3
+          >();
+          break;
+          case STREAM_4:
+          NVIC::enableInterrupt<
+          nvic::irqn::DMA2_Stream4
+          >();
+          break;
+          case STREAM_5:
+          NVIC::enableInterrupt<
+          nvic::irqn::DMA2_Stream5
+          >();
+          break;
+          case STREAM_6:
+          NVIC::enableInterrupt<
+          nvic::irqn::DMA2_Stream6
+          >();
+          break;
+          case STREAM_7:
+          NVIC::enableInterrupt<
+          nvic::irqn::DMA2_Stream7
+          >();
+          break;
+        }
+        break;
+      }
+    }
+
+    /**
+     * @brief Disables all the DMA stream interrupts.
+     */
+    template<dma::common::Address D, Address S>
+    void Functions<D, S>::disableGlobalInterrupts()
+    {
+
+      switch (D) {
+        case common::DMA1:
+        switch (S) {
+          case STREAM_0:
+          NVIC::disableInterrupt<
+          nvic::irqn::DMA1_Stream0
+          >();
+          break;
+          case STREAM_1:
+          NVIC::disableInterrupt<
+          nvic::irqn::DMA1_Stream1
+          >();
+          break;
+          case STREAM_2:
+          NVIC::disableInterrupt<
+          nvic::irqn::DMA1_Stream2
+          >();
+          break;
+          case STREAM_3:
+          NVIC::disableInterrupt<
+          nvic::irqn::DMA1_Stream3
+          >();
+          break;
+          case STREAM_4:
+          NVIC::disableInterrupt<
+          nvic::irqn::DMA1_Stream4
+          >();
+          break;
+          case STREAM_5:
+          NVIC::disableInterrupt<
+          nvic::irqn::DMA1_Stream5
+          >();
+          break;
+          case STREAM_6:
+          NVIC::disableInterrupt<
+          nvic::irqn::DMA1_Stream6
+          >();
+          break;
+          case STREAM_7:
+          NVIC::disableInterrupt<
+          nvic::irqn::DMA1_Stream7
+          >();
+          break;
+        }
+        break;
+        case common::DMA2:
+        switch (S) {
+          case STREAM_0:
+          NVIC::disableInterrupt<
+          nvic::irqn::DMA2_Stream0
+          >();
+          break;
+          case STREAM_1:
+          NVIC::disableInterrupt<
+          nvic::irqn::DMA2_Stream1
+          >();
+          break;
+          case STREAM_2:
+          NVIC::disableInterrupt<
+          nvic::irqn::DMA2_Stream2
+          >();
+          break;
+          case STREAM_3:
+          NVIC::disableInterrupt<
+          nvic::irqn::DMA2_Stream3
+          >();
+          break;
+          case STREAM_4:
+          NVIC::disableInterrupt<
+          nvic::irqn::DMA2_Stream4
+          >();
+          break;
+          case STREAM_5:
+          NVIC::disableInterrupt<
+          nvic::irqn::DMA2_Stream5
+          >();
+          break;
+          case STREAM_6:
+          NVIC::disableInterrupt<
+          nvic::irqn::DMA2_Stream6
+          >();
+          break;
+          case STREAM_7:
+          NVIC::disableInterrupt<
+          nvic::irqn::DMA2_Stream7
+          >();
+          break;
+        }
+        break;
+      }
     }
 
     /**
@@ -298,7 +679,7 @@ namespace dma {
       return *(u32 volatile*) (bitband::peripheral<
           D + S + cr::OFFSET,
           cr::en::POSITION
-      >());
+          >());
     }
 
     /**
@@ -358,16 +739,16 @@ namespace dma {
 
       *(u32 volatile*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::hifcr::OFFSET :
-                        D + dma::common::lifcr::OFFSET),
+              D + dma::common::hifcr::OFFSET :
+              D + dma::common::lifcr::OFFSET),
           (Stream % 4 == 0 ?
-                             0 :
-                             (Stream % 4 == 1 ?
-                                                6 :
-                                                (Stream % 4 == 2 ?
-                                                                   16 :
-                                                                   22)))
-      >()) = 1;
+              0 :
+              (Stream % 4 == 1 ?
+                  6 :
+                  (Stream % 4 == 2 ?
+                      16 :
+                      22)))
+          >()) = 1;
     }
 
     /**
@@ -384,16 +765,16 @@ namespace dma {
 
       return *(u32 volatile*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::hisr::OFFSET :
-                        D + dma::common::lisr::OFFSET),
+              D + dma::common::hisr::OFFSET :
+              D + dma::common::lisr::OFFSET),
           (Stream % 4 == 0 ?
-                             0 :
-                             (Stream % 4 == 1 ?
-                                                6 :
-                                                (Stream % 4 == 2 ?
-                                                                   16 :
-                                                                   22)))
-      >());
+              0 :
+              (Stream % 4 == 1 ?
+                  6 :
+                  (Stream % 4 == 2 ?
+                      16 :
+                      22)))
+          >());
     }
 
     /**
@@ -408,16 +789,16 @@ namespace dma {
 
       *(u32 volatile*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::hifcr::OFFSET :
-                        D + dma::common::lifcr::OFFSET),
+              D + dma::common::hifcr::OFFSET :
+              D + dma::common::lifcr::OFFSET),
           (Stream % 4 == 0 ?
-                             2 :
-                             (Stream % 4 == 1 ?
-                                                8 :
-                                                (Stream % 4 == 2 ?
-                                                                   18 :
-                                                                   24)))
-      >()) = 1;
+              2 :
+              (Stream % 4 == 1 ?
+                  8 :
+                  (Stream % 4 == 2 ?
+                      18 :
+                      24)))
+          >()) = 1;
     }
 
     /**
@@ -434,16 +815,16 @@ namespace dma {
 
       return *(u32 volatile*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::hisr::OFFSET :
-                        D + dma::common::lisr::OFFSET),
+              D + dma::common::hisr::OFFSET :
+              D + dma::common::lisr::OFFSET),
           (Stream % 4 == 0 ?
-                             2 :
-                             (Stream % 4 == 1 ?
-                                                8 :
-                                                (Stream % 4 == 2 ?
-                                                                   18 :
-                                                                   24)))
-      >());
+              2 :
+              (Stream % 4 == 1 ?
+                  8 :
+                  (Stream % 4 == 2 ?
+                      18 :
+                      24)))
+          >());
     }
 
     /**
@@ -458,16 +839,16 @@ namespace dma {
 
       *(u32 volatile*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::hifcr::OFFSET :
-                        D + dma::common::lifcr::OFFSET),
+              D + dma::common::hifcr::OFFSET :
+              D + dma::common::lifcr::OFFSET),
           (Stream % 4 == 0 ?
-                             3 :
-                             (Stream % 4 == 1 ?
-                                                9 :
-                                                (Stream % 4 == 2 ?
-                                                                   19 :
-                                                                   25)))
-      >()) = 1;
+              3 :
+              (Stream % 4 == 1 ?
+                  9 :
+                  (Stream % 4 == 2 ?
+                      19 :
+                      25)))
+          >()) = 1;
     }
 
     /**
@@ -484,16 +865,16 @@ namespace dma {
 
       return *(u32 volatile*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::hisr::OFFSET :
-                        D + dma::common::lisr::OFFSET),
+              D + dma::common::hisr::OFFSET :
+              D + dma::common::lisr::OFFSET),
           (Stream % 4 == 0 ?
-                             3 :
-                             (Stream % 4 == 1 ?
-                                                9 :
-                                                (Stream % 4 == 2 ?
-                                                                   19 :
-                                                                   25)))
-      >());
+              3 :
+              (Stream % 4 == 1 ?
+                  9 :
+                  (Stream % 4 == 2 ?
+                      19 :
+                      25)))
+          >());
     }
 
     /**
@@ -508,16 +889,16 @@ namespace dma {
 
       *(u32 volatile*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::hifcr::OFFSET :
-                        D + dma::common::lifcr::OFFSET),
+              D + dma::common::hifcr::OFFSET :
+              D + dma::common::lifcr::OFFSET),
           (Stream % 4 == 0 ?
-                             4 :
-                             (Stream % 4 == 1 ?
-                                                10 :
-                                                (Stream % 4 == 2 ?
-                                                                   20 :
-                                                                   26)))
-      >()) = 1;
+              4 :
+              (Stream % 4 == 1 ?
+                  10 :
+                  (Stream % 4 == 2 ?
+                      20 :
+                      26)))
+          >()) = 1;
     }
 
     /**
@@ -534,16 +915,16 @@ namespace dma {
 
       return *(u32 volatile*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::hisr::OFFSET :
-                        D + dma::common::lisr::OFFSET),
+              D + dma::common::hisr::OFFSET :
+              D + dma::common::lisr::OFFSET),
           (Stream % 4 == 0 ?
-                             4 :
-                             (Stream % 4 == 1 ?
-                                                10 :
-                                                (Stream % 4 == 2 ?
-                                                                   20 :
-                                                                   26)))
-      >());
+              4 :
+              (Stream % 4 == 1 ?
+                  10 :
+                  (Stream % 4 == 2 ?
+                      20 :
+                      26)))
+          >());
     }
 
     /**
@@ -558,16 +939,16 @@ namespace dma {
 
       *(u32 volatile*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::hifcr::OFFSET :
-                        D + dma::common::lifcr::OFFSET),
+              D + dma::common::hifcr::OFFSET :
+              D + dma::common::lifcr::OFFSET),
           (Stream % 4 == 0 ?
-                             5 :
-                             (Stream % 4 == 1 ?
-                                                11 :
-                                                (Stream % 4 == 2 ?
-                                                                   21 :
-                                                                   27)))
-      >()) = 1;
+              5 :
+              (Stream % 4 == 1 ?
+                  11 :
+                  (Stream % 4 == 2 ?
+                      21 :
+                      27)))
+          >()) = 1;
     }
 
     /**
@@ -584,16 +965,16 @@ namespace dma {
 
       return *(u32 volatile*) (bitband::peripheral<
           (Stream > 3 ?
-                        D + dma::common::hisr::OFFSET :
-                        D + dma::common::lisr::OFFSET),
+              D + dma::common::hisr::OFFSET :
+              D + dma::common::lisr::OFFSET),
           (Stream % 4 == 0 ?
-                             5 :
-                             (Stream % 4 == 1 ?
-                                                11 :
-                                                (Stream % 4 == 2 ?
-                                                                   21 :
-                                                                   27)))
-      >());
+              5 :
+              (Stream % 4 == 1 ?
+                  11 :
+                  (Stream % 4 == 2 ?
+                      21 :
+                      27)))
+          >());
     }
 
     /**
@@ -607,7 +988,7 @@ namespace dma {
       return *(u32 volatile*) (bitband::peripheral<
           D + S + cr::OFFSET,
           cr::ct::POSITION
-      >());
+          >());
     }
 
     /**
@@ -637,9 +1018,9 @@ namespace dma {
         cr::chsel::States CHSEL)
     {
       reinterpret_cast<stream::Registers*>(D + S)->CR =
-          DMEIE + TEIE + HTIE + TCIE + PFCTRL + DIR + CIRC + PINC +
-              MINC + PSIZE + MSIZE + PINCOS + PL + DBM + CT + PBURST +
-              MBURST + CHSEL;
+      DMEIE + TEIE + HTIE + TCIE + PFCTRL + DIR + CIRC + PINC +
+      MINC + PSIZE + MSIZE + PINCOS + PL + DBM + CT + PBURST +
+      MBURST + CHSEL;
     }
 
     /**
