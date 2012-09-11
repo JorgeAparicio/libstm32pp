@@ -119,7 +119,7 @@ namespace nvic {
       EXTI9_5 = 23,
   #ifdef VALUE_LINE
       TIM1_BRK_TIM15 = 24,
-      TIM1_UP_TIM6 = 25,
+      TIM1_UP_TIM16 = 25,
       TIM1_TRG_COM_TIM17 = 26,
   #elif defined XL_DENSITY || \
         defined STM32F2XX || \
@@ -182,9 +182,9 @@ namespace nvic {
 
   #elif defined STM32F2XX || \
         defined STM32F4XX
-      ADC3 = 47,
-  #else
       DMA1_Stream7 = 47,
+  #else
+      ADC3 = 47,
   #endif
   #ifndef CONNECTIVITY_LINE
       FSMC = 48,
