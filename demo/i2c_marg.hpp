@@ -32,6 +32,10 @@ typedef USART6 USART;
 typedef PC6 TX;
 typedef PC7 RX;
 
+#include "peripheral/dma.hpp"
+
+typedef DMA2_STREAM7 DMA_U6TX;
+
 #include "peripheral/i2c.hpp"
 
 typedef I2C1 I2C;
@@ -63,6 +67,8 @@ union {
 
 int main()
 {
+  clk::initialize();
+
   // USART CONFIGURATION
   GPIOC::enableClock();
   TX::setAlternateFunction(gpio::afr::USART4_6);
@@ -90,7 +96,7 @@ int main()
       usart::cr3::eie::ERROR_INTERRUPT_DISABLED,
       usart::cr3::hdsel::FULL_DUPLEX,
       usart::cr3::dmar::RECEIVER_DMA_DISABLED,
-      usart::cr3::dmat::TRANSMITTER_DMA_DISABLED,
+      usart::cr3::dmat::TRANSMITTER_DMA_ENABLED,
       usart::cr3::rtse::RTS_HARDWARE_FLOW_DISABLED,
       usart::cr3::ctse::CTS_HARDWARE_FLOW_DISABLED,
       usart::cr3::ctsie::CTS_INTERRUPT_DISABLED,
@@ -128,10 +134,10 @@ int main()
       400000 /* Hz */
   >();
 
-// TIMER CONFIGURATION
+  // TIMER CONFIGURATION
   TIM6::enableClock();
   TIM6::configurePeriodicInterrupt<
-      10 /* Hz */
+      100 /* Hz */
   >();
   NVIC::enableInterrupt<
       nvic::irqn::TIM6_DAC
@@ -150,7 +156,7 @@ int main()
       lsm303dlhc::accelerometer::ctrl4::ble::LITTLE_ENDIAN_DATA_FORMAT,
       lsm303dlhc::accelerometer::ctrl4::bdu::CONTINUOUS_UPDATE);
 
-// GYROSCOPE CONFIGURATION
+  // GYROSCOPE CONFIGURATION
   Gyroscope::configure(
       l3gd20::ctrl1::xen::X_AXIS_ENABLED,
       l3gd20::ctrl1::yen::Y_AXIS_ENABLED,
@@ -162,13 +168,39 @@ int main()
       l3gd20::ctrl4::ble::LITTLE_ENDIAN_FORMAT,
       l3gd20::ctrl4::bdu::CONTINUOUS_UPDATE);
 
-// MAGNETOMETER CONFIGURATION
+  // MAGNETOMETER CONFIGURATION
   Magnetometer::setMode(
       lsm303dlhc::magnetometer::mr::md::CONTINOUS_CONVERSION);
   Magnetometer::setReadingRange(
       lsm303dlhc::magnetometer::crb::gn::PLUS_MINUS_1_DOT_3_GAUSS);
   Magnetometer::setDataRate(
       lsm303dlhc::magnetometer::cra::do_::_220_HZ);
+
+  // DMA CONFIGURATION
+  DMA_U6TX::enableClock();
+
+  DMA_U6TX::configure(
+      dma::stream::cr::dmeie::DIRECT_MODE_ERROR_INTERRUPT_DISABLED,
+      dma::stream::cr::teie::TRANSFER_ERROR_INTERRUPT_DISABLED,
+      dma::stream::cr::htie::HALF_TRANSFER_INTERRUPT_DISABLED,
+      dma::stream::cr::tcie::TRANSFER_COMPLETE_INTERRUPT_DISABLED,
+      dma::stream::cr::pfctrl::DMA_FLOW_CONTROLLER,
+      dma::stream::cr::dir::MEMORY_TO_PERIPHERAL,
+      dma::stream::cr::circ::CIRCULAR_MODE_DISABLED,
+      dma::stream::cr::pinc::PERIPHERAL_INCREMENT_MODE_DISABLED,
+      dma::stream::cr::minc::MEMORY_INCREMENT_MODE_ENABLED,
+      dma::stream::cr::psize::PERIPHERAL_SIZE_8BITS,
+      dma::stream::cr::msize::MEMORY_SIZE_8BITS,
+      dma::stream::cr::pincos::PERIPHERAL_INCREMENT_OFFSET_SIZE_32BITS,
+      dma::stream::cr::pl::PRIORITY_LEVEL_MEDIUM,
+      dma::stream::cr::dbm::DOUBLE_BUFFER_MODE_DISABLED,
+      dma::stream::cr::ct::CURRENT_TARGET_MEMORY_0,
+      dma::stream::cr::pburst::PERIPHERAL_BURST_TRANSFER_SINGLE,
+      dma::stream::cr::mburst::MEMORY_BURST_TRANSFER_SINGLE,
+      dma::stream::cr::chsel::CHANNEL_5);
+
+  DMA_U6TX::setMemory0Address(&reading);
+  DMA_U6TX::setPeripheralAddress(&USART6_REGS->DR);
 
   TIM6::startCounter();
 
@@ -197,7 +229,9 @@ int main()
       reading[8].bytes[0] = Magnetometer::readZLow();
       reading[8].bytes[1] = Magnetometer::readZHigh();
 
-      // TODO SEND READINGS THROUGH USART
+      DMA_U6TX::clearTransferCompleteFlag();
+      DMA_U6TX::setNumberOfTransactions(sizeof(reading));
+      DMA_U6TX::enablePeripheral();
     }
   }
 }
