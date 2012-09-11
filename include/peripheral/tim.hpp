@@ -80,6 +80,8 @@ namespace tim {
       static inline void setCounter(u16 const);
       static inline u16 getCounter();
       static inline void generateUpdate();
+      static inline void enableGlobalInterrupt();
+      static inline void disableGlobalInterrupt();
       static inline void enableUpdateInterrupt();
       static inline void disableUpdateInterrupt();
       static inline void clearUpdateFlag();
