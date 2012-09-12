@@ -386,6 +386,7 @@ namespace rcc {
   void Functions::resetPeripherals()
   {
     RCC_REGS->APB1RSTR |= cSum<APB1RSTR...>::value;
+    RCC_REGS->APB1RSTR &= ~cSum<APB1RSTR...>::value;
   }
 
   /**
@@ -418,7 +419,8 @@ namespace rcc {
   >
   void Functions::resetPeripherals()
   {
-    RCC_REGS->APB2RSTR = cSum<APB2RSTR...>::value;
+    RCC_REGS->APB2RSTR |= cSum<APB2RSTR...>::value;
+    RCC_REGS->APB2RSTR &= ~cSum<APB2RSTR...>::value;
   }
 
 #ifdef STM32F1XX
@@ -461,7 +463,8 @@ namespace rcc {
   >
   void Functions::resetPeripherals()
   {
-    RCC_REGS->AHBRSTR = cSum<AHBRSTR...>::value;
+    RCC_REGS->AHBRSTR |= cSum<AHBRSTR...>::value;
+    RCC_REGS->AHBRSTR &= ~cSum<AHBRSTR...>::value;
   }
 #endif
 
@@ -687,7 +690,8 @@ namespace rcc {
   >
   void Functions::resetPeripherals()
   {
-    RCC_REGS->AHB1RSTR = cSum<AHB1RSTR...>::value;
+    RCC_REGS->AHB1RSTR |= cSum<AHB1RSTR...>::value;
+    RCC_REGS->AHB1RSTR &= ~cSum<AHB1RSTR...>::value;
   }
 
   /**
@@ -720,7 +724,8 @@ namespace rcc {
   >
   void Functions::resetPeripherals()
   {
-    RCC_REGS->AHB2RSTR = cSum<AHB2RSTR...>::value;
+    RCC_REGS->AHB2RSTR |= cSum<AHB2RSTR...>::value;
+    RCC_REGS->AHB2RSTR &= ~cSum<AHB2RSTR...>::value;
   }
 
   /**
@@ -753,7 +758,8 @@ namespace rcc {
   >
   void Functions::resetPeripherals()
   {
-    RCC_REGS->AHB3RSTR = cSum<AHB3RSTR...>::value;
+    RCC_REGS->AHB3RSTR |= cSum<AHB3RSTR...>::value;
+    RCC_REGS->AHB3RSTR &= ~cSum<AHB3RSTR...>::value;
   }
 
   /**
