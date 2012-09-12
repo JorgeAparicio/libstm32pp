@@ -177,6 +177,18 @@ namespace tim {
   }
 
   /**
+   * @brief Is the timer counting?
+   */
+  template<Address T>
+  bool Functions<T>::isCounting()
+  {
+    return *(bool volatile*) (bitband::peripheral<
+        T + cr1::OFFSET,
+        cr1::cen::POSITION
+    >());
+  }
+
+  /**
    * @brief Configures the prescaler, so the counter counts in microseconds.
    */
   template<Address T>

@@ -72,6 +72,7 @@ namespace tim {
       static inline void disableClock();
       static inline void startCounter();
       static inline void stopCounter();
+      static inline bool isCounting();
       static inline void setMicroSecondResolution();
       static inline void setMiliSecondResolution();
       static void delay(u16 const);
