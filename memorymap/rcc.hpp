@@ -616,6 +616,9 @@ TIM17 = 1 << 18,
 TIM9 = 1 << 19,
 TIM10 = 1 << 20,
 TIM11 = 1 << 21,
+ALL = AFIO + IOPA + IOPB + IOPC + IOPD + IOPE + IOPF + IOPG + ADC1 + ADC2 +
+TIM1 + SPI1 + TIM8 + USART1 + ADC3 + TIM15 + TIM16 + TIM17 + TIM9 + TIM10 +
+TIM11,
 #else // STM32F1XX
 TIM1 = 1 << 0,
 TIM8 = 1 << 1,
@@ -628,6 +631,8 @@ SYSCFG = 1 << 14,
 TIM9 = 1 << 16,
 TIM10 = 1 << 17,
 TIM11 = 1 << 18,
+ALL = TIM1 + TIM8 + USART1 + USART6 + ADC + SDIO + SPI1 + SYSCFG + TIM9 +
+TIM10 + TIM11,
 #endif // STM32F1XX
 };
 } // namespace apb2rstr
@@ -671,6 +676,15 @@ BKP = 1 << 27,
 PWR = 1 << 28,
 DAC = 1 << 29,
 CEC = 1 << 30,
+#ifdef CONNECTIVITY_LINE
+ALL = TIM2 + TIM3 + TIM4 + TIM5 + TIM6 + TIM7 + TIM12 + TIM13 + TIM14 + WWDG +
+SPI2 + SPI3 + USART2 + USART3 + UART4 + UART5 + I2C1 + I2C2 + USB + CAN1 +
+CAN2 + BKP + PWR + DAC + CEC,
+#else // CONNECTIVITY_LINE
+ALL = TIM2 + TIM3 + TIM4 + TIM5 + TIM6 + TIM7 + TIM12 + TIM13 + TIM14 + WWDG +
+SPI2 + SPI3 + USART2 + USART3 + UART4 + UART5 + I2C1 + I2C2 + USB + CAN + BKP +
+PWR + DAC + CEC,
+#endif // CONNECTIVITY_LINE
 #else // STM32F1XX
 TIM2 = 1 << 0,
 TIM3 = 1 << 1,
@@ -695,6 +709,9 @@ CAN1 = 1 << 25,
 CAN2 = 1 << 26,
 PWR = 1 << 28,
 DAC = 1 << 29,
+ALL = TIM2 + TIM3 + TIM4 + TIM5 + TIM6 + TIM7 + TIM12 + TIM13 + TIM14 + WWDG +
+SPI2 + SPI3 + USART2 + USART3 + UART4 + UART5 + I2C1 + I2C2 + I2C3 + CAN1 +
+CAN2 + PWR + DAC,
 #endif // STM32F1XX
 };
 }
@@ -1042,6 +1059,7 @@ OFFSET = 0x28
 enum Bits {
 USB_OTG_FS = 1 << 12,
 ETH_MAC = 1 << 14,
+ALL = USB_OTG_FS + ETH_MAC,
 };
 }  // namespace ahbrstr
 #endif // CONNECTIVITY_LINE
@@ -1145,6 +1163,8 @@ DMA1 = 1 << 21,
 DMA2 = 1 << 22,
 ETH_MAC = 1 << 25,
 OTG_HS = 1 << 29,
+ALL = GPIOA + GPIOB + GPIOC + GPIOD + GPIOE + GPIOF + GPIOG + GPIOH + GPIOI +
+CRC + DMA1 + DMA2 + ETH_MAC + OTG_HS,
 };
 }  // namespace ahb1rstr
 
@@ -1158,6 +1178,7 @@ CRYP = 1 << 4,
 HASH = 1 << 5,
 RNG = 1 << 6,
 OTGFS = 1 << 7,
+ALL = DCMI + CRYP + HASH + RNG + OTGFS,
 };
 }  // namespace ahb2rstr
 
@@ -1167,6 +1188,7 @@ OFFSET = 0x18
 };
 enum Bits {
 FSMC = 1 << 0,
+ALL = FSMC,
 };
 }  // namespace ahb3rstr
 
