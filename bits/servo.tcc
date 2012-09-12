@@ -126,6 +126,21 @@ namespace servo {
   }
 
   /**
+   * @brief Is the servo controller active?
+   */
+  template<
+      tim::Address P,
+      u32 F,
+      tim::Address D,
+      u16 M,
+      u8 N
+  >
+  bool Functions<P, F, D, M, N>::isActive()
+  {
+    return PeriodTimer::isCounting();
+  }
+
+  /**
    * @brief Loads values into the servo controller buffer
    */
   template<

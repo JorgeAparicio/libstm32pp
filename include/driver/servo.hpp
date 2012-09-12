@@ -81,6 +81,7 @@ namespace servo {
       inline void setPin(u8 const, u32* const);
       inline void start();
       inline void stop();
+      inline bool isActive();
       inline void load(s16 const (&)[N]);
       inline void onPeriodTimerInterrupt();
       inline void onDutyCycleTimerInterrupt();
