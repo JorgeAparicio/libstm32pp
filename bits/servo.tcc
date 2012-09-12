@@ -68,19 +68,17 @@ namespace servo {
   >
   void Functions<P, F, D, M, N>::initialize()
   {
+    PeriodTimer::enableClock();
     PeriodTimer::template configurePeriodicInterrupt<F>();
 
+    DutyCycleTimer::enableClock();
+    DutyCycleTimer::enableGlobalInterrupt();
     DutyCycleTimer::configureBasicCounter(
-        tim::cr1::cen::
-        COUNTER_DISABLED,
-        tim::cr1::udis::
-        UPDATE_EVENT_ENABLED,
-        tim::cr1::urs::
-        UPDATE_REQUEST_SOURCE_OVERFLOW_UNDERFLOW,
-        tim::cr1::opm::
-        DONT_STOP_COUNTER_AT_NEXT_UPDATE_EVENT,
-        tim::cr1::arpe::
-        AUTO_RELOAD_UNBUFFERED);
+        tim::cr1::cen::COUNTER_DISABLED,
+        tim::cr1::udis::UPDATE_EVENT_ENABLED,
+        tim::cr1::urs::UPDATE_REQUEST_SOURCE_OVERFLOW_UNDERFLOW,
+        tim::cr1::opm::DONT_STOP_COUNTER_AT_NEXT_UPDATE_EVENT,
+        tim::cr1::arpe::AUTO_RELOAD_UNBUFFERED);
     // Timer resolution: 1us
     DutyCycleTimer::setPrescaler((DutyCycleTimer::FREQUENCY / 1000000) - 1);
     DutyCycleTimer::enableUpdateInterrupt();
@@ -203,7 +201,8 @@ namespace servo {
       *(pin[sortedIndices[servoIndex]]) = 0;
       servoIndex++;
     } while (((value[sortedIndices[servoIndex]] -
-        value[sortedIndices[servoIndex - 1]]) == 0) &&
+        value[sortedIndices[servoIndex - 1]]) <=
+        DutyCycleTimer::getCounter()) &&
         servoIndex != N);
 
     if (servoIndex == N) {

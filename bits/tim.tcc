@@ -743,6 +743,7 @@ namespace tim {
                                                                    10000 - 1 :
                                                                    0))))));
 
+    enableGlobalInterrupt();
     enableUpdateInterrupt();
     generateUpdate();
   }
