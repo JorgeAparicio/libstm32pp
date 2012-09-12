@@ -68,6 +68,9 @@ namespace servo {
   >
   void Functions<P, F, D, M, N>::initialize()
   {
+    for (int i = 0; i < N; i++)
+          sortedIndices[i] = i;
+
     PeriodTimer::enableClock();
     PeriodTimer::template configurePeriodicInterrupt<F>();
 
@@ -102,8 +105,6 @@ namespace servo {
     for (u8 i = 0; i < N; i++) {
       if (pin[i] == 0)
         return;
-
-      sortedIndices[i] = i;
     }
 
     PeriodTimer::startCounter();
