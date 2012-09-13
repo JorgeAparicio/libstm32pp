@@ -29,17 +29,19 @@
 
 // TODO Test GPIO demo on STM32F1XX
 
+typedef PA0 LED;
+
 int main()
 {
-  PA0::enableClock();
+  LED::enableClock();
 #ifdef STM32F1XX
-  PA0::setMode(gpio::cr::GP_PUSH_PULL_10MHZ);
+  LED::setMode(gpio::cr::GP_PUSH_PULL_10MHZ);
 #else // STM32F1XX
-  PA0::setMode(gpio::moder::OUTPUT);
+  LED::setMode(gpio::moder::OUTPUT);
 #endif // STM32F1XX
 
   while (true) {
-    PA0::setLow();
-    PA0::setHigh();
+    LED::setLow();
+    LED::setHigh();
   }
 }
