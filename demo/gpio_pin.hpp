@@ -31,6 +31,8 @@ typedef PA0 LED;
 
 int main()
 {
+  clk::initialize();
+
   LED::enableClock();
 #ifdef STM32F1XX
   LED::setMode(gpio::cr::GP_PUSH_PULL_10MHZ);

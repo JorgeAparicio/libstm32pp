@@ -31,6 +31,8 @@
 
 int main()
 {
+  clk::initialize();
+
   float debug = 16;
 
   FPU::enableFullAccess();

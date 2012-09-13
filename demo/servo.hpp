@@ -39,6 +39,8 @@ servo::Functions<
 
 void mcuSetup()
 {
+  clk::initialize();
+
   GPIOA::enableClock();
 #ifdef STM32F1XX
   GPIOA::configureLowerPins<

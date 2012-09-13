@@ -68,6 +68,8 @@ u8 inputBuffer[2 * NUMBER_OF_SERVOS];
 
 void mcuSetup()
 {
+  clk::initialize();
+
   // GPIO configuration
 
   GPIOA::enableClock();

@@ -31,7 +31,9 @@
 
 int main()
 {
-  volatile u32 debug = 0;
+  clk::initialize();
+
+  u32 debug = 0;
 
   GPIOA::enableClock();
 #ifdef STM32F1XX

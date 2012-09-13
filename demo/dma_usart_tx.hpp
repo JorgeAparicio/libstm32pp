@@ -37,6 +37,8 @@ char msg[] = "Hello World!\n\r";
 
 int main()
 {
+  clk::initialize();
+
   GPIOA::enableClock();
 
   PA9::setAlternateFunction(gpio::afr::USART1_3);

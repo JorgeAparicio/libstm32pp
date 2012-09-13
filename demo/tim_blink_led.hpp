@@ -29,15 +29,18 @@
 #include "core/nvic.hpp"
 
 // TODO Test TIM demo on STM32F1XX
+typedef PA0 LED;
 
 int main()
 {
-  PA0::enableClock();
+  clk::initialize();
+
+  LED::enableClock();
 
 #ifdef STM32F1XX
-  PA0::setMode(gpio::cr::GP_PUSH_PULL_2MHZ);
+  LED::setMode(gpio::cr::GP_PUSH_PULL_2MHZ);
 #else
-  PA0::setMode(gpio::moder::OUTPUT);
+  LED::setMode(gpio::moder::OUTPUT);
 #endif
 
   TIM6::enableClock();
@@ -45,18 +48,6 @@ int main()
   TIM6::configurePeriodicInterrupt<
       1 /* Hz */
   >();
-
-#if defined VALUE_LINE || \
-    defined STM32F2XX || \
-    defined STM32F4XX
-  NVIC::enableInterrupt<
-      nvic::irqn::TIM6_DAC
-  >();
-#else
-  NVIC::enableInterrupt<
-  nvic::irqn::TIM6
-  >();
-#endif
 
   TIM6::startCounter();
 
@@ -72,14 +63,14 @@ void interrupt::TIM6_DAC()
 void interrupt::TIM6()
 #endif
 {
-  static u32 debug = 0;
+  static u32 counter = 0;
 
   TIM6::clearUpdateFlag();
 
-  debug++;
+  counter++;
 
-  if (debug % 2)
-    PA0::setLow();
+  if (counter % 2)
+    LED::setLow();
   else
-    PA0::setHigh();
+    LED::setHigh();
 }

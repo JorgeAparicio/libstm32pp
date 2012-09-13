@@ -39,6 +39,8 @@ typedef PC7 RX;
 
 int main()
 {
+  clk::initialize();
+
   GPIOC::enableClock();
   TX::setAlternateFunction(gpio::afr::USART4_6);
   TX::setMode(gpio::moder::ALTERNATE);
