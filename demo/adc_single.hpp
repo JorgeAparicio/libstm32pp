@@ -19,8 +19,6 @@
  *
  ******************************************************************************/
 
-#pragma once
-
 // DO NOT INCLUDE THIS FILE ANYWHERE. THIS DEMO IS JUST A REFERENCE TO BE USED
 // IN YOUR MAIN SOURCE FILE.
 
