@@ -29,13 +29,18 @@
  *            Also go to sytem_call.hpp and define which USART port will be
  *            used for stdout.
  */
-#include <stdio.h>
+
+#include "clock.hpp"
+
 #include "peripheral/gpio.hpp"
+
 #include "peripheral/usart.hpp"
 
 typedef USART6 USART;
 typedef PC6 TX;
 typedef PC7 RX;
+
+#include <stdio.h>
 
 int main()
 {
@@ -79,7 +84,7 @@ int main()
 
   /**
    * IMPORTANT: printf employs a buffer under the hood, and only writes to
-   *            stdout when a '\n' (newline) character is spotted.
+   *            stdout (UART) when a '\n' (newline) character is spotted.
    */
 //  printf("Hello World!"); // This will not print
   printf("Hello World!\n"); // This will print

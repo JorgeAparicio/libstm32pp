@@ -22,12 +22,15 @@
 // DO NOT INCLUDE THIS FILE ANYWHERE. THIS DEMO IS JUST A REFERENCE TO BE USED
 // IN YOUR MAIN SOURCE FILE.
 
+// TODO Test SERVO demo on STM32F1XX
+
+#include "clock.hpp"
+
 #include "interrupt.hpp"
-#include "core/nvic.hpp"
-#include "driver/servo.hpp"
+
 #include "peripheral/gpio.hpp"
 
-// TODO Test SERVO demo on STM32F1XX
+#include "driver/servo.hpp"
 
 servo::Functions<
     tim::TIM6,

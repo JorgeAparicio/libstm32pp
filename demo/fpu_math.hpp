@@ -22,7 +22,10 @@
 // DO NOT INCLUDE THIS FILE ANYWHERE. THIS DEMO IS JUST A REFERENCE TO BE USED
 // IN YOUR MAIN SOURCE FILE.
 
+#include "clock.hpp"
+
 #include "core/fpu.hpp"
+
 #include <math.h>
 
 #ifndef M_PI
@@ -43,5 +46,4 @@ int main()
   debug *= M_PI;  // PI / 2
   debug = sinf(debug);  // 1.0
   debug = 0.0;
-
 }

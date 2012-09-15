@@ -22,12 +22,13 @@
 // DO NOT INCLUDE THIS FILE ANYWHERE. THIS DEMO IS JUST A REFERENCE TO BE USED
 // IN YOUR MAIN SOURCE FILE.
 
-#include "device_select.hpp"
-#include "peripheral/gpio.hpp"
-#include "peripheral/rcc.hpp"
-#include "peripheral/adc.hpp"
-
 // TODO Test ADC demo
+
+#include "clock.hpp"
+
+#include "peripheral/gpio.hpp"
+
+#include "peripheral/adc.hpp"
 
 int main()
 {

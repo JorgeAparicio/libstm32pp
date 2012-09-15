@@ -22,10 +22,11 @@
 // DO NOT INCLUDE THIS FILE ANYWHERE. THIS DEMO IS JUST A REFERENCE TO BE USED
 // IN YOUR MAIN SOURCE FILE.
 
+#include "clock.hpp"
+
 #include "interrupt.hpp"
-#include "core.hpp"
-#include "driver.hpp"
-#include "peripheral.hpp"
+
+#include "peripheral/gpio.hpp"
 
 typedef PC13 S1;
 typedef PC0 S2;
@@ -48,11 +49,17 @@ typedef PD8 S18;
 typedef PD10 S19;
 typedef PD12 S20;
 
+#include "peripheral/dma.hpp"
+
 typedef DMA2_STREAM2 DMA_RX;
+
+#include "peripheral/usart.hpp"
 
 typedef USART6 USART;
 typedef PC6 TX;
 typedef PC7 RX;
+
+#include "driver/servo.hpp"
 
 #define NUMBER_OF_SERVOS 20
 

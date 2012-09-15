@@ -22,10 +22,11 @@
 // DO NOT INCLUDE THIS FILE ANYWHERE. THIS DEMO IS JUST A REFERENCE TO BE USED
 // IN YOUR MAIN SOURCE FILE.
 
-#include "peripheral/gpio.hpp"
-#include "peripheral/rcc.hpp"
-
 // TODO Test GPIO demo on STM32F1XX
+
+#include "clock.hpp"
+
+#include "peripheral/gpio.hpp"
 
 typedef PA0 LED;
 

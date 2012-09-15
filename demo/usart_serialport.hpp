@@ -22,13 +22,15 @@
 // DO NOT INCLUDE THIS FILE ANYWHERE. THIS DEMO IS JUST A REFERENCE TO BE USED
 // IN YOUR MAIN SOURCE FILE.
 
+// TODO USART demo for STM32F1XX
+
+#include "clock.hpp"
 
 #include "interrupt.hpp"
-#include "peripheral/gpio.hpp"
-#include "peripheral/rcc.hpp"
-#include "peripheral/usart.hpp"
 
-// TODO USART demo for STM32F1XX
+#include "peripheral/gpio.hpp"
+
+#include "peripheral/usart.hpp"
 
 typedef PA9 U1TX;
 typedef PA10 U1RX;

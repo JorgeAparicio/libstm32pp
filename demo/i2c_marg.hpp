@@ -22,6 +22,10 @@
 // DO NOT INCLUDE THIS FILE ANYWHERE. THIS DEMO IS JUST A REFERENCE TO BE USED
 // IN YOUR MAIN SOURCE FILE.
 
+#include "clock.hpp"
+
+#include "interrupt.hpp"
+
 #include "peripheral/gpio.hpp"
 
 #include "peripheral/usart.hpp"
@@ -41,9 +45,6 @@ typedef PB6 SCL;
 typedef PB7 SDA;
 
 #include "peripheral/tim.hpp"
-
-#include "core/nvic.hpp"
-#include "interrupt.hpp"
 
 #include "driver/lsm303dlhc.hpp"
 

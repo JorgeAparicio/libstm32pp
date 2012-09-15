@@ -22,14 +22,17 @@
 // DO NOT INCLUDE THIS FILE ANYWHERE. THIS DEMO IS JUST A REFERENCE TO BE USED
 // IN YOUR MAIN SOURCE FILE.
 
-#include "interrupt.hpp"
-#include "peripheral/gpio.hpp"
-#include "peripheral/rcc.hpp"
-#include "peripheral/tim.hpp"
-#include "core/nvic.hpp"
-
 // TODO Test TIM demo on STM32F1XX
+
+#include "clock.hpp"
+
+#include "interrupt.hpp"
+
+#include "peripheral/gpio.hpp"
+
 typedef PA0 LED;
+
+#include "peripheral/tim.hpp"
 
 int main()
 {

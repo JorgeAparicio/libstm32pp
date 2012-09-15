@@ -22,16 +22,20 @@
 // DO NOT INCLUDE THIS FILE ANYWHERE. THIS DEMO IS JUST A REFERENCE TO BE USED
 // IN YOUR MAIN SOURCE FILE.
 
-#include "peripheral/dma.hpp"
-#include "peripheral/gpio.hpp"
-#include "peripheral/rcc.hpp"
-#include "peripheral/usart.hpp"
-
 // TODO DMA demo for STM32F1XX
+
+#include "clock.hpp"
+
+#include "peripheral/gpio.hpp"
+
+#include "peripheral/dma.hpp"
+
+typedef DMA2_STREAM7 DMA_U1TX;
+
+#include "peripheral/usart.hpp"
 
 typedef PA9 U1TX;
 typedef PA10 U1RX;
-typedef DMA2_STREAM7 DMA_U1TX;
 
 char msg[] = "Hello World!\n\r";
 
