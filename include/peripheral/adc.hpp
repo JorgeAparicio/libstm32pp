@@ -117,6 +117,7 @@ namespace adc {
       Functions();
   };
 
+#ifndef STM32F1XX
   class CommonFunctions {
     public:
       static inline void enableTemperatureSensor();
@@ -126,14 +127,15 @@ namespace adc {
     private:
       CommonFunctions();
   };
+#endif
 }  // namespace adc
 
 // High-level access to the peripherals
-typedef adc::CommonFunctions ADC;
 typedef adc::Functions<adc::ADC1> ADC1;
 typedef adc::Functions<adc::ADC2> ADC2;
 #ifndef STM32F1XX
 typedef adc::Functions<adc::ADC3> ADC3;
+typedef adc::CommonFunctions ADC;
 #endif
 
 #include "../../bits/adc.tcc"

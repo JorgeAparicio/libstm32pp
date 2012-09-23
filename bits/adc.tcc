@@ -351,6 +351,7 @@ namespace adc {
             EXTSEL + EXTEN + SWSTART;
   }
 
+#ifndef STM32F1XX
   void CommonFunctions::enableTemperatureSensor()
   {
     *(u32 volatile*) (bitband::peripheral<
@@ -372,4 +373,5 @@ namespace adc {
     ADC_COMMON_REGS->CCR &= ccr::adcpre::MASK;
     ADC_COMMON_REGS->CCR |= ADCPRE;
   }
+#endif
 }  // namespace adc
