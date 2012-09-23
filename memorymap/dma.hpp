@@ -133,8 +133,8 @@ namespace dma {
           MASK = 1 << POSITION
         };
         enum States {
-          TRANSFER_COMPLETE_INTERRUPT_DISABLE = 0 << POSITION,
-          TRANSFER_COMPLETE_INTERRUPT_ENABLE = 1 << POSITION,
+          TRANSFER_COMPLETE_INTERRUPT_DISABLED = 0 << POSITION,
+          TRANSFER_COMPLETE_INTERRUPT_ENABLED = 1 << POSITION,
         };
       }  // namespace tcie
 
@@ -200,7 +200,7 @@ namespace dma {
         };
         enum States {
           MEMORY_INCREMENT_MODE_DISABLED = 0 << POSITION,
-          MEMORY_INCREMENT_MODE_ENABLE = 1 << POSITION,
+          MEMORY_INCREMENT_MODE_ENABLED = 1 << POSITION,
         };
       }  // namespace minc
 
