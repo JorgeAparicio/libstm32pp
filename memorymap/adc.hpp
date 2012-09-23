@@ -25,7 +25,7 @@
 
 namespace adc {
   enum Address {
-#ifdef SMT32F1XX
+#ifdef STM32F1XX
     ADC1 = alias::APB2 + 0x2400,
     ADC2 = alias::APB2 + 0x2800,
     ADC3 = alias::APB2 + 0x3C00,
