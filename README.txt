@@ -40,14 +40,22 @@ To use this library, simply link the libstm32pp/include folder to your source.
 
 The following files are important:
 
-+ device_select.hpp - Here the microcontroller family must be selected.
-+ clock.hpp - Here the uC clocks can be configured.
-+ interrupt_cpp.hpp - This is actually a source file that configures the uC's
-                      interrupts.
-+ system_call_cpp.hpp - This is actually a source file that implements the
-                        newlib hardware dependant functions.
++ device_select.hpp     Here the microcontroller family must be selected.
+                        (uncomment the family you are going to use)
 
-Check the "demo" folder for more information.
++ clock.hpp             Here the uC clocks can be configured.
+                        (be sure to call clk::initialize() as soon as possible
+                         in your program)
+                         
++ interrupt_cpp.hpp     This is actually a source file that configures the uC
+                        interrupts.
+                        (include this file in a source file .cpp)
+                        
++ system_call_cpp.hpp   This is actually a source file that implements the
+                        newlib hardware dependant functions.
+                        (include this file in a source file .cpp)
+
+Check the "demo" folder for examples.
 
 An editor with auto-complete feature is highly recommended for development using
 this library.
