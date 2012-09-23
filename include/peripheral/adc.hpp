@@ -116,9 +116,20 @@ namespace adc {
     private:
       Functions();
   };
+
+  class CommonFunctions {
+    public:
+      static inline void enableTemperatureSensor();
+      static inline void disableTemperatureSensor();
+      static inline void setPrescaler(ccr::adcpre::States ADCPRE);
+
+    private:
+      CommonFunctions();
+  };
 }  // namespace adc
 
 // High-level access to the peripherals
+typedef adc::CommonFunctions ADC;
 typedef adc::Functions<adc::ADC1> ADC1;
 typedef adc::Functions<adc::ADC2> ADC2;
 #ifndef STM32F1XX

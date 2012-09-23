@@ -665,6 +665,30 @@ namespace adc {
     enum {
       OFFSET = 0x04
     };
+    namespace tsvrefe {
+      enum {
+        POSITION = 23,
+        MASK = 0b1 << POSITION
+      };
+      enum States {
+        TEMPERATURE_SENSOR_AND_VREFINT_CHANNEL_DISABLED = 0 << POSITION,
+        TEMPERATURE_SENSOR_AND_VREFINT_CHANNEL_ENABLED = 1 << POSITION,
+      };
+    }  // namespace tsvrefe
+
+    namespace adcpre {
+      enum {
+        POSITION = 16,
+        MASK = 0b11 << POSITION
+      };
+      enum States {
+        APB2_CLOCK_DIVIDED_BY_2 = 0 << POSITION,
+        APB2_CLOCK_DIVIDED_BY_4 = 1 << POSITION,
+        APB2_CLOCK_DIVIDED_BY_6 = 2 << POSITION,
+        APB2_CLOCK_DIVIDED_BY_8 = 3 << POSITION,
+      };
+
+    }  // namespace adcpre
   }  // namespace ccr
 
   namespace cdr {

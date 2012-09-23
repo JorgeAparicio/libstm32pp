@@ -350,4 +350,26 @@ namespace adc {
         ADON + CONT + DMA + DDS + EOCS + ALIGN + JEXTSEL + JEXTEN + JSWSTART +
             EXTSEL + EXTEN + SWSTART;
   }
+
+  void CommonFunctions::enableTemperatureSensor()
+  {
+    *(u32 volatile*) (bitband::peripheral<
+        ADC + ccr::OFFSET,
+        ccr::tsvrefe::POSITION
+    >()) = 1;
+  }
+
+  void CommonFunctions::disableTemperatureSensor()
+  {
+    *(u32 volatile*) (bitband::peripheral<
+        ADC + ccr::OFFSET,
+        ccr::tsvrefe::POSITION
+    >()) = 0;
+  }
+
+  void CommonFunctions::setPrescaler(ccr::adcpre::States ADCPRE)
+  {
+    ADC_COMMON_REGS->CCR &= ccr::adcpre::MASK;
+    ADC_COMMON_REGS->CCR |= ADCPRE;
+  }
 }  // namespace adc
