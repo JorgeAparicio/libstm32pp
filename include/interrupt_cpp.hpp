@@ -23,233 +23,232 @@
 // memory section. This header file is actually a source file, include it in
 // another source file. e.g. for the bareCortexM project, include this file
 // ONLY in the file named "interrupt.cpp"
-
 #pragma once
 
 #include "interrupt.hpp"
 
-typedef void (* pvf)();
+typedef void (*pvf)();
 
 namespace interrupt {
   __attribute__ ((section(".interrupt_vector")))
   pvf interruptVector[] = {
-    WWDG,// 0x0040
-    PVD,// 0x0044
+      WWDG, // 0x0040
+      PVD, // 0x0044
 #if defined VALUE_LINE || \
     defined STM32F2XX || \
     defined STM32F4XX
-    TAMP_STAMP,  // 0x0048
-    RTC_WKUP,// 0x004C
+      TAMP_STAMP,  // 0x0048
+      RTC_WKUP,  // 0x004C
 #else
-    TAMPER,  // 0x0048
-    RTC,// 0x004C
+      TAMPER,  // 0x0048
+      RTC,// 0x004C
 #endif
-    FLASH,  // 0x0050
-    RCC,// 0x0054
-    EXTI0,// 0x0058
-    EXTI1,// 0x005C
-    EXTI2,// 0x0060
-    EXTI3,// 0x0064
-    EXTI4,// 0x0068
+      FLASH,  // 0x0050
+      RCC,  // 0x0054
+      EXTI0,  // 0x0058
+      EXTI1,  // 0x005C
+      EXTI2,  // 0x0060
+      EXTI3,  // 0x0064
+      EXTI4,  // 0x0068
 #ifdef STM32F1XX
-    DMA1_Channel1,  // 0x006C
-    DMA1_Channel2,// 0x0070
-    DMA1_Channel3,// 0x0074
-    DMA1_Channel4,// 0x0078
-    DMA1_Channel5,// 0x007C
-    DMA1_Channel6,// 0x0080
-    DMA1_Channel7,// 0x0084
+      DMA1_Channel1,  // 0x006C
+      DMA1_Channel2,// 0x0070
+      DMA1_Channel3,// 0x0074
+      DMA1_Channel4,// 0x0078
+      DMA1_Channel5,// 0x007C
+      DMA1_Channel6,// 0x0080
+      DMA1_Channel7,// 0x0084
 #else
-    DMA1_Stream0,  // 0x006C
-    DMA1_Stream1,// 0x0070
-    DMA1_Stream2,// 0x0074
-    DMA1_Stream3,// 0x0078
-    DMA1_Stream4,// 0x007C
-    DMA1_Stream5,// 0x0080
-    DMA1_Stream6,// 0x0084
+      DMA1_Stream0,  // 0x006C
+      DMA1_Stream1,  // 0x0070
+      DMA1_Stream2,  // 0x0074
+      DMA1_Stream3,  // 0x0078
+      DMA1_Stream4,  // 0x007C
+      DMA1_Stream5,  // 0x0080
+      DMA1_Stream6,  // 0x0084
 #endif // STM32F1XX
 #ifdef VALUE_LINE
-    // 0x0088ADC1,
+      ADC1,  // 0x0088
 #elif defined STM32F2XX || \
       defined STM32F4XX
-    ADC,  // 0x0088
+      ADC,  // 0x0088
 #else
-    ADC1_2,  // 0x0088
+      ADC1_2,  // 0x0088
 #endif
 #ifdef VALUE_LINE
-    0,  // 0x008C
-    0,// 0x0090
+      0,  // 0x008C
+      0,// 0x0090
 #elif defined CONNECTIVITY_LINE || \
       defined STM32F2XX || \
       defined STM32F4XX
-    CAN1_TX,  // 0x008C
-    CAN1_RX0,// 0x0090
+      CAN1_TX,  // 0x008C
+      CAN1_RX0,  // 0x0090
 #else
-    USB_HP_CAN1_TX,  // 0x008C
-    USB_LP_CAN1_RX0,// 0x0090
+      USB_HP_CAN1_TX,  // 0x008C
+      USB_LP_CAN1_RX0,// 0x0090
 #endif
 #ifndef VALUE_LINE
-    CAN1_RX1,  // 0x0094
-    CAN1_SCE,// 0x0098
+      CAN1_RX1,  // 0x0094
+      CAN1_SCE,  // 0x0098
 #else
-    0,  // 0x0094
-    0,// 0x0098
+      0,  // 0x0094
+      0,// 0x0098
 #endif
-    EXTI9_5,  // 0x009C
+      EXTI9_5,  // 0x009C
 #ifdef VALUE_LINE
-    TIM1_BRK_TIM15,  // 0x00A0
-    TIM1_UP_TIM6,// 0x00A4
-    TIM1_TRG_COM_TIM17,// 0x00A8
+      TIM1_BRK_TIM15,  // 0x00A0
+      TIM1_UP_TIM6,// 0x00A4
+      TIM1_TRG_COM_TIM17,// 0x00A8
 #elif defined XL_DENSITY || \
       defined STM32F2XX  || \
       defined STM32F4XX
-    TIM1_BRK_TIM9,  // 0x00A0
-    TIM1_UP_TIM10,// 0x00A4
-    TIM1_TRG_COM_TIM11,// 0x00A8
+      TIM1_BRK_TIM9,  // 0x00A0
+      TIM1_UP_TIM10,  // 0x00A4
+      TIM1_TRG_COM_TIM11,  // 0x00A8
 #else
-    TIM1_BRK,  // 0x00A0
-    TIM1_UP,// 0x00A4
-    TIM1_TRG_COM,// 0x00A8
+      TIM1_BRK,  // 0x00A0
+      TIM1_UP,// 0x00A4
+      TIM1_TRG_COM,// 0x00A8
 #endif
-    TIM1_CC,  // 0x00AC
-    TIM2,// 0x00B0
-    TIM3,// 0x00B4
-    TIM4,// 0x00B8
-    I2C1_EV,// 0x00BC
-    I2C1_ER,// 0x00C0
-    I2C2_EV,// 0x00C4
-    I2C2_ER,// 0x00C8
-    SPI1,// 0x00CC
-    SPI2,// 0x00D0
-    USART1,// 0x00D4
-    USART2,// 0x00D8
-    USART3,// 0x00DC
-    EXTI15_10,// 0x00E0
-    RTCAlarm,// 0x00E4
+      TIM1_CC,  // 0x00AC
+      TIM2,  // 0x00B0
+      TIM3,  // 0x00B4
+      TIM4,  // 0x00B8
+      I2C1_EV,  // 0x00BC
+      I2C1_ER,  // 0x00C0
+      I2C2_EV,  // 0x00C4
+      I2C2_ER,  // 0x00C8
+      SPI1,  // 0x00CC
+      SPI2,  // 0x00D0
+      USART1,  // 0x00D4
+      USART2,  // 0x00D8
+      USART3,  // 0x00DC
+      EXTI15_10,  // 0x00E0
+      RTCAlarm,  // 0x00E4
 #ifdef VALUE_LINE
-    CEC,  // 0x00E8
+      CEC,  // 0x00E8
 #elif defined CONNECTIVITY_LINE || \
       defined STM32F2XX || \
       defined STM32F4XX
-    OTG_FS_WKUP,  // 0x00E8
+      OTG_FS_WKUP,  // 0x00E8
 #else
-    USB_WakeUp,  // 0x00E8
+      USB_WakeUp,  // 0x00E8
 #endif
 #ifdef VALUE_LINE
-    TIM12,  // 0x00EC
-    TIM13,// 0x00F0
-    TIM14,// 0x00F4
+      TIM12,  // 0x00EC
+      TIM13,// 0x00F0
+      TIM14,// 0x00F4
 #elif defined CONNECTIVITY_LINE
-    0,  // 0x00EC
-    0,// 0x00F0
-    0,// 0x00F4
+      0,  // 0x00EC
+      0,// 0x00F0
+      0,// 0x00F4
 #elif defined XL_DENSITY || \
       defined STM32F2XX || \
       defined STM32F4XX
-    TIM8_BRK_TIM12,  // 0x00EC
-    TIM8_UP_TIM13,// 0x00F0
-    TIM8_TRG_COM_TIM14,// 0x00F4
+      TIM8_BRK_TIM12,  // 0x00EC
+      TIM8_UP_TIM13,  // 0x00F0
+      TIM8_TRG_COM_TIM14,  // 0x00F4
 #else
-    TIM8_BRK,  // 0x00EC
-    TIM8_UP,// 0x00F0
-    TIM8_TRG_COM,// 0x00F4
+      TIM8_BRK,  // 0x00EC
+      TIM8_UP,// 0x00F0
+      TIM8_TRG_COM,// 0x00F4
 #endif
 #if defined VALUE_LINE || \
     defined CONNECTIVITY_LINE
-    0,  // 0x00F8
+      0,  // 0x00F8
 #else
-    TIM8_CC,  // 0x00F8
+      TIM8_CC,  // 0x00F8
 #endif
 #if defined VALUE_LINE || \
     defined CONNECTIVITY_LINE
-    0,  // 0x00FC
+      0,  // 0x00FC
 #elif defined STM32F2XX || \
       defined STM32F4XX
-    ADC3,  // 0x00FC
+      ADC3,  // 0x00FC
 #else
-    DMA1_Stream7,  // 0x00FC
+      DMA1_Stream7,  // 0x00FC
 #endif
 #ifdef CONNECTIVITY_LINE
-    0,  // 0x0100
+      0,  // 0x0100
 #else
-    FSMC,  // 0x0100
+      FSMC,  // 0x0100
 #endif
 #if defined VALUE_LINE || \
     defined CONNECTIVITY_LINE
-    0,  // 0x0104
+      0,  // 0x0104
 #else
-    SDIO,  // 0x0104
+      SDIO,  // 0x0104
 #endif
-    TIM5,  // 0x0108
-    SPI3,// 0x010C
-    UART4,// 0x0110
-    UART5,// 0x0114
+      TIM5,  // 0x0108
+      SPI3,  // 0x010C
+      UART4,  // 0x0110
+      UART5,  // 0x0114
 #if defined VALUE_LINE || \
     defined STM32F2XX || \
     defined STM32F4XX
-    TIM6_DAC,  // 0x0118
+      TIM6_DAC,  // 0x0118
 #else
-    TIM6,  // 0x0118
+      TIM6,  // 0x0118
 #endif
-    TIM7,  // 0x011C
+      TIM7,  // 0x011C
 #if defined STM32F2XX || \
     defined STM32F4XX
-    DMA2_Stream0,  // 0x0120
-    DMA2_Stream1,// 0x0124
-    DMA2_Stream2,// 0x0128
+      DMA2_Stream0,  // 0x0120
+      DMA2_Stream1,  // 0x0124
+      DMA2_Stream2,  // 0x0128
 #else
-    DMA2_Channel1,  // 0x0120
-    DMA2_Channel2,// 0x0124
-    DMA2_Channel3,// 0x0128
+      DMA2_Channel1,  // 0x0120
+      DMA2_Channel2,// 0x0124
+      DMA2_Channel3,// 0x0128
 #endif
 #if defined STM32F2XX || \
     defined STM32F4XX
-    DMA2_Stream3,  // 0x012C
+      DMA2_Stream3,  // 0x012C
 #elif defined CONNECTIVITY_LINE
-    DMA2_Channel4,  // 0x012C
+      DMA2_Channel4,  // 0x012C
 #else
-    DMA2_Channel4_5,  // 0x012C
+      DMA2_Channel4_5,  // 0x012C
 #endif
 #if defined STM32F2XX || \
     defined STM32F4XX
-    DMA2_Stream4,  // 0x0130
+      DMA2_Stream4,  // 0x0130
 #elif defined VALUE_LINE || \
       defined CONNECTIVITY_LINE
-    DMA2_Channel5,  // 0x0130
+      DMA2_Channel5,  // 0x0130
 #else
-    0,  // 0x0130
+      0,  // 0x0130
 #endif
 #if defined CONNECTIVITY_LINE || \
     defined STM32F2XX || \
     defined STM32F4XX
-    ETH,  // 0x0134
-    ETH_WKUP,// 0x0138
-    CAN2_TX,// 0x013C
-    CAN2_RX0,// 0x0140
-    CAN2_RX1,// 0x0144
-    CAN2_SCE,// 0x0148
-    OTG_FS,// 0x014C
+      ETH,  // 0x0134
+      ETH_WKUP,  // 0x0138
+      CAN2_TX,  // 0x013C
+      CAN2_RX0,  // 0x0140
+      CAN2_RX1,  // 0x0144
+      CAN2_SCE,  // 0x0148
+      OTG_FS,  // 0x014C
 #endif
 #if defined STM32F2XX || \
     defined STM32F4XX
-    DMA2_Stream5,  // 0x0150
-    DMA2_Stream6,// 0x0154
-    DMA2_Stream7,// 0x0158
-    USART6,// 0x015C
-    I2C3_EV,// 0x0160
-    I2C3_ER,// 0x0164
-    OTG_HS_EP1_OUT,// 0x0168
-    OTG_HS_EP1_IN,// 0x016C
-    OTG_HS_WKUP,// 0x0170
-    OTG_HS,// 0x0174
-    DCMI,// 0x0178
-    CRYP,// 0x017C
-    HASH_RNG,// 0x0180
+      DMA2_Stream5,  // 0x0150
+      DMA2_Stream6,  // 0x0154
+      DMA2_Stream7,  // 0x0158
+      USART6,  // 0x015C
+      I2C3_EV,  // 0x0160
+      I2C3_ER,  // 0x0164
+      OTG_HS_EP1_OUT,  // 0x0168
+      OTG_HS_EP1_IN,  // 0x016C
+      OTG_HS_WKUP,  // 0x0170
+      OTG_HS,  // 0x0174
+      DCMI,  // 0x0178
+      CRYP,  // 0x017C
+      HASH_RNG,  // 0x0180
 #endif
 #ifdef STM32F4XX
-    FPU,  // 0x0184
+      FPU,  // 0x0184
 #endif
-  };  // interruptVector
+      };  // interruptVector
 }  // namespace interrupt
 
 extern "C" void defaultInterruptHandler()
