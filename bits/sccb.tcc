@@ -44,18 +44,12 @@ namespace sccb {
   {
     TIMER::enableClock();
 
-    TIMER::template configureBasicCounter<
-        tim::cr1::cen::
-        COUNTER_DISABLED,
-        tim::cr1::udis::
-        UPDATE_EVENT_ENABLED,
-        tim::cr1::urs::
-        UPDATE_REQUEST_SOURCE_OVERFLOW_UNDERFLOW,
-        tim::cr1::opm::
-        DONT_STOP_COUNTER_AT_NEXT_UPDATE_EVENT,
-        tim::cr1::arpe::
-        AUTO_RELOAD_UNBUFFERED
-    >();
+    TIMER::configureBasicCounter(
+        tim::cr1::cen::COUNTER_DISABLED,
+        tim::cr1::udis::UPDATE_EVENT_ENABLED,
+        tim::cr1::urs::UPDATE_REQUEST_SOURCE_OVERFLOW_UNDERFLOW,
+        tim::cr1::opm::DONT_STOP_COUNTER_AT_NEXT_UPDATE_EVENT,
+        tim::cr1::arpe::AUTO_RELOAD_UNBUFFERED);
 
     TIMER::setMicroSecondResolution();
 
@@ -65,20 +59,12 @@ namespace sccb {
     SDIO_C::setHigh();
     SDIO_D::setHigh();
 
-    SDIO_C::template setPullMode<
-        gpio::pupdr::PULL_UP
-    >();
-    SDIO_D::template setPullMode<
-        gpio::pupdr::PULL_UP
-    >();
+    SDIO_C::setPullMode(gpio::pupdr::PULL_UP);
+    SDIO_D::setPullMode(gpio::pupdr::PULL_UP);
 
-    SDIO_C::template setMode<
-        gpio::moder::OUTPUT
-    >();
+    SDIO_C::setMode(gpio::moder::OUTPUT);
 
-    SDIO_D::template setMode<
-        gpio::moder::OUTPUT
-    >();
+    SDIO_D::setMode(gpio::moder::OUTPUT);
   }
 
   /**
@@ -213,9 +199,7 @@ namespace sccb {
       TIMER::delay(DELAY);
     }
 
-    SDIO_D::template setMode<
-        gpio::moder::INPUT
-    >();
+    SDIO_D::setMode(gpio::moder::INPUT);
     TIMER::delay(DELAY);
 
     SDIO_C::setHigh();
@@ -229,9 +213,7 @@ namespace sccb {
     SDIO_C::setLow();
     TIMER::delay(DELAY);
 
-    SDIO_D::template setMode<
-        gpio::moder::OUTPUT
-    >();
+    SDIO_D::setMode(gpio::moder::OUTPUT);
 
     return sucess;
   }
@@ -258,9 +240,7 @@ namespace sccb {
   {
     u8 data = 0;
 
-    SDIO_D::template setMode<
-        gpio::moder::INPUT
-    >();
+    SDIO_D::setMode(gpio::moder::INPUT);
     TIMER::delay(DELAY);
 
     for (u8 i = 8; i > 0; i--) {
@@ -275,9 +255,7 @@ namespace sccb {
       TIMER::delay(DELAY);
     }
 
-    SDIO_D::template setMode<
-        gpio::moder::OUTPUT
-    >();
+    SDIO_D::setMode(gpio::moder::OUTPUT);
 
     return data;
   }
