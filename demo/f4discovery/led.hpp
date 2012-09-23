@@ -44,60 +44,26 @@ void initializeGpio()
   LD5::setMode(gpio::moder::OUTPUT);
 }
 
-void initializeTimer()
-{
-  TIM6::enableClock();
-  TIM6::configurePeriodicInterrupt<
-      8 /* Hz */
-  >();
-}
-
-void initializePeripherals()
-{
-  initializeGpio();
-  initializeTimer();
-
-  TIM6::startCounter();
-}
-
 void loop()
 {
+  LD3::setLow();
+  LD4::setLow();
+  LD5::setLow();
+  LD6::setLow();
 
+  LD3::setHigh();
+  LD4::setHigh();
+  LD5::setHigh();
+  LD6::setHigh();
 }
 
 int main()
 {
   clk::initialize();
 
-  initializePeripherals();
+  initializeGpio();
 
   while (true) {
     loop();
-  }
-}
-
-void interrupt::TIM6_DAC()
-{
-  static u8 counter = 0;
-
-  TIM6::clearUpdateFlag();
-
-  switch (counter++ % 4) {
-    case 0:
-      LD3::setHigh();
-      LD5::setLow();
-      break;
-    case 1:
-      LD3::setLow();
-      LD4::setHigh();
-      break;
-    case 2:
-      LD4::setLow();
-      LD6::setHigh();
-      break;
-    case 3:
-      LD6::setLow();
-      LD5::setHigh();
-      break;
   }
 }
