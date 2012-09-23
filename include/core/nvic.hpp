@@ -42,17 +42,16 @@ namespace nvic {
       template<
           nvic::irqn::E I
       >
-      static inline void enableInterrupt(void);
-
+      static inline void enableIrq();
       template<
           nvic::irqn::E I
       >
-      static inline void disableInterrupt(void);
+      static inline void disableIrq();
 
       template<
           nvic::irqn::E I, u8 P
       >
-      static inline void setInterruptPriority();
+      static inline void setPriority();
 
     private:
       Functions();

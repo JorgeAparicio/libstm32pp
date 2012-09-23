@@ -290,77 +290,77 @@ namespace tim {
   }
 
   /**
-   * @brief Enables all the timer interrupts.
+   * @brief Unmasks all the timer interrupts.
    */
   template<Address T>
-  void Functions<T>::enableGlobalInterrupt()
+  void Functions<T>::unmaskInterrupts()
   {
     switch (T) {
 #if defined XL_DENSITY || \
     defined STM32F2XX || \
     defined STM32F4XX
       case TIM1:
-      NVIC::enableInterrupt<
+      NVIC::enableIrq<
       nvic::irqn::TIM1_BRK_TIM9
       >();
-      NVIC::enableInterrupt<
+      NVIC::enableIrq<
       nvic::irqn::TIM1_CC
       >();
-      NVIC::enableInterrupt<
+      NVIC::enableIrq<
       nvic::irqn::TIM1_TRG_COM_TIM11
       >();
-      NVIC::enableInterrupt<
+      NVIC::enableIrq<
       nvic::irqn::TIM1_UP_TIM10
       >();
       break;
 #elif defined VALUE_LINE
       case TIM1:
-      NVIC::enableInterrupt<
+      NVIC::enableIrq<
       nvic::irqn::TIM1_BRK_TIM15
       >();
-      NVIC::enableInterrupt<
+      NVIC::enableIrq<
       nvic::irqn::TIM1_CC
       >();
-      NVIC::enableInterrupt<
+      NVIC::enableIrq<
       nvic::irqn::TIM1_TRG_COM_TIM17
       >();
-      NVIC::enableInterrupt<
+      NVIC::enableIrq<
       nvic::irqn::TIM1_UP_TIM16
       >();
       break;
 #else // XL_DENSITY || STM32F2XX || STM32F4XX
       case TIM1:
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
             nvic::irqn::TIM1_BRK
         >();
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
             nvic::irqn::TIM1_CC
         >();
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
             nvic::irqn::TIM1_TRG_COM
         >();
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
             nvic::irqn::TIM1_UP
         >();
         break;
 #endif // XL_DENSITY || STM32F2XX || STM32F4XX
       case TIM2:
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
             nvic::irqn::TIM2
         >();
         break;
       case TIM3:
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
             nvic::irqn::TIM3
         >();
         break;
       case TIM4:
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
             nvic::irqn::TIM4
         >();
         break;
       case TIM5:
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
             nvic::irqn::TIM5
         >();
         break;
@@ -368,19 +368,19 @@ namespace tim {
         defined STM32F2XX || \
         defined STM32F4XX
         case TIM6:
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
         nvic::irqn::TIM6_DAC
         >();
         break;
 #else // !STM32F1XX
       case TIM6:
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
             nvic::irqn::TIM6
         >();
         break;
 #endif // !STM32F1XX
       case TIM7:
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
             nvic::irqn::TIM7
         >();
         break;
@@ -388,99 +388,99 @@ namespace tim {
   defined STM32F2XX || \
   defined STM32F4XX
         case TIM8:
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
         nvic::irqn::TIM8_BRK_TIM12
         >();
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
         nvic::irqn::TIM8_CC
         >();
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
         nvic::irqn::TIM8_TRG_COM_TIM14
         >();
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
         nvic::irqn::TIM8_UP_TIM13
         >();
         break;
 #elif not defined CONNECTIVITY_LINE && \
  not defined VALUE_LINE
         case TIM8:
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
         nvic::irqn::TIM8_BRK
         >();
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
         nvic::irqn::TIM8_CC
         >();
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
         nvic::irqn::TIM8_TRG_COM
         >();
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
         nvic::irqn::TIM8_UP
         >();
         break;
 #endif // XL_DENSITY || STM32F2XX || STM32F4XX
 #ifndef STM32F1XX
         case TIM9:
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
         nvic::irqn::TIM1_BRK_TIM9
         >();
         break;
         case TIM10:
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
         nvic::irqn::TIM1_UP_TIM10
         >();
         break;
         case TIM11:
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
         nvic::irqn::TIM1_TRG_COM_TIM11
         >();
         break;
 #endif // !STM32F1XX
 #ifndef STM32F1XX
         case TIM12:
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
         nvic::irqn::TIM8_BRK_TIM12
         >();
         break;
         case TIM13:
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
         nvic::irqn::TIM8_UP_TIM13
         >();
         break;
         case TIM14:
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
         nvic::irqn::TIM8_TRG_COM_TIM14
         >();
         break;
 #elif defined VALUE_LINE
         case TIM12:
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
         nvic::irqn::TIM12
         >();
         break;
         case TIM13:
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
         nvic::irqn::TIM13
         >();
         break;
         case TIM14:
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
         nvic::irqn::TIM14
         >();
         break;
 #endif // !STM32F1XX
 #ifdef VALUE_LINE
         case TIM15:
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
         nvic::irqn::TIM1_BRK_TIM15
         >();
         break;
         case TIM16:
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
         nvic::irqn::TIM1_UP_TIM16
         >();
         break;
         case TIM17:
-        NVIC::enableInterrupt<
+        NVIC::enableIrq<
         nvic::irqn::TIM1_TRG_COM_TIM17
         >();
         break;
@@ -489,10 +489,10 @@ namespace tim {
   }
 
   /**
-   * @brief Disables all the timer interrupts.
+   * @brief Masks all the timer interrupts.
    */
   template<Address T>
-  void Functions<T>::disableGlobalInterrupt()
+  void Functions<T>::maskInterrupts()
   {
     switch (T) {
 
@@ -502,41 +502,41 @@ namespace tim {
     defined VALUE_LINE
       case TIM1:
       static_assert(T != TIM1,
-          "Don't use this function, use NVIC::disableInterrupt() instead.");
+          "Don't use this function, use NVIC::disableIrq() instead.");
       break;
 #else
       case TIM1:
-        NVIC::disableInterrupt<
+        NVIC::disableIrq<
             nvic::irqn::TIM1_BRK
         >();
-        NVIC::disableInterrupt<
+        NVIC::disableIrq<
             nvic::irqn::TIM1_CC
         >();
-        NVIC::disableInterrupt<
+        NVIC::disableIrq<
             nvic::irqn::TIM1_TRG_COM
         >();
-        NVIC::disableInterrupt<
+        NVIC::disableIrq<
             nvic::irqn::TIM1_UP
         >();
         break;
 #endif
       case TIM2:
-        NVIC::disableInterrupt<
+        NVIC::disableIrq<
             nvic::irqn::TIM2
         >();
         break;
       case TIM3:
-        NVIC::disableInterrupt<
+        NVIC::disableIrq<
             nvic::irqn::TIM3
         >();
         break;
       case TIM4:
-        NVIC::disableInterrupt<
+        NVIC::disableIrq<
             nvic::irqn::TIM4
         >();
         break;
       case TIM5:
-        NVIC::disableInterrupt<
+        NVIC::disableIrq<
             nvic::irqn::TIM5
         >();
         break;
@@ -545,17 +545,17 @@ namespace tim {
     defined STM32F4XX
         case TIM6:
         static_assert(T != TIM6,
-            "Don't use this function, use NVIC::disableInterrupt() instead.");
+            "Don't use this function, use NVIC::disableIrq() instead.");
         break;
 #else // !STM32F1XX
       case TIM6:
-        NVIC::disableInterrupt<
+        NVIC::disableIrq<
             nvic::irqn::TIM6
         >();
         break;
 #endif // !STM32F1XX
       case TIM7:
-        NVIC::disableInterrupt<
+        NVIC::disableIrq<
             nvic::irqn::TIM7
         >();
         break;
@@ -564,63 +564,63 @@ namespace tim {
   defined STM32F4XX
         case TIM8:
         static_assert(T != TIM8,
-            "Don't use this function, use NVIC::disableInterrupt() instead.");
+            "Don't use this function, use NVIC::disableIrq() instead.");
         break;
 #elif not defined CONNECTIVITY_LINE && \
  not defined VALUE_LINE
         case TIM8:
-        NVIC::disableInterrupt<
+        NVIC::disableIrq<
         nvic::irqn::TIM8_BRK
         >();
-        NVIC::disableInterrupt<
+        NVIC::disableIrq<
         nvic::irqn::TIM8_CC
         >();
-        NVIC::disableInterrupt<
+        NVIC::disableIrq<
         nvic::irqn::TIM8_TRG_COM
         >();
-        NVIC::disableInterrupt<
+        NVIC::disableIrq<
         nvic::irqn::TIM8_UP
         >();
         break;
 #endif // XL_DENSITY || STM32F2XX || STM32F4XX
       case TIM9:
         static_assert(T != TIM9,
-            "Don't use this function, use NVIC::disableInterrupt() instead.");
+            "Don't use this function, use NVIC::disableIrq() instead.");
         break;
       case TIM10:
         static_assert(T != TIM10,
-            "Don't use this function, use NVIC::disableInterrupt() instead.");
+            "Don't use this function, use NVIC::disableIrq() instead.");
         break;
       case TIM11:
         static_assert(T != TIM11,
-            "Don't use this function, use NVIC::disableInterrupt() instead.");
+            "Don't use this function, use NVIC::disableIrq() instead.");
         break;
 #ifndef STM32F1XX
         case TIM12:
         static_assert(T != TIM12,
-            "Don't use this function, use NVIC::disableInterrupt() instead.");
+            "Don't use this function, use NVIC::disableIrq() instead.");
         break;
         case TIM13:
         static_assert(T != TIM13,
-            "Don't use this function, use NVIC::disableInterrupt() instead.");
+            "Don't use this function, use NVIC::disableIrq() instead.");
         break;
         case TIM14:
         static_assert(T != TIM14,
-            "Don't use this function, use NVIC::disableInterrupt() instead.");
+            "Don't use this function, use NVIC::disableIrq() instead.");
         break;
 #elif defined VALUE_LINE
         case TIM12:
-        NVIC::disableInterrupt<
+        NVIC::disableIrq<
         nvic::irqn::TIM12
         >();
         break;
         case TIM13:
-        NVIC::disableInterrupt<
+        NVIC::disableIrq<
         nvic::irqn::TIM13
         >();
         break;
         case TIM14:
-        NVIC::disableInterrupt<
+        NVIC::disableIrq<
         nvic::irqn::TIM14
         >();
         break;
@@ -628,15 +628,15 @@ namespace tim {
 #ifdef VALUE_LINE
         case TIM15:
         static_assert(T != TIM15,
-            "Don't use this function, use NVIC::disableInterrupt() instead.");
+            "Don't use this function, use NVIC::disableIrq() instead.");
         break;
         case TIM16:
         static_assert(T != TIM16,
-            "Don't use this function, use NVIC::disableInterrupt() instead.");
+            "Don't use this function, use NVIC::disableIrq() instead.");
         break;
         case TIM17:
         static_assert(T != TIM17,
-            "Don't use this function, use NVIC::disableInterrupt() instead.");
+            "Don't use this function, use NVIC::disableIrq() instead.");
         break;
 #endif // VALUE_LINE
     }
@@ -755,7 +755,7 @@ namespace tim {
                                                                    10000 - 1 :
                                                                    0))))));
 
-    enableGlobalInterrupt();
+    unmaskInterrupts();
     enableUpdateInterrupt();
     generateUpdate();
   }

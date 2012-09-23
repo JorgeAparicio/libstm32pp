@@ -123,46 +123,46 @@ namespace dma {
     }
 
     /**
-     * @brief Enables all the DMA stream interrupts.
+     * @brief Unmasks all the DMA stream interrupts.
      */
     template<dma::common::Address D, Address S>
-    void Functions<D, S>::enableGlobalInterrupts()
+    void Functions<D, S>::unmaskInterrupts()
     {
       switch (D) {
         case common::DMA1:
           switch (S) {
             case CHANNEL_1:
-              NVIC::enableInterrupt<
+              NVIC::enableIrq<
                   nvic::irqn::DMA1_Channel1
               >();
               break;
             case CHANNEL_2:
-              NVIC::enableInterrupt<
+              NVIC::enableIrq<
                   nvic::irqn::DMA1_Channel2
               >();
               break;
             case CHANNEL_3:
-              NVIC::enableInterrupt<
+              NVIC::enableIrq<
                   nvic::irqn::DMA1_Channel3
               >();
               break;
             case CHANNEL_4:
-              NVIC::enableInterrupt<
+              NVIC::enableIrq<
                   nvic::irqn::DMA1_Channel4
               >();
               break;
             case CHANNEL_5:
-              NVIC::enableInterrupt<
+              NVIC::enableIrq<
                   nvic::irqn::DMA1_Channel5
               >();
               break;
             case CHANNEL_6:
-              NVIC::enableInterrupt<
+              NVIC::enableIrq<
                   nvic::irqn::DMA1_Channel6
               >();
               break;
             case CHANNEL_7:
-              NVIC::enableInterrupt<
+              NVIC::enableIrq<
                   nvic::irqn::DMA1_Channel7
               >();
               break;
@@ -171,39 +171,39 @@ namespace dma {
         case common::DMA2:
           switch (S) {
             case CHANNEL_1:
-              NVIC::enableInterrupt<
+              NVIC::enableIrq<
                   nvic::irqn::DMA2_Channel1
               >();
               break;
             case CHANNEL_2:
-              NVIC::enableInterrupt<
+              NVIC::enableIrq<
                   nvic::irqn::DMA2_Channel2
               >();
               break;
             case CHANNEL_3:
-              NVIC::enableInterrupt<
+              NVIC::enableIrq<
                   nvic::irqn::DMA2_Channel3
               >();
               break;
 #ifdef CONNECTIVITY_LINE
             case CHANNEL_4:
-              NVIC::enableInterrupt<
+              NVIC::enableIrq<
                   nvic::irqn::DMA2_Channel4
               >();
               break;
             case CHANNEL_5:
-              NVIC::enableInterrupt<
+              NVIC::enableIrq<
                   nvic::irqn::DMA2_Channel5
               >();
               break;
 #else // CONNECTIVITY_LINE
               case CHANNEL_4:
-              NVIC::enableInterrupt<
+              NVIC::enableIrq<
               nvic::irqn::DMA2_Channel4_5
               >();
               break;
               case CHANNEL_5:
-              NVIC::enableInterrupt<
+              NVIC::enableIrq<
               nvic::irqn::DMA2_Channel4_5
               >();
               break;
@@ -214,47 +214,47 @@ namespace dma {
     }
 
     /**
-     * @brief Disables all the DMA stream interrupts.
+     * @brief Masks all the DMA stream interrupts.
      */
     template<dma::common::Address D, Address S>
-    void Functions<D, S>::disableGlobalInterrupts()
+    void Functions<D, S>::maskInterrupts()
     {
 
       switch (D) {
         case common::DMA1:
           switch (S) {
             case CHANNEL_1:
-              NVIC::disableInterrupt<
+              NVIC::disableIrq<
                   nvic::irqn::DMA1_Channel1
               >();
               break;
             case CHANNEL_2:
-              NVIC::disableInterrupt<
+              NVIC::disableIrq<
                   nvic::irqn::DMA1_Channel2
               >();
               break;
             case CHANNEL_3:
-              NVIC::disableInterrupt<
+              NVIC::disableIrq<
                   nvic::irqn::DMA1_Channel3
               >();
               break;
             case CHANNEL_4:
-              NVIC::disableInterrupt<
+              NVIC::disableIrq<
                   nvic::irqn::DMA1_Channel4
               >();
               break;
             case CHANNEL_5:
-              NVIC::disableInterrupt<
+              NVIC::disableIrq<
                   nvic::irqn::DMA1_Channel5
               >();
               break;
             case CHANNEL_6:
-              NVIC::disableInterrupt<
+              NVIC::disableIrq<
                   nvic::irqn::DMA1_Channel6
               >();
               break;
             case CHANNEL_7:
-              NVIC::disableInterrupt<
+              NVIC::disableIrq<
                   nvic::irqn::DMA1_Channel7
               >();
               break;
@@ -263,28 +263,28 @@ namespace dma {
         case common::DMA2:
           switch (S) {
             case CHANNEL_1:
-              NVIC::disableInterrupt<
+              NVIC::disableIrq<
                   nvic::irqn::DMA2_Channel1
               >();
               break;
             case CHANNEL_2:
-              NVIC::disableInterrupt<
+              NVIC::disableIrq<
                   nvic::irqn::DMA2_Channel2
               >();
               break;
             case CHANNEL_3:
-              NVIC::disableInterrupt<
+              NVIC::disableIrq<
                   nvic::irqn::DMA2_Channel3
               >();
               break;
 #ifdef CONNECTIVITY_LINE
             case CHANNEL_4:
-              NVIC::disableInterrupt<
+              NVIC::disableIrq<
                   nvic::irqn::DMA2_Channel4
               >();
               break;
             case CHANNEL_5:
-              NVIC::disableInterrupt<
+              NVIC::disableIrq<
                   nvic::irqn::DMA2_Channel5
               >();
               break;
@@ -292,12 +292,12 @@ namespace dma {
               case CHANNEL_4:
               static_assert(S != CHANNEL_4,
                   "Don't use this function, "
-                  "use NVIC::disableInterrupts() instead.");
+                  "use NVIC::disableIrqs() instead.");
               break;
               case CHANNEL_5:
               static_assert(S != CHANNEL_5,
                   "Don't use this function, "
-                  "use NVIC::disableInterrupts() instead.");
+                  "use NVIC::disableIrqs() instead.");
               break;
 #endif // CONNECTIVITY_LINE
           }
@@ -473,51 +473,51 @@ namespace dma {
     }
 
     /**
-     * @brief Enables all the DMA stream interrupts.
+     * @brief Unmasks all the DMA stream interrupts.
      */
     template<dma::common::Address D, Address S>
-    void Functions<D, S>::enableGlobalInterrupts()
+    void Functions<D, S>::unmaskInterrupts()
     {
       switch (D) {
         case common::DMA1:
         switch (S) {
           case STREAM_0:
-          NVIC::enableInterrupt<
+          NVIC::enableIrq<
           nvic::irqn::DMA1_Stream0
           >();
           break;
           case STREAM_1:
-          NVIC::enableInterrupt<
+          NVIC::enableIrq<
           nvic::irqn::DMA1_Stream1
           >();
           break;
           case STREAM_2:
-          NVIC::enableInterrupt<
+          NVIC::enableIrq<
           nvic::irqn::DMA1_Stream2
           >();
           break;
           case STREAM_3:
-          NVIC::enableInterrupt<
+          NVIC::enableIrq<
           nvic::irqn::DMA1_Stream3
           >();
           break;
           case STREAM_4:
-          NVIC::enableInterrupt<
+          NVIC::enableIrq<
           nvic::irqn::DMA1_Stream4
           >();
           break;
           case STREAM_5:
-          NVIC::enableInterrupt<
+          NVIC::enableIrq<
           nvic::irqn::DMA1_Stream5
           >();
           break;
           case STREAM_6:
-          NVIC::enableInterrupt<
+          NVIC::enableIrq<
           nvic::irqn::DMA1_Stream6
           >();
           break;
           case STREAM_7:
-          NVIC::enableInterrupt<
+          NVIC::enableIrq<
           nvic::irqn::DMA1_Stream7
           >();
           break;
@@ -526,42 +526,42 @@ namespace dma {
         case common::DMA2:
         switch (S) {
           case STREAM_0:
-          NVIC::enableInterrupt<
+          NVIC::enableIrq<
           nvic::irqn::DMA2_Stream0
           >();
           break;
           case STREAM_1:
-          NVIC::enableInterrupt<
+          NVIC::enableIrq<
           nvic::irqn::DMA2_Stream1
           >();
           break;
           case STREAM_2:
-          NVIC::enableInterrupt<
+          NVIC::enableIrq<
           nvic::irqn::DMA2_Stream2
           >();
           break;
           case STREAM_3:
-          NVIC::enableInterrupt<
+          NVIC::enableIrq<
           nvic::irqn::DMA2_Stream3
           >();
           break;
           case STREAM_4:
-          NVIC::enableInterrupt<
+          NVIC::enableIrq<
           nvic::irqn::DMA2_Stream4
           >();
           break;
           case STREAM_5:
-          NVIC::enableInterrupt<
+          NVIC::enableIrq<
           nvic::irqn::DMA2_Stream5
           >();
           break;
           case STREAM_6:
-          NVIC::enableInterrupt<
+          NVIC::enableIrq<
           nvic::irqn::DMA2_Stream6
           >();
           break;
           case STREAM_7:
-          NVIC::enableInterrupt<
+          NVIC::enableIrq<
           nvic::irqn::DMA2_Stream7
           >();
           break;
@@ -571,52 +571,52 @@ namespace dma {
     }
 
     /**
-     * @brief Disables all the DMA stream interrupts.
+     * @brief Masks all the DMA stream interrupts.
      */
     template<dma::common::Address D, Address S>
-    void Functions<D, S>::disableGlobalInterrupts()
+    void Functions<D, S>::maskInterrupts()
     {
 
       switch (D) {
         case common::DMA1:
         switch (S) {
           case STREAM_0:
-          NVIC::disableInterrupt<
+          NVIC::disableIrq<
           nvic::irqn::DMA1_Stream0
           >();
           break;
           case STREAM_1:
-          NVIC::disableInterrupt<
+          NVIC::disableIrq<
           nvic::irqn::DMA1_Stream1
           >();
           break;
           case STREAM_2:
-          NVIC::disableInterrupt<
+          NVIC::disableIrq<
           nvic::irqn::DMA1_Stream2
           >();
           break;
           case STREAM_3:
-          NVIC::disableInterrupt<
+          NVIC::disableIrq<
           nvic::irqn::DMA1_Stream3
           >();
           break;
           case STREAM_4:
-          NVIC::disableInterrupt<
+          NVIC::disableIrq<
           nvic::irqn::DMA1_Stream4
           >();
           break;
           case STREAM_5:
-          NVIC::disableInterrupt<
+          NVIC::disableIrq<
           nvic::irqn::DMA1_Stream5
           >();
           break;
           case STREAM_6:
-          NVIC::disableInterrupt<
+          NVIC::disableIrq<
           nvic::irqn::DMA1_Stream6
           >();
           break;
           case STREAM_7:
-          NVIC::disableInterrupt<
+          NVIC::disableIrq<
           nvic::irqn::DMA1_Stream7
           >();
           break;
@@ -625,42 +625,42 @@ namespace dma {
         case common::DMA2:
         switch (S) {
           case STREAM_0:
-          NVIC::disableInterrupt<
+          NVIC::disableIrq<
           nvic::irqn::DMA2_Stream0
           >();
           break;
           case STREAM_1:
-          NVIC::disableInterrupt<
+          NVIC::disableIrq<
           nvic::irqn::DMA2_Stream1
           >();
           break;
           case STREAM_2:
-          NVIC::disableInterrupt<
+          NVIC::disableIrq<
           nvic::irqn::DMA2_Stream2
           >();
           break;
           case STREAM_3:
-          NVIC::disableInterrupt<
+          NVIC::disableIrq<
           nvic::irqn::DMA2_Stream3
           >();
           break;
           case STREAM_4:
-          NVIC::disableInterrupt<
+          NVIC::disableIrq<
           nvic::irqn::DMA2_Stream4
           >();
           break;
           case STREAM_5:
-          NVIC::disableInterrupt<
+          NVIC::disableIrq<
           nvic::irqn::DMA2_Stream5
           >();
           break;
           case STREAM_6:
-          NVIC::disableInterrupt<
+          NVIC::disableIrq<
           nvic::irqn::DMA2_Stream6
           >();
           break;
           case STREAM_7:
-          NVIC::disableInterrupt<
+          NVIC::disableIrq<
           nvic::irqn::DMA2_Stream7
           >();
           break;

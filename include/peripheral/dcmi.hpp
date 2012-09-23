@@ -49,6 +49,8 @@ namespace dcmi {
     public:
       static inline void enableClock();
       static inline void disableClock();
+      static inline void unmaskInterrupts();
+      static inline void maskInterrupts();
       static inline void enablePeripheral();
       static inline void disablePeripheral();
       static inline void startCapture();

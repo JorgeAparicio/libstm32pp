@@ -75,7 +75,7 @@ namespace servo {
     PeriodTimer::template configurePeriodicInterrupt<F>();
 
     DutyCycleTimer::enableClock();
-    DutyCycleTimer::enableGlobalInterrupt();
+    DutyCycleTimer::unmaskInterrupts();
     DutyCycleTimer::configureBasicCounter(
         tim::cr1::cen::COUNTER_DISABLED,
         tim::cr1::udis::UPDATE_EVENT_ENABLED,

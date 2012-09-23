@@ -22,6 +22,7 @@
 #pragma once
 
 #include "../include/peripheral/rcc.hpp"
+#include "../include/core/nvic.hpp"
 
 namespace dcmi {
   /**
@@ -43,6 +44,26 @@ namespace dcmi {
   {
     RCC::disableClocks<
         rcc::ahb2enr::DCMI
+    >();
+  }
+
+  /**
+   * @brief Unmasks all the DCMI interrupts.
+   */
+  void Functions::unmaskInterrupts()
+  {
+    NVIC::enableIrq<
+        nvic::irqn::DCMI
+    >();
+  }
+
+  /**
+   * @brief Masks all the DCMI interrupts.
+   */
+  void Functions::maskInterrupts()
+  {
+    NVIC::disableIrq<
+        nvic::irqn::DCMI
     >();
   }
 

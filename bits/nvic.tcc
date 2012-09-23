@@ -23,19 +23,19 @@
 
 namespace nvic {
   /**
-   * @brief Enables an interrupt.
+   * @brief Enables an interrupt request.
    */
   template<irqn::E I>
-  void Functions::enableInterrupt(void)
+  void Functions::enableIrq(void)
   {
     reinterpret_cast<Registers*>(ADDRESS)->ISER[I >> 5] = 1 << (I % 32);
   }
 
   /**
-   * @brief Disables an interrupt.
+   * @brief Disables an interrupt request.
    */
   template<irqn::E I>
-  void Functions::disableInterrupt(void)
+  void Functions::disableIrq(void)
   {
     reinterpret_cast<Registers*>(ADDRESS)->ICER[I >> 5] = 1 << (I % 32);
   }
@@ -45,7 +45,7 @@ namespace nvic {
    * @note  A lower priority number, means higher priority.
    */
   template<irqn::E I, u8 P>
-  void Functions::setInterruptPriority()
+  void Functions::setPriority()
   {
     static_assert(P % 32 == 31,
         "The priority number must have it 4 lower bits set to 1.");
