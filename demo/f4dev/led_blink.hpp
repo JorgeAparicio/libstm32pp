@@ -23,9 +23,13 @@
 // IN YOUR MAIN SOURCE FILE.
 #include "clock.hpp"
 
+#include "interrupt.hpp"
+
 #include "peripheral/gpio.hpp"
 
 typedef PC13 LED;
+
+#include "peripheral/tim.hpp"
 
 void initializeGpio()
 {
@@ -33,19 +37,46 @@ void initializeGpio()
   LED::setMode(gpio::moder::OUTPUT);
 }
 
+void initializeTimer()
+{
+  TIM6::enableClock();
+  TIM6::configurePeriodicInterrupt<
+      8 /* Hz */
+  >();
+}
+
+void initializePeripherals()
+{
+  initializeGpio();
+  initializeTimer();
+
+  TIM6::startCounter();
+}
+
 void loop()
 {
-  LED::setLow();
-  LED::setHigh();
+
 }
 
 int main()
 {
   clk::initialize();
 
-  initializeGpio();
+  initializePeripherals();
 
   while (true) {
     loop();
   }
+}
+
+void interrupt::TIM6_DAC()
+{
+  static u8 count = 0;
+
+  TIM6::clearUpdateFlag();
+
+  if (count++ % 2)
+    LED::setHigh();
+  else
+    LED::setLow();
 }

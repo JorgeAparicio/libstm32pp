@@ -21,7 +21,6 @@
 
 // DO NOT INCLUDE THIS FILE ANYWHERE. THIS DEMO IS JUST A REFERENCE TO BE USED
 // IN YOUR MAIN SOURCE FILE.
-
 #include "clock.hpp"
 
 #include "interrupt.hpp"
@@ -34,17 +33,15 @@ typedef PC13 LED;
 
 #include "peripheral/usart.hpp"
 
-typedef USART1 USART;
-
 #include "peripheral/dma.hpp"
 
 typedef DMA2_STREAM7 DMA_U1TX;
 typedef DMA2_STREAM5 DMA_U1RX;
 
 char outputBuffer[] = "Hello World!\n\r";
-char inputBuffer[1];
+char inputBuffer;
 
-void configureGpio()
+void initializeGpio()
 {
   GPIOA::enableClock();
 
@@ -58,11 +55,10 @@ void configureGpio()
   LED::setMode(gpio::moder::OUTPUT);
 }
 
-void configureUsart()
+void initializeUsart()
 {
-  USART::enableClock();
-
-  USART::configure(
+  USART1::enableClock();
+  USART1::configure(
       usart::cr1::rwu::RECEIVER_IN_ACTIVE_MODE,
       usart::cr1::re::RECEIVER_ENABLED,
       usart::cr1::te::TRANSMITTER_ENABLED,
@@ -86,12 +82,12 @@ void configureUsart()
       usart::cr3::ctse::CTS_HARDWARE_FLOW_DISABLED,
       usart::cr3::ctsie::CTS_INTERRUPT_DISABLED,
       usart::cr3::onebit::THREE_SAMPLE_BIT_METHOD);
-  USART::setBaudRate<
-      2000000 /* bps */
+  USART1::setBaudRate<
+      9600 /* bps */
   >();
 }
 
-void configureDma()
+void initializeDma()
 {
   DMA2::enableClock();
 
@@ -140,15 +136,15 @@ void configureDma()
   DMA_U1RX::setMemory0Address(&inputBuffer);
   DMA_U1RX::setPeripheralAddress(&USART1_REGS->DR);
   DMA_U1RX::setNumberOfTransactions(sizeof(inputBuffer));
-  DMA_U1RX::enableGlobalInterrupts();
+  DMA_U1RX::unmaskInterrupts();
   DMA_U1RX::enablePeripheral();
 }
 
-void configure()
+void initializePeripherals()
 {
-  configureGpio();
-  configureUsart();
-  configureDma();
+  initializeGpio();
+  initializeUsart();
+  initializeDma();
 }
 
 void loop()
@@ -160,7 +156,7 @@ int main()
 {
   clk::initialize();
 
-  configure();
+  initializePeripherals();
 
   while (true) {
     loop();
@@ -171,7 +167,7 @@ void interrupt::DMA2_Stream5()
 {
   DMA_U1RX::clearTransferCompleteFlag();
 
-  switch (inputBuffer[0]) {
+  switch (inputBuffer) {
     case 'E':
       LED::setLow();
       DMA_U1TX::disablePeripheral();

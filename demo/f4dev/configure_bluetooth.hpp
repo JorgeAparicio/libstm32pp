@@ -22,11 +22,9 @@
 // DO NOT INCLUDE THIS FILE ANYWHERE. THIS DEMO IS JUST A REFERENCE TO BE USED
 // IN YOUR MAIN SOURCE FILE.
 ////////////////////////////////////////////////////////////////////////////////
-// This demo is to communicate through the BlueTooth.
-// If you need to configure the BlueTooth, check the configure_bluetooth demo.
-// The BlueTooth must be PAIRED and a correct baud rate must be used.
-// When you send the 'S' character, the device will answer with output[].
-// When you send the 'E' character, the device will stop answering.
+// This demo is for configuring the BlueTooth.
+// If want to communicate through the BlueTooth, check the usart_bluetooth demo.
+// The BlueTooth must be UNPAIRED and a correct baud rate must be used.
 #include "clock.hpp"
 
 #include "interrupt.hpp"
@@ -36,8 +34,6 @@
 typedef PB10 U1TX;
 typedef PB11 U1RX;
 
-typedef PC13 LED;
-
 #include "peripheral/usart.hpp"
 
 #include "peripheral/dma.hpp"
@@ -45,8 +41,73 @@ typedef PC13 LED;
 typedef DMA1_STREAM3 DMA_U3TX;
 typedef DMA1_STREAM1 DMA_U3RX;
 
-char output[] = "Hello World!\n\r";
-char input;
+char ans[16];
+
+// COMMANDS
+// Uncomment one of the char cmd[] lines.
+// Note:  "string" is a null-terminated char array.
+
+// BlueTooth responds "OK"
+char cmd[] = "AT";
+
+// BlueTooth responds "OKlinvorV1.5"
+//char cmd[] = "AT+VERSION";
+
+// Sets BlueTooth name to "foo" (can be any other name)
+// BlueTooth responds OKsetname
+//char cmd[] = "AT+NAMEfoo";
+
+// Sets BlueTooth pin code to "1234" (4 digits)
+// BlueTooth responds OKsetPIN
+//char cmd[] = "AT+PIN1234";
+
+// Sets BlueTooth baud rate to 1200
+// BlueTooth responds OK1200
+//char cmd[] = "AT+BAUD1";
+
+// Sets BlueTooth baud rate to 2400
+// BlueTooth responds OK2400
+//char cmd[] = "AT+BAUD2";
+
+// Sets BlueTooth baud rate to 4800
+// BlueTooth responds OK4800
+//char cmd[] = "AT+BAUD3";
+
+// Sets BlueTooth baud rate to 9600
+// BlueTooth responds OK9600
+//char cmd[] = "AT+BAUD4";
+
+// Sets BlueTooth baud rate to 19200
+// BlueTooth responds OK19200
+//char cmd[] = "AT+BAUD5";
+
+// Sets BlueTooth baud rate to 38400
+// BlueTooth responds OK38400
+//char cmd[] = "AT+BAUD6";
+
+// Sets BlueTooth baud rate to 57600
+// BlueTooth responds OK57600
+//char cmd[] = "AT+BAUD7";
+
+// Sets BlueTooth baud rate to 115200
+// BlueTooth responds OK115200
+//char cmd[] = "AT+BAUD8";
+
+// Sets BlueTooth baud rate to 230400
+// BlueTooth responds OK230400
+//char cmd[] = "AT+BAUD9";
+
+// Sets BlueTooth baud rate to 460800
+// BlueTooth responds OK460800
+//char cmd[] = "AT+BAUDA";
+
+// Sets BlueTooth baud rate to 921600
+// BlueTooth responds OK921600
+//char cmd[] = "AT+BAUDB";
+
+// Sets BlueTooth baud rate to 1382400
+// BlueTooth responds OK1382400
+//char cmd[] = "AT+BAUDC";
 
 void initializeGpio()
 {
@@ -57,9 +118,6 @@ void initializeGpio()
 
   U1RX::setAlternateFunction(gpio::afr::USART1_3);
   U1RX::setMode(gpio::moder::ALTERNATE);
-
-  LED::enableClock();
-  LED::setMode(gpio::moder::OUTPUT);
 }
 
 void initializeUsart()
@@ -105,7 +163,7 @@ void initializeDma()
       dma::stream::cr::tcie::TRANSFER_COMPLETE_INTERRUPT_DISABLED,
       dma::stream::cr::pfctrl::DMA_FLOW_CONTROLLER,
       dma::stream::cr::dir::MEMORY_TO_PERIPHERAL,
-      dma::stream::cr::circ::CIRCULAR_MODE_ENABLED,
+      dma::stream::cr::circ::CIRCULAR_MODE_DISABLED,
       dma::stream::cr::pinc::PERIPHERAL_INCREMENT_MODE_DISABLED,
       dma::stream::cr::minc::MEMORY_INCREMENT_MODE_ENABLED,
       dma::stream::cr::psize::PERIPHERAL_SIZE_8BITS,
@@ -117,15 +175,15 @@ void initializeDma()
       dma::stream::cr::pburst::PERIPHERAL_BURST_TRANSFER_SINGLE,
       dma::stream::cr::mburst::MEMORY_BURST_TRANSFER_SINGLE,
       dma::stream::cr::chsel::CHANNEL_4);
-  DMA_U3TX::setMemory0Address(&output);
+  DMA_U3TX::setMemory0Address(&cmd);
   DMA_U3TX::setPeripheralAddress(&USART3_REGS->DR);
-  DMA_U3TX::setNumberOfTransactions(sizeof(output));
+  DMA_U3TX::setNumberOfTransactions(sizeof(cmd) - 1); // -1 for the null char
 
   DMA_U3RX::configure(
       dma::stream::cr::dmeie::DIRECT_MODE_ERROR_INTERRUPT_DISABLED,
       dma::stream::cr::teie::TRANSFER_ERROR_INTERRUPT_DISABLED,
       dma::stream::cr::htie::HALF_TRANSFER_INTERRUPT_DISABLED,
-      dma::stream::cr::tcie::TRANSFER_COMPLETE_INTERRUPT_ENABLED,
+      dma::stream::cr::tcie::TRANSFER_COMPLETE_INTERRUPT_DISABLED,
       dma::stream::cr::pfctrl::DMA_FLOW_CONTROLLER,
       dma::stream::cr::dir::PERIPHERAL_TO_MEMORY,
       dma::stream::cr::circ::CIRCULAR_MODE_ENABLED,
@@ -140,10 +198,9 @@ void initializeDma()
       dma::stream::cr::pburst::PERIPHERAL_BURST_TRANSFER_SINGLE,
       dma::stream::cr::mburst::MEMORY_BURST_TRANSFER_SINGLE,
       dma::stream::cr::chsel::CHANNEL_4);
-  DMA_U3RX::setMemory0Address(&input);
+  DMA_U3RX::setMemory0Address(&ans);
   DMA_U3RX::setPeripheralAddress(&USART3_REGS->DR);
-  DMA_U3RX::setNumberOfTransactions(sizeof(input));
-  DMA_U3RX::unmaskInterrupts();
+  DMA_U3RX::setNumberOfTransactions(sizeof(ans));
   DMA_U3RX::enablePeripheral();
 }
 
@@ -152,6 +209,9 @@ void initializePeripherals()
   initializeGpio();
   initializeUsart();
   initializeDma();
+
+  DMA_U3TX::enablePeripheral(); // This line will send the command.
+  // Check the ans variable afterwards.
 }
 
 void loop()
@@ -167,21 +227,5 @@ int main()
 
   while (true) {
     loop();
-  }
-}
-
-void interrupt::DMA1_Stream1()
-{
-  DMA_U3RX::clearTransferCompleteFlag();
-
-  switch (input) {
-    case 'S':
-      LED::setHigh();
-      DMA_U3TX::enablePeripheral();
-      break;
-    case 'E':
-      LED::setLow();
-      DMA_U3TX::disablePeripheral();
-      break;
   }
 }
