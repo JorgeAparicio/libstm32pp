@@ -23,8 +23,10 @@
 
 namespace l3gd20 {
   enum Address {
-    GYRO1 = 0b1101010,
-    GYRO2 = 0b1101011,
+    L3GD20_0 = 0b1101010,
+    L3GD20_1 = 0b1101011,
+    L3G4200D_0 = 0b1101000,
+    L3G4200D_1 = 0b1101001,
   };
 
   namespace who_am_i {
