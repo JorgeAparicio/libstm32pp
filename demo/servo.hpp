@@ -21,14 +21,20 @@
 
 // DO NOT INCLUDE THIS FILE ANYWHERE. THIS DEMO IS JUST A REFERENCE TO BE USED
 // IN YOUR MAIN SOURCE FILE.
-
-// TODO Test SERVO demo on STM32F1XX
-
+////////////////////////////////////////////////////////////////////////////////
+// Tested on STM32VLDISCOVERY
+// Tested on STM32F4DISCOVERY
+// Tested on F4Dev
 #include "clock.hpp"
 
 #include "interrupt.hpp"
 
 #include "peripheral/gpio.hpp"
+
+typedef PA0 Servo1;
+typedef PA1 Servo2;
+typedef PA2 Servo3;
+typedef PA3 Servo4;
 
 #include "driver/servo.hpp"
 
@@ -37,92 +43,70 @@ servo::Functions<
     50,  // Hz
     tim::TIM7,
     1500,  // us
-    8
+    4
 > Servo;
 
-void mcuSetup()
+void initializeGpio()
 {
-  clk::initialize();
-
-  GPIOA::enableClock();
 #ifdef STM32F1XX
-  GPIOA::configureLowerPins<
-  gpio::cr::GP_PUSH_PULL_2MHZ, /* 0 */
-  gpio::cr::GP_PUSH_PULL_2MHZ, /* 1 */
-  gpio::cr::GP_PUSH_PULL_2MHZ, /* 2 */
-  gpio::cr::GP_PUSH_PULL_2MHZ, /* 3 */
-  gpio::cr::GP_PUSH_PULL_2MHZ, /* 4 */
-  gpio::cr::GP_PUSH_PULL_2MHZ, /* 5 */
-  gpio::cr::GP_PUSH_PULL_2MHZ, /* 6 */
-  gpio::cr::GP_PUSH_PULL_2MHZ /* 7 */
-  >();
+  Servo1::enableClock();
+  Servo1::setMode(gpio::cr::GP_PUSH_PULL_2MHZ);
 
+  Servo2::enableClock();
+  Servo2::setMode(gpio::cr::GP_PUSH_PULL_2MHZ);
+
+  Servo3::enableClock();
+  Servo3::setMode(gpio::cr::GP_PUSH_PULL_2MHZ);
+
+  Servo4::enableClock();
+  Servo4::setMode(gpio::cr::GP_PUSH_PULL_2MHZ);
 #else
-  GPIOA::setModes(
-      gpio::moder::OUTPUT, /* 0 */
-      gpio::moder::OUTPUT, /* 1 */
-      gpio::moder::OUTPUT, /* 2 */
-      gpio::moder::OUTPUT, /* 3 */
-      gpio::moder::OUTPUT, /* 4 */
-      gpio::moder::OUTPUT, /* 5 */
-      gpio::moder::OUTPUT, /* 6 */
-      gpio::moder::OUTPUT, /* 7 */
-      gpio::moder::INPUT, /* 8 */
-      gpio::moder::INPUT, /* 9 */
-      gpio::moder::INPUT, /* 10 */
-      gpio::moder::INPUT, /* 11 */
-      gpio::moder::INPUT, /* 12 */
-      gpio::moder::ALTERNATE, /* 13: JTAG PIN! */
-      gpio::moder::ALTERNATE, /* 14: JTAG PIN! */
-      gpio::moder::ALTERNATE /* 15: JTAG PIN! */);
+  Servo1::enableClock();
+  Servo1::setMode(gpio::moder::OUTPUT);
+
+  Servo2::enableClock();
+  Servo2::setMode(gpio::moder::OUTPUT);
+
+  Servo3::enableClock();
+  Servo3::setMode(gpio::moder::OUTPUT);
+
+  Servo4::enableClock();
+  Servo4::setMode(gpio::moder::OUTPUT);
 #endif
+}
 
-  Servo.setPin(0, (u32*)(PA0::OUT_ADDRESS));
-  Servo.setPin(1, (u32*)(PA1::OUT_ADDRESS));
-  Servo.setPin(2, (u32*)(PA2::OUT_ADDRESS));
-  Servo.setPin(3, (u32*)(PA3::OUT_ADDRESS));
-  Servo.setPin(4, (u32*)(PA4::OUT_ADDRESS));
-  Servo.setPin(5, (u32*)(PA5::OUT_ADDRESS));
-  Servo.setPin(6, (u32*)(PA6::OUT_ADDRESS));
-  Servo.setPin(7, (u32*)(PA7::OUT_ADDRESS));
-
-  RCC::enableClocks<
-      rcc::apb1enr::TIM6,
-      rcc::apb1enr::TIM7
-  >();
-
-#if defined VALUE_LINE || \
-    defined STM32F2XX || \
-    defined STM32F4XX
-  NVIC::enableInterrupt<
-      nvic::irqn::TIM6_DAC
-  >();
-#else
-  NVIC::enableInterrupt<
-  nvic::irqn::TIM6
-  >();
-#endif
-
-  NVIC::enableInterrupt<
-      nvic::irqn::TIM7
-  >();
+void initializeServoController()
+{
+  Servo.setPin(0, (u32*) (Servo1::OUT_ADDRESS));
+  Servo.setPin(1, (u32*) (Servo2::OUT_ADDRESS));
+  Servo.setPin(2, (u32*) (Servo3::OUT_ADDRESS));
+  Servo.setPin(3, (u32*) (Servo4::OUT_ADDRESS));
 
   Servo.initialize();
+}
+
+void initializePeripherals()
+{
+  initializeGpio();
+  initializeServoController();
+
   Servo.start();
 }
 
-void mcuLoop()
+void loop()
 {
-
+  // In debug mode: Modify the Servo.buffer variable.
 }
 
 int main(void)
 {
-  mcuSetup();
+  clk::initialize();
+
+  initializePeripherals();
 
   while (true)
   {
-    mcuLoop();
+    loop();
   }
 }
 
@@ -130,15 +114,12 @@ int main(void)
     defined STM32F2XX || \
     defined STM32F4XX
 void interrupt::TIM6_DAC()
+#else
+void interrupt::TIM6()
+#endif
 {
   Servo.onPeriodTimerInterrupt();
 }
-#else
-void interrupt::TIM6()
-{
-  Servo::onPeriodTimerInterrupt();
-}
-#endif
 
 void interrupt::TIM7()
 {

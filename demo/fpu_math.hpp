@@ -21,7 +21,9 @@
 
 // DO NOT INCLUDE THIS FILE ANYWHERE. THIS DEMO IS JUST A REFERENCE TO BE USED
 // IN YOUR MAIN SOURCE FILE.
-
+////////////////////////////////////////////////////////////////////////////////
+// Tested on STM32F4DISCOVERY
+// Tested on F4Dev
 #include "clock.hpp"
 
 #include "core/fpu.hpp"
@@ -32,18 +34,30 @@
 #define M_PI 3.14159265358979323846264338327
 #endif
 
+float debug = 1;
+
+void initializeFpu()
+{
+  FPU::enableFullAccess();
+}
+
+void loop()
+{
+  debug *= 16;              // 16.0
+  debug = sqrtf(debug);     // 4.0
+  debug = 1 / debug;        // .25
+  debug = powf(debug, .5);  // .5
+  debug *= M_PI;            // PI / 2
+  debug = sinf(debug);      // 1.0
+}
+
 int main()
 {
   clk::initialize();
 
-  float debug = 16;
+  initializeFpu();
 
-  FPU::enableFullAccess();
-
-  debug = sqrtf(debug);  // 4.0
-  debug = 1 / debug;  // .25
-  debug = powf(debug, .5);  // .5
-  debug *= M_PI;  // PI / 2
-  debug = sinf(debug);  // 1.0
-  debug = 0.0;
+  while (true) {
+    loop();
+  }
 }

@@ -21,39 +21,47 @@
 
 // DO NOT INCLUDE THIS FILE ANYWHERE. THIS DEMO IS JUST A REFERENCE TO BE USED
 // IN YOUR MAIN SOURCE FILE.
-
-/**
- * IMPORTANT: Include system_call_cpp.hpp in a source file once, this will
- *            define the newlib stubs necessary for new, delete, printf, etc.
- *
- *            Also go to sytem_call.hpp and define which USART port will be
- *            used for stdout.
- */
-
+////////////////////////////////////////////////////////////////////////////////
+// Tested on STM32VLDISCOVERY
+// Tested on F4Dev
+////////////////////////////////////////////////////////////////////////////////
+// IMPORTANT: Include system_call_cpp.hpp in a source file once, this will
+//            define the newlib stubs necessary for new, delete, printf, etc.
+//
+//            Also go to sytem_call.hpp and define which USART port will be
+//            used for stdout.
 #include "clock.hpp"
 
 #include "peripheral/gpio.hpp"
 
-#include "peripheral/usart.hpp"
+typedef PA9 U1TX;
+typedef PA10 U1RX;
 
-typedef USART6 USART;
-typedef PC6 TX;
-typedef PC7 RX;
+#include "peripheral/usart.hpp"
 
 #include <stdio.h>
 
-int main()
+void initializeGpio()
 {
-  clk::initialize();
+  GPIOA::enableClock();
 
-  GPIOC::enableClock();
-  TX::setAlternateFunction(gpio::afr::USART4_6);
-  TX::setMode(gpio::moder::ALTERNATE);
-  RX::setAlternateFunction(gpio::afr::USART4_6);
-  RX::setMode(gpio::moder::ALTERNATE);
+#ifdef STM32F1XX
+  U1TX::setMode(gpio::cr::AF_PUSH_PULL_2MHZ);
 
-  USART::enableClock();
-  USART::configure(
+  U1RX::setMode(gpio::cr::AF_PUSH_PULL_2MHZ);
+#else
+  U1TX::setAlternateFunction(gpio::afr::USART1_3);
+  U1TX::setMode(gpio::moder::ALTERNATE);
+
+  U1RX::setAlternateFunction(gpio::afr::USART1_3);
+  U1RX::setMode(gpio::moder::ALTERNATE);
+#endif
+}
+
+void initializeUsart()
+{
+  USART1::enableClock();
+  USART1::configure(
       usart::cr1::rwu::RECEIVER_IN_ACTIVE_MODE,
       usart::cr1::re::RECEIVER_ENABLED,
       usart::cr1::te::TRANSMITTER_ENABLED,
@@ -77,19 +85,35 @@ int main()
       usart::cr3::ctse::CTS_HARDWARE_FLOW_DISABLED,
       usart::cr3::ctsie::CTS_INTERRUPT_DISABLED,
       usart::cr3::onebit::ONE_SAMPLE_BIT_METHOD);
-
-  USART::setBaudRate<
-      921600 /* bps */
+  USART1::setBaudRate<
+      9600 /* bps */
   >();
+}
 
-  /**
-   * IMPORTANT: printf employs a buffer under the hood, and only writes to
-   *            stdout (UART) when a '\n' (newline) character is spotted.
-   */
-//  printf("Hello World!"); // This will not print
-  printf("Hello World!\n"); // This will print
+void initializePeripherals()
+{
+  initializeGpio();
+  initializeUsart();
+}
+
+void loop()
+{
+  // IMPORTANT: printf employs a buffer under the hood, and only writes to
+  //            stdout (UART) when a '\n' (newline) character is spotted.
+  // The next line won't print
+//  printf("Hello World!");
+  // Any of the following lines will print
+//  printf("Hello World!\n\r"); // Uses the buffer and more flash memory.
+  printf("\rHello World!\n"); // Uses less flash memory.
+}
+
+int main()
+{
+  clk::initialize();
+
+  initializePeripherals();
 
   while (true) {
-
+    loop();
   }
 }

@@ -21,6 +21,10 @@
 
 // DO NOT INCLUDE THIS FILE ANYWHERE. THIS DEMO IS JUST A REFERENCE TO BE USED
 // IN YOUR MAIN SOURCE FILE.
+////////////////////////////////////////////////////////////////////////////////
+// Tested on STM32VLDISCOVERY
+// Tested on F4Dev
+#define UART_BAUD_RATE 9600
 
 #include "clock.hpp"
 
@@ -28,94 +32,61 @@
 
 #include "peripheral/gpio.hpp"
 
-typedef PC13 S1;
-typedef PC0 S2;
-typedef PC2 S3;
-typedef PA0 S4;
-typedef PA2 S5;
-typedef PA5 S6;
-typedef PA7 S7;
-typedef PC5 S8;
-typedef PB1 S9;
-typedef PE7 S10;
-typedef PE9 S11;
-typedef PE11 S12;
-typedef PE13 S13;
-typedef PE15 S14;
-typedef PB11 S15;
-typedef PB12 S16;
-typedef PB14 S17;
-typedef PD8 S18;
-typedef PD10 S19;
-typedef PD12 S20;
+typedef PA9 U1TX;
+typedef PA10 U1RX;
 
-#include "peripheral/dma.hpp"
-
-typedef DMA2_STREAM2 DMA_RX;
+typedef PC8 Servo1;
 
 #include "peripheral/usart.hpp"
 
-typedef USART6 USART;
-typedef PC6 TX;
-typedef PC7 RX;
+#include "peripheral/dma.hpp"
+
+#ifdef STM32F1XX
+typedef DMA1_CHANNEL5 DMA_U1RX;
+#else
+typedef DMA2_STREAM5 DMA_U1RX;
+#endif
 
 #include "driver/servo.hpp"
-
-#define NUMBER_OF_SERVOS 20
 
 servo::Functions<
     tim::TIM6,
     50,  // Hz
     tim::TIM7,
     1500,  // us
-    NUMBER_OF_SERVOS
-> Servo;
+    1
+> ServoController;
 
-u8 inputBuffer[2 * NUMBER_OF_SERVOS];
+s16 angle[1];
 
-void mcuSetup()
+void initializeGpio()
 {
-  clk::initialize();
-
-  // GPIO configuration
-
   GPIOA::enableClock();
-  GPIOB::enableClock();
-  GPIOC::enableClock();
-  GPIOD::enableClock();
-  GPIOE::enableClock();
 
-  S1::setMode(gpio::moder::OUTPUT);
-  S2::setMode(gpio::moder::OUTPUT);
-  S3::setMode(gpio::moder::OUTPUT);
-  S4::setMode(gpio::moder::OUTPUT);
-  S5::setMode(gpio::moder::OUTPUT);
-  S6::setMode(gpio::moder::OUTPUT);
-  S7::setMode(gpio::moder::OUTPUT);
-  S8::setMode(gpio::moder::OUTPUT);
-  S9::setMode(gpio::moder::OUTPUT);
-  S10::setMode(gpio::moder::OUTPUT);
-  S11::setMode(gpio::moder::OUTPUT);
-  S12::setMode(gpio::moder::OUTPUT);
-  S13::setMode(gpio::moder::OUTPUT);
-  S14::setMode(gpio::moder::OUTPUT);
-  S15::setMode(gpio::moder::OUTPUT);
-  S16::setMode(gpio::moder::OUTPUT);
-  S17::setMode(gpio::moder::OUTPUT);
-  S18::setMode(gpio::moder::OUTPUT);
-  S19::setMode(gpio::moder::OUTPUT);
-  S20::setMode(gpio::moder::OUTPUT);
+#ifdef STM32F1XX
+  U1TX::setMode(gpio::cr::AF_PUSH_PULL_2MHZ);
 
-  // USART Configuration
+  U1RX::setMode(gpio::cr::FLOATING_INPUT);
+#else
+  U1TX::setAlternateFunction(gpio::afr::USART1_3);
+  U1TX::setMode(gpio::moder::ALTERNATE);
 
-  USART::enableClock();
+  U1RX::setAlternateFunction(gpio::afr::USART1_3);
+  U1RX::setMode(gpio::moder::ALTERNATE);
+#endif
 
-  TX::setAlternateFunction(gpio::afr::USART4_6);
-  TX::setMode(gpio::moder::ALTERNATE);
-  RX::setAlternateFunction(gpio::afr::USART4_6);
-  RX::setMode(gpio::moder::ALTERNATE);
+  Servo1::enableClock();
+#ifdef STM32F1XX
+  Servo1::setMode(gpio::cr::GP_PUSH_PULL_10MHZ);
+#else
+  Servo1::setMode(gpio::moder::OUTPUT);
+#endif
+}
 
-  USART::configure(
+void initializeUsart()
+{
+  USART1::enableClock();
+  USART1::configure(
       usart::cr1::rwu::RECEIVER_IN_ACTIVE_MODE,
       usart::cr1::re::RECEIVER_ENABLED,
       usart::cr1::te::TRANSMITTER_ENABLED,
@@ -134,21 +105,35 @@ void mcuSetup()
       usart::cr3::eie::ERROR_INTERRUPT_DISABLED,
       usart::cr3::hdsel::FULL_DUPLEX,
       usart::cr3::dmar::RECEIVER_DMA_ENABLED,
-      usart::cr3::dmat::TRANSMITTER_DMA_ENABLED,
+      usart::cr3::dmat::TRANSMITTER_DMA_DISABLED,
       usart::cr3::rtse::RTS_HARDWARE_FLOW_DISABLED,
       usart::cr3::ctse::CTS_HARDWARE_FLOW_DISABLED,
       usart::cr3::ctsie::CTS_INTERRUPT_DISABLED,
-      usart::cr3::onebit::ONE_SAMPLE_BIT_METHOD);
-
-  USART::setBaudRate<
-      921600 /* bps */
+      usart::cr3::onebit::THREE_SAMPLE_BIT_METHOD);
+  USART1::setBaudRate<
+      UART_BAUD_RATE /* bps */
   >();
+}
 
-  // DMA Configuration
-
-  DMA2::enableClock();
-
-  DMA_RX::configure(
+void initializeDma()
+{
+  DMA_U1RX::enableClock();
+#ifdef STM32F1XX
+  DMA_U1RX::configure(
+      dma::channel::cr::tcie::TRANSFER_COMPLETE_INTERRUPT_ENABLED,
+      dma::channel::cr::htie::HALF_TRANSFER_INTERRUPT_DISABLED,
+      dma::channel::cr::teie::TRANSFER_ERROR_INTERRUPT_DISABLED,
+      dma::channel::cr::dir::READ_FROM_PERIPHERAL,
+      dma::channel::cr::circ::CIRCULAR_MODE_ENABLED,
+      dma::channel::cr::pinc::PERIPHERAL_INCREMENT_MODE_DISABLED,
+      dma::channel::cr::minc::MEMORY_INCREMENT_MODE_ENABLED,
+      dma::channel::cr::psize::PERIPHERAL_SIZE_8BITS,
+      dma::channel::cr::msize::MEMORY_SIZE_8BITS,
+      dma::channel::cr::pl::CHANNEL_PRIORITY_LEVEL_MEDIUM,
+      dma::channel::cr::mem2mem::MEMORY_TO_MEMORY_MODE_DISABLED);
+  DMA_U1RX::setMemoryAddress(&angle);
+#else
+  DMA_U1RX::configure(
       dma::stream::cr::dmeie::DIRECT_MODE_ERROR_INTERRUPT_DISABLED,
       dma::stream::cr::teie::TRANSFER_ERROR_INTERRUPT_DISABLED,
       dma::stream::cr::htie::HALF_TRANSFER_INTERRUPT_DISABLED,
@@ -166,86 +151,71 @@ void mcuSetup()
       dma::stream::cr::ct::CURRENT_TARGET_MEMORY_0,
       dma::stream::cr::pburst::PERIPHERAL_BURST_TRANSFER_SINGLE,
       dma::stream::cr::mburst::MEMORY_BURST_TRANSFER_SINGLE,
-      dma::stream::cr::chsel::CHANNEL_5);
-
-  NVIC::enableInterrupt<
-      nvic::irqn::DMA2_Stream2
-  >();
-
-  DMA_RX::setNumberOfTransactions(sizeof(inputBuffer));
-  DMA_RX::setPeripheralAddress(&USART6_REGS->DR);
-  DMA_RX::setMemory0Address(&inputBuffer);
-  DMA_RX::enablePeripheral();
-
-  // Servo configuration
-
-  Servo.setPin(0, (u32*) PC13::OUT_ADDRESS);
-  Servo.setPin(1, (u32*) PC0::OUT_ADDRESS);
-  Servo.setPin(2, (u32*) PC2::OUT_ADDRESS);
-  Servo.setPin(3, (u32*) PA0::OUT_ADDRESS);
-  Servo.setPin(4, (u32*) PA2::OUT_ADDRESS);
-  Servo.setPin(5, (u32*) PA5::OUT_ADDRESS);
-  Servo.setPin(6, (u32*) PA7::OUT_ADDRESS);
-  Servo.setPin(7, (u32*) PC5::OUT_ADDRESS);
-  Servo.setPin(8, (u32*) PB1::OUT_ADDRESS);
-  Servo.setPin(9, (u32*) PE7::OUT_ADDRESS);
-  Servo.setPin(10, (u32*) PE9::OUT_ADDRESS);
-  Servo.setPin(11, (u32*) PE11::OUT_ADDRESS);
-  Servo.setPin(12, (u32*) PE13::OUT_ADDRESS);
-  Servo.setPin(13, (u32*) PE15::OUT_ADDRESS);
-  Servo.setPin(14, (u32*) PB11::OUT_ADDRESS);
-  Servo.setPin(15, (u32*) PB12::OUT_ADDRESS);
-  Servo.setPin(16, (u32*) PB14::OUT_ADDRESS);
-  Servo.setPin(17, (u32*) PD8::OUT_ADDRESS);
-  Servo.setPin(18, (u32*) PD10::OUT_ADDRESS);
-  Servo.setPin(19, (u32*) PD12::OUT_ADDRESS);
-
-  RCC::enableClocks<
-      rcc::apb1enr::TIM6,
-      rcc::apb1enr::TIM7
-  >();
-
-  NVIC::enableInterrupt<
-      nvic::irqn::TIM6_DAC
-  >();
-
-  NVIC::enableInterrupt<
-      nvic::irqn::TIM7
-  >();
-
-  Servo.initialize();
-  Servo.start();
-
+      dma::stream::cr::chsel::CHANNEL_4);
+  DMA_U1RX::setMemory0Address(&angle);
+#endif
+  DMA_U1RX::setPeripheralAddress(&USART1_REGS->DR);
+  DMA_U1RX::setNumberOfTransactions(sizeof(angle));
+  DMA_U1RX::unmaskInterrupts();
+  DMA_U1RX::enablePeripheral();
 }
 
-void mcuLoop()
+void initializeServoController()
+{
+  ServoController.setPin(0, (u32*) Servo1::OUT_ADDRESS);
+
+  ServoController.initialize();
+}
+
+void initializePeripherals()
+{
+  initializeGpio();
+  initializeUsart();
+  initializeDma();
+  initializeServoController();
+
+  ServoController.start();
+}
+
+void loop()
 {
 
 }
 
-int main(void)
+int main()
 {
-  mcuSetup();
+  clk::initialize();
 
-  while (true)
-  {
-    mcuLoop();
+  initializePeripherals();
+
+  while (true) {
+    loop();
   }
 }
 
+#if defined VALUE_LINE || \
+    defined STM32F2XX || \
+    defined STM32F4XX
 void interrupt::TIM6_DAC()
+#else
+void interrupt::TIM6()
+#endif
 {
-  Servo.onPeriodTimerInterrupt();
+  ServoController.onPeriodTimerInterrupt();
 }
 
 void interrupt::TIM7()
 {
-  Servo.onDutyCycleTimerInterrupt();
+  ServoController.onDutyCycleTimerInterrupt();
 }
 
-void interrupt::DMA2_Stream2()
+#ifdef STM32F1XX
+void interrupt::DMA1_Channel5()
+#else
+void interrupt::DMA2_Stream5()
+#endif
 {
-  DMA_RX::clearTransferCompleteFlag();
+  DMA_U1RX::clearTransferCompleteFlag();
 
-  Servo.load((s16 (&)[NUMBER_OF_SERVOS]) (inputBuffer));
+  ServoController.load(angle);
 }

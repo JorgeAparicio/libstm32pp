@@ -21,9 +21,10 @@
 
 // DO NOT INCLUDE THIS FILE ANYWHERE. THIS DEMO IS JUST A REFERENCE TO BE USED
 // IN YOUR MAIN SOURCE FILE.
-
-// TODO Test TIM demo on STM32F1XX
-
+////////////////////////////////////////////////////////////////////////////////
+// Tested on STM32VLDISCOVERY
+// Tested on STM32F4DISCOVERY
+// Tested on F4Dev
 #include "clock.hpp"
 
 #include "interrupt.hpp"
@@ -34,10 +35,8 @@ typedef PA0 LED;
 
 #include "peripheral/tim.hpp"
 
-int main()
+void initializeGpio()
 {
-  clk::initialize();
-
   LED::enableClock();
 
 #ifdef STM32F1XX
@@ -45,16 +44,37 @@ int main()
 #else
   LED::setMode(gpio::moder::OUTPUT);
 #endif
+}
 
+void initializeTimer()
+{
   TIM6::enableClock();
-
   TIM6::configurePeriodicInterrupt<
-      1 /* Hz */
+      4 /* Hz */
   >();
+}
+
+void initializePeripherals()
+{
+  initializeGpio();
+  initializeTimer();
 
   TIM6::startCounter();
+}
+
+void loop()
+{
+
+}
+
+int main()
+{
+  clk::initialize();
+
+  initializePeripherals();
 
   while (true) {
+    loop();
   }
 }
 
@@ -66,14 +86,12 @@ void interrupt::TIM6_DAC()
 void interrupt::TIM6()
 #endif
 {
-  static u32 counter = 0;
+  static u8 counter = 0;
 
   TIM6::clearUpdateFlag();
 
-  counter++;
-
-  if (counter % 2)
-    LED::setLow();
-  else
+  if (counter++ % 2)
     LED::setHigh();
+  else
+    LED::setLow();
 }

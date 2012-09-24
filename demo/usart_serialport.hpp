@@ -21,8 +21,10 @@
 
 // DO NOT INCLUDE THIS FILE ANYWHERE. THIS DEMO IS JUST A REFERENCE TO BE USED
 // IN YOUR MAIN SOURCE FILE.
-
-// TODO USART demo for STM32F1XX
+////////////////////////////////////////////////////////////////////////////////
+// Tested on STM32VLDISCOVERY
+// Tested on F4Dev
+#define UART_BAUD_RATE 9600
 
 #include "clock.hpp"
 
@@ -37,22 +39,26 @@ typedef PA10 U1RX;
 
 const char msg[] = "Hello World!\n\r";
 
-int main()
+void initializeGpio()
 {
-  clk::initialize();
-
   GPIOA::enableClock();
 
-  PA9::setAlternateFunction(gpio::afr::USART1_3);
+#ifdef STM32F1XX
+  U1TX::setMode(gpio::cr::AF_PUSH_PULL_2MHZ);
 
-  PA9::setMode(gpio::moder::ALTERNATE);
+  U1RX::setMode(gpio::cr::FLOATING_INPUT);
+#else
+  U1TX::setAlternateFunction(gpio::afr::USART1_3);
+  U1TX::setMode(gpio::moder::ALTERNATE);
 
-  PA10::setAlternateFunction(gpio::afr::USART1_3);
+  U1RX::setAlternateFunction(gpio::afr::USART1_3);
+  U1RX::setMode(gpio::moder::ALTERNATE);
+#endif
+}
 
-  PA10::setMode(gpio::moder::ALTERNATE);
-
+void initializeUsart()
+{
   USART1::enableClock();
-
   USART1::configure(
       usart::cr1::rwu::RECEIVER_IN_ACTIVE_MODE,
       usart::cr1::re::RECEIVER_ENABLED,
@@ -77,18 +83,34 @@ int main()
       usart::cr3::ctse::CTS_HARDWARE_FLOW_DISABLED,
       usart::cr3::ctsie::CTS_INTERRUPT_DISABLED,
       usart::cr3::onebit::ONE_SAMPLE_BIT_METHOD);
-
   USART1::setBaudRate<
-      9600 /* bps */
+      UART_BAUD_RATE /* bps */
   >();
+}
 
+void initializePeripherals()
+{
+  initializeGpio();
+  initializeUsart();
+}
+
+void loop()
+{
   for (u8 i = 0; i < sizeof(msg); i++) {
     while (!USART1::canSendDataYet()) {
     }
 
     USART1::sendData(msg[i]);
   }
+}
+
+int main()
+{
+  clk::initialize();
+
+  initializePeripherals();
 
   while (true) {
+    loop();
   }
 }
