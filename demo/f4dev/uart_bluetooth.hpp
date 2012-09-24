@@ -35,8 +35,8 @@
 
 #include "peripheral/gpio.hpp"
 
-typedef PB10 U1TX;
-typedef PB11 U1RX;
+typedef PB10 U3TX;
+typedef PB11 U3RX;
 
 typedef PC13 LED;
 
@@ -54,11 +54,11 @@ void initializeGpio()
 {
   GPIOB::enableClock();
 
-  U1TX::setAlternateFunction(gpio::afr::USART1_3);
-  U1TX::setMode(gpio::moder::ALTERNATE);
+  U3TX::setAlternateFunction(gpio::afr::USART1_3);
+  U3TX::setMode(gpio::moder::ALTERNATE);
 
-  U1RX::setAlternateFunction(gpio::afr::USART1_3);
-  U1RX::setMode(gpio::moder::ALTERNATE);
+  U3RX::setAlternateFunction(gpio::afr::USART1_3);
+  U3RX::setMode(gpio::moder::ALTERNATE);
 
   LED::enableClock();
   LED::setMode(gpio::moder::OUTPUT);
