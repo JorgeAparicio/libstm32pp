@@ -21,6 +21,8 @@
 
 // DO NOT INCLUDE THIS FILE ANYWHERE. THIS DEMO IS JUST A REFERENCE TO BE USED
 // IN YOUR MAIN SOURCE FILE.
+#define UART_BAUD_RATE 9600
+
 #include "clock.hpp"
 
 #include "interrupt.hpp"
@@ -83,7 +85,7 @@ void initializeUsart()
       usart::cr3::ctsie::CTS_INTERRUPT_DISABLED,
       usart::cr3::onebit::THREE_SAMPLE_BIT_METHOD);
   USART1::setBaudRate<
-      9600 /* bps */
+      UART_BAUD_RATE /* bps */
   >();
 }
 

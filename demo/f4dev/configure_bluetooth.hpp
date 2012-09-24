@@ -25,6 +25,8 @@
 // This demo is for configuring the BlueTooth.
 // If want to communicate through the BlueTooth, check the usart_bluetooth demo.
 // The BlueTooth must be UNPAIRED and a correct baud rate must be used.
+#define UART_BAUD_RATE 9600
+
 #include "clock.hpp"
 
 #include "interrupt.hpp"
@@ -148,7 +150,7 @@ void initializeUsart()
       usart::cr3::ctsie::CTS_INTERRUPT_DISABLED,
       usart::cr3::onebit::THREE_SAMPLE_BIT_METHOD);
   USART3::setBaudRate<
-      9600 /* bps */
+      UART_BAUD_RATE /* bps */
   >();
 }
 

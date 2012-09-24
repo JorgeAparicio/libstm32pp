@@ -27,6 +27,8 @@
 // The BlueTooth must be PAIRED and a correct baud rate must be used.
 // When you send the 'S' character, the device will answer with output[].
 // When you send the 'E' character, the device will stop answering.
+#define UART_BAUD_RATE 9600
+
 #include "clock.hpp"
 
 #include "interrupt.hpp"
@@ -90,7 +92,7 @@ void initializeUsart()
       usart::cr3::ctsie::CTS_INTERRUPT_DISABLED,
       usart::cr3::onebit::THREE_SAMPLE_BIT_METHOD);
   USART3::setBaudRate<
-      9600 /* bps */
+      UART_BAUD_RATE /* bps */
   >();
 }
 
