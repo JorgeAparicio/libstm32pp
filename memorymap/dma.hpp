@@ -247,7 +247,7 @@ namespace dma {
           MASK = 1 << POSITION
         };
         enum States {
-          MEMORY_TO_MEMORT_MODE_DISABLED = 0 << POSITION,
+          MEMORY_TO_MEMORY_MODE_DISABLED = 0 << POSITION,
           MEMORY_TO_MEMORY_MODE_ENABLED = 1 << POSITION,
         };
       }  // namespace mem2mem
