@@ -42,6 +42,8 @@ typedef PA10 U1RX;
 typedef PB8 SCL;
 typedef PB9 SDA;
 
+typedef PC13 LED;
+
 #include "peripheral/usart.hpp"
 
 #include "peripheral/dma.hpp"
@@ -103,6 +105,9 @@ void initializeGpio()
   SDA::setAlternateFunction(gpio::afr::I2C);
   SDA::setPullMode(gpio::pupdr::PULL_UP);
   SDA::setMode(gpio::moder::ALTERNATE);
+
+  LED::enableClock();
+  LED::setMode(gpio::moder::OUTPUT);
 }
 
 void initializeUsart()
@@ -315,10 +320,12 @@ void interrupt::DMA2_Stream5()
 
   switch (input) {
     case 'S':
+      LED::setHigh();
       TIM6::startCounter();
       break;
 
     case 'E':
+      LED::setLow();
       TIM6::stopCounter();
       break;
   }
