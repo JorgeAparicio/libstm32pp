@@ -46,6 +46,8 @@ namespace exti {
       static inline void disableAll();
       static inline void disableEvent();
       static inline void disableInterrupt();
+      static inline void unmaskInterrupt();
+      static inline void maskInterrupt();
       static inline void enableHardwareEventByFallingEdge();
       static inline void enableHardwareEventByRisingEdge();
       static inline void enableHardwareInterruptByFallingEdge();

@@ -21,6 +21,8 @@
 
 #pragma once
 
+#include "../include/core/nvic.hpp"
+
 namespace exti {
   /**
    * @brief Clears the pending interrupt/event flag.
@@ -118,6 +120,86 @@ namespace exti {
         ADDRESS + swier::OFFSET,
         N
     >()) = 0;
+  }
+
+  template<u8 N>
+  void Functions<N>::unmaskInterrupt()
+  {
+    static_assert(N < 5, "Warning: EXTI5-9 are grouped and EXTI10-15 are also "
+        "grouped. Unmasking one of the member will unmask the whole group. "
+        "You can comment this static_assert now, you have been warned.");
+    switch (N) {
+      case 0:
+        NVIC::enableIrq<nvic::irqn::EXTI0>();
+        break;
+      case 1:
+        NVIC::enableIrq<nvic::irqn::EXTI1>();
+        break;
+      case 2:
+        NVIC::enableIrq<nvic::irqn::EXTI2>();
+        break;
+      case 3:
+        NVIC::enableIrq<nvic::irqn::EXTI3>();
+        break;
+      case 4:
+        NVIC::enableIrq<nvic::irqn::EXTI4>();
+        break;
+      case 5:
+      case 6:
+      case 7:
+      case 8:
+      case 9:
+        NVIC::enableIrq<nvic::irqn::EXTI9_5>();
+        break;
+      case 10:
+      case 11:
+      case 12:
+      case 13:
+      case 14:
+      case 15:
+        NVIC::enableIrq<nvic::irqn::EXTI15_10>();
+        break;
+    }
+  }
+
+  template<u8 N>
+  void Functions<N>::maskInterrupt()
+  {
+    static_assert(N < 5, "Warning: EXTI5-9 are grouped and EXTI10-15 are also "
+        "grouped. Masking one of the member will mask the whole group. "
+        "You can comment this static_assert now, you have been warned.");
+    switch (N) {
+      case 0:
+        NVIC::disableIrq<nvic::irqn::EXTI0>();
+        break;
+      case 1:
+        NVIC::disableIrq<nvic::irqn::EXTI1>();
+        break;
+      case 2:
+        NVIC::disableIrq<nvic::irqn::EXTI2>();
+        break;
+      case 3:
+        NVIC::disableIrq<nvic::irqn::EXTI3>();
+        break;
+      case 4:
+        NVIC::disableIrq<nvic::irqn::EXTI4>();
+        break;
+      case 5:
+      case 6:
+      case 7:
+      case 8:
+      case 9:
+        NVIC::disableIrq<nvic::irqn::EXTI9_5>();
+        break;
+      case 10:
+      case 11:
+      case 12:
+      case 13:
+      case 14:
+      case 15:
+        NVIC::disableIrq<nvic::irqn::EXTI15_10>();
+        break;
+    }
   }
 
   /**
