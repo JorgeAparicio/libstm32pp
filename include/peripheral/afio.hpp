@@ -45,6 +45,13 @@ namespace afio {
     public:
       static inline void enableClock();
       static inline void disableClock();
+
+      template <
+        exticr::States PORT,
+        u8 PIN
+      >
+      static inline void configureExti();
+
     private:
       Functions();
   };

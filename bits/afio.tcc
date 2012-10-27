@@ -34,4 +34,17 @@ namespace afio {
     RCC::disableClocks<rcc::apb2enr::AFIO>();
   }
 
+  template <
+    exticr::States PORT,
+    u8 PIN
+  >
+ void Functions::configureExti()
+  {
+    reinterpret_cast<Registers*>(ADDRESS)->EXTICR[PIN / 4] &=
+        exticr::MASK << (exticr::POSITION * (PIN % 4));
+
+    reinterpret_cast<Registers*>(ADDRESS)->EXTICR[PIN / 4] |=
+            PORT << (exticr::POSITION * (PIN % 4));
+  }
+
 } // namespace afio

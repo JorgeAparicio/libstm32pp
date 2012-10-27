@@ -41,5 +41,19 @@ namespace afio {
       u32 MAPR2;      // 0x1C: Remap and debug configuration 2
   };
 
-// TODO AFIO register bits
+  namespace exticr {
+    enum {
+      MASK = 0b1111,
+      POSITION = 4
+    };
+    enum States {
+      PA = 0,
+      PB = 1,
+      PC = 2,
+      PD = 3,
+      PE = 4,
+      PF = 5,
+      PG = 6,
+    };
+  }  // namespace exticr
 }// namespace afio
