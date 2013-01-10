@@ -293,6 +293,12 @@ namespace gpio {
       case GPIOG:
         RCC::enableClocks<rcc::ahb1enr::GPIOG>();
         break;
+      case GPIOH:
+        RCC::enableClocks<rcc::ahb1enr::GPIOH>();
+        break;
+      case GPIOI:
+        RCC::enableClocks<rcc::ahb1enr::GPIOI>();
+        break;
     }
   }
 
@@ -435,6 +441,12 @@ namespace gpio {
       case GPIOG:
         RCC::enableClocks<rcc::ahb1enr::GPIOG>();
         break;
+      case GPIOH:
+        RCC::enableClocks<rcc::ahb1enr::GPIOH>();
+        break;
+      case GPIOI:
+        RCC::enableClocks<rcc::ahb1enr::GPIOI>();
+        break;
     }
   }
 
@@ -466,6 +478,12 @@ namespace gpio {
         break;
       case GPIOG:
         RCC::disableClocks<rcc::ahb1enr::GPIOG>();
+        break;
+      case GPIOH:
+        RCC::enableClocks<rcc::ahb1enr::GPIOH>();
+        break;
+      case GPIOI:
+        RCC::enableClocks<rcc::ahb1enr::GPIOI>();
         break;
     }
   }
