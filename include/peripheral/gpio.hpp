@@ -41,7 +41,7 @@
 #define GPIOE_REGS  ((gpio::Registers *) gpio::GPIOE)
 #define GPIOF_REGS  ((gpio::Registers *) gpio::GPIOF)
 #define GPIOG_REGS  ((gpio::Registers *) gpio::GPIOG)
-#ifdef STM32F4XX
+#if defined(STM32F4XX) || defined(STM32F2XX)
 #define GPIOH_REGS  ((gpio::Registers *) gpio::GPIOH)
 #define GPIOI_REGS  ((gpio::Registers *) gpio::GPIOI)
 #endif
@@ -236,7 +236,7 @@ typedef gpio::Port<gpio::GPIOD> GPIOD;
 typedef gpio::Port<gpio::GPIOE> GPIOE;
 typedef gpio::Port<gpio::GPIOF> GPIOF;
 typedef gpio::Port<gpio::GPIOG> GPIOG;
-#ifdef STM32F4XX
+#if defined(STM32F4XX) || defined(STM32F2XX)
 typedef gpio::Port<gpio::GPIOH> GPIOH;
 typedef gpio::Port<gpio::GPIOI> GPIOI;
 #endif
@@ -360,7 +360,7 @@ typedef gpio::Pin<gpio::GPIOG, 13> PG13;
 typedef gpio::Pin<gpio::GPIOG, 14> PG14;
 typedef gpio::Pin<gpio::GPIOG, 15> PG15;
 
-#ifdef STM32F4XX
+#if defined(STM32F4XX) || defined(STM32F2XX)
 typedef gpio::Pin<gpio::GPIOH, 0> PH0;
 typedef gpio::Pin<gpio::GPIOH, 1> PH1;
 typedef gpio::Pin<gpio::GPIOH, 2> PH2;
