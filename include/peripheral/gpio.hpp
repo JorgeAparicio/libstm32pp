@@ -236,7 +236,7 @@ typedef gpio::Port<gpio::GPIOD> GPIOD;
 typedef gpio::Port<gpio::GPIOE> GPIOE;
 typedef gpio::Port<gpio::GPIOF> GPIOF;
 typedef gpio::Port<gpio::GPIOG> GPIOG;
-#ifdef STM32F4XX
+#if defined(STM32F4XX) || defined(STM32F2XX)
 typedef gpio::Port<gpio::GPIOH> GPIOH;
 typedef gpio::Port<gpio::GPIOI> GPIOI;
 #endif
